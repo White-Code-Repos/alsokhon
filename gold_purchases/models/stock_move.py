@@ -411,7 +411,8 @@ class StockMoveLine(models.Model):
             'item_category_id':res.item_category_id.id,
             'sub_category_id':res.sub_category_id.id,
             'selling_karat_id':res.selling_karat_id.id,
-            'assembly_description':assembly_description,
+            'assembly_description_gold':assembly_description_gold,
+            'assembly_description_diamond':assembly_description_diamond,
             })
 
 

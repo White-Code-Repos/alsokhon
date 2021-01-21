@@ -9,6 +9,7 @@ access_assembly_gold,accessassembly_s_gold,model_assembly_component_gold,,1,1,1,
 access_assembly_diamond,accessassembly_s_diamond,model_assembly_component_diamond,,1,1,1,1
 access_assembly_gold_back,accessassembly_s_gold_back,model_assembly_back_component_gold,,1,1,1,1
 access_assembly_diamond_back,accessassembly_s_diamond_back,model_assembly_back_component_diamond,,1,1,1,1
+access_assembly_mix_back,accessassembly_s_mix_back,model_assembly_back_component_mix,,1,1,1,1
 access_assembly_descg,accessassembly_ss_descg,model_assembly_description_gold,,1,1,1,1
 access_assembly_descd,accessassembly_ss_descd,model_assembly_description_diamond,,1,1,1,1
 access_assembly_lotg,accessassembly_sss_lotg,model_assembly_description_lot_gold,,1,1,1,1

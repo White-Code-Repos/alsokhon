@@ -71,6 +71,16 @@
                     </tree>
                   </field>
                 </page>
+                <page string="Assembly Mix Components" name="assembly_mrp_mix" attrs="{'invisible':[('assembly','!=', True)]}">
+                  <field name="assembly_diamond_ids">
+                    <tree editable="top">
+                      <field name="product_id" domain="[('diamond','=',True)]"/>
+                      <field name="location_id" domain="[('usage','=','internal')]"/>
+                      <field name="lot_id" domain="[('product_id','=',product_id),('product_qty','>',0)]"/>
+                      <field name="carat"/>
+                    </tree>
+                  </field>
+                </page>
                 <page string="Assembly Gold Returned Components" name="assembly_mrp_gold_back" attrs="{'invisible':[('assembly','!=', True)]}">
                   <field name="assembly_back_gold_ids">
                     <tree editable="top">

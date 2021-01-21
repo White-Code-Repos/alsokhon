@@ -123,6 +123,25 @@ class assemblyComponentsDiamond(models.Model):
     def getvalues(self):
         if self.product_id and self.lot_id:
             self.carat = self.lot_id.carat
+
+class assemblyComponentsDiamond(models.Model):
+    """Assembly Details."""
+    _name = 'assembly.component.mix'
+
+    product_id = fields.Many2one('product.product')
+    location_id = fields.Many2one('stock.location')
+    lot_id = fields.Many2one('stock.production.lot')
+    purchase_mix_id = fields.Many2one('purchase.order')
+
+class assemblyComponentsDiamond(models.Model):
+    """Assembly Details."""
+    _name = 'assembly.back.component.mix'
+
+    product_id = fields.Many2one('product.product')
+    location_id = fields.Many2one('stock.location')
+    purchase_back_mix_id = fields.Many2one('purchase.order')
+
+
 class PurchaseOrder(models.Model):
     _inherit = 'purchase.order'
     state = fields.Selection([
@@ -271,6 +290,7 @@ class PurchaseOrder(models.Model):
 
     assembly_back_gold_ids = fields.One2many('assembly.back.component.gold','purchase_back_gold_id')
     assembly_back_diamond_ids = fields.One2many('assembly.back.component.diamond','purchase_back_diamond_id')
+    assembly_back_mix_ids = fields.One2many('assembly.back.component.mix','purchase_back_mix_id')
 
     def return_component(self):
         diamond_move_lines = []
@@ -463,6 +483,7 @@ class PurchaseOrder(models.Model):
             this.assembly_operations_count = self.env['stock.picking'].search_count([('assembly_purchase_id','=',self.id)])
     assembly_gold_ids = fields.One2many('assembly.component.gold','purchase_gold_id')
     assembly_diamond_ids = fields.One2many('assembly.component.diamond','purchase_diamond_id')
+    assembly_mix_ids = fields.One2many('assembly.component.mix','purchase_mix_id')
     assembly_no_giving = fields.Boolean(compute="_compute_assembly_state")
     assembly_give_gold = fields.Boolean(compute="_compute_assembly_state")
     assembly_give_diamond = fields.Boolean(compute="_compute_assembly_state")
