@@ -231,7 +231,7 @@ class PurchaseOrder(models.Model):
                     sale_type = 'fixed'
                 elif self.order_type.is_unfixed:
                     sale_type = 'unfixed'
-                for line in scrap_move_lines:
+                for line in location_scrap_components:
                     scrap_move_lines.append((0, 0, {
                             'name': "assembly move",
                             'location_id': location.id,
@@ -257,7 +257,7 @@ class PurchaseOrder(models.Model):
                             'origin': location.name + ' - Assembly Scrap Transfer'
                         })
                 picking.action_confirm()
-                # picking.action_assign()
+                picking.action_assign()
                 for this in picking:
                     for this_lot_line in this.move_line_ids_without_package:
                         this_lot_line.lot_id = this_lot_line.move_id.lot_id.id
