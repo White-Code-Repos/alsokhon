@@ -81,6 +81,15 @@ class StockPicking(models.Model):
                             if line.product_id.categ_id.is_diamond:
                                 line.lot_id.carat -= line.move_id.carat
                     rec.create_gold_journal_entry_sale()
+                if 'Assembly Mix Transfer' in rec.origin:
+                    if rec.picking_type_id.code == 'incoming':
+                        pass
+                    elif rec.picking_type_id.code == 'outgoing':
+                        for line in rec.move_line_ids_without_package:
+                            if line.product_id.categ_id.is_assembly:
+                                line.lot_id.carat = 0.0
+                                line.lot_id.gross_weight = 0.0
+                    rec.create_gold_journal_entry_sale()
             print(rec)
             print(rec.group_id)
             print(rec.group_id.name)
