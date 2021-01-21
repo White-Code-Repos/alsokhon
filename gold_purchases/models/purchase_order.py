@@ -124,13 +124,14 @@ class assemblyComponentsDiamond(models.Model):
         if self.product_id and self.lot_id:
             self.carat = self.lot_id.carat
 
-class assemblyComponentsDiamond(models.Model):
+class assemblyComponentsMix(models.Model):
     """Assembly Details."""
     _name = 'assembly.component.mix'
 
     product_id = fields.Many2one('product.product')
     location_id = fields.Many2one('stock.location')
     lot_id = fields.Many2one('stock.production.lot')
+    quantity = fields.Float(default=1)
     purchase_mix_id = fields.Many2one('purchase.order')
 
 class assemblyComponentsDiamond(models.Model):
@@ -169,6 +170,7 @@ class PurchaseOrder(models.Model):
         diamond_move_lines = []
         scrap_move_lines = []
         gold_move_lines = []
+        mix_move_lines = []
         gold_components = self.assembly_gold_ids.filtered(lambda x: x.product_id and
                                                        x.product_id.gold and
                                                        x.product_id.categ_id and
@@ -178,12 +180,14 @@ class PurchaseOrder(models.Model):
                                                        x.product_id.categ_id and
                                                        x.product_id.categ_id.is_scrap)
         diamond_components = self.assembly_diamond_ids
+        mix_components = self.assembly_mix_ids
 
         internal_locations = self.env['stock.location'].search([('usage','=','internal')])
         for location in internal_locations:
             location_gold_components = gold_components.filtered(lambda x: x.location_id == location)
             location_scrap_components = scrap_components.filtered(lambda x: x.location_id == location)
             location_diamond_components = diamond_components.filtered(lambda x: x.location_id == location)
+            location_mix_components = mix_components.filtered(lambda x: x.location_id == location)
             if len(location_gold_components) > 0:
                 sale_type = ""
                 if self.order_type.is_fixed:
@@ -288,6 +292,34 @@ class PurchaseOrder(models.Model):
                         this_lot_line.lot_id = this_lot_line.move_id.lot_id.id
                 picking.assembly_purchase_id = self.id
 
+            if len(location_mix_components) > 0:
+                for line in location_mix_components:
+                    mix_move_lines.append((0, 0, {
+                            'name': "assembly move",
+                            'location_id': location.id,
+                            'location_dest_id': self.order_type.assembly_picking_type_id.default_location_dest_id.id,
+                            'product_id': line.product_id.id,
+                            'product_uom': line.product_id.uom_id.id,
+                            'picking_type_id':  line.purchase_diamond_id.order_type.assembly_picking_type_id.id,
+                            'product_uom_qty': line.quantity,
+                            'lot_id':line.lot_id.id,
+                            'origin': location.name + ' - Assembly Mix Transfer',
+                            }))
+                picking = self.env['stock.picking'].create({
+                            'partner_id': self.partner_id.id,
+                            'location_id': location.id,
+                            'location_dest_id': self.order_type.assembly_picking_type_id.default_location_dest_id.id,
+                            'picking_type_id':  self.order_type.assembly_picking_type_id.id,
+                            'immediate_transfer': False,
+                            'move_lines': diamond_move_lines,
+                            'origin': location.name + ' - Assembly Mix Transfer'
+                        })
+                picking.action_confirm()
+                picking.action_assign()
+                for this in picking:
+                    for this_lot_line in this.move_line_ids_without_package:
+                        this_lot_line.lot_id = this_lot_line.move_id.lot_id.id
+                picking.assembly_purchase_id = self.id
     assembly_back_gold_ids = fields.One2many('assembly.back.component.gold','purchase_back_gold_id')
     assembly_back_diamond_ids = fields.One2many('assembly.back.component.diamond','purchase_back_diamond_id')
     assembly_back_mix_ids = fields.One2many('assembly.back.component.mix','purchase_back_mix_id')
