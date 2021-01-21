@@ -60,6 +60,8 @@
 
           <!-- Orderlines -->
           <t t-set='unfixed_total' t-value='0' />
+          <t t-set='unfixed_qty_total' t-value='0' />
+          <t t-set='unfixed_unit' t-value='0' />
           <!-- <t t-set='taxincluded' t-value='Math.abs(receipt.subtotal - receipt.total_with_tax) &lt;= 0.000001' /> -->
 
 
@@ -103,6 +105,10 @@
                 <t t-else="">
                   <!-- <span t-esc='widget.format_currency_no_symbol(line.price_display)' class="price_display pos-receipt-right-align"/> -->
                   <t t-set="unfixed_total" t-value="(unfixed_total + line.price_display)"/>
+                  <t t-set="unfixed_qty_total" t-value="(unfixed_qty_total - line.quantity)"/>
+                  <t t-set="unfixed_unit" t-value="line.unit_name"/>
+                  <!-- <t t-esc="Math.round(line.quantity * Math.pow(10, pos.dp['Product Unit of Measure'])) / Math.pow(10, pos.dp['Product Unit of Measure'])"/>
+                  <t t-if='line.unit_name !== "Units"' t-esc='line.unit_name'/> -->
                 </t>
 
               </t>
@@ -149,7 +155,9 @@
           <t t-if='unfixed_total !== 0'>
             <div >
                 Unfixed
-                <span t-esc='widget.format_currency_no_symbol(-1*unfixed_total)' class="pos-receipt-right-align"/>
+                <span t-esc='unfixed_qty_total' class="pos-receipt-right-align"/>
+                <span t-esc='unfixed_unit' class="pos-receipt-right-align"/>
+                <!-- <span t-esc='widget.format_currency_no_symbol(-1*unfixed_total)' class="pos-receipt-right-align"/> -->
             </div>
           </t>
 
