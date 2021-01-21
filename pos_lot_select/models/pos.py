@@ -278,6 +278,8 @@ class PosOrder(models.Model):
                     else:
                         order_picking.sudo().message_post(body=message)
                 neg_qty = any([x.qty < 0 for x in order.lines if x.product_id.type in ['product', 'consu']])
+                # print("neg_qty")
+                # print(neg_qty)
                 if neg_qty:
                     return_vals = picking_vals.copy()
                     return_vals.update({
@@ -285,6 +287,11 @@ class PosOrder(models.Model):
                         'location_dest_id': return_pick_type != picking_type and return_pick_type.default_location_dest_id.id or location_id,
                         'picking_type_id': return_pick_type.id
                     })
+                    # print({
+                    #     'location_id': destination_id,
+                    #     'location_dest_id': return_pick_type != picking_type and return_pick_type.default_location_dest_id.id or location_id,
+                    #     'picking_type_id': return_pick_type.id
+                    # })
                     return_picking = Picking.create(return_vals)
                     if self.env.user.partner_id.email:
                         return_picking.message_post(body=message)
@@ -295,17 +302,21 @@ class PosOrder(models.Model):
             for line in order.lines.filtered(lambda l: l.product_id.type in ['product', 'consu'] and not float_is_zero(l.qty, precision_rounding=l.product_id.uom_id.rounding)):
                 if line.pack_lot_ids:
 
-                    # print(line.lot_id.gross_weight , line.product_uom_qty)
 
                     for lots in line.pack_lot_ids:
 
                         lot_id = lots
+                        # print(lot_id)
+                        # print(line.lot_id.gross_weight , line.product_uom_qty)
+
 
                         lot = self.env['stock.production.lot'].search([('name','=',lot_id.lot_name),('product_id','=',lot_id.product_id.id)])
                         gross_weight = lot.gross_weight
                         pure_weight = lot.pure_weight
                         carat = lot.carat
-#                         print("BJKBJH")
+                        # print("BJKBJH")
+                        # print(lot)
+                        # print(line.qty)
 # # 97.0 1.0 97.0
 #                         print(lot.carat,line.qty,lot.total_qty)
                         if line.product_id.categ_id.is_scrap:
@@ -318,7 +329,24 @@ class PosOrder(models.Model):
                                 lot.carat-=line.qty
                         else:
                             lot.gross_weight -= line.qty * lot.gross_weight
-                        # print(lot.carat)
+                        # print("(((((lot.carat)))))")
+                        # print({
+                        #     'name': line.name,
+                        #     'product_uom': line.product_id.uom_id.id,
+                        #     'picking_id': order_picking.id if line.qty >= 0 else return_picking.id,
+                        #     'picking_type_id': picking_type.id if line.qty >= 0 else return_pick_type.id,
+                        #     'product_id': line.product_id.id,#   item_category_id sub_category_id selling_karat_id selling_making_charge
+                        #     'gross_weight':gross_weight if (gross_weight-lot.gross_weight)==0 else gross_weight-lot.gross_weight,
+                        #     'pure_weight':pure_weight if (pure_weight-lot.pure_weight)==0 else pure_weight-lot.pure_weight,
+                        #     'carat': carat-lot.carat,
+                        #     'purity': line.purity_id.scrap_purity,
+                        #     'selling_making_charge': line.make_value,
+                        #     'lot_id': lot.id,
+                        #     'product_uom_qty': abs(line.qty),
+                        #     'state': 'draft',
+                        #     'location_id': location_id if line.qty >= 0 else destination_id,
+                        #     'location_dest_id': destination_id if line.qty >= 0 else return_pick_type != picking_type and return_pick_type.default_location_dest_id.id or location_id,
+                        # })
 
                         moves |= Move.create({
                             'name': line.name,
@@ -366,6 +394,8 @@ class PosOrder(models.Model):
 
             # prefer associating the regular order picking, not the return
             order.write({'picking_id': order_picking.id or return_picking.id})
+            # print("order_picking,return_picking")
+            # print(order_picking,return_picking)
 
             if return_picking:
                 order._force_picking_done(return_picking)
