@@ -257,7 +257,7 @@ class PurchaseOrder(models.Model):
                             'origin': location.name + ' - Assembly Scrap Transfer'
                         })
                 picking.action_confirm()
-                picking.action_assign()
+                # picking.action_assign()
                 for this in picking:
                     for this_lot_line in this.move_line_ids_without_package:
                         this_lot_line.lot_id = this_lot_line.move_id.lot_id.id
