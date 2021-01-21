@@ -12,11 +12,11 @@ class assemblyDescriptionGold(models.Model):
     _name = 'assembly.description.gold'
 
     product_id = fields.Many2one('product.product')
-    quantity = fields.Float()
-    gross_weight = fields.Float()
-    pure_weight = fields.Float()
-    purity_id = fields.Float()
-    purity = fields.Float()
+    quantity = fields.Float(digits=(16,3))
+    gross_weight = fields.Float(digits=(16,3))
+    pure_weight = fields.Float(digits=(16,3))
+    purity_id = fields.Float(digits=(16,3))
+    purity = fields.Float(digits=(16,3))
     purchase_id_gold = fields.Many2one('purchase.order')
 
 
@@ -26,8 +26,8 @@ class assemblyDescriptionDiamond(models.Model):
     _name = 'assembly.description.diamond'
 
     product_id = fields.Many2one('product.product')
-    carat = fields.Float()
-    stones_quantity = fields.Float()
+    carat = fields.Float(digits=(16,3))
+    stones_quantity = fields.Float(digits=(16,3))
     purchase_id_diamond = fields.Many2one('purchase.order')
 
 class assemblyBackGold(models.Model):
@@ -39,11 +39,11 @@ class assemblyBackGold(models.Model):
     # lot_id = fields.Many2one('stock.production.lot')
     # lot_name = fields.Char()
     gold_rate = fields.Float(digits=(16,3),compute="_compute_rate")
-    gross_weight = fields.Float()
+    gross_weight = fields.Float(digits=(16,3))
     purity_id = fields.Many2one('gold.purity')
-    purity = fields.Float()
-    pure_weight = fields.Float(compute="_compute_pure_weight")
-    total_value = fields.Float(compute="_compute_total_vale")
+    purity = fields.Float(digits=(16,3))
+    pure_weight = fields.Float(digits=(16,3), compute="_compute_pure_weight")
+    total_value = fields.Float(digits=(16,3), compute="_compute_total_vale")
     def _compute_rate(self):
         for this in self:
             this.gold_rate = this.purchase_back_gold_id.gold_rate/1000
@@ -71,8 +71,8 @@ class assemblyBackDiamond(models.Model):
     # lot_state = fields.Selection([('exist','Existing Lot'),('new','New Lot')])
     # lot_id = fields.Many2one('stock.production.lot')
     # lot_name = fields.Char()
-    carat = fields.Float()
-    carat_cost = fields.Float()
+    carat = fields.Float(digits=(16,3))
+    carat_cost = fields.Float(digits=(16,3))
     total_cost = fields.Float(compute="_compute_total_vale")
 
     # @api.onchange('lot_id')
@@ -90,12 +90,12 @@ class assemblyComponentsGold(models.Model):
     _name = 'assembly.component.gold'
 
     product_id = fields.Many2one('product.product')
-    location_id = fields.Many2one('stock.location')
+    location_id = fields.Many2one('stock.location', required=True)
     lot_id = fields.Many2one('stock.production.lot')
-    product_uom_qty = fields.Float()
-    gross_weight = fields.Float()
-    pure_weight = fields.Float()
-    purity = fields.Float()
+    product_uom_qty = fields.Float(digits=(16,3))
+    gross_weight = fields.Float(digits=(16,3))
+    pure_weight = fields.Float(digits=(16,3))
+    purity = fields.Float(digits=(16,3))
     purchase_gold_id = fields.Many2one('purchase.order')
 
     @api.onchange('gross_weight','purity')
@@ -114,9 +114,9 @@ class assemblyComponentsDiamond(models.Model):
     _name = 'assembly.component.diamond'
 
     product_id = fields.Many2one('product.product')
-    location_id = fields.Many2one('stock.location')
+    location_id = fields.Many2one('stock.location', required=True)
     lot_id = fields.Many2one('stock.production.lot')
-    carat = fields.Float()
+    carat = fields.Float(digits=(16,3))
     purchase_diamond_id = fields.Many2one('purchase.order')
 
     @api.onchange('lot_id')
@@ -129,9 +129,9 @@ class assemblyComponentsMix(models.Model):
     _name = 'assembly.component.mix'
 
     product_id = fields.Many2one('product.product')
-    location_id = fields.Many2one('stock.location')
+    location_id = fields.Many2one('stock.location', required=True)
     lot_id = fields.Many2one('stock.production.lot')
-    quantity = fields.Float(default=1)
+    quantity = fields.Float(digits=(16,3), default=1)
     purchase_mix_id = fields.Many2one('purchase.order')
 
 class assemblyComponentsDiamond(models.Model):
@@ -139,7 +139,7 @@ class assemblyComponentsDiamond(models.Model):
     _name = 'assembly.back.component.mix'
 
     product_id = fields.Many2one('product.product')
-    location_id = fields.Many2one('stock.location')
+    location_id = fields.Many2one('stock.location', required=True)
     purchase_back_mix_id = fields.Many2one('purchase.order')
 
 
@@ -509,7 +509,7 @@ class PurchaseOrder(models.Model):
                 result['views'] = form_view
             result['res_id'] = pick_ids.id
         return result
-    assembly_operations_count = fields.Float(compute="_compute_assembly_operations_count")
+    assembly_operations_count = fields.Float(digits=(16,3), compute="_compute_assembly_operations_count")
     def _compute_assembly_operations_count(self):
         for this in self:
             this.assembly_operations_count = self.env['stock.picking'].search_count([('assembly_purchase_id','=',self.id)])
