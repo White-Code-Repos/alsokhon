@@ -12,6 +12,10 @@ class stockGoldMove(models.TransientModel):
     purity_id = fields.Many2one('gold.purity')
     lot_state = fields.Selection([('exist','Existing Lot'),('new','New Lot')])
     lot_id = fields.Many2one('stock.production.lot')
+    @api.onchange('lot_id')
+    def retrive_lot(self):
+        if self.lot_id:
+            self.purity_id = self.lot_id.purity_id.id
     lot_name = fields.Char()
     gross_weight = fields.Float(digits=(16, 3))
     pure_weight = fields.Float(compute="_compute_pure_weight" ,digits=(16, 3))
