@@ -58,19 +58,28 @@ class StockPicking(models.Model):
                             # print(line.lot_id.gross_weight,line.lot_id.pure_weight)
                     rec.create_gold_journal_entry_sale()
                 if 'Assembly Scrap Transfer' in rec.origin:
-                    for line in rec.move_line_ids_without_package:
-                        if line.product_id.categ_id.is_scrap:
-                            line.lot_id.gross_weight -= line.move_id.gross_weight
+                    if rec.picking_type_id.code == 'incoming':
+                        pass
+                    elif rec.picking_type_id.code == 'outgoing':
+                        for line in rec.move_line_ids_without_package:
+                            if line.product_id.categ_id.is_scrap:
+                                line.lot_id.gross_weight -= line.move_id.gross_weight
                     rec.create_gold_journal_entry_sale()
                 if 'Assembly Gold Transfer' in rec.origin:
-                    for line in rec.move_line_ids_without_package:
-                        if line.product_id.categ_id.is_gold:
-                            line.lot_id.gross_weight -= line.move_id.product_uom_qty * line.move_id.gross_weight
+                    if rec.picking_type_id.code == 'incoming':
+                        pass
+                    elif rec.picking_type_id.code == 'outgoing':
+                        for line in rec.move_line_ids_without_package:
+                            if line.product_id.categ_id.is_gold:
+                                line.lot_id.gross_weight -= line.move_id.product_uom_qty * line.move_id.gross_weight
                     rec.create_gold_journal_entry_sale()
                 if 'Assembly Diamond Transfer' in rec.origin:
-                    for line in rec.move_line_ids_without_package:
-                        if line.product_id.categ_id.is_diamond:
-                            line.lot_id.carat -= line.move_id.carat
+                    if rec.picking_type_id.code == 'incoming':
+                        pass
+                    elif rec.picking_type_id.code == 'outgoing':
+                        for line in rec.move_line_ids_without_package:
+                            if line.product_id.categ_id.is_diamond:
+                                line.lot_id.carat -= line.move_id.carat
                     rec.create_gold_journal_entry_sale()
             print(rec)
             print(rec.group_id)
