@@ -14,6 +14,8 @@ class StockPicking(models.Model):
     def _compute_gold_state(self):
         for this in self:
             this.gold = False
+            this.diamond = False
+            this.assembly = False
             for line in this.move_ids_without_package:
                 if line.product_id.categ_id.is_gold:
                     this.gold = True
