@@ -7,6 +7,7 @@ access_unfixed_wizard,access_unfixed_wizard_sstock,model_stock_move_gold,,1,1,1,
 access_unfixed_fixing,access_unfixed_fixing_sstock,model_fixing_unfixed_bill,,1,1,1,1
 access_assembly_gold,accessassembly_s_gold,model_assembly_component_gold,,1,1,1,1
 access_assembly_diamond,accessassembly_s_diamond,model_assembly_component_diamond,,1,1,1,1
+access_assembly_mix,accessassembly_s_mix,model_assembly_component_mix,,1,1,1,1
 access_assembly_gold_back,accessassembly_s_gold_back,model_assembly_back_component_gold,,1,1,1,1
 access_assembly_diamond_back,accessassembly_s_diamond_back,model_assembly_back_component_diamond,,1,1,1,1
 access_assembly_mix_back,accessassembly_s_mix_back,model_assembly_back_component_mix,,1,1,1,1
