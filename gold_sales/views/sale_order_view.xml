@@ -138,7 +138,7 @@
                        <field name="is_make_value"  width="10%"  invisible="1"/>
                 </xpath>
                 <xpath expr="//field[@name='order_line']/tree/field[@name='price_unit']" position="attributes">
-                    <attribute name="attrs">{'readonly': [('parent.assembly','!=',True)]}</attribute>
+                    <attribute name="attrs">{'readonly': [('parent.assembly','!=',True),('parent.diamond','!=',True)]}</attribute>
                     <attribute name="force_save">1</attribute>
                 </xpath>
                 <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="attributes">

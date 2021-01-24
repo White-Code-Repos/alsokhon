@@ -52,7 +52,7 @@ class assemblyDescriptionSaleDiamond(models.Model):
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
-    order_category = fields.Selection([('whole_sale','Whole-sale'),('retail','Retail')])
+    order_category = fields.Selection([('whole_sale','Whole-sale'),('retail','Retail')],required=True)
     # details_assembly = fields.One2many('details.assembly','sale_id')
     details_assembly_gold = fields.One2many('assembly.description.sale.gold','sale_order_gold')
     details_assembly_diamond = fields.One2many('assembly.description.sale.diamond','sale_order_diamond')
@@ -63,7 +63,9 @@ class SaleOrder(models.Model):
 
     @api.model
     def create(self, values):
-
+        making_order_line = self.env['sale.order.line'].search([('order_id','=',self.id),('is_make_value','=',True)])
+        if making_order_line:
+            making_order_line.unlink()
         res = super(SaleOrder, self).create(values)
         list_assemply_gold = []
         list_assemply_diamond = []
