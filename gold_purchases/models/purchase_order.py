@@ -207,6 +207,7 @@ class PurchaseOrder(models.Model):
                             'pure_weight': line.pure_weight,
                             'purity': line.purity,
                             'lot_id':line.lot_id.id,
+                            'gold_rate':line.purchase_gold_id.gold_rate / 1000,
                             'origin': location.name + ' - Assembly Gold Transfer'
                             }))
                 picking = self.env['stock.picking'].create({
@@ -244,6 +245,7 @@ class PurchaseOrder(models.Model):
                             'pure_weight': line.pure_weight,
                             'purity': line.purity,
                             'lot_id':line.lot_id.id,
+                            'gold_rate':line.purchase_gold_id.gold_rate / 1000,
                             'origin': location.name + ' - Assembly Scrap Transfer'
                             }))
                 picking = self.env['stock.picking'].create({
@@ -370,6 +372,7 @@ class PurchaseOrder(models.Model):
                         'pure_weight': line.pure_weight,
                         'purity': line.purity,
                         # 'lot_id':lot.id,
+                        'gold_rate':line.purchase_back_gold_id.gold_rate / 1000,
                         'origin': self.order_type.assembly_picking_type_id_back.default_location_dest_id.name + ' - Receive - Assembly Gold Transfer'
                         }))
             picking = self.env['stock.picking'].create({
@@ -421,6 +424,7 @@ class PurchaseOrder(models.Model):
                         'pure_weight': line.pure_weight,
                         'purity': line.purity,
                         # 'lot_id':lot.id,
+                        'gold_rate':line.purchase_back_gold_id.gold_rate / 1000,
                         'origin': self.order_type.assembly_picking_type_id_back.default_location_dest_id.name + ' - Receive - Assembly Scrap Transfer'
                         }))
             picking = self.env['stock.picking'].create({
