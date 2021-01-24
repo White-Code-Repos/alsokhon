@@ -24,11 +24,38 @@ class DetailsAssembly(models.Model):
     sale_id = fields.Many2one('sale.order')
     sol_product = fields.Many2one('product.product')
 
+
+class assemblyDescriptionSaleGold(models.Model):
+    """docstring for assemblyDescriptionSaleGold."""
+    _name = 'assembly.description.sale.gold'
+
+    product_id = fields.Many2one('product.product')
+    quantity = fields.Float()
+    gross_weight = fields.Float()
+    pure_weight = fields.Float()
+    purity_id = fields.Float()
+    purity = fields.Float()
+    sale_order_gold = fields.Many2one('sale.order')
+    sol_product = fields.Many2one('product.product')
+
+class assemblyDescriptionSaleDiamond(models.Model):
+    """docstring for assemblyDescriptionSaleDiamond."""
+    _name = 'assembly.description.sale.diamond'
+
+    product_id = fields.Many2one('product.product')
+    carat = fields.Float()
+    stones_quantity = fields.Float()
+    sale_order_diamond = fields.Many2one('sale.order')
+    sol_product = fields.Many2one('product.product')
+
+
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
     order_category = fields.Selection([('whole_sale','Whole-sale'),('retail','Retail')])
-    details_assembly = fields.One2many('details.assembly','sale_id')
+    # details_assembly = fields.One2many('details.assembly','sale_id')
+    details_assembly_gold = fields.One2many('assembly.description.sale.gold','sale_order_gold')
+    details_assembly_diamond = fields.One2many('assembly.description.sale.diamond','sale_order_diamond')
 
 
 
@@ -38,18 +65,33 @@ class SaleOrder(models.Model):
     def create(self, values):
 
         res = super(SaleOrder, self).create(values)
-        list_assebnly = []
+        list_assemply_gold = []
+        list_assemply_diamond = []
         for line in res.order_line:
             if line.lot_id and line.product_id.categ_id.is_assembly:
-                list_assebnly = []
-                for det in line.lot_id.assembly_description:
-                    list_assebnly.append((0,0,{
-                    'product_id':det.product_id.id,
-                    'quantity':det.quantity,
-                    'sale_id':line.order_id.id,
+                list_assemply_gold = []
+                list_assemply_diamond = []
+                for detgol in line.lot_id.assembly_description_gold:
+                    list_assemply_gold.append((0,0,{
+                    'product_id':detgol.product_id.id,
+                    'quantity':detgol.quantity,
+                    'gross_weight':detgol.gross_weight,
+                    'purity_id':detgol.purity_id,
+                    'purity':detgol.purity,
+                    'pure_weight':detgol.pure_weight,
+                    'sale_order_gold':line.order_id.id,
                     'sol_product':line.product_id.id,
                     }))
-        res.write({'details_assembly':list_assebnly})
+                for detdim in line.lot_id.assembly_description_gold:
+                    list_assemply_gold.append((0,0,{
+                    'product_id':detdim.product_id.id,
+                    'carat':detdim.carat,
+                    'stones_quantity':detdim.stones_quantity,
+                    'sale_order_diamond':line.order_id.id,
+                    'sol_product':line.product_id.id,
+                    }))
+        res.write({'details_assembly_gold':list_assemply_gold})
+        res.write({'details_assembly_diamond':list_assemply_diamond})
         total_make_rate = 0
         total_qty = 0
         product_charge_gold_list = []
@@ -133,20 +175,37 @@ class SaleOrder(models.Model):
         return res
 
     def write(self, values):
-        for dde in self.details_assembly:
+        for dde in self.details_assembly_gold:
             dde.unlink()
-        list_assebnly = []
+        for dded in self.details_assembly_diamond:
+            dded.unlink()
+        list_assemply_gold = []
+        list_assemply_diamond = []
         for line in self.order_line:
             if line.lot_id and line.product_id.categ_id.is_assembly:
-                list_assebnly = []
-                for det in line.lot_id.assembly_description:
-                    list_assebnly.append((0,0,{
-                    'product_id':det.product_id.id,
-                    'quantity':det.quantity,
-                    'sale_id':line.order_id.id,
+                list_assemply_gold = []
+                list_assemply_diamond = []
+                for detgol in line.lot_id.assembly_description_gold:
+                    list_assemply_gold.append((0,0,{
+                    'product_id':detgol.product_id.id,
+                    'quantity':detgol.quantity,
+                    'gross_weight':detgol.gross_weight,
+                    'purity_id':detgol.purity_id,
+                    'purity':detgol.purity,
+                    'pure_weight':detgol.pure_weight,
+                    'sale_order_gold':line.order_id.id,
                     'sol_product':line.product_id.id,
                     }))
-        values['details_assembly'] = list_assebnly
+                for detdim in line.lot_id.assembly_description_gold:
+                    list_assemply_gold.append((0,0,{
+                    'product_id':detdim.product_id.id,
+                    'carat':detdim.carat,
+                    'stones_quantity':detdim.stones_quantity,
+                    'sale_order_diamond':line.order_id.id,
+                    'sol_product':line.product_id.id,
+                    }))
+        values['details_assembly_gold'] = list_assemply_gold
+        values['details_assembly_diamond'] = list_assemply_diamond
         res = super(SaleOrder, self).write(values)
 
         making_order_line = self.env['sale.order.line'].search([('order_id','=',self.id),('is_make_value','=',True)])

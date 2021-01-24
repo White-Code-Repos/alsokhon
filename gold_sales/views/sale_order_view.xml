@@ -20,13 +20,34 @@
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
               <page name="other_information" position="after">
-                <page name="details_assembly" string="Assembly Products Description">
+                <!-- <page name="details_assembly" string="Assembly Products Description">
                   <field name="details_assembly">
                     <tree>
                       <field name="product_id"/>
                       <field name="quantity"/>
                       <field name="sale_id"/>
                       <field name="sol_product"/>
+                    </tree>
+                  </field>
+                </page> -->
+                <page name="assembly_description_sale_gold" string="Assembly Gold Description" attrs="{'invisible':[('assembly','!=', True)]}">
+                  <field name="assembly_description_gold">
+                    <tree editable="top">
+                      <field name="product_id"/>
+                      <field name="quantity"/>
+                      <field name="gross_weight"/>
+                      <field name="purity_id"/>
+                      <field name="purity"/>
+                      <field name="pure_weight"/>
+                    </tree>
+                  </field>
+                </page>
+                <page name="assembly_description_sale_diamond" string="Assembly Diamond Description" attrs="{'invisible':[('assembly','!=', True)]}">
+                  <field name="assembly_description_diamond">
+                    <tree editable="top">
+                      <field name="product_id"/>
+                      <field name="carat"/>
+                      <field name="stones_quantity"/>
                     </tree>
                   </field>
                 </page>
