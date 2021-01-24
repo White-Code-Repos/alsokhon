@@ -15,11 +15,19 @@ class assemblyDescriptionGold(models.Model):
     quantity = fields.Float(digits=(16,3))
     gross_weight = fields.Float(digits=(16,3))
     pure_weight = fields.Float(digits=(16,3))
-    purity_id = fields.Float(digits=(16,3))
+    purity_id = fields.Many2one('gold.purity')
+    @api.onchange('purity_id')
+    def get_values_gold(arg):
+        if self.purity_id:
+            if self.product_id.scrap:
+                self.purity = self.scrap_purity
+                self.pure_weight = self.gross_weight * (self.purity / 1000)
+            elif self.product_id.gold and not self.product_id.scrap:
+                self.purity = self.purity
+                self.pure_weight = self.gross_weight * (self.purity / 1000)
+
     purity = fields.Float(digits=(16,3))
     purchase_id_gold = fields.Many2one('purchase.order')
-
-
 
 class assemblyDescriptionDiamond(models.Model):
     """docstring for assemblyDescriptionDiamond."""
