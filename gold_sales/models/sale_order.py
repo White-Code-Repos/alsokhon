@@ -82,7 +82,7 @@ class SaleOrder(models.Model):
                     'sale_order_gold':line.order_id.id,
                     'sol_product':line.product_id.id,
                     }))
-                for detdim in line.lot_id.assembly_description_gold:
+                for detdim in line.lot_id.assembly_description_diamond:
                     list_assemply_gold.append((0,0,{
                     'product_id':detdim.product_id.id,
                     'carat':detdim.carat,
