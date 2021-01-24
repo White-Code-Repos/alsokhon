@@ -403,7 +403,7 @@ class StockMoveLine(models.Model):
                         'quantity':line.quantity,
                         'gross_weight':line.gross_weight,
                         'pure_weight':line.pure_weight,
-                        'purity_id':line.purity_id,
+                        'purity_id':line.purity_id.id,
                         'purity':line.purity,
                         }))
                     for line in purchase_obj.assembly_description_diamond:
