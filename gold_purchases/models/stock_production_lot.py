@@ -10,7 +10,7 @@ class assemblyDescriptionLotGold(models.Model):
     quantity = fields.Float()
     gross_weight = fields.Float()
     pure_weight = fields.Float()
-    purity_id = fields.Float()
+    purity_id = fields.Many2one('gold.purity')
     purity = fields.Float()
     lot_id_gold = fields.Many2one('stock.production.lot')
 
@@ -26,7 +26,7 @@ class assemblyDescriptionLotDiamond(models.Model):
 
 class StockProductionLot(models.Model):
     _inherit = 'stock.production.lot'
-    
+
     assembly_description_gold = fields.One2many('assembly.description.lot.gold','lot_id_gold')
     assembly_description_diamond = fields.One2many('assembly.description.lot.diamond','lot_id_diamond')
     gold = fields.Boolean(string="Gold", compute="_compute_gold_state")
