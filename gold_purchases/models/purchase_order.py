@@ -51,7 +51,8 @@ class assemblyBackGold(models.Model):
     @api.onchange('gross_weight','purity_id')
     def _compute_pure_weight(self):
         for this in self:
-            this.purity = this.purity_id.scrap_purity
+            if this.purity_id:
+                this.purity = this.purity_id.scrap_purity
             this.pure_weight = this.gross_weight * (this.purity / 1000)
 
     # @api.onchange('lot_id')
