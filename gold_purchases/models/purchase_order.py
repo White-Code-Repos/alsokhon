@@ -48,7 +48,7 @@ class assemblyBackGold(models.Model):
     def _compute_rate(self):
         for this in self:
             this.gold_rate = this.purchase_back_gold_id.gold_rate/1000
-    @api.onchange('gross_weight')
+    @api.onchange('gross_weight','purity_id')
     def _compute_pure_weight(self):
         for this in self:
             this.purity = this.purity_id.scrap_purity
