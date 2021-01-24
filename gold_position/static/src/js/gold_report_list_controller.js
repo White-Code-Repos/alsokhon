@@ -30,6 +30,11 @@ var GoldReportListController = ListController.extend({
         $buttonToDate.on('click', this._onOpenWizard.bind(this));
 
         $buttonToDate.prependTo($node.find('.o_list_buttons'));
+
+        var $button = $(qweb.render('GoldFixingReport.Buttons'));
+        $button.on('click', this._onOpenView.bind(this));
+
+        $button.prependTo($node.find('.o_list_buttons'));
     },
 
     // -------------------------------------------------------------------------
@@ -52,17 +57,23 @@ var GoldReportListController = ListController.extend({
             method: 'action_confirm',
             args: [[]],
         }).then(function (result) {
-            // this.do_action(result);
             return 1;
         });
-        // this.do_action({
-        //     res_model: 'gold.fixing.position.wizard',
-        //     views: [[false, 'form']],
-        //     target: 'new',
-        //     type: 'ir.actions.act_window',
-        //     context: context,
-        // });
-
+    },
+    _onOpenView: function () {
+        var state = this.model.get(this.handle, {raw: true});
+        var stateContext = state.getContext();
+        var context = {
+            active_model: this.modelName,
+        };
+         this.do_action({
+                name: "Gold Fixing Position",
+                type: 'ir.actions.act_window',
+                res_model: 'gold.fixing.position',
+                views: [[false, 'form']],
+                target: 'new',
+                flags: {mode:'readonly'},
+            });
     },
 });
 

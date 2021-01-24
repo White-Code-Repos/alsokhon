@@ -48,7 +48,7 @@ class GoldPosition(models.Model):
                 current_position = debit - credit
             rec.gold_capital = gold_capital
             rec.current_position = current_position
-            rec.capital_difference =  gold_capital - current_position
+            rec.capital_difference = gold_capital - current_position
 
     name = fields.Char()
     gold_capital = fields.Float(compute=_compute_value)

@@ -40,7 +40,7 @@
     </record>
 
     <record id="view_gold_position_action" model="ir.actions.act_window">
-        <field name="name">Gold Position</field>
+        <field name="name">Gold Fixing Position</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">gold.position</field>
         <field name="view_mode">form</field>
@@ -50,7 +50,7 @@
     </record>
 
     <menuitem id="menu_action_open_gold_position"
-              name="Gold Position"
+              name="Gold Fixing Position"
               action="view_gold_position_action"
               parent="account_reports.account_reports_audit_reports_menu"
               groups="account.group_account_user"/>

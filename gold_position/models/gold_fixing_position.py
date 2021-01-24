@@ -8,7 +8,7 @@ class GoldFixingPositionReport(models.Model):
     date = fields.Date(string='Doc. Date')
     quantity_in = fields.Float(string='In')
     quantity_out = fields.Float(string='Out')
-    rate_kilo = fields.Float(string='Rate/K', digits=(12, 3))
+    rate_kilo = fields.Float(string='Rate/Kg', digits=(12, 3))
     value = fields.Float(string='Value')
     rate_gram = fields.Float(string='Rate/G')
     quantity_balance = fields.Float(string='Balance')

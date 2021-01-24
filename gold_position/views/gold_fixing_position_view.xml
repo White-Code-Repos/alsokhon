@@ -48,7 +48,7 @@
         <field name="name">gold.fixing.position.report.search</field>
         <field name="model">gold.fixing.position.report</field>
         <field name="arch" type="xml">
-            <search string="Gold Fixing Position">
+            <search string="Gold Fixing Registry">
                 <field name="name"/>
                 <field name="date"/>
                 <filter string="name" name="group_by_name" context="{'group_by':'name'}"/>
@@ -58,7 +58,7 @@
     </record>
 
     <record id="gold_fixing_position_report_action" model="ir.actions.act_window">
-        <field name="name">Gold Fixing Position</field>
+        <field name="name">Gold Fixing Registry</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">gold.fixing.position.report</field>
         <field name="view_mode">tree,form</field>
@@ -72,7 +72,7 @@
 
     <menuitem id="menu_gold_fixing_position_report"
               action="gold_fixing_position_report_action"
-              name="Gold Fixing Position"
+              name="Gold Fixing Registry"
               parent="account.account_reports_management_menu"
               sequence="15"/>
 </odoo>

@@ -12,8 +12,8 @@ class GoldFixingPositionWizard(models.TransientModel):
         account_moves = self.env['account.move'].search([('type_of_action', '=', 'fixed'),
                                                          ('journal_id.gold', '=', True),
                                                          ])
-                                                         # ('date', '>=', self.date_from),
-                                                         # ('date', '<=', self.date_to)
+        # ('date', '>=', self.date_from),
+        # ('date', '<=', self.date_to)
 
         account_move_lines = self.env['account.move.line'].search([('move_id', 'in', account_moves.ids),
                                                                    ('account_id.gold', '=', True),
@@ -27,19 +27,16 @@ class GoldFixingPositionWizard(models.TransientModel):
         quantity_balance, amount_balance, values, all_values = 0, 0, 0, 0
         if len(account_move_lines) > 0:
             self.env['gold.fixing.position.report'].search([]).unlink()
+
         for rec in account_move_lines:
-            # print(rec)
-            # print(rec.ref)
-            # print(rec.ref.split())
-            print(rec.ref.split()[0])
             bills = self.env['account.move'].search([
-                                                     ('name', '=', rec.ref.split()[0])])
-                                                     # ('date', '>=', self.date_from),
-                                                     #  ('date', '<=', self.date_to),
+                ('name', '=', rec.ref.split()[0])])
+            # ('date', '>=', self.date_from),
+            #  ('date', '<=', self.date_to),
             pickings = self.env['stock.picking'].search([
-                                                         ('name', '=', rec.ref.split()[0])])
-                                                     # ('scheduled_date', '>=', self.date_from),
-                                                     #  ('scheduled_date', '<=', self.date_to),
+                ('name', '=', rec.ref.split()[0])])
+            # ('scheduled_date', '>=', self.date_from),
+            #  ('scheduled_date', '<=', self.date_to),
             vals = {
                 'date': rec.move_id.date,
                 'name': rec.move_id.name,
@@ -69,7 +66,11 @@ class GoldFixingPositionWizard(models.TransientModel):
                 related_pos_orders = self.env['pos.order']
 
                 if 'POS' in pic.origin:
-                    related_pos_orders = self.env['pos.order'].search([('name', '=', pic.origin.split()[2]),('session_id', '=', self.env['pos.session'].search([('name','=',pic.origin.split()[0])]).id)]).sorted(
+                    related_pos_orders = self.env['pos.order'].search([('name', '=', pic.origin.split()[2]),
+                                                                       ('session_id', '=',
+                                                                        self.env['pos.session'].search([('name', '=',
+                                                                                                         pic.origin.split()[
+                                                                                                             0])]).id)]).sorted(
                         lambda r: r.date_order.date())
 
                 for pol in related_pos_orders:
@@ -85,7 +86,6 @@ class GoldFixingPositionWizard(models.TransientModel):
                             vals['rate_gram'] * vals['quantity_out'])
                     vals['amount_balance'] = all_values if all_values != 0 else values
                     vals['amount_average'] = vals['amount_balance'] / vals['quantity_balance']
-
 
                 for sal in related_sale_orders:
                     vals['rate_kilo'] = sal.gold_rate

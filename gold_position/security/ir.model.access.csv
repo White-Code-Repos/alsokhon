@@ -1,3 +1,5 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_gold_position,access_gold_position,model_gold_position,,1,1,1,0
 access_gold_fixing_position_report,access_gold_fixing_position_report_user,model_gold_fixing_position_report,,1,1,1,1
+
+

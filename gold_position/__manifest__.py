@@ -24,6 +24,7 @@
     ],
     'qweb': [
         "static/src/xml/new_button.xml",
+        "static/src/xml/new_button_2.xml",
     ],
     'installable': True,
     'auto_install': False,
