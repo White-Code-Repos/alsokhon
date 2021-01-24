@@ -17,7 +17,7 @@ class assemblyDescriptionGold(models.Model):
     pure_weight = fields.Float(digits=(16,3))
     purity_id = fields.Many2one('gold.purity')
     @api.onchange('purity_id')
-    def get_values_gold(arg):
+    def get_values_gold(self):
         if self.purity_id:
             if self.product_id.scrap:
                 self.purity = self.scrap_purity

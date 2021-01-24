@@ -33,7 +33,7 @@ class assemblyDescriptionSaleGold(models.Model):
     quantity = fields.Float()
     gross_weight = fields.Float()
     pure_weight = fields.Float()
-    purity_id = fields.Float()
+    purity_id = fields.Many2one('gold.purity')
     purity = fields.Float()
     sale_order_gold = fields.Many2one('sale.order')
     sol_product = fields.Many2one('product.product')
