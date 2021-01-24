@@ -31,11 +31,11 @@
                   <field name="assembly_description_gold">
                     <tree editable="top">
                       <field name="product_id" domain="['|',('gold','=',True),('scrap','=',True)]"/>
-                      <field name="quantity"/>
-                      <field name="gross_weight"/>
+                      <field name="quantity" sum="quantity"/>
+                      <field name="gross_weight" sum="gross_weight"/>
                       <field name="purity_id"/>
                       <field name="purity"/>
-                      <field name="pure_weight"/>
+                      <field name="pure_weight" sum="pure_weight"/>
                     </tree>
                   </field>
                 </page>
@@ -43,8 +43,8 @@
                   <field name="assembly_description_diamond">
                     <tree editable="top">
                       <field name="product_id" domain="[('diamond','=',True)]"/>
-                      <field name="carat"/>
-                      <field name="stones_quantity"/>
+                      <field name="carat" sum="carat"/>
+                      <field name="stones_quantity" sum="stones_quantity"/>
                     </tree>
                   </field>
                 </page>
