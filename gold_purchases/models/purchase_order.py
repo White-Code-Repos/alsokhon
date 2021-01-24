@@ -324,7 +324,7 @@ class PurchaseOrder(models.Model):
                             'location_dest_id': self.order_type.assembly_picking_type_id.default_location_dest_id.id,
                             'picking_type_id':  self.order_type.assembly_picking_type_id.id,
                             'immediate_transfer': False,
-                            'move_lines': diamond_move_lines,
+                            'move_lines': mix_move_lines,
                             'origin': location.name + ' - Assembly Mix Transfer'
                         })
                 picking.action_confirm()
