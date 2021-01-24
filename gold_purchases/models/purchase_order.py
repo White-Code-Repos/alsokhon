@@ -313,7 +313,7 @@ class PurchaseOrder(models.Model):
                             'location_dest_id': self.order_type.assembly_picking_type_id.default_location_dest_id.id,
                             'product_id': line.product_id.id,
                             'product_uom': line.product_id.uom_id.id,
-                            'picking_type_id':  line.purchase_diamond_id.order_type.assembly_picking_type_id.id,
+                            'picking_type_id':  line.purchase_mix_id.order_type.assembly_picking_type_id.id,
                             'product_uom_qty': line.quantity,
                             'lot_id':line.lot_id.id,
                             'origin': location.name + ' - Assembly Mix Transfer',
