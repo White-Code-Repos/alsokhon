@@ -74,7 +74,7 @@
                 <page string="Assembly Mix Components" name="assembly_mrp_mix" attrs="{'invisible':[('assembly','!=', True)]}">
                   <field name="assembly_mix_ids">
                     <tree editable="top">
-                      <field name="product_id" domain="[('diamond','=',True)]"/>
+                      <field name="product_id" domain="[('assembly','=',True)]"/>
                       <field name="location_id" domain="[('usage','=','internal')]"/>
                       <field name="lot_id" domain="[('product_id','=',product_id),('product_qty','>',0)]"/>
                       <field name="quantity"/>
