@@ -10,15 +10,21 @@ class stockGoldMove(models.TransientModel):
 
     product_id = fields.Many2one('product.product')
     purity_id = fields.Many2one('gold.purity')
+    purity = fields.Float()
     lot_state = fields.Selection([('exist','Existing Lot'),('new','New Lot')])
     lot_id = fields.Many2one('stock.production.lot')
     @api.onchange('lot_id')
     def retrive_lot(self):
         if self.lot_id:
             self.purity_id = self.lot_id.purity_id.id
+            self.purity = self.lot_id.purity_id.scrap_purity
+    @api.onchange('purity_id')
+    def get_purity(self):
+        if self.purity_id:
+            self.purity = self.purity_id.scrap_purity
     lot_name = fields.Char()
     gross_weight = fields.Float(digits=(16, 3))
-    pure_weight = fields.Float(compute="_compute_pure_weight" ,digits=(16, 3))
+    pure_weight = fields.Float(digits=(16, 3))
     required_pure = fields.Float(compute="_compute_required_pure" ,digits=(16, 3))
     def _compute_required_pure(self):
         for this in self:
@@ -42,11 +48,15 @@ class stockGoldMove(models.TransientModel):
         for this in self:
             if this.gross_weight and this.purity_id:
                 this.pure_weight = this.gross_weight * (self.purity_id and (self.purity_id.scrap_purity / 1000.000) or 1)
+                account_move = self.env['account.move'].browse(int(self.env.context.get('active_id')))
+                print(account_move)
+                if this.pure_weight > account_move.pure_wt_value:
+                    raise UserError(_("You Can not pay pure gold more than the invoice"))
 
     def compute_sheet(self):
-        [data] = self.read()
-        if not data['gross_weight'] or not data['product_id'] or not data['purity_id']:
-            raise UserError(_("You must select data to generate payment(s)."))
+        # [data] = self.read()
+        # if not data['gross_weight'] or not data['product_id'] or not data['purity_id']:
+        #     raise UserError(_("You must select data to generate payment(s)."))
 
         active_id = self.env.context.get('active_id')
 

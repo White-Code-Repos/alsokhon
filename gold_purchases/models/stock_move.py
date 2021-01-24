@@ -124,15 +124,19 @@ class StockMove(models.Model):
                             svl_vals = move.product_id._prepare_in_svl_vals(
                                 pol.product_qty, pol.price_unit + pol.d_make_value  + diamond_price)
             elif move.product_id.gold:
-                if 'P0' in move.origin:
+                if move.origin:
+                    if 'P0' in move.origin:
+                        svl_vals = move.product_id._prepare_in_svl_vals(
+                            move.pure_weight, move.gold_rate)
+                    elif 'Assembly Gold Transfer' in move.origin:
+                        purchase_order = move.picking_id.assembly_purchase_id
+                        assembly_return = purchase_order.assembly_back_gold_ids.filtered(lambda x: x.product_id and
+                                                                       x.product_id == move.product_id)
+                        svl_vals = move.product_id._prepare_in_svl_vals(
+                            assembly_return.pure_weight , assembly_return.gold_rate)
+                else:
                     svl_vals = move.product_id._prepare_in_svl_vals(
                         move.pure_weight, move.gold_rate)
-                elif 'Assembly Gold Transfer' in move.origin:
-                    purchase_order = move.picking_id.assembly_purchase_id
-                    assembly_return = purchase_order.assembly_back_gold_ids.filtered(lambda x: x.product_id and
-                                                                   x.product_id == move.product_id)
-                    svl_vals = move.product_id._prepare_in_svl_vals(
-                        assembly_return.pure_weight , assembly_return.gold_rate)
             elif move.product_id.diamond:
                 purchase_order = self.env['purchase.order']
                 if 'P0' in move.origin:

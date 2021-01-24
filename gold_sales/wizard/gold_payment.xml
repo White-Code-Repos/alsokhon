@@ -31,7 +31,8 @@
                         <field name="lot_state" widget="radio"/>
                         <field name="lot_id" domain="[('product_id','=',product_id)]" attrs="{'invisible':[('lot_state','!=','exist')] , 'required':[('lot_state','=','exist')]}"/>
                         <field name="lot_name" attrs="{'invisible':[('lot_state','!=','new')] , 'required':[('lot_state','=','new')]}"/>
-                        <field name="purity_id"/>
+                        <field name="purity_id" attrs="{'readonly':[('lot_id','!=',False)]}"/>
+                        <field name="purity" readonly="1"/>
                       </group>
                       <group>
                         <!-- <field name="required_pure"/> -->
@@ -49,7 +50,7 @@
             <field name="res_model">stock.move.gold.sale</field>
             <field name="view_mode">form</field>
             <field name="view_id" ref="view_moves_show_sales"/>
-            <field name="context">{'default_pure_weight': context.get('pure_weight', False),'default_gold_rate': context.get('gold_rate',False)}</field>
+            <!-- <field name="context">{'default_pure_weight': context.get('pure_weight', False),'default_gold_rate': context.get('gold_rate',False)}</field> -->
             <field name="target">new</field>
         </record>
 

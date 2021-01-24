@@ -47,13 +47,22 @@ var GoldReportListController = ListController.extend({
         var context = {
             active_model: this.modelName,
         };
-        this.do_action({
-            res_model: 'gold.fixing.position.wizard',
-            views: [[false, 'form']],
-            target: 'new',
-            type: 'ir.actions.act_window',
-            context: context,
+        this._rpc({
+            model: 'gold.fixing.position.wizard',
+            method: 'action_confirm',
+            args: [[]],
+        }).then(function (result) {
+            // this.do_action(result);
+            return 1;
         });
+        // this.do_action({
+        //     res_model: 'gold.fixing.position.wizard',
+        //     views: [[false, 'form']],
+        //     target: 'new',
+        //     type: 'ir.actions.act_window',
+        //     context: context,
+        // });
+
     },
 });
 
