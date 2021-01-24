@@ -359,7 +359,7 @@ class StockMoveLine(models.Model):
         res = super(StockMoveLine, self).create(vals)
         print(res.lot_id.product_id)
         print(res.lot_id.product_id.categ_id.is_scrap)
-        if res.lot_id.product_id and res.lot_id.product_id.categ_id.is_scrap:
+        if res.lot_id.product_id and res.lot_id.product_id.categ_id.is_scrap and res.move_id._is_in():
             res.lot_id.write({
             'gross_weight': res.lot_id.gross_weight + res.gross_weight,
             'purity': res.purity,
@@ -369,7 +369,7 @@ class StockMoveLine(models.Model):
             'sub_category_id':res.sub_category_id.id,
             'selling_karat_id':res.selling_karat_id.id,
             })
-        elif res.lot_id.product_id and res.lot_id.product_id.categ_id.is_diamond:
+        elif res.lot_id.product_id and res.lot_id.product_id.categ_id.is_diamond and res.move_id._is_in():
             res.lot_id.write({
             'carat': res.lot_id.carat + res.carat,
             'gross_weight': res.lot_id.gross_weight + res.gross_weight,
@@ -380,7 +380,7 @@ class StockMoveLine(models.Model):
             'sub_category_id':res.sub_category_id.id,
             'selling_karat_id':res.selling_karat_id.id,
             })
-        elif res.lot_id.product_id and res.lot_id.product_id.categ_id.is_gold:
+        elif res.lot_id.product_id and res.lot_id.product_id.categ_id.is_gold and res.move_id._is_in():
             res.lot_id.write({
             'gross_weight': res.gross_weight,
             'purity': res.purity,
