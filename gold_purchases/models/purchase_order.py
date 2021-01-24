@@ -44,12 +44,14 @@ class assemblyBackGold(models.Model):
     purity = fields.Float(digits=(16,3))
     pure_weight = fields.Float(digits=(16,3), compute="_compute_pure_weight")
     total_value = fields.Float(digits=(16,3), compute="_compute_total_vale")
+
     def _compute_rate(self):
         for this in self:
             this.gold_rate = this.purchase_back_gold_id.gold_rate/1000
     @api.onchange('gross_weight')
     def _compute_pure_weight(self):
         for this in self:
+            this.purity = this.purity_id.scrap_purity
             this.pure_weight = this.gross_weight * (this.purity / 1000)
 
     # @api.onchange('lot_id')
