@@ -29,14 +29,13 @@ class GoldFixingPositionWizard(models.TransientModel):
             self.env['gold.fixing.position.report'].search([]).unlink()
 
         for rec in account_move_lines:
-            bills = self.env['account.move'].search([
-                ('name', '=', rec.ref.split()[0])])
+            bills = self.env['account.move'].search([('name', '=', rec.ref.split()[0])])
             # ('date', '>=', self.date_from),
             #  ('date', '<=', self.date_to),
-            pickings = self.env['stock.picking'].search([
-                ('name', '=', rec.ref.split()[0])])
+            pickings = self.env['stock.picking'].search([('name', '=', rec.ref.split()[0])])
             # ('scheduled_date', '>=', self.date_from),
             #  ('scheduled_date', '<=', self.date_to),
+            
             vals = {
                 'date': rec.move_id.date,
                 'name': rec.move_id.name,
@@ -134,4 +133,5 @@ class GoldFixingPositionWizard(models.TransientModel):
                     vals['amount_balance'] = all_values if all_values != 0 else values
                     vals['amount_average'] = vals['amount_balance'] / vals['quantity_balance']
 
+            vals['quantity_balance'] = quantity_balance
             self.env['gold.fixing.position.report'].create(vals)
