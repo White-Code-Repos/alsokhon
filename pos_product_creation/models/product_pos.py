@@ -54,6 +54,7 @@ class ProductFromPos(models.Model):
         rec = self.env['product.product'].create(new_vals)
         new_vals['id'] = rec.id
         new_vals['categ_id'] = [rec.categ_id.id,category.name]
+        new_vals['qty_available'] = rec.qty_available
         new_vals['lst_price'] = vals.get('price') if vals.get('price') else 1
         new_vals['standard_price'] = vals.get('price') if vals.get('price') else 1
         new_vals['pos_categ_id'] = [rec.pos_categ_id.id] if rec.pos_categ_id else None
