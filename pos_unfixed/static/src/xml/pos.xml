@@ -5,8 +5,8 @@
 
   <t t-extend="PaymentScreenWidget">
       <t t-jquery='.payment-buttons' t-operation='append'>
-        <!-- <t t-if="widget.pos.get_order().order_type == 'sale'"> -->
-          <div class='button unfixed_product' >
+        <!-- <t t-if="!widget.pos.get_order().order_fixed"> -->
+          <div class='button unfixed_product' style=' display:none;' >
               <i class='fa fa-tag' role="img" aria-label="Customer" title="Unfixed"/>
               Unfixed
           </div>
@@ -254,6 +254,30 @@
       Whole Sale
 		</div>
 	</t>
+  <t t-name="fixedButton">
+		<div class='control-button fixed_bt' style='background: #a0efc7; display:none;'>
+			<i class='fa fa-tag ' />
+      <!-- <t t-if="widget.pos.get_order().order_type">
+          <t t-esc="widget.pos.get_order().order_type" />
+      </t>
+      <t t-if="!widget.pos.get_order().order_type">
+           Order Type
+      </t> -->
+      Fixed
+		</div>
+	</t>
+  <t t-name="unfixedButton">
+		<div class='control-button unfixed_bt' style=' display:none;'>
+			<i class='fa fa-tag  ' />
+      <!-- <t t-if="widget.pos.get_order().order_type">
+          <t t-esc="widget.pos.get_order().order_type" />
+      </t>
+      <t t-if="!widget.pos.get_order().order_type">
+           Order Type
+      </t> -->
+      Unfixed
+		</div>
+	</t>
 
 
   <t t-extend="PackLotLinePopupWidget">
@@ -320,22 +344,18 @@
                                           <col width='15%' />
                                           <col width='15%' /> -->
                                           <td>Lot</td>
-                                          <td>Quantity</td>
                                           <!-- <td><t t-esc="widget.options.order_line.product.categ.is_diamond" /></td> -->
                                           <t t-if="widget.options.order_line.product.categ.is_gold">
+                                            <td>Quantity</td>
                                             <td>Gross Weight</td>
                                             <td>Purity</td>
                                             <td>Pure Weight</td>
                                             <td>Making Charge</td>
                                             <td>Gold Rate</td>
                                           </t>
-                                          <t t-if="widget.options.order_line.product.categ.is_scrap">
-                                            <td>Gross Weight</td>
-                                            <td>Purity</td>
-                                            <td>Pure Weight</td>
-                                            <td>Gold Rate</td>
-                                          </t>
+
                                           <t t-if="widget.options.order_line.product.categ.is_assembly">
+                                            <td>Quantity</td>
                                             <td>Gross Weight</td>
                                             <td>Purity</td>
                                             <td>Pure Weight</td>
@@ -343,10 +363,27 @@
                                             <td>Diamond Carat</td>
                                           </t>
                                           <t t-if="widget.options.order_line.product.categ.is_diamond">
+                                            <td>Quantity</td>
                                             <td>Diamond Carat</td>
                                             <!-- <td>Diamond Wt</td> -->
                                             <td>Making Charge</td>
                                           </t>
+                                          <!-- <t t-if="!widget.options.order_line.is_unfixed">
+                                            <t t-if="widget.options.order_line.product.categ.is_scrap">
+                                              <td>Quantity</td>
+                                              <td>Gross Weight</td>
+                                              <td>Purity</td>
+                                              <td>Pure Weight</td>
+                                              <td>Gold Rate</td>
+                                            </t>
+                                          </t> -->
+                                          <!-- <t t-if="widget.options.order_line.is_unfixed"> -->
+                                            <t t-if="widget.options.order_line.product.categ.is_scrap">
+
+                                              <td>Purity</td>
+
+                                            </t>
+                                          <!-- </t> -->
                                       </colgroup>
 
                                       <t t-foreach="widget.options.product_lot" t-as="product_lot">
@@ -358,10 +395,11 @@
                                                         <t t-esc="product_lot.name" />
                                                     </div>
                                                 </td>
-                                                <td id="total_qty">
-                                                    <t t-esc="product_lot.total_qty" />
-                                                </td>
+
                                                 <t t-if="widget.options.order_line.product.categ.is_gold">
+                                                  <td id="total_qty">
+                                                      <t t-esc="product_lot.total_qty" />
+                                                  </td>
                                                   <td id="gross_weight">
                                                       <t t-esc="product_lot.gross_weight" />
                                                   </td>
@@ -381,22 +419,11 @@
                                                       <t t-esc="widget.pos.config.gold_rate" />
                                                   </td>
                                                 </t>
-                                                <t t-if="widget.options.order_line.product.categ.is_scrap">
-                                                  <td id="gross_weight">
-                                                      <t t-esc="product_lot.gross_weight" />
-                                                  </td>
-                                                  <td id="purity_id">
-                                                      <t t-esc="product_lot.purity_id[1]" />
-                                                  </td>
-                                                  <td id="pure_weight">
-                                                      <t t-esc="product_lot.pure_weight"/>
-                                                  </td>
 
-                                                  <td id="gold_rate">
-                                                      <t t-esc="widget.pos.config.gold_rate" />
-                                                  </td>
-                                                </t>
                                                 <t t-if="widget.options.order_line.product.categ.is_assembly">
+                                                  <td id="total_qty">
+                                                      <t t-esc="product_lot.total_qty" />
+                                                  </td>
                                                   <td id="gross_weight">
                                                       <t t-esc="product_lot.gross_weight" />
                                                   </td>
@@ -414,6 +441,9 @@
                                                   </td>
                                                 </t>
                                                 <t t-if="widget.options.order_line.product.categ.is_diamond">
+                                                  <td id="total_qty">
+                                                      <t t-esc="product_lot.total_qty" />
+                                                  </td>
                                                   <td id="carat">
                                                       <t t-esc="product_lot.carat" />
                                                   </td>
@@ -424,6 +454,36 @@
                                                       <t t-esc="product_lot.selling_making_charge" />
                                                   </td>
                                                 </t>
+                                                <!-- <t t-if="widget.options.order_line.is_unfixed"> -->
+                                                <!-- <t t-if="!widget.options.order_line.is_unfixed">
+                                                  <t t-if="widget.options.order_line.product.categ.is_scrap">
+                                                    <td id="total_qty">
+                                                        <t t-esc="product_lot.total_qty" />
+                                                    </td>
+                                                    <td id="gross_weight">
+                                                        <t t-esc="product_lot.gross_weight" />
+                                                    </td>
+                                                    <td id="purity_id">
+                                                        <t t-esc="product_lot.purity_id[1]" />
+                                                    </td>
+                                                    <td id="pure_weight">
+                                                        <t t-esc="product_lot.pure_weight"/>
+                                                    </td>
+
+                                                    <td id="gold_rate">
+                                                        <t t-esc="widget.pos.config.gold_rate" />
+                                                    </td>
+                                                  </t>
+                                                </t> -->
+                                                <!-- <t t-if="widget.options.order_line.is_unfixed"> -->
+                                                  <t t-if="widget.options.order_line.product.categ.is_scrap">
+
+                                                    <td id="purity_id">
+                                                        <t t-esc="product_lot.purity_id[1]" />
+                                                    </td>
+
+                                                  </t>
+                                                <!-- </t> -->
                                                 <!-- <span id="gold_rate" ><t t-esc="product_lot.gold_rate" class="display:none;"/></span> -->
                                                 <td>
                                                     <input type="text" value="1" style="font-size: 15px;width: 52px;min-height: 9px;height: 25px;padding: -1px;"/>
@@ -438,26 +498,18 @@
                                       <t t-if="widget.options.order_line.is_unfixed">
                                         <tr class="new_lot" style="font-size: 12px;display: none;">
                                           <td id="name_in">
-                                            <input class="name_lot"  type="text" value="lot" style="font-size: 15px;text-align: center;"/>
-                                          </td>
-                                          <td>
-                                          </td>
-                                          <td>
+                                            <input class="name_lot"  type="text" value="lot" style="font-size: 15px;text-align: center;    width: 50px;"/>
                                           </td>
                                           <!-- <td id="gross_weight_in">
                                             <input class="gr_wight"  type="text" value="1" style="font-size: 15px;text-align: center;"/>
                                           </td> -->
                                           <td id="purity_id_in">
-                                            <input class="puri" type="text" value="1" style="font-size: 15px;text-align: center;"/>
+                                            <input class="puri" type="text" value="1" style="font-size: 15px;text-align: center;    width: 50px;"/>
                                           </td>
                                           <!-- <td id="pure_weight_in">
                                             <input class="pr_wight" type="text" value="1" style="font-size: 15px;text-align: center;"/>
                                           </td> -->
-                                          <td >
-                                          </td>
 
-                                          <td >
-                                          </td>
                                         </tr>
 
                                       </t>
@@ -494,6 +546,84 @@
               </div>
           </div>
       </t>
+  </t>
+
+
+  <t t-name="Orderline">
+    <!-- <t t-jquery='.orderline' t-operation='replace'> -->
+      <li t-attf-class="orderline #{ line.selected ? 'selected' : '' }">
+
+          <span class="product-name">
+              <t t-esc="line.get_product().display_name"/>
+              <t t-if="line.get_product().tracking!=='none'">
+                  <i class="oe_link_icon fa fa-list oe_icon line-lot-icon oe_green" t-if="line.has_valid_product_lot()"
+                     aria-label="Valid product lot" role="img" title="Valid product lot"/>
+                  <i class="oe_link_icon fa fa-list oe_icon line-lot-icon oe_red" t-if="!line.has_valid_product_lot()"
+                     aria-label="Invalid product lot" role="img" title="Invalid product lot"/>
+              </t>
+          </span>
+          <t t-if="!line.get_product().categ.is_scrap">
+            <span class="price">
+                <t t-esc="widget.format_currency(line.get_display_price())"/>
+            </span>
+            <ul class="info-list">
+                <t t-if="line.get_quantity_str() !== '1' || line.selected ">
+                    <li class="info">
+                        <em>
+                            <t t-esc="line.get_quantity_str()" />
+                        </em>
+                        <t t-esc="line.get_unit().name" />
+                        at
+                        <t t-if="line.display_discount_policy() == 'without_discount' &amp;&amp;
+                            line.get_unit_display_price() != line.get_lst_price()">
+                            <s>
+                                <t t-esc="widget.format_currency(line.get_fixed_lst_price(),'Product Price')" />
+                            </s>
+                            <t t-esc="widget.format_currency(line.get_unit_display_price(),'Product Price')" />
+                        </t>
+                        <t t-else="">
+                            <t t-esc="widget.format_currency(line.get_unit_display_price(),'Product Price')" />
+                        </t>
+                        /
+                        <t t-esc="line.get_unit().name" />
+                    </li>
+                </t>
+                <t t-if="line.get_discount_str() !== '0'">
+                    <li class="info">
+                        With a
+                        <em>
+                            <t t-esc="line.get_discount_str()" />%
+                        </em>
+                        discount
+                    </li>
+                </t>
+            </ul>
+          </t>
+          <t t-if="line.get_product().categ.is_scrap">
+            <span class="price">
+              <t t-esc="line.get_quantity_str()" /><t t-esc="line.get_unit().name" />
+
+            </span>
+            <ul class="info-list">
+                <!-- <t t-if="line.get_quantity_str() !== '1' || line.selected "> -->
+                    <li class="info">
+                        <t t-esc="line.get_quantity_str()" />
+
+                        <t t-esc="line.get_unit().name" />
+                        from
+                        <t t-if="line.purity ">
+                          <t t-esc="line.purity" />
+                        </t>
+
+                    </li>
+                <!-- </t> -->
+
+            </ul>
+          </t>
+
+
+      </li>
+    <!-- </t> -->
   </t>
 
 

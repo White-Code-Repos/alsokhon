@@ -55,7 +55,8 @@ odoo.define('pos_unfixed.pos', function(require){
     models.Orderline = models.Orderline.extend({
         initialize: function(attr,options) {
     			var self = this;
-    			this.is_unfixed = false;
+          this.is_unfixed = false;
+    			this.purity = false;
     			OrderlineSuper.initialize.call(this,attr,options);
     		},
 
@@ -252,7 +253,8 @@ odoo.define('pos_unfixed.pos', function(require){
   	models.Order = models.Order.extend({
   		initialize: function(attr,options) {
   			var self = this;
-  			this.order_type = 'retail';
+        this.order_type = 'retail';
+  			this.order_fixed = true;
   			posorder_super.initialize.call(this,attr,options);
   		},
       add_product: function(product, options){
@@ -339,7 +341,8 @@ odoo.define('pos_unfixed.pos', function(require){
       // },
   		export_as_JSON: function(){
   			var loaded = posorder_super.export_as_JSON.apply(this, arguments);
-  			loaded.order_type = this.order_type || false;
+        loaded.order_type = this.order_type || false;
+  			loaded.order_fixed = this.order_fixed || false;
         // this.order_type = 'retail';
 
   			return loaded;
@@ -420,6 +423,8 @@ odoo.define('pos_unfixed.pos', function(require){
         order.order_type = 'sale';
         $(".wSale_bt").css({'background': '#6EC89B'});
         $(".retail_bt").css({'background':'fixed'});
+        $(".fixed_bt").css({'display':'inline-block'});
+        $(".unfixed_bt").css({'display':'inline-block'});
     	},
     });
     screens.define_action_button({
@@ -434,6 +439,10 @@ odoo.define('pos_unfixed.pos', function(require){
         order.order_type = 'retail';
         $(".retail_bt").css({'background': '#6EC89B'});
         $(".wSale_bt").css({'background':'fixed'});
+        $(".fixed_bt").css({'display':'none'});
+        $(".unfixed_bt").css({'display':'none'});
+        $(".unfixed_product").css({'display':'none'});
+
     	},
       // check_type: function () {
       //     // var name = _t('Order Type');
@@ -453,6 +462,53 @@ odoo.define('pos_unfixed.pos', function(require){
     screens.define_action_button({
     	'name': 'retailorderType',
     	'widget': retailButton,
+    });
+
+    var fixedButton = screens.ActionButtonWidget.extend({
+    	template: 'fixedButton',
+    	button_click: function(){
+        var self = this;
+        var order = this.pos.get_order();
+        order.order_fixed = true;
+        $(".fixed_bt").css({'background': '#a0efc7'});
+        $(".unfixed_bt").css({'background':'fixed'});
+        $(".unfixed_product").css({'display':'none'});
+        $(".add_product").css({'display':'none'});
+    	},
+    });
+    screens.define_action_button({
+    	'name': 'fixedType',
+    	'widget': fixedButton,
+    });
+    var unfixedButton = screens.ActionButtonWidget.extend({
+    	template: 'unfixedButton',
+    	button_click: function(){
+        var self = this;
+        var order = this.pos.get_order();
+        order.order_fixed = false;
+        $(".unfixed_bt").css({'background': '#a0efc7'});
+        $(".fixed_bt").css({'background':'fixed'});
+        $(".unfixed_product").css({'display':'block'});
+        $(".add_product").css({'display':'block'});
+    	},
+      // check_type: function () {
+      //     // var name = _t('Order Type');
+      //
+      //     var order = this.pos.get_order();
+      //     console.log(order);
+      //
+      //     if (order.order_type == 'sale') {
+      //       $(".wSale_bt").css({'background': '#6EC89B'});
+      //       $(".retail_bt").css({'background':'fixed'});
+      //     }else {
+      //       $(".retail_bt").css({'background': '#6EC89B'});
+      //       $(".wSale_bt").css({'background':'fixed'});
+      //     }
+      // },
+    });
+    screens.define_action_button({
+    	'name': 'unfixedType',
+    	'widget': unfixedButton,
     });
 
 

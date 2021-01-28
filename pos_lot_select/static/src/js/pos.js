@@ -533,6 +533,7 @@ odoo.define('pos_lot_select.pos', function(require){
                       else {
                         pure_weight = self.pos.list_gold_purity[lot.purity_id[0]].scrap_purity/1000;
                       }
+                      order_line.purity = self.pos.list_gold_purity[lot.purity_id[0]].name;
                     }
 
                     // console.log(self.options);
@@ -576,6 +577,7 @@ odoo.define('pos_lot_select.pos', function(require){
               // var gold_rate= $(this).closest("tr").find("#gold_rate")[0].innerText;
               //
               // self.change_price(gold_rate,pure_weight);
+              console.log(this.options.order_line);
 
 
               // this.options.order_line.price=0;
