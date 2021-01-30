@@ -30,7 +30,7 @@ class StockProductionLot(models.Model):
     assembly_description_gold = fields.One2many('assembly.description.lot.gold','lot_id_gold')
     assembly_description_diamond = fields.One2many('assembly.description.lot.diamond','lot_id_diamond')
     gold = fields.Boolean(string="Gold", compute="_compute_gold_state")
-    diamond = fields.Boolean(string="Diamond", compute="_compute_gold_state")
+    diamond = fields.Boolean(string="Stone", compute="_compute_gold_state")
     assembly = fields.Boolean(string="assembly", compute="_compute_gold_state")
     def _compute_gold_state(self):
         for this in self:

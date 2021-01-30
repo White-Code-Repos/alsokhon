@@ -12,7 +12,7 @@ class StockQuant(models.Model):
     _inherit = 'stock.quant'
 
 
-    diamond = fields.Boolean(string="Diamond", compute="_compute_gold_state")
+    diamond = fields.Boolean(string="Stone", compute="_compute_gold_state")
     gold = fields.Boolean(string="Gold", compute="_compute_gold_state")
     def _compute_gold_state(self):
         for this in self:

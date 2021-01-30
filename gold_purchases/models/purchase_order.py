@@ -287,7 +287,7 @@ class PurchaseOrder(models.Model):
                             'carat':line.carat,
                             'product_uom_qty': line.carat,
                             'lot_id':line.lot_id.id,
-                            'origin': location.name + ' - Assembly Diamond Transfer',
+                            'origin': location.name + ' - Assembly Stone Transfer',
                             }))
                 picking = self.env['stock.picking'].create({
                             'partner_id': self.partner_id.id,
@@ -296,7 +296,7 @@ class PurchaseOrder(models.Model):
                             'picking_type_id':  self.order_type.assembly_picking_type_id.id,
                             'immediate_transfer': False,
                             'move_lines': diamond_move_lines,
-                            'origin': location.name + ' - Assembly Diamond Transfer'
+                            'origin': location.name + ' - Assembly Stone Transfer'
                         })
                 picking.action_confirm()
                 picking.action_assign()
@@ -477,7 +477,7 @@ class PurchaseOrder(models.Model):
                         'carat':line.carat,
                         'product_uom_qty': line.carat,
                         # 'lot_id':lot.id,
-                        'origin': self.order_type.assembly_picking_type_id_back.default_location_dest_id.name + ' - Receive - Assembly Diamond Transfer',
+                        'origin': self.order_type.assembly_picking_type_id_back.default_location_dest_id.name + ' - Receive - Assembly Stone Transfer',
                         }))
             picking = self.env['stock.picking'].create({
                         'partner_id': self.partner_id.id,
@@ -486,7 +486,7 @@ class PurchaseOrder(models.Model):
                         'picking_type_id':  self.order_type.assembly_picking_type_id_back.id,
                         'immediate_transfer': False,
                         'move_lines': diamond_move_lines,
-                        'origin': self.order_type.assembly_picking_type_id_back.default_location_dest_id.name + ' - Receive - Assembly Diamond Transfer'
+                        'origin': self.order_type.assembly_picking_type_id_back.default_location_dest_id.name + ' - Receive - Assembly Stone Transfer'
                     })
             picking.action_confirm()
             picking.action_assign()

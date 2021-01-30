@@ -9,7 +9,7 @@
                 <field name="type" position="after">
                     <field name="gold" attrs="{'invisible': [('type', '!=', 'product')]}" force_save="1"/>
                     <field name="scrap" attrs="{'invisible': [('type', '!=', 'product')]}" force_save="1"/>
-                    <field name="diamond" string="Diomand" attrs="{'invisible': [('type', '!=', 'product')]}" force_save="1"/>
+                    <field name="diamond" string="Stone" attrs="{'invisible': [('type', '!=', 'product')]}" force_save="1"/>
                     <field name="assembly" string="Assembly" attrs="{'invisible': [('type', '!=', 'product')]}" force_save="1"/>
                     <field name="is_making_charges" attrs="{'invisible': [('type', '!=', 'service')]}" force_save="1"/>
                     <field name="is_diamond_making_charges" attrs="{'invisible': [('type', '!=', 'service')]}" force_save="1" string="Diomand Making Charges"/>

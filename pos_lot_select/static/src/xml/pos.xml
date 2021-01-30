@@ -77,10 +77,10 @@
                                               <td>Purity</td>
                                               <td>Pure Weight</td>
                                               <td>Gold Rate</td>
-                                              <td>Diamond Carat</td>
+                                              <td>Stone Carat</td>
                                             </t>
                                             <t t-if="widget.options.order_line.product.categ.is_diamond">
-                                              <td>Diamond Carat</td>
+                                              <td>Stone Carat</td>
                                               <!-- <td>Diamond Wt</td> -->
                                               <td>Making Charge</td>
                                             </t>

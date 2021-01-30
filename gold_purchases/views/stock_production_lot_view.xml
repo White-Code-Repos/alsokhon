@@ -19,7 +19,7 @@
                     </tree>
                   </field>
                 </page>
-                <page name="assembly_description_diamond" string="Assembly Diamond Description">
+                <page name="assembly_description_diamond" string="Assembly Stone Description">
                   <field name="assembly_description_diamond">
                     <tree editable="top">
                       <field name="product_id"/>

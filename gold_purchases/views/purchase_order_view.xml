@@ -39,7 +39,7 @@
                     </tree>
                   </field>
                 </page>
-                <page string="Assembly Diamond Description" name="assembly_mrp_details_diamond" attrs="{'invisible':[('assembly','!=', True)]}">
+                <page string="Assembly Stone Description" name="assembly_mrp_details_diamond" attrs="{'invisible':[('assembly','!=', True)]}">
                   <field name="assembly_description_diamond">
                     <tree editable="top">
                       <field name="product_id" domain="[('diamond','=',True)]"/>
@@ -61,7 +61,7 @@
                     </tree>
                   </field>
                 </page>
-                <page string="Assembly Diamond Components" name="assembly_mrp_diamond" attrs="{'invisible':[('assembly','!=', True)]}">
+                <page string="Assembly Stone Components" name="assembly_mrp_diamond" attrs="{'invisible':[('assembly','!=', True)]}">
                   <field name="assembly_diamond_ids">
                     <tree editable="top">
                       <field name="product_id" domain="[('diamond','=',True)]"/>
@@ -97,7 +97,7 @@
                     </tree>
                   </field>
                 </page>
-                <page string="Assembly Diamond Returned Components" name="assembly_mrp_diamond_back" attrs="{'invisible':[('assembly','!=', True)]}">
+                <page string="Assembly Stone Returned Components" name="assembly_mrp_diamond_back" attrs="{'invisible':[('assembly','!=', True)]}">
                   <field name="assembly_back_diamond_ids">
                     <tree editable="top">
                       <field name="product_id"  domain="[('diamond','=',True)]"/>

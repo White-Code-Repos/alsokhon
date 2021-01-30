@@ -31,7 +31,7 @@ class PurchaseOrderType(models.Model):
     is_fixed = fields.Boolean('Is Fixed')
     is_unfixed = fields.Boolean('Is Unfixed')
     gold = fields.Boolean('Gold')
-    diamond = fields.Boolean('Diamond')
+    diamond = fields.Boolean('Stone')
     assembly = fields.Boolean('Assembly')
     assembly_picking_type_id = fields.Many2one(
         comodel_name='stock.picking.type', string='picking type item out')
