@@ -26,7 +26,7 @@ class ProductTemplate(models.Model):
 class PurchaseOrderLine(models.Model):
     _inherit = 'purchase.order.line'
 
-    carat = fields.Float('Stone Carat', default=1.0)
+    carat = fields.Float('Stone Carat', default=0.0)
     d_make_value = fields.Float('Stone Labor Charges')
 
 class StockProductionLot(models.Model):
@@ -36,7 +36,7 @@ class StockProductionLot(models.Model):
 
 class SaleOrderLine(models.Model):
     _inherit = 'sale.order.line'
-    carat = fields.Float('Stone Carat', default=1.0)
+    carat = fields.Float('Stone Carat', default=0.0)
     d_make_value = fields.Float('Stone Labor Charges')
 
 class StockQuant(models.Model):
