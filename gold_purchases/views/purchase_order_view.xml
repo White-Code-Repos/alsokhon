@@ -76,7 +76,7 @@
                       <field name="stones_quantity" sum="stones_quantity"/>
                       <field name="carat" sum="carat"/>
                       <field name="stones_quantity_ret" sum="stones_quantity_ret" attrs="{'invisible':[('state','in',['draft'])],'readonly':[('state','in',['draft','receive','sent','to approve','purchase','done','cancel'])]}" force_save="1"/>
-                      <field name="carat_ret" sum="carat_ret" attrs="{'invisible':[('state','in',['draft'],'readonly':[('state','in',['draft','receive','sent','to approve','purchase','done','cancel'])]}" force_save="1"/>
+                      <field name="carat_ret" sum="carat_ret" attrs="{'invisible':[('state','in',['draft'])],'readonly':[('state','in',['draft','receive','sent','to approve','purchase','done','cancel'])]}" force_save="1"/>
                     </tree>
                   </field>
                 </page>
