@@ -58,6 +58,9 @@ class StockMove(models.Model):
     selling_making_charge = fields.Monetary('Selling Making Charge',
                                             currency_field='company_currency_id',
                                             digits=(16, 3))
+    buying_making_charge = fields.Monetary('Buying Making Charge',
+                                            currency_field='company_currency_id',
+                                            digits=(16, 3))
     company_currency_id = fields.Many2one('res.currency',
                                           string="Company Currency",
                                           related='company_id.currency_id')
