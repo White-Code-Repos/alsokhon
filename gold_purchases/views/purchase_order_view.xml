@@ -20,7 +20,7 @@
               <button name="finish_processing" type="object" string="Finish Assembly" class="oe_highlight" attrs="{'invisible':[('state','not in',['review','receive'])]}"/>
             </xpath>
             <field name="state" position="replace">
-              <field name="state" widget="statusbar" statusbar_visible="draft,processing,receive,sent,purchase" readonly="1"/>
+              <field name="state" widget="statusbar" statusbar_visible="draft,processing,receive,review,sent,purchase" readonly="1"/>
             </field>
             <div name="button_box" position="inside">
               <button type="object" name="action_view_assembly_operations" class="oe_stat_button" icon="fa-truck" attrs="{'invisible':['|', ('assembly_operations_count', '=', 0), ('state', 'in', ('draft','sent','to approve'))]}">
