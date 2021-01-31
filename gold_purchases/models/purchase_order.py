@@ -185,7 +185,7 @@ class PurchaseOrder(models.Model):
         ('draft', 'RFQ'),
         ('processing', 'In Progress'),
         ('receive','Received'),
-        ('review','Reviewing')
+        ('review','Reviewing'),
         ('sent', 'RFQ Sent'),
         ('to approve', 'To Approve'),
         ('purchase', 'Purchase Order'),
