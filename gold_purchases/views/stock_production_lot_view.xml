@@ -7,7 +7,7 @@
             <field name="inherit_id" ref="stock.view_production_lot_form"/>
             <field name="arch" type="xml">
               <page name="description" position="after">
-                <page name="assembly_description_gold" string="Assembly Gold Description" attrs="{'invisible':[('product_id.assembly','!=',True)]}">
+                <page name="assembly_description_gold" string="Assembly Gold Description" attrs="{'invisible':[('assembly','!=',True)]}">
                   <field name="assembly_description_gold">
                     <tree editable="top">
                       <field name="product_id"/>
@@ -20,7 +20,7 @@
                     </tree>
                   </field>
                 </page>
-                <page name="assembly_description_diamond" string="Assembly Stone Description" attrs="{'invisible':[('product_id.assembly','!=',True)]}">
+                <page name="assembly_description_diamond" string="Assembly Stone Description" attrs="{'invisible':[('assembly','!=',True)]}">
                   <field name="assembly_description_diamond">
                     <tree editable="top">
                       <field name="product_id"/>
