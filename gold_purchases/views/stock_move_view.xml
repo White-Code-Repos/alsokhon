@@ -60,7 +60,7 @@
             <field name="inherit_id" ref="stock.view_move_line_tree"/>
             <field name="arch" type="xml">
                 <field name="qty_done" position="before">
-                  <field name="carat" readonly="0" attrs="{'column_invisible':[('parent.diamond','!=',True)]}"/>
+                  <field name="carat" readonly="0" attrs="{'column_invisible':[('parent.assembly','!=',True),('parent.diamond','!=',True)]}"/>
                     <field name="gross_weight" readonly="0" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
                     <field name="pure_weight" readonly="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
                     <field name="purity_id" readonly="1" force_save="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
@@ -102,7 +102,7 @@
                            options='{"size": [60, 60]}'/>
                 </field>
                 <field name="product_uom_id" position="after">
-                  <field name="carat" readonly="0"  attrs="{'column_invisible':[('parent.diamond','!=',True)]}"/>
+                  <field name="carat" readonly="0"  attrs="{'column_invisible':[('parent.assembly','!=',True),('parent.diamond','!=',True)]}"/>
                     <field name="gross_weight" readonly="0"  attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
                     <field name="pure_weight" readonly="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
                     <field name="purity_id" readonly="1" force_save="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
@@ -130,7 +130,7 @@
             <field name="inherit_id" ref="stock.view_move_line_form"/>
             <field name="arch" type="xml">
                 <field name="product_uom_id" position="after">
-                  <field name="carat" readonly="0"  attrs="{'column_invisible':[('parent.diamond','!=',True)]}"/>
+                  <field name="carat" readonly="0"  attrs="{'column_invisible':[('parent.assembly','!=',True),('parent.diamond','!=',True)]}"/>
                     <field name="gross_weight" readonly="0" />
                     <field name="pure_weight" readonly="1" />
                     <field name="purity_id" readonly="1" force_save="1" />
@@ -186,7 +186,7 @@
               </field>
                 <xpath expr="//field[@name='move_ids_without_package']/tree/field[@name='product_uom']"
                        position="after">
-                     <field name="carat" readonly="0" attrs="{'column_invisible':[('parent.diamond','!=',True)]}"/>
+                     <field name="carat" readonly="0" attrs="{'column_invisible':[('parent.assembly','!=',True),('parent.diamond','!=',True)]}"/>
                     <field name="gross_weight" readonly="0" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
                     <field name="pure_weight" readonly="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
                     <field name="purity" readonly="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
