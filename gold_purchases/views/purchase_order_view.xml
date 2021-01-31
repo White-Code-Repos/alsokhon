@@ -16,7 +16,8 @@
               <field name="ready" invisible="1"/>
               <button name="process" type="object" string="Process Assembly" class="oe_highlight" attrs="{'invisible':['|',('state','!=','draft'),('assembly','!=',True)]}"/>
               <button name="return_component" type="object" string="Receive Charge Components" class="oe_highlight" attrs="{'invisible':[('state','!=','processing')]}"/>
-              <button name="finish_processing" type="object" string="Finish Assembly" class="oe_highlight" attrs="{'invisible':[('state','not in',['processing','receive'])]}"/>
+              <button name="review_assembly" type="object" string="Review Assembly" class="oe_highlight" attrs="{'invisible':[('state','not in',['processing','review'])]}"/>
+              <button name="finish_processing" type="object" string="Finish Assembly" class="oe_highlight" attrs="{'invisible':[('state','not in',['review','receive'])]}"/>
             </xpath>
             <field name="state" position="replace">
               <field name="state" widget="statusbar" statusbar_visible="draft,processing,receive,sent,purchase" readonly="1"/>
@@ -39,12 +40,17 @@
                     </tree>
                   </field>
                 </page>
-                <page string="Assembly Stone Description" name="assembly_mrp_details_diamond" attrs="{'invisible':[('assembly','!=', True)]}">
+                <page string="Assembly Stone Description" name="assembly_mrp_details_diamond" attrs="{'invisible':[('assembly','!=', True),('state','in',['draft','processing'])]}">
                   <field name="assembly_description_diamond">
                     <tree editable="top">
                       <field name="product_id" domain="[('diamond','=',True)]"/>
-                      <field name="carat" sum="carat"/>
-                      <field name="stones_quantity" sum="stones_quantity"/>
+                      <field name="our_stock" invisible="1"/>
+                      <field name="carat" attrs="{'readonly':[('our_stock','=',True)]}"/>
+                      <field name="carat_price" attrs="{'invisible':[('state','in',['draft','processing'])],'readonly':[('our_stock','=',True)]}"/>
+                      <field name="stones_value" attrs="{'invisible':[('state','in',['draft','processing'])],'readonly':[('our_stock','=',True)]}"/>
+                      <field name="stones_quantity" sum="stones_quantity" attrs="{'readonly':[('our_stock','=',True)]}"/>
+                      <field name="stone_setting_rate" attrs="{'invisible':[('state','in',['draft','processing'])]'readonly':[('our_stock','=',True)]}"/>
+                      <field name="stone_setting_value" sum="stone_setting_value" readonly="1" force_save="1" attrs="{'invisible':[('state','in',['draft','processing'])]}"/>
                     </tree>
                   </field>
                 </page>
@@ -67,7 +73,10 @@
                       <field name="product_id" domain="[('diamond','=',True)]"/>
                       <field name="location_id" domain="[('usage','=','internal')]"/>
                       <field name="lot_id" domain="[('product_id','=',product_id),('product_qty','>',0)]"/>
-                      <field name="carat"/>
+                      <field name="stones_quantity" sum="stones_quantity"/>
+                      <field name="carat" sum="carat"/>
+                      <field name="stones_quantity_ret" sum="stones_quantity_ret" attrs="{'invisible':[('state','in',['draft'])],'readonly':[('state','in',['draft','receive','sent','to approve','purchase','done','cancel'])]}" force_save="1"/>
+                      <field name="carat_ret" sum="carat_ret" attrs="{'invisible':[('state','in',['draft'],'readonly':[('state','in',['draft','receive','sent','to approve','purchase','done','cancel'])]}" force_save="1"/>
                     </tree>
                   </field>
                 </page>
@@ -97,19 +106,19 @@
                     </tree>
                   </field>
                 </page>
-                <page string="Assembly Stone Returned Components" name="assembly_mrp_diamond_back" attrs="{'invisible':[('assembly','!=', True)]}">
+                <!-- <page string="Assembly Stone Returned Components" name="assembly_mrp_diamond_back" attrs="{'invisible':[('assembly','!=', True)]}">
                   <field name="assembly_back_diamond_ids">
                     <tree editable="top">
-                      <field name="product_id"  domain="[('diamond','=',True)]"/>
+                      <field name="product_id"  domain="[('diamond','=',True)]"/> -->
                       <!-- <field name="lot_state"/>
                       <field name="lot_id" domain="[('product_id','=',product_id),('product_qty','>',0)]" attrs="{'invisible':[('lot_state','!=','exist')] , 'required':[('lot_state','=','exist')]}"/>
                       <field name="lot_name" attrs="{'invisible':[('lot_state','!=','new')] , 'required':[('lot_state','=','new')]}"/> -->
-                      <field name="carat"/>
+                      <!-- <field name="carat"/>
                       <field name="carat_cost"/>
                       <field name="total_cost"/>
                     </tree>
                   </field>
-                </page>
+                </page> -->
               </page>
           </field>
       </record>

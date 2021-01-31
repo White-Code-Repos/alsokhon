@@ -33,9 +33,24 @@ class assemblyDescriptionDiamond(models.Model):
     """docstring for assemblyDescriptionDiamond."""
     _name = 'assembly.description.diamond'
 
+    def unlink(self):
+        if self.our_stock:
+            raise ValidationError(_('You can not remove a line you already processed'))
+
     product_id = fields.Many2one('product.product')
     carat = fields.Float(digits=(16,3))
+    carat_price = fields.Float(digits=(16,3))
+    stones_value = fields.Float(digits=(16,3))
+    @api.onchange('carat_price')
+    def calc_stones_value(self):
+        self.stones_value = self.carat * self.carat_price
     stones_quantity = fields.Float(digits=(16,3))
+    stone_setting_rate = fields.Float(digits=(16,3))
+    stone_setting_value = fields.Float(digits=(16,3))
+    @api.onchange('stone_setting_rate')
+    def cacl__stone_setting_value(self):
+        self.stone_setting_value = self.stone_setting_rate * self.stones_quantity
+    our_stock = fields.Boolean(default=False)
     purchase_id_diamond = fields.Many2one('purchase.order')
 
 class assemblyBackGold(models.Model):
@@ -127,13 +142,23 @@ class assemblyComponentsDiamond(models.Model):
     product_id = fields.Many2one('product.product')
     location_id = fields.Many2one('stock.location', required=True)
     lot_id = fields.Many2one('stock.production.lot')
-    carat = fields.Float(digits=(16,3))
+    stones_quantity = fields.Float(digits=(16,3), string="Stones")
+    carat = fields.Float(digits=(16,3), string="Carat")
+    stones_quantity_ret = fields.Float(default=0.0, digits=(16,3), string="Returned Stones")
+    carat_ret = fields.Float(default=0.0, digits=(16,3), string="Returned Carat")
+    final_net_stones_quantity = fields.Float(digits=(16,3), compute="_compute_final_net")
+    final_net_carat = fields.Float(digits=(16,3), compute="_compute_final_net")
     purchase_diamond_id = fields.Many2one('purchase.order')
 
-    @api.onchange('lot_id')
-    def getvalues(self):
-        if self.product_id and self.lot_id:
-            self.carat = self.lot_id.carat
+    def _compute_final_net(self):
+        for this in self:
+            this.final_net_stones_quantity = this.stones_quantity - this.stones_quantity_ret
+            this.final_net_carat = this.carat - this.carat_ret
+
+    # @api.onchange('lot_id')
+    # def getvalues(self):
+    #     if self.product_id and self.lot_id:
+    #         self.carat = self.lot_id.carat
 
 class assemblyComponentsMix(models.Model):
     """Assembly Details."""
@@ -158,8 +183,9 @@ class PurchaseOrder(models.Model):
     _inherit = 'purchase.order'
     state = fields.Selection([
         ('draft', 'RFQ'),
-        ('processing', 'In Process'),
+        ('processing', 'In Progress'),
         ('receive','Received'),
+        ('review','Reviewing')
         ('sent', 'RFQ Sent'),
         ('to approve', 'To Approve'),
         ('purchase', 'Purchase Order'),
@@ -212,7 +238,7 @@ class PurchaseOrder(models.Model):
                             'location_dest_id': self.order_type.assembly_picking_type_id.default_location_dest_id.id,
                             'product_id': line.product_id.id,
                             'product_uom': line.product_id.uom_id.id,
-                            'picking_type_id':  line.purchase_gold_id.order_type.assembly_picking_type_id.id,
+                            'picking_type_id':  self.order_type.assembly_picking_type_id.id,
                             'product_uom_qty': line.product_uom_qty,
                             'gross_weight' : line.gross_weight ,
                             'pure_weight': line.pure_weight,
@@ -250,7 +276,7 @@ class PurchaseOrder(models.Model):
                             'location_dest_id': self.order_type.assembly_picking_type_id.default_location_dest_id.id,
                             'product_id': line.product_id.id,
                             'product_uom': line.product_id.uom_id.id,
-                            'picking_type_id':  line.purchase_gold_id.order_type.assembly_picking_type_id.id,
+                            'picking_type_id':  self.order_type.assembly_picking_type_id.id,
                             'product_uom_qty': line.gross_weight,
                             'gross_weight' : line.gross_weight ,
                             'pure_weight': line.pure_weight,
@@ -283,7 +309,7 @@ class PurchaseOrder(models.Model):
                             'location_dest_id': self.order_type.assembly_picking_type_id.default_location_dest_id.id,
                             'product_id': line.product_id.id,
                             'product_uom': line.product_id.uom_id.id,
-                            'picking_type_id':  line.purchase_diamond_id.order_type.assembly_picking_type_id.id,
+                            'picking_type_id':  self.order_type.assembly_picking_type_id.id,
                             'carat':line.carat,
                             'product_uom_qty': line.carat,
                             'lot_id':line.lot_id.id,
@@ -313,7 +339,7 @@ class PurchaseOrder(models.Model):
                             'location_dest_id': self.order_type.assembly_picking_type_id.default_location_dest_id.id,
                             'product_id': line.product_id.id,
                             'product_uom': line.product_id.uom_id.id,
-                            'picking_type_id':  line.purchase_mix_id.order_type.assembly_picking_type_id.id,
+                            'picking_type_id':  self.order_type.assembly_picking_type_id.id,
                             'product_uom_qty': line.quantity,
                             'lot_id':line.lot_id.id,
                             'origin': location.name + ' - Assembly Mix Transfer',
@@ -333,6 +359,15 @@ class PurchaseOrder(models.Model):
                     for this_lot_line in this.move_line_ids_without_package:
                         this_lot_line.lot_id = this_lot_line.move_id.lot_id.id
                 picking.assembly_purchase_id = self.id
+        description_lines = []
+        for line in self.assembly_diamond_ids:
+            description_lines.append((0,0,{
+            'stones_quantity':line.final_net_stones_quantity,
+            'carat':line.final_net_carat,
+            'our_stock':True
+            }))
+        self.write({'assembly_description_diamond':[(5)]})
+        self.write({'assembly_description_diamond':description_lines})
     assembly_back_gold_ids = fields.One2many('assembly.back.component.gold','purchase_back_gold_id')
     assembly_back_diamond_ids = fields.One2many('assembly.back.component.diamond','purchase_back_diamond_id')
     assembly_back_mix_ids = fields.One2many('assembly.back.component.mix','purchase_back_mix_id')
@@ -349,7 +384,7 @@ class PurchaseOrder(models.Model):
                                                        x.product_id.gold and
                                                        x.product_id.categ_id and
                                                        x.product_id.categ_id.is_scrap)
-        diamond_components = self.assembly_back_diamond_ids
+        diamond_components = self.assembly_diamond_ids
         if len(gold_components) > 0:
             sale_type = ""
             if self.order_type.is_fixed:
@@ -377,7 +412,7 @@ class PurchaseOrder(models.Model):
                         'location_dest_id': self.order_type.assembly_picking_type_id_back.default_location_dest_id.id,
                         'product_id': line.product_id.id,
                         'product_uom': line.product_id.uom_id.id,
-                        'picking_type_id':  line.purchase_back_gold_id.order_type.assembly_picking_type_id_back.id,
+                        'picking_type_id':  self.order_type.assembly_picking_type_id_back.id,
                         'product_uom_qty': 1,
                         'gross_weight' : line.gross_weight ,
                         'pure_weight': line.pure_weight,
@@ -429,7 +464,7 @@ class PurchaseOrder(models.Model):
                         'location_dest_id': self.order_type.assembly_picking_type_id_back.default_location_dest_id.id,
                         'product_id': line.product_id.id,
                         'product_uom': line.product_id.uom_id.id,
-                        'picking_type_id':  line.purchase_back_gold_id.order_type.assembly_picking_type_id_back.id,
+                        'picking_type_id':  self.order_type.assembly_picking_type_id_back.id,
                         'product_uom_qty': line.gross_weight,
                         'gross_weight' : line.gross_weight ,
                         'pure_weight': line.pure_weight,
@@ -467,38 +502,73 @@ class PurchaseOrder(models.Model):
                 #     })
                 # else:
                 #     lot = line.lot_id
-                diamond_move_lines.append((0, 0, {
-                        'name': "assembly move",
-                        'location_id': self.order_type.assembly_picking_type_id_back.default_location_src_id.id,
-                        'location_dest_id': self.order_type.assembly_picking_type_id_back.default_location_dest_id.id,
-                        'product_id': line.product_id.id,
-                        'product_uom': line.product_id.uom_id.id,
-                        'picking_type_id':  line.purchase_back_diamond_id.order_type.assembly_picking_type_id_back.id,
-                        'carat':line.carat,
-                        'product_uom_qty': line.carat,
-                        # 'lot_id':lot.id,
-                        'origin': self.order_type.assembly_picking_type_id_back.default_location_dest_id.name + ' - Receive - Assembly Stone Transfer',
-                        }))
-            picking = self.env['stock.picking'].create({
-                        'partner_id': self.partner_id.id,
-                        'location_id': self.order_type.assembly_picking_type_id_back.default_location_src_id.id,
-                        'location_dest_id': self.order_type.assembly_picking_type_id_back.default_location_dest_id.id,
-                        'picking_type_id':  self.order_type.assembly_picking_type_id_back.id,
-                        'immediate_transfer': False,
-                        'move_lines': diamond_move_lines,
-                        'origin': self.order_type.assembly_picking_type_id_back.default_location_dest_id.name + ' - Receive - Assembly Stone Transfer'
-                    })
-            picking.action_confirm()
-            picking.action_assign()
-            # for this in picking:
-            #     for this_lot_line in this.move_line_ids_without_package:
-            #         this_lot_line.lot_id = this_lot_line.move_id.lot_id.id
-            picking.assembly_purchase_id = self.id
+                if line.stones_quantity_ret > 0.0 and line.carat_ret > 0.0:
+                    diamond_move_lines.append((0, 0, {
+                            'name': "assembly move",
+                            'location_id': self.order_type.assembly_picking_type_id_back.default_location_src_id.id,
+                            'location_dest_id': self.order_type.assembly_picking_type_id_back.default_location_dest_id.id,
+                            'product_id': line.product_id.id,
+                            'product_uom': line.product_id.uom_id.id,
+                            'picking_type_id':  self.order_type.assembly_picking_type_id_back.id,
+                            'carat':line.carat,
+                            'product_uom_qty': line.carat,
+                            # 'lot_id':lot.id,
+                            'origin': self.order_type.assembly_picking_type_id_back.default_location_dest_id.name + ' - Receive - Assembly Stone Transfer',
+                            }))
+            if len(diamond_move_lines) > 0:
+                picking = self.env['stock.picking'].create({
+                            'partner_id': self.partner_id.id,
+                            'location_id': self.order_type.assembly_picking_type_id_back.default_location_src_id.id,
+                            'location_dest_id': self.order_type.assembly_picking_type_id_back.default_location_dest_id.id,
+                            'picking_type_id':  self.order_type.assembly_picking_type_id_back.id,
+                            'immediate_transfer': False,
+                            'move_lines': diamond_move_lines,
+                            'origin': self.order_type.assembly_picking_type_id_back.default_location_dest_id.name + ' - Receive - Assembly Stone Transfer'
+                        })
+                picking.action_confirm()
+                picking.action_assign()
+                # for this in picking:
+                #     for this_lot_line in this.move_line_ids_without_package:
+                #         this_lot_line.lot_id = this_lot_line.move_id.lot_id.id
+                picking.assembly_purchase_id = self.id
+        description_lines = []
+        for line in self.assembly_diamond_ids:
+            description_lines.append((0,0,{
+            'stones_quantity':line.final_net_stones_quantity,
+            'carat':line.final_net_carat,
+            'our_stock':True
+            }))
+        self.write({'assembly_description_diamond':[(5)]})
+        self.write({'assembly_description_diamond':description_lines})
         self.state = 'receive'
+
+    def review_assembly(self):
+        description_lines = []
+        for line in self.assembly_diamond_ids:
+            description_lines.append((0,0,{
+            'stones_quantity':line.final_net_stones_quantity,
+            'carat':line.final_net_carat,
+            'carat_price':line.product_id.standard_price,
+            'stones_value':line.product_id.standard_price * line.final_net_carat,
+            'our_stock':True
+            }))
+        self.write({'assembly_description_diamond':[(5)]})
+        self.write({'assembly_description_diamond':description_lines})
+        self.state = 'review'
 
     def finish_processing(self):
         self.state = 'draft'
         self.ready = True
+        total_stones_price = 0.0
+        total_stones_labor = 0.0
+        for line in self.assembly_description_diamond:
+            total_stones_labor += line.stone_setting_value
+            if line.our_stock:
+                total_stones_price += line.stones_value
+        pol = self.env['purchase.order.line'].search([('order_id','=',self.id)])
+        if pol:
+            pol.write({'d_make_value':total_stones_labor})
+            pol.write({'price_unit':total_stones_price})
         return self.button_confirm()
 
     ready = fields.Boolean(default=False)
