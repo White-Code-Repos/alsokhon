@@ -525,8 +525,8 @@ class PurchaseOrder(models.Model):
                             'product_id': line.product_id.id,
                             'product_uom': line.product_id.uom_id.id,
                             'picking_type_id':  self.order_type.assembly_picking_type_id_back.id,
-                            'carat':line.carat,
-                            'product_uom_qty': line.carat,
+                            'carat':line.carat_ret,
+                            'product_uom_qty': line.carat_ret,
                             # 'lot_id':lot.id,
                             'origin': self.order_type.assembly_picking_type_id_back.default_location_dest_id.name + ' - Receive - Assembly Stone Transfer',
                             }))
