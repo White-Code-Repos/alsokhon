@@ -2,6 +2,8 @@
 from odoo import api, fields, models, _
 from datetime import date , timedelta , datetime
 from odoo.exceptions import ValidationError,UserError
+import logging
+_logger = logging.getLogger(__name__)
 
 
 
@@ -575,12 +577,16 @@ class PurchaseOrder(models.Model):
             'stones_value':line.product_id.standard_price * line.final_net_carat,
             'our_stock':True
             }))
+            _logger.info(line.product_id.id)
+            _logger.info(line.product_id.name)
         gold_description_lines = []
         for line in self.assembly_gold_ids:
             gold_description_lines.append((0,0,{
             'product_id':line.product_id.id,
             'our_stock':True
             }))
+            _logger.info(line.product_id.id)
+            _logger.info(line.product_id.name)
         self.write({'assembly_description_gold':[(5)]})
         self.write({'assembly_description_gold':gold_description_lines})
         self.write({'assembly_description_diamond':[(5)]})
