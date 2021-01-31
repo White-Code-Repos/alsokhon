@@ -631,7 +631,7 @@ class PurchaseOrder(models.Model):
         total_gross = 0.0
         for line in self.assembly_description_diamond:
             total_stones_labor += line.stone_setting_value
-            if line.our_stock:
+            if not line.our_stock:
                 total_stones_price += line.stones_value
         for line in self.assembly_description_gold:
             total_gross += line.gross_weight
