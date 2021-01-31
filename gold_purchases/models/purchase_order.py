@@ -26,7 +26,9 @@ class assemblyDescriptionGold(models.Model):
                 self.purity = self.purity
                 self.pure_weight = self.gross_weight * (self.purity / 1000)
 
+    our_stock = fields.Boolean(default=False)
     purity = fields.Float(digits=(16,3))
+    polish_rhodium = fields.Float('Polish & Rhodium',digits=(16,3))
     purchase_id_gold = fields.Many2one('purchase.order')
 
 class assemblyDescriptionDiamond(models.Model):
@@ -361,15 +363,24 @@ class PurchaseOrder(models.Model):
                     for this_lot_line in this.move_line_ids_without_package:
                         this_lot_line.lot_id = this_lot_line.move_id.lot_id.id
                 picking.assembly_purchase_id = self.id
-        description_lines = []
+        stone_description_lines = []
         for line in self.assembly_diamond_ids:
-            description_lines.append((0,0,{
+            stone_description_lines.append((0,0,{
+            'product_id':line.product_id.id,
             'stones_quantity':line.final_net_stones_quantity,
             'carat':line.final_net_carat,
             'our_stock':True
             }))
+        gold_description_lines = []
+        for line in self.assembly_gold_ids:
+            gold_description_lines.append((0,0,{
+            'product_id':line.product_id.id,
+            'our_stock':True
+            }))
+        self.write({'assembly_description_gold':[(5)]})
+        self.write({'assembly_description_gold':gold_description_lines})
         self.write({'assembly_description_diamond':[(5)]})
-        self.write({'assembly_description_diamond':description_lines})
+        self.write({'assembly_description_diamond':stone_description_lines})
     assembly_back_gold_ids = fields.One2many('assembly.back.component.gold','purchase_back_gold_id')
     assembly_back_diamond_ids = fields.One2many('assembly.back.component.diamond','purchase_back_diamond_id')
     assembly_back_mix_ids = fields.One2many('assembly.back.component.mix','purchase_back_mix_id')
@@ -533,29 +544,47 @@ class PurchaseOrder(models.Model):
                 #     for this_lot_line in this.move_line_ids_without_package:
                 #         this_lot_line.lot_id = this_lot_line.move_id.lot_id.id
                 picking.assembly_purchase_id = self.id
-        description_lines = []
+        stone_description_lines = []
         for line in self.assembly_diamond_ids:
-            description_lines.append((0,0,{
+            stone_description_lines.append((0,0,{
+            'product_id':line.product_id.id,
             'stones_quantity':line.final_net_stones_quantity,
             'carat':line.final_net_carat,
             'our_stock':True
             }))
+        gold_description_lines = []
+        for line in self.assembly_gold_ids:
+            gold_description_lines.append((0,0,{
+            'product_id':line.product_id.id,
+            'our_stock':True
+            }))
+        self.write({'assembly_description_gold':[(5)]})
+        self.write({'assembly_description_gold':gold_description_lines})
         self.write({'assembly_description_diamond':[(5)]})
-        self.write({'assembly_description_diamond':description_lines})
+        self.write({'assembly_description_diamond':stone_description_lines})
         self.state = 'receive'
 
     def review_assembly(self):
-        description_lines = []
+        stone_description_lines = []
         for line in self.assembly_diamond_ids:
-            description_lines.append((0,0,{
+            stone_description_lines.append((0,0,{
+            'product_id':line.product_id.id,
             'stones_quantity':line.final_net_stones_quantity,
             'carat':line.final_net_carat,
             'carat_price':line.product_id.standard_price,
             'stones_value':line.product_id.standard_price * line.final_net_carat,
             'our_stock':True
             }))
+        gold_description_lines = []
+        for line in self.assembly_gold_ids:
+            gold_description_lines.append((0,0,{
+            'product_id':line.product_id.id,
+            'our_stock':True
+            }))
+        self.write({'assembly_description_gold':[(5)]})
+        self.write({'assembly_description_gold':gold_description_lines})
         self.write({'assembly_description_diamond':[(5)]})
-        self.write({'assembly_description_diamond':description_lines})
+        self.write({'assembly_description_diamond':stone_description_lines})
         self.state = 'review'
 
     def finish_processing(self):
@@ -563,14 +592,24 @@ class PurchaseOrder(models.Model):
         self.ready = True
         total_stones_price = 0.0
         total_stones_labor = 0.0
+        total_r_p = 0.0
+        # total_make = 0.0
+        total_gross = 0.0
         for line in self.assembly_description_diamond:
             total_stones_labor += line.stone_setting_value
             if line.our_stock:
                 total_stones_price += line.stones_value
+        for line in self.assembly_description_gold:
+            total_gross += line.gross_weight
+            # total_make += line.make_rate
+            total_total_r_p += line.polish_rhodium
         pol = self.env['purchase.order.line'].search([('order_id','=',self.id)])
         if pol:
-            pol.write({'d_make_value':total_stones_labor})
-            pol.write({'price_unit':total_stones_price})
+            pol[0].write({'d_make_value':total_stones_labor})
+            pol[0].write({'polish_rhodium':total_r_p})
+            pol[0].write({'price_unit':total_stones_price})
+            pol[0].write({'gross_wt':total_gross})
+            pol[0].write({'purity_id':self.assembly_description_gold[0].purity_id.id})
         return self.button_confirm()
 
     ready = fields.Boolean(default=False)
@@ -1090,6 +1129,8 @@ class PurchaseOrderLine(models.Model):
     make_rate = fields.Monetary('Make Rate/G', digits=(16, 3))
     make_value = fields.Monetary('Make Value', compute='_get_gold_rate',
                                  digits=(16, 3), default=0.00)
+    polish_rhodium = fields.Float('Polish & Rhodium',digits=(16,3))
+
     gold_rate = fields.Float('Gold Rate/G', compute='_get_gold_rate',
                              digits=(16, 3))
     gold_value = fields.Monetary('Gold Value', compute='_get_gold_rate',

@@ -12,6 +12,7 @@ class assemblyDescriptionLotGold(models.Model):
     pure_weight = fields.Float()
     purity_id = fields.Many2one('gold.purity')
     purity = fields.Float()
+    polish_rhodium = fields.Float('Polish & Rhodium',digits=(16,3))
     lot_id_gold = fields.Many2one('stock.production.lot')
 
 class assemblyDescriptionLotDiamond(models.Model):
