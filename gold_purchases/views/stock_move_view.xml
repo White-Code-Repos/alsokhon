@@ -70,7 +70,7 @@
                            domain="[('parent_category_id', '=', item_category_id)]"/>
                     <field name="selling_karat_id" readonly="1"/>
                     <field name="selling_making_charge"/>
-                    <field name="buying_making_charge"/>
+                    <field name="buying_making_charge" readonly="1" force_save="1"/>
                 </field>
                  <xpath expr="//field[@name='date']" position="attributes">
                     <attribute name="attrs">{'column_invisible': True}</attribute>
@@ -140,7 +140,7 @@
                            domain="[('parent_category_id', '=', item_category_id)]"/>
                     <field name="selling_karat_id"  readonly="1"/>
                     <field name="selling_making_charge"/>
-                    <field name="buying_making_charge"/>
+                    <field name="buying_making_charge" readonly="1" force_save="1"/>
                 </field>
             </field>
         </record>
@@ -195,7 +195,7 @@
                            domain="[('parent_category_id', '=', item_category_id)]"/>
                     <field name="selling_karat_id"  readonly="1" invisible="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
                     <field name="selling_making_charge" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
-                    <field name="buying_making_charge" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
+                    <field name="buying_making_charge" readonly="1" force_save="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
                 </xpath>
             </field>
         </record>
