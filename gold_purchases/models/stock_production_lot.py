@@ -32,6 +32,16 @@ class assemblyDescriptionLotDiamond(models.Model):
 class StockProductionLot(models.Model):
     _inherit = 'stock.production.lot'
 
+    def read(self, fields=None, load='_classic_read'):
+        res = super(StockPicking, self).read(fields, load)
+        for this in self:
+            if this.product_id.diamond:
+                this.carat = this.product_qty
+            elif this.product_id.scrap:
+                this.gross_weight = this.product_qty
+            else:
+                pass
+        return res
     assembly_description_gold = fields.One2many('assembly.description.lot.gold','lot_id_gold')
     assembly_description_diamond = fields.One2many('assembly.description.lot.diamond','lot_id_diamond')
     gold = fields.Boolean(string="Gold", compute="_compute_gold_state")
