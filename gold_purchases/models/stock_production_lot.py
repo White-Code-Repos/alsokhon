@@ -33,7 +33,7 @@ class StockProductionLot(models.Model):
     _inherit = 'stock.production.lot'
 
     def read(self, fields=None, load='_classic_read'):
-        res = super(StockPicking, self).read(fields, load)
+        res = super(StockProductionLot, self).read(fields, load)
         for this in self:
             if this.product_id.diamond:
                 this.carat = this.product_qty
