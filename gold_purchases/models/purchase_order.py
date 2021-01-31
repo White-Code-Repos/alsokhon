@@ -36,6 +36,8 @@ class assemblyDescriptionDiamond(models.Model):
     def unlink(self):
         if self.our_stock:
             raise ValidationError(_('You can not remove a line you already processed'))
+        else:
+            return super(assemblyDescriptionDiamond, self).unlink()
 
     product_id = fields.Many2one('product.product')
     carat = fields.Float(digits=(16,3))
@@ -1287,6 +1289,7 @@ class PurchaseOrderLine(models.Model):
                     self.product_id.product_template_attribute_value_ids.mapped(
                         'product_attribute_value_id')[0].id or
                     False
+                ,'buying_making_charge':self.make_rate
             })
         else:
             res and res[0].update({
@@ -1300,6 +1303,7 @@ class PurchaseOrderLine(models.Model):
                     self.product_id.product_template_attribute_value_ids.mapped(
                         'product_attribute_value_id')[0].id or
                     False
+                ,'buying_making_charge':self.make_rate
             })
         return res
 
