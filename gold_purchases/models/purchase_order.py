@@ -679,17 +679,25 @@ class PurchaseOrder(models.Model):
     assembly_no_giving = fields.Boolean(compute="_compute_assembly_state")
     assembly_give_gold = fields.Boolean(compute="_compute_assembly_state")
     assembly_give_diamond = fields.Boolean(compute="_compute_assembly_state")
+    assembly_give_both = fields.Boolean(compute="_compute_assembly_state")
     def _compute_assembly_state(self):
         for this in self:
             this.assembly_give_gold = False
             this.assembly_give_diamond = False
             this.assembly_no_giving = False
-            if len(this.assembly_gold_ids) > 0:
+            this.assembly_give_both = False
+            if len(this.assembly_gold_ids) > 0 and len(this.assembly_diamond_ids) > 0 and len(this.assembly_mix_ids) == 0:
+                this.assembly_give_both = True
+                return True
+            if len(this.assembly_gold_ids) > 0 and len(this.assembly_mix_ids) == 0:
                 this.assembly_give_gold = True
-            if len(this.assembly_diamond_ids) > 0:
+                return True
+            if len(this.assembly_diamond_ids) > 0 and len(this.assembly_mix_ids) == 0:
                 this.assembly_give_diamond = True
-            if len(this.assembly_gold_ids) == 0 and len(this.assembly_diamond_ids) == 0:
+                return True
+            if len(this.assembly_gold_ids) == 0 and len(this.assembly_diamond_ids) == 0 and len(this.assembly_mix_ids) == 0:
                 this.assembly_no_giving = True
+                return True
 
     def button_cancel(self):
         res = super(PurchaseOrder, self).button_cancel()
