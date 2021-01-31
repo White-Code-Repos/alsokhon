@@ -98,12 +98,12 @@
                       <!-- <field name="lot_state"/>
                       <field name="lot_id" domain="[('product_id','=',product_id),('product_qty','>',0)]" attrs="{'invisible':[('lot_state','!=','exist')] , 'required':[('lot_state','=','exist')]}"/>
                       <field name="lot_name" attrs="{'invisible':[('lot_state','!=','new')] , 'required':[('lot_state','=','new')]}"/> -->
-                      <field name="gold_rate"/>
+                      <!-- <field name="gold_rate"/> -->
                       <field name="gross_weight"/>
                       <field name="purity_id"/>
                       <field name="purity" readonly="1" force_save="1"/>
                       <field name="pure_weight"/>
-                      <field name="total_value"/>
+                      <!-- <field name="total_value"/> -->
                     </tree>
                   </field>
                 </page>
