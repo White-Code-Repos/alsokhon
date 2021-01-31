@@ -410,12 +410,17 @@ class StockMoveLine(models.Model):
                         'pure_weight':line.pure_weight,
                         'purity_id':line.purity_id.id,
                         'purity':line.purity,
+                        'polish_rhodium':line.polish_rhodium
                         }))
                     for line in purchase_obj.assembly_description_diamond:
                         assembly_description_diamond.append((0,0,{
                         'product_id':line.product_id.id,
                         'carat':line.carat,
+                        'carat_price':line.carat_price,
+                        'stones_value':line.stones_value,
                         'stones_quantity':line.stones_quantity,
+                        'stone_setting_rate':line.stone_setting_rate,
+                        'stone_setting_value':line.stone_setting_value,
                         }))
             res.lot_id.write({
             'carat': res.carat,
