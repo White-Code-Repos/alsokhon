@@ -305,6 +305,8 @@ class StockMoveLine(models.Model):
                                        compute='get_karat')
     selling_making_charge = fields.Monetary('Selling Making Charge',
                                             digits=(16, 3))
+    buying_making_charge = fields.Monetary('Selling Making Charge',
+                                            digits=(16, 3))
     currency_id = fields.Many2one('res.currency', string="Company Currency",
                                   related='company_id.currency_id')
 
