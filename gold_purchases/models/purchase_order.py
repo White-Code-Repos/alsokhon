@@ -608,7 +608,7 @@ class PurchaseOrder(models.Model):
         for line in self.assembly_description_gold:
             total_gross += line.gross_weight
             # total_make += line.make_rate
-            total_total_r_p += line.polish_rhodium
+            total_r_p += line.polish_rhodium
         pol = self.env['purchase.order.line'].search([('order_id','=',self.id)])
         if pol:
             pol[0].write({'d_make_value':total_stones_labor})
