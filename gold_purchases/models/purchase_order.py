@@ -1464,33 +1464,63 @@ class PurchaseOrderLine(models.Model):
     def _prepare_stock_moves(self, picking):
         res = super(PurchaseOrderLine, self)._prepare_stock_moves(picking)
         if self.product_id and self.product_id.categ_id.is_scrap:
-            res and res[0].update({
-                'carat': self.carat,
-                'gross_weight': self.gross_wt,
-                'pure_weight': self.pure_wt,
-                'purity': self.purity_id.scrap_purity or 1,
-                'gold_rate': self.gold_rate,
-                'selling_karat_id':
-                    self.product_id.product_template_attribute_value_ids and
-                    self.product_id.product_template_attribute_value_ids.mapped(
-                        'product_attribute_value_id')[0].id or
-                    False
-                ,'buying_making_charge':self.make_rate
-            })
+            if self.purity_diff != 0.0:
+                res and res[0].update({
+                    'carat': self.carat,
+                    'gross_weight': self.gross_wt,
+                    'pure_weight': self.pure_wt,
+                    'purity': self.purity_hall,
+                    'gold_rate': self.gold_rate,
+                    'selling_karat_id':
+                        self.product_id.product_template_attribute_value_ids and
+                        self.product_id.product_template_attribute_value_ids.mapped(
+                            'product_attribute_value_id')[0].id or
+                        False
+                    ,'buying_making_charge':self.make_rate
+                })
+            else:
+                res and res[0].update({
+                    'carat': self.carat,
+                    'gross_weight': self.gross_wt,
+                    'pure_weight': self.pure_wt,
+                    'purity': self.purity_id.scrap_purity or 1,
+                    'gold_rate': self.gold_rate,
+                    'selling_karat_id':
+                        self.product_id.product_template_attribute_value_ids and
+                        self.product_id.product_template_attribute_value_ids.mapped(
+                            'product_attribute_value_id')[0].id or
+                        False
+                    ,'buying_making_charge':self.make_rate
+                })
         else:
-            res and res[0].update({
-                'carat': self.carat,
-                'gross_weight': self.gross_wt * self.product_qty,
-                'pure_weight': self.pure_wt,
-                'purity': self.purity_id.purity or 1,
-                'gold_rate': self.gold_rate,
-                'selling_karat_id':
-                    self.product_id.product_template_attribute_value_ids and
-                    self.product_id.product_template_attribute_value_ids.mapped(
-                        'product_attribute_value_id')[0].id or
-                    False
-                ,'buying_making_charge':self.make_rate
-            })
+            if self.purity_diff != 0.0:
+                res and res[0].update({
+                    'carat': self.carat,
+                    'gross_weight': self.gross_wt * self.product_qty,
+                    'pure_weight': self.pure_wt,
+                    'purity': self.purity_hall,
+                    'gold_rate': self.gold_rate,
+                    'selling_karat_id':
+                        self.product_id.product_template_attribute_value_ids and
+                        self.product_id.product_template_attribute_value_ids.mapped(
+                            'product_attribute_value_id')[0].id or
+                        False
+                    ,'buying_making_charge':self.make_rate
+                })
+            else:
+                res and res[0].update({
+                    'carat': self.carat,
+                    'gross_weight': self.gross_wt * self.product_qty,
+                    'pure_weight': self.pure_wt,
+                    'purity': self.purity_id.purity or 1,
+                    'gold_rate': self.gold_rate,
+                    'selling_karat_id':
+                        self.product_id.product_template_attribute_value_ids and
+                        self.product_id.product_template_attribute_value_ids.mapped(
+                            'product_attribute_value_id')[0].id or
+                        False
+                    ,'buying_making_charge':self.make_rate
+                })
         return res
 
     # def _prepare_account_move_line(self, move):
