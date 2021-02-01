@@ -50,8 +50,8 @@
                       <field name="carat_price" attrs="{'column_invisible':[('parent.state','in',['draft','processing'])],'readonly':[('our_stock','=',True)]}"/>
                       <field name="stones_value" attrs="{'column_invisible':[('parent.state','in',['draft','processing'])],'readonly':[('our_stock','=',True)]}"/>
                       <field name="stones_quantity" sum="stones_quantity" attrs="{'readonly':[('our_stock','=',True)]}"/>
-                      <field name="stone_setting_rate" attrs="{'column_invisible':[('parent.state','in',['draft','processing'])]}"/>
-                      <field name="stone_setting_value" sum="stone_setting_value" readonly="1" force_save="1" attrs="{'column_invisible':[('parent.state','in',['draft','processing'])]}"/>
+                      <field name="stone_setting_rate" attrs="{'column_invisible':[('parent.state','in',['draft'])]}"/>
+                      <field name="stone_setting_value" sum="stone_setting_value" readonly="1" force_save="1" attrs="{'column_invisible':[('parent.state','in',['draft'])]}"/>
                     </tree>
                   </field>
                 </page>
