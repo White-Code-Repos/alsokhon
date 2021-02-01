@@ -38,10 +38,10 @@ class assemblyDescriptionDiamond(models.Model):
     _name = 'assembly.description.diamond'
 
     def unlink(self):
-        if self.our_stock:
-            raise ValidationError(_('You can not remove a line you already processed'))
-        else:
-            return super(assemblyDescriptionDiamond, self).unlink()
+        for this in self:
+            if this.our_stock:
+                raise ValidationError(_('You can not remove a line you already processed'))
+        return super(assemblyDescriptionDiamond, self).unlink()
 
     product_id = fields.Many2one('product.product')
     carat = fields.Float(digits=(16,3))
