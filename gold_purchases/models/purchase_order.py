@@ -1347,12 +1347,23 @@ class PurchaseOrderLine(models.Model):
             #     make_value_product = self.env['product.product'].browse([rec.product_id.making_charge_id.id])
             #     product_make_object = self.env['purchase.order.line'].search([('order_id','=',rec.order_id.id),('product_id','=',make_value_product.id)])
             if rec.product_id.categ_id.is_scrap:
-                rec.pure_wt = rec.gross_wt * (rec.purity_id and (
-                        rec.purity_id.scrap_purity / 1000.000) or 0)
+                if rec.purity_diff != 0:
+                    rec.pure_wt = rec.gross_wt * rec.purity_hall / 1000.000
+                    # (rec.purity_id and (
+                    #         rec.purity_id.scrap_purity / 1000.000) or 0)
+                else:
+                    rec.pure_wt = rec.gross_wt * (rec.purity_id and (
+                            rec.purity_id.scrap_purity / 1000.000) or 0)
             else:
-                rec.pure_wt = rec.product_qty * rec.gross_wt * (rec.purity_id and (
-                        rec.purity_id.purity / 1000.000) or 0)
-            rec.total_pure_weight = rec.pure_wt + rec.purity_diff
+                if rec.purity_diff != 0:
+                    rec.pure_wt = rec.product_qty * rec.gross_wt * rec.purity_hall / 1000.000
+                    # (rec.purity_id and (
+                    #         rec.purity_id.purity / 1000.000) or 0)
+                else:
+                    rec.pure_wt = rec.product_qty * rec.gross_wt * (rec.purity_id and (
+                            rec.purity_id.purity / 1000.000) or 0)
+            # rec.total_pure_weight = rec.pure_wt + rec.purity_diff
+            rec.total_pure_weight = rec.pure_wt
             # NEED TO ADD PURITY DIFF + rec.purity_diff
             # new_pure_wt = rec.pure_wt + rec.purity_diff
             # rec.stock = (rec.product_id and rec.product_id.available_gold or
