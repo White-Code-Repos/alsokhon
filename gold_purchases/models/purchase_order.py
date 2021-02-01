@@ -645,8 +645,8 @@ class PurchaseOrder(models.Model):
         self.write({'assembly_description_gold':gold_description_lines})
         # self.write({'assembly_description_diamond':[(5)]})
         self.write({'assembly_description_diamond':stone_description_lines})
-        self.state = 'review'
         self.update_po_line()
+        self.write({'state':'review'})
 
     def update_po_line(self):
         total_stones_price = 0.0
@@ -696,8 +696,8 @@ class PurchaseOrder(models.Model):
                 'price_unit':pol[0].price_unit+pol[0].gold_value,
                 })
     def finish_processing(self):
-        self.state = 'draft'
-        self.ready = True
+        self.write({'state':'draft'})
+        self.write({'ready':True})
         self.update_po_line()
         return self.button_confirm()
 
@@ -910,8 +910,10 @@ class PurchaseOrder(models.Model):
                 product_charge_gold_list.append(line.product_id.making_charge_id.id)
                 product_charge_diamond_list.append(line.product_id.making_charge_diamond_id.id)
 
+        print("product_charge_gold_list")
         print(product_charge_gold_list)
         print(product_charge_diamond_list)
+        print("product_charge_diamond_list")
         done_gold_product = []
         total_charge_gold = []
         for line in product_charge_gold_list:
@@ -938,7 +940,10 @@ class PurchaseOrder(models.Model):
         apply_diamond_charge = []
         gold_charge = False
         diamond_charge = False
-
+        print("total_charge_gold")
+        print(total_charge_gold)
+        print(total_charge_diamond)
+        print("total_charge_diamond")
         for tup in total_charge_gold:
             if tup[0] > 0.00:
                 gold_charge = True
@@ -948,9 +953,12 @@ class PurchaseOrder(models.Model):
             if tup[0] > 0.00:
                 diamond_charge = True
                 apply_diamond_charge.append(tup)
+        print("apply_gold_charge")
         print(apply_gold_charge)
         print(apply_diamond_charge)
+        print("apply_diamond_charge")
         if gold_charge:
+            print("IFGOLD")
             for pro in apply_gold_charge:
                 make_value_product = self.env['product.product'].browse(pro[1])
                 uom = self.env.ref('uom.product_uom_unit')
@@ -965,7 +973,9 @@ class PurchaseOrder(models.Model):
                                         'is_make_value': True,
                                         'price_subtotal': pro[0],
                                     })
+                print(make)
         if diamond_charge:
+            print("IFDIAMOND")
             for pro in apply_diamond_charge:
                 make_value_product = self.env['product.product'].browse(pro[1])
                 uom = self.env.ref('uom.product_uom_unit')
@@ -980,12 +990,15 @@ class PurchaseOrder(models.Model):
                                         'is_make_value': True,
                                         'price_subtotal': pro[0],
                                     })
+                print(make)
         return res
 
     def write(self, values):
-        print("WRITE")
+        print("WRITELABORMAKE")
         res = super(PurchaseOrder, self).write(values)
         making_order_line = self.env['purchase.order.line'].search([('order_id','=',self.id),('is_make_value','=',True)])
+        print(making_order_line)
+        print(self.state)
         if self.state not in  ['done','purchase']:
             if making_order_line:
                 making_order_line.unlink()
@@ -1002,8 +1015,10 @@ class PurchaseOrder(models.Model):
                     product_charge_gold_list.append(line.product_id.making_charge_id.id)
                     product_charge_diamond_list.append(line.product_id.making_charge_diamond_id.id)
 
+            print("product_charge_gold_list")
             print(product_charge_gold_list)
             print(product_charge_diamond_list)
+            print("product_charge_diamond_list")
 
             done_gold_product = []
             total_charge_gold = []
@@ -1011,7 +1026,9 @@ class PurchaseOrder(models.Model):
                 if line in done_gold_product:
                     continue
                 products_for_this_make = self.env['product.product'].search([('making_charge_id','=',line)])
+                print(products_for_this_make)
                 order_lines_in_this_order = self.env['purchase.order.line'].search([('order_id','=',self.id),('product_id','in',products_for_this_make.ids)])
+                print(order_lines_in_this_order)
                 for sol in order_lines_in_this_order:
                     total_charge_gold.append((sol.make_value,sol.product_id.making_charge_id.id))
                 done_gold_product.append(line)
@@ -1031,9 +1048,10 @@ class PurchaseOrder(models.Model):
             apply_diamond_charge = []
             gold_charge = False
             diamond_charge = False
-            print("______________________________")
+            print("total_charge_gold")
             print(total_charge_gold)
             print(total_charge_diamond)
+            print("total_charge_diamond")
             for tup in total_charge_gold:
                 if tup[0] > 0.00:
                     gold_charge = True
@@ -1044,10 +1062,12 @@ class PurchaseOrder(models.Model):
                     diamond_charge = True
                     apply_diamond_charge.append(tup)
 
-            print("****************************")
+            print("apply_gold_charge")
             print(apply_gold_charge)
             print(apply_diamond_charge)
+            print("apply_diamond_charge")
             if gold_charge:
+                print("IFGOLD")
                 for pro in apply_gold_charge:
                     make_value_product = self.env['product.product'].browse(pro[1])
                     uom = self.env.ref('uom.product_uom_unit')
@@ -1062,7 +1082,9 @@ class PurchaseOrder(models.Model):
                                             'is_make_value': True,
                                             'price_subtotal': pro[0],
                                         })
+                    print(make)
             if diamond_charge:
+                print("IFDIAMOND")
                 for pro in apply_diamond_charge:
                     make_value_product = self.env['product.product'].browse(pro[1])
                     uom = self.env.ref('uom.product_uom_unit')
@@ -1077,6 +1099,7 @@ class PurchaseOrder(models.Model):
                                             'is_make_value': True,
                                             'price_subtotal': pro[0],
                                         })
+                    print(make)
             return res
     total_gold_vale_order = fields.Float('Total Value', compute="_compute_total_gold_vale_order")
     def _compute_total_gold_vale_order(self):
