@@ -1398,6 +1398,20 @@ class PurchaseOrderLine(models.Model):
                     'price_total': taxes['total_included'],
                     'price_subtotal': taxes['total_excluded'],
                 })
+            elif line.product_id.assembly:
+                vals = line._prepare_compute_all_values()
+                taxes = line.taxes_id.compute_all(
+                    vals['price_unit']+line.polish_rhodium,
+                    vals['currency_id'],
+                    1,
+                    vals['product'],
+                    vals['partner'],)
+                line.update({
+                    'price_tax': sum(
+                        t.get('amount', 0.0) for t in taxes.get('taxes', [])),
+                    'price_total': taxes['total_included'],
+                    'price_subtotal': taxes['total_excluded'],
+                })
             else:
                 vals = line._prepare_compute_all_values()
                 taxes = line.taxes_id.compute_all(
