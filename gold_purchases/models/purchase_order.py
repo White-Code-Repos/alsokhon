@@ -698,6 +698,7 @@ class PurchaseOrder(models.Model):
     def finish_processing(self):
         self.state = 'draft'
         self.ready = True
+        self.update_po_line()
         return self.button_confirm()
 
     ready = fields.Boolean(default=False)
