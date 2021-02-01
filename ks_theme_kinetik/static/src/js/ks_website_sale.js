@@ -232,8 +232,6 @@ odoo.define('ks_theme_website_sale_custom', function (require) {
 //            });
 
         $(document).on('click', '.ks_modal_optional', function (ev) {
-                var val = $('.quantity').val();
-                $(ev.currentTarget).parent().find('.mobile-add').attr("value",val)
                 var product_id=$(ev.currentTarget).attr('data-product-product-id')
                 var product_template_id=$(ev.currentTarget).attr('data-product-template-id')
                   ajax.jsonRpc("/details/cart/update", 'call', {'product_id':product_id,'template_id':product_template_id}

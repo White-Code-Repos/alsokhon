@@ -10,21 +10,6 @@
             <field name="ks_Speed" position="after">
                 <field name="ks_is_full_width"/>
             </field>
-            <xpath expr="/form/sheet/group/group[1]" position="replace">
-                <group>
-                    <field name="name"/>
-                    <field name="ks_item_selection_method"/>
-                    <field name="ks_items_per_slide" attrs="{'invisible':['|',('ks_item_selection_method','=','brands'),('ks_item_selection_method','=','blogs')]}"/>
-                    <field name="ks_items_per_slide_for_brands" attrs="{'invisible':[('ks_item_selection_method','!=','brands')]}"/>
-                    <field name="ks_template_type" attrs="{'invisible':[('ks_item_selection_method','!=','brands')]}"/>
-                    <field name="ks_is_animation" attrs="{'invisible':[('ks_item_selection_method','!=','brands')]}"/>
-                    <field name="ks_blog_template" attrs="{'invisible':[('ks_item_selection_method','!=','blogs')]}"/>
-                    <field name="ks_items_per_slide_for_blogs" attrs="{'invisible':[('ks_item_selection_method','!=','blogs')]}"/>
-                </group>
-            </xpath>
-            <xpath expr="/form/sheet/notebook/page" position="attributes">
-                <attribute name="string">Items</attribute>
-            </xpath>
         </field>
     </record>
 </odoo>

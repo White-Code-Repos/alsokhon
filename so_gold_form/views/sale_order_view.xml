@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="sale_order_form_extend_alsokhon_period" model="ir.ui.view">
+            <field name="name">sale.order.form</field>
+            <field name="model">sale.order</field>
+            <field name="inherit_id" ref="sale.view_order_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='date_order']" position="after">
+                    <strong attrs="{'invisible': [('gold', '=', False),('assembly','=',False)]}">
+                        <label for="gold_rate" string="Gold Rate" style="font-weight: bold;"/>
+                    </strong>
+                    <div class="o_row" attrs="{'invisible': [('gold', '=', False),('assembly','=',False)]}">
+                        <field name="gold_rate"/>
+                        <strong>Per Kg</strong>
+                    </div>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

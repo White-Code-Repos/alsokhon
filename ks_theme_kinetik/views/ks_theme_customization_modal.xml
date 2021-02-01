@@ -91,7 +91,7 @@
                                 <form class="myForm" onsubmit="return false">
                                     <label for="input_url">Enter The Font Url</label>
                                     <input type="url" name="Font_Url" class="input_url w-100 mb-2"/>
-                                    <button type="submit"  class="dynamic_font_url btn btn-secondary">Download the Font</button>
+                                    <input type="submit" value="Download the Font" class="dynamic_font_url btn btn-secondary"/>
                                 </form>
                             </div>
                         </div>

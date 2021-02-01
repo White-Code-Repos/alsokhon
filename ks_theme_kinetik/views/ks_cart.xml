@@ -4,10 +4,10 @@
     <!--We will use one cart template for whole theme-->
     <template id="ks_cart_popover_inherit_website_event_sale" inherit_id="website_sale.cart_popover"
               name="Event Cart Popover">
-        <xpath expr="//div[hasclass('alert-info')]" position="replace">
+         <xpath expr="//div[hasclass('alert-info')]" position="replace">
             <div t-if="not website_sale_order or not website_sale_order.website_order_line" class="alert alert-info">
-                Cart is empty!
-            </div>
+          Cart is empty!
+        </div>
         </xpath>
         <xpath expr="//t//t" position="replace">
             <div t-if="website_sale_order.cart_quantity > 0" class="container oe_website_sale py-2">
@@ -16,17 +16,17 @@
                            t-if="website_sale_order and website_sale_order.website_order_line">
                         <thead>
                             <tr>
-                                <th class="td-img text-center">Product</th>
-                                <th class="td-name text-center">Name</th>
+                                <th class="td-img">Product</th>
+                                <th />
                                 <th class="text-center td-qty">Quantity</th>
                                 <th class="text-center td-price">Price</th>
-                                <th class="text-center td-action"/>
+                                <th class="text-center td-action" />
                             </tr>
                         </thead>
                         <tbody class="oe_cart">
                             <t t-foreach="website_sale_order.website_order_line" t-as="line">
                                 <tr t-att-class="'optional_product info' if line.linked_line_id else None">
-                                    <td colspan="2" t-if="not line.product_id.product_tmpl_id" class='td-img'/>
+                                    <td colspan="2" t-if="not line.product_id.product_tmpl_id" class='td-img' />
                                     <td align="center" t-if="line.product_id.product_tmpl_id" class='td-img'>
                                         <span t-field="line.product_id.image_128"
                                               t-options="{'widget': 'image', 'class': 'rounded'}"/>
@@ -34,37 +34,35 @@
                                     <td t-if="line.product_id.product_tmpl_id" class='td-product_name'>
                                         <div>
                                             <t t-call="website_sale.cart_line_product_link">
-                                                <strong t-field="line.product_id.name"/>
+                                                <strong t-field="line.name_short"/>
                                             </t>
                                         </div>
                                         <!--<t t-call="website_sale.cart_line_description_following_lines">-->
-                                        <!--<t t-set="div_class" t-value="'d-none d-md-block'"/>-->
+                                            <!--<t t-set="div_class" t-value="'d-none d-md-block'"/>-->
                                         <!--</t>-->
                                     </td>
                                     <td class="text-center td-qty">
                                         <div t-if="not line.linked_line_id"
-                                             class="css_quantity input-group oe_website_spinner justify-content-center">
+                                             class="css_quantity input-group oe_website_spinner">
                                             <div class="input-group-prepend">
                                                 <a t-attf-href="#"
-                                                   class="btn btn-link js_add_cart_json d-md-inline-block hover-cart"
+                                                   class="btn btn-link js_add_cart_json d-none d-md-inline-block hover-cart"
                                                    aria-label="Remove one" title="Remove one">
-                                                    <i class="fa fa-minus"/>
+                                                    <i class="fa fa-minus" />
                                                 </a>
                                             </div>
-                                            <input type="text" class="js_quantity form-control quantity"
-                                                   t-att-data-line-id="line.id"
-                                                   t-att-data-product-id="line.product_id.id"
-                                                   t-att-value="int(line.product_uom_qty) == line.product_uom_qty and int(line.product_uom_qty) or line.product_uom_qty"/>
+                                             <input type="text" class="js_quantity form-control quantity" t-att-data-line-id="line.id"
+                                                    t-att-data-product-id="line.product_id.id" t-att-value="int(line.product_uom_qty) == line.product_uom_qty and int(line.product_uom_qty) or line.product_uom_qty" />
 
-                                            <span class="js_quantity text-muted" t-att-data-line-id="line.id"
+                                                <span class="js_quantity text-muted" t-att-data-line-id="line.id"
                                                   t-att-data-product-id="line.product_id.id"
                                                   data-min="1"
                                                   t-esc="int(line.product_uom_qty)"/>
                                             <div class="input-group-append">
                                                 <a t-attf-href="#"
-                                                   class="btn btn-link float_left js_add_cart_json d-md-inline-block hover-cart"
+                                                   class="btn btn-link float_left js_add_cart_json d-none d-md-inline-block hover-cart"
                                                    aria-label="Add one" title="Add one">
-                                                    <i class="fa fa-plus"/>
+                                                    <i class="fa fa-plus" />
                                                 </a>
                                             </div>
                                         </div>
@@ -76,39 +74,24 @@
                                     </td>
                                     <div>
                                         <td class="text-center td-price" name="price">
-                                            <t t-set="combination"
-                                               t-value="line.product_id.product_template_attribute_value_ids + line.product_no_variant_attribute_value_ids"/>
-                                            <t t-set="combination_info"
-                                               t-value="line.product_id.product_tmpl_id._get_combination_info(combination)"/>
+                            <t t-set="combination" t-value="line.product_id.product_template_attribute_value_ids + line.product_no_variant_attribute_value_ids"/>
+                            <t t-set="combination_info" t-value="line.product_id.product_tmpl_id._get_combination_info(combination)"/>
 
-                                            <t t-set="list_price_converted"
-                                               t-value="website.currency_id._convert(combination_info['list_price'], website_sale_order.currency_id, website_sale_order.company_id, date)"/>
-                                            <t groups="account.group_show_line_subtotals_tax_excluded"
-                                               t-if="(website_sale_order.pricelist_id.discount_policy == 'without_discount' and website_sale_order.currency_id.compare_amounts(list_price_converted, line.price_reduce_taxexcl) == 1) or website_sale_order.currency_id.compare_amounts(line.price_unit, line.price_reduce) == 1"
-                                               name="order_line_discount">
-                                                <del t-attf-class="#{'text-danger mr8'}" style="white-space: nowrap;"
-                                                     t-esc="list_price_converted"
-                                                     t-options="{'widget': 'monetary', 'display_currency': website_sale_order.currency_id}"/>
-                                            </t>
-                                            <span t-field="line.price_reduce_taxexcl" style="white-space: nowrap;"
-                                                  t-options="{'widget': 'monetary', 'display_currency': website_sale_order.currency_id}"
-                                                  groups="account.group_show_line_subtotals_tax_excluded"/>
-                                            <t groups="account.group_show_line_subtotals_tax_included"
-                                               t-if="(website_sale_order.pricelist_id.discount_policy == 'without_discount' and website_sale_order.currency_id.compare_amounts(list_price_converted, line.price_reduce_taxinc) == 1) or website_sale_order.currency_id.compare_amounts(line.price_unit, line.price_reduce) == 1"
-                                               name="order_line_discount">
-                                                <del t-attf-class="#{'text-danger mr8'}" style="white-space: nowrap;"
-                                                     t-esc="list_price_converted"
-                                                     t-options="{'widget': 'monetary', 'display_currency': website_sale_order.currency_id}"/>
-                                            </t>
-                                            <span t-field="line.price_reduce_taxinc" style="white-space: nowrap;"
-                                                  t-options="{'widget': 'monetary', 'display_currency': website_sale_order.currency_id}"
-                                                  groups="account.group_show_line_subtotals_tax_included"/>
-                                        </td>
+                            <t t-set="list_price_converted" t-value="website.currency_id._convert(combination_info['list_price'], website_sale_order.currency_id, website_sale_order.company_id, date)"/>
+                            <t groups="account.group_show_line_subtotals_tax_excluded" t-if="(website_sale_order.pricelist_id.discount_policy == 'without_discount' and website_sale_order.currency_id.compare_amounts(list_price_converted, line.price_reduce_taxexcl) == 1) or website_sale_order.currency_id.compare_amounts(line.price_unit, line.price_reduce) == 1" name="order_line_discount">
+                                <del t-attf-class="#{'text-danger mr8'}" style="white-space: nowrap;" t-esc="list_price_converted" t-options="{'widget': 'monetary', 'display_currency': website_sale_order.currency_id}" />
+                            </t>
+                            <span t-field="line.price_reduce_taxexcl" style="white-space: nowrap;" t-options="{'widget': 'monetary', 'display_currency': website_sale_order.currency_id}" groups="account.group_show_line_subtotals_tax_excluded" />
+                            <t groups="account.group_show_line_subtotals_tax_included" t-if="(website_sale_order.pricelist_id.discount_policy == 'without_discount' and website_sale_order.currency_id.compare_amounts(list_price_converted, line.price_reduce_taxinc) == 1) or website_sale_order.currency_id.compare_amounts(line.price_unit, line.price_reduce) == 1" name="order_line_discount">
+                                <del t-attf-class="#{'text-danger mr8'}" style="white-space: nowrap;" t-esc="list_price_converted" t-options="{'widget': 'monetary', 'display_currency': website_sale_order.currency_id}" />
+                            </t>
+                            <span t-field="line.price_reduce_taxinc" style="white-space: nowrap;" t-options="{'widget': 'monetary', 'display_currency': website_sale_order.currency_id}" groups="account.group_show_line_subtotals_tax_included" />
+                        </td>
                                         <td class="td-action">
                                             <a href='#' aria-label="Remove from cart" title="Remove from cart"
                                                class='js_delete_product no-decoration js_delete_from_popup'>
                                                 <small>
-                                                    <i class='fa fa-trash-o'/>
+                                                    <i class='fa fa-trash-o' />
                                                 </small>
                                             </a>
                                         </td>
@@ -125,7 +108,7 @@
                          t-if="website_sale_order and website_sale_order.website_order_line">
                         <div class="card-body">
                             <h4 class="d-xl-block">Order Total</h4>
-                            <hr class=""/>
+                            <hr class="d-none d-xl-block"/>
                             <div>
                                 <t t-call="website_sale.total">
                                     <t t-set='no_rowspan'>1</t>
@@ -133,25 +116,23 @@
                             </div>
                         </div>
                     </div>
-                    <a role="button" class="btn btn-primary btn-lg px-4" href="/shop/cart">
-                        <i class="fa fa fa-credit-card mr-2"/>
-                        Checkout
-                        <!--                        View Cart (-->
-                        <!--                        <span class="view_cart_button">-->
-                        <!--                            <t t-esc="website_sale_order.cart_quantity"/>-->
-                        <!--                            items)-->
-                        <!--                        </span>-->
+                    <a role="button" class="btn btn-primary" href="/shop/cart">
+                        View Cart (
+                        <span class="view_cart_button">
+                            <t t-esc="website_sale_order.cart_quantity"/>
+                            items)
+                        </span>
                     </a>
                 </div>
             </div>
         </xpath>
     </template>
-    <!--    <template id="ks_cart_line" inherit_id="website_sale.cart_lines" name="Event Cart line">-->
-    <!--         <xpath expr="//span[@t-field='line.product_id.image_128']" position="replace">-->
-    <!--            <span t-field="line.product_id.image" t-options="{'widget': 'image', 'class': 'rounded'}" />-->
-    <!--        </xpath>-->
+<!--    <template id="ks_cart_line" inherit_id="website_sale.cart_lines" name="Event Cart line">-->
+<!--         <xpath expr="//span[@t-field='line.product_id.image_128']" position="replace">-->
+<!--            <span t-field="line.product_id.image" t-options="{'widget': 'image', 'class': 'rounded'}" />-->
+<!--        </xpath>-->
 
-    <!--    </template>-->
+<!--    </template>-->
     <!--    <template id="ks_search_box" inherit_id="website.website_search_box" name="ks Website Search Box Remove">-->
     <!--        <xpath expr="//div//input[1]" position="replace">-->
     <!--        </xpath>-->
@@ -159,46 +140,4 @@
     <!--        </xpath>-->
     <!---->
     <!--    </template>-->
-    <template id="ks_cart_summary" inherit_id="website_sale.cart_summary">
-        <xpath expr="//table[@id='cart_products']//th[2]" position="replace">
-            <th class="border-top-0 td-name">Name</th>
-        </xpath>
-        <xpath expr="//td[hasclass('td-qty')]" position="replace">
-            <td class='td-qty ks_qty'>
-                <div t-esc="int(line.product_uom_qty)"/>
-            </td>
-        </xpath>
-        <xpath expr="//td[hasclass('td-product_name')]" position="replace">
-            <td class='td-product_name' t-if="line.product_id.product_tmpl_id">
-                <div>
-                    <strong t-field="line.product_id.name"/>
-                    <t t-if="line.product_id.product_template_attribute_value_ids">
-                        <t t-foreach="line.product_id.product_template_attribute_value_ids" t-as="variant_name">
-                            <strong class="ks_cart_variant" t-field="variant_name.display_name"/>
-                        </t>
-                    </t>
-                </div>
-            </td>
-        </xpath>
-    </template>
-
-    <template id="ks_cart" inherit_id="website_sale.cart_lines">
-        <xpath expr="//td[hasclass('td-product_name')]" position="replace">
-            <td class='td-product_name' t-if="line.product_id.product_tmpl_id">
-                <div>
-                    <t t-call="website_sale.cart_line_product_link">
-                        <strong t-field="line.product_id.name"/>
-                        <t t-if="line.product_id.product_template_attribute_value_ids">
-                            <t t-foreach="line.product_id.product_template_attribute_value_ids" t-as="variant_name">
-                                <strong class="ks-cart-variant-2" t-field="variant_name.display_name"/>
-                            </t>
-                        </t>
-                    </t>
-                </div>
-                <t t-call="website_sale.cart_line_description_following_lines">
-                    <t t-set="div_class" t-value="'d-none d-md-block'"/>
-                </t>
-            </td>
-        </xpath>
-    </template>
 </odoo>

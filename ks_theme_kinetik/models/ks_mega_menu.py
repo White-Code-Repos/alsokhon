@@ -24,7 +24,6 @@ class Ks_WebsiteMegaMenu(models.Model):
     ks_product_brand_ids = fields.Many2many('ks_product_manager.ks_brand',
                                             relation='website_menu_ks_product_manager_ks_brands', string='Brands')
     ks_is_category_tab_layout = fields.Boolean(string='Set Tab Layout For Categories')
-    ks_show_sub_categories = fields.Boolean(string='Display Sub Categories', default=True)
 
     # Slider Configuration
     ks_is_slider = fields.Selection(
@@ -55,7 +54,7 @@ class Ks_WebsiteMegaMenu(models.Model):
     ks_font_color_sub_cat = fields.Char(default="#000000", string="Sub Heading Color")
     ks_set_number_of_columns = fields.Selection(
         [('two', '2'), ('three', '3'), ('four', '4'), ('five', '5'), ('six  ', '6')],
-        string='Set Number of Column', default='four', required=True)
+        string='Set Number of Column', default='four')
 
     # ToDo Remove this field when create a new database
     ks_font_color = fields.Char()

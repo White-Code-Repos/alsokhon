@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<odoo>
+    <template id="gold_fixing_position_backend" name="gold_fixing_position" inherit_id="web.assets_backend">
+        <xpath expr="." position="inside">
+            <script type="text/javascript" src="/gold_position/static/src/js/gold_report_list_controller.js"></script>
+            <script type="text/javascript" src="/gold_position/static/src/js/gold_report_list_view.js"></script>
+        </xpath>
+    </template>
+</odoo>

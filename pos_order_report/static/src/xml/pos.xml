@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+  <templates id="template">
+     <t t-extend="ReceiptScreenWidget">
+         <t t-jquery=".button.print" t-operation="after">
+             <div class="button order-print">
+                 <i class='fa fa-print'></i>
+                 Print POS Invoice
+             </div>
+         </t>
+     </t>
+  </templates>

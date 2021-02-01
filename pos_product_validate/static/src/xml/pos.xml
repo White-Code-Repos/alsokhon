@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-extend="Product">
+        <t t-jquery='.price-tag' t-operation='replace'>
+          <span class="price-tag" id="availqty">
+              <t t-esc="product.qty_available+' '+widget.pos.units_by_id[product.uom_id[0]].name"/>
+          </span>
+        </t>
+    </t>
+    <t t-extend="Chrome">
+          <t t-jquery='.pos-branding' t-operation='replace'>
+            <div class="pos-branding">
+                <img class="pos-logo" src="/pos_product_validate/static/src/img/Sukhon.png" alt="Logo"/>
+            </div>
+          </t>
+      </t>
+
+</templates>

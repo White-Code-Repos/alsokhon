@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <record id="stock_view_quant_form_extend_alsokhon_value" model="ir.ui.view">
+            <field name="name">stock.view.quant.form.extend.alsokhon.value</field>
+            <field name="model">stock.quant</field>
+            <field name="inherit_id" ref="stock_account.view_stock_quant_tree_editable_inherit"/>
+            <field name="arch" type="xml">
+              <field name="value" position="after">
+                  <field name="total_value" readonly="1" invisible="1"/>
+              </field>
+              <field name="value" position="attributes">
+                <attribute name="invisible">1</attribute>
+              </field>
+            </field>
+        </record>
+    </data>
+</odoo>

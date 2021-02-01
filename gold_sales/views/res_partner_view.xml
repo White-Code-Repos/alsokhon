@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="view_partner_property_form_inherited_gold_sale" model="ir.ui.view">
+            <field name="name">gold.sale.res.partner.form.view.inherit</field>
+            <field name="model">res.partner</field>
+            <field name="inherit_id" ref="account.view_partner_property_form"/>
+            <field name="arch" type="xml">
+                <field name="property_account_receivable_id" position="after">
+                    <field name="gold_account_receivable_id"/>
+                </field>
+            </field>
+        </record>
+    </data>
+</odoo>

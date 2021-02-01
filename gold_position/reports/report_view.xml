@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <data>
+        <report id="report_gold_journal_entry_qweb"
+                model="gold.fixing.position"
+                string="Gold Fixing Position"
+                menu="False"
+                report_type="qweb-pdf"
+                name="gold_position.report_account_gold_journal_entry"
+                file="gold_position.report_account_gold_journal_entry"/>
+
+        <template id="report_account_gold_journal_entry">
+            <t t-set="data_report_margin_top" t-value="12"/>
+            <t t-set="data_report_header_spacing" t-value="9"/>
+            <t t-set="data_report_dpi" t-value="110"/>
+            <t t-set="data_report_landscape" t-value="True"/>
+            <t t-set="full_width" t-value="True"/>
+            <t t-call="web.html_container">
+                <t t-call="web.external_layout">
+                    <div class="page">
+                        <br/><br/>
+                        <h2>
+                            <left>Gold Fixing Position</left>
+                        </h2>
+
+                        <div class="row mt32">
+                            <div class="col-3">
+                                <strong>Date From: </strong>
+                                <span t-esc="date_from"/>
+                            </div>
+                            <div class="col-3">
+                                <strong>Date To: </strong>
+                                <span t-esc="date_to"/>
+                            </div>
+                        </div>
+                        <div class="row mt32">
+                            <div class="col-3">
+                                <strong>Gold Capital: </strong>
+                                <span t-esc="'%.2f'% gold_capital"/>
+                            </div>
+                            <div class="col-3">
+                                <strong>Current Position: </strong>
+                                <span t-esc="'%.2f'% current_position"/>
+                            </div>
+                            <div class="col-3">
+                                <strong>Capital Difference: </strong>
+                                <span t-esc="'%.2f'% capital_difference"/>
+                            </div>
+                        </div>
+                        <br/>
+                        <table class="table table-condensed" style="width: 100%;height=90%;text-align:right">
+                            <thead>
+                                <tr>
+                                    <th style="text-align:center;width:10%;background-color:#B0C4DE;">
+                                        <strong>Doc. Date</strong>
+                                    </th>
+                                    <th style="text-align:center;width: 10%;background-color:#B0C4DE;">
+                                        <strong>Doc. No.</strong>
+                                    </th>
+                                    <th colspan="3" style="text-align:center;width: 35%;background-color:#B0C4DE;">
+                                        <strong>Quantity</strong>
+                                    </th>
+                                    <th colspan="3" style="text-align:center;width: 35%;background-color:#B0C4DE;">
+                                        <strong>Amount</strong>
+                                    </th>
+                                    <th style="text-align:center;width: 10%;background-color:#B0C4DE;">
+                                        <strong>Average</strong>
+                                    </th>
+                                </tr>
+                                <tr>
+                                    <th colspan="2" style="background-color:#B0C4DE;">
+                                    </th>
+                                    <th style="text-align:center;width: 10%;background-color:#B0C4DE;">
+                                        <strong>In</strong>
+                                    </th>
+                                    <th style="text-align:center;width: 10%;background-color:#B0C4DE;">
+                                        <strong>Out</strong>
+                                    </th>
+                                    <th style="text-align:center;width: 10%;background-color:#B0C4DE;">
+                                        <strong>Balance</strong>
+                                    </th>
+
+                                    <th style="text-align:center;width: 10%;background-color:#B0C4DE;">
+                                        <strong>Rate</strong>
+                                    </th>
+                                    <th style="text-align:center;width: 10%;background-color:#B0C4DE;">
+                                        <strong>Value</strong>
+                                    </th>
+                                    <th style="text-align:center;width: 10%;background-color:#B0C4DE;">
+                                        <strong>Balance</strong>
+                                    </th>
+                                    <th style="background-color:#B0C4DE;"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="opening_balance" t-value="0"/>
+                                <t t-set="amount_opening_balance" t-value="0"/>
+                                <t t-foreach="move_lines" t-as="line">
+                                    <tr>
+                                        <td style="text-align:center;">
+                                            <span t-esc="line['date']"/>
+                                        </td>
+                                        <td>
+                                            <span t-esc="line['name']"/>
+                                        </td>
+                                        <td style="text-align:center;">
+                                            <t t-if="line['in'] != 0.0">
+                                                <span t-esc="line['in']"/>
+                                                <t t-set="opening_balance"
+                                                   t-value="opening_balance+line['in']"/>
+                                            </t>
+                                            <t t-else="">
+                                                <span>0.0</span>
+                                            </t>
+                                        </td>
+                                        <td style="text-align:center;">
+                                            <t t-if="line['out'] != 0.0">
+                                                <span t-esc="line['out']"/>
+                                                <t t-set="opening_balance"
+                                                   t-value="opening_balance+line['out']"/>
+                                            </t>
+                                            <t t-else="">
+                                                <span>0.0</span>
+                                            </t>
+                                        </td>
+                                        <td style="text-align:center;">
+                                            <span t-esc="opening_balance"/>
+                                        </td>
+                                        <td style="text-align:center;">
+                                            <span t-esc="'%.6f'% line['rate_kilo']"/>
+                                        </td>
+                                        <td style="text-align:center;">
+                                            <t t-if="line['in'] != 0.0">
+                                                <span t-esc="'%.3f'% (line['rate_gram']*line['in'])"/>
+                                                <t t-set="amount_opening_balance"
+                                                   t-value="amount_opening_balance+(line['rate_gram']*line['in'])"/>
+                                            </t>
+                                            <t t-else="">
+                                                <span t-esc="'%.3f'% (line['rate_gram']*line['out'])"/>
+                                                <t t-set="amount_opening_balance"
+                                                   t-value="amount_opening_balance+(line['rate_gram']*line['out'])"/>
+                                            </t>
+                                        </td>
+                                        <td style="text-align:center;">
+                                            <span t-esc="'%.3f'% amount_opening_balance"/>
+                                        </td>
+                                        <td style="text-align:center;">
+                                            <span t-esc="'%.6f'% (amount_opening_balance/opening_balance)"/>
+                                        </td>
+                                    </tr>
+                                </t>
+                            </tbody>
+                        </table>
+                    </div>
+                </t>
+            </t>
+        </template>
+    </data>
+</odoo>

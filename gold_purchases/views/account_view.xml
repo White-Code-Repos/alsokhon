@@ -8,6 +8,7 @@
             <field name="arch" type="xml">
                 <field name="deprecated" position="after">
                     <field name="gold"/>
+                    <field name="current_position" attrs="{'invisible': [('gold', '=', False)]}" />
                 </field>
             </field>
         </record>
@@ -29,13 +30,13 @@
             <field name="tag">account_report</field>
             <field name="context" eval="{'model': 'account.general.ledger','gold': 'gold_fixed_position'}" />
         </record>
-        
-        <menuitem id="menu_action_account_report_gold_fixed_general_ledger"
-            action="action_account_report_gold_fixed_general_ledger"
-            name="Gold Fixing Position"
-            parent="account.account_reports_management_menu"
-            groups="account.group_account_user"
-            sequence="3"/>
+
+<!--        <menuitem id="menu_action_account_report_gold_fixed_general_ledger"-->
+<!--            action="action_account_report_gold_fixed_general_ledger"-->
+<!--            name="Gold Fixing Position"-->
+<!--            parent="account.account_reports_management_menu"-->
+<!--            groups="account.group_account_user"-->
+<!--            sequence="3"/>-->
 
 
 
@@ -93,48 +94,87 @@
             <field name="model">account.move</field>
             <field name="inherit_id" ref="account.view_move_form"/>
             <field name="arch" type="xml">
+              <field name="invoice_origin" position="after">
+                <field name="gold" invisible="1"/>
+                <field name="diamond" invisible="1"/>
+              </field>
                 <xpath expr="//notebook/page[@id='invoice_tab']/field[@name='invoice_line_ids']/tree/field[@name='product_uom_id']" position="after">
-                    <field name="gross_wt" readonly="1"/>
-                    <field name="purity_id" readonly="1"/>
-                    <field name="pure_wt" readonly="1"/>
-                    <field name="purity_diff" readonly="1"/>
-                    <field name="make_rate" readonly="1"/>
-                    <field name="make_value" readonly="1"/>
-                    <field name="gold_rate" readonly="1"/>
-                    <field name="gold_value" readonly="1"/>
+                  <field name="carat" readonly="1"  />
+                    <field name="gross_wt" readonly="1"  />
+                    <field name="purity_id" readonly="1"  />
+                    <field name="pure_wt" readonly="1"  />
+                    <field name="purity_diff" readonly="1"  />
+                    <field name="make_rate" readonly="1"  />
+                    <field name="make_value" readonly="1"  />
+                    <field name="gold_rate" readonly="1"  />
+                    <field name="gold_value" readonly="1"  />
                 </xpath>
                 <xpath expr="//notebook/page[@id='invoice_tab']/field[@name='invoice_line_ids']/form/sheet/group/field[@name='product_uom_id']" position="after">
-                    <field name="gross_wt" readonly="1"/>
-                    <field name="purity_id" readonly="1"/>
-                    <field name="pure_wt" readonly="1"/>
-                    <field name="purity_diff" readonly="1"/>
-                    <field name="make_rate" readonly="1"/>
-                    <field name="make_value" readonly="1"/>
-                    <field name="gold_rate" readonly="1"/>
-                    <field name="gold_value" readonly="1"/>
+                  <field name="carat" readonly="1"  />
+                    <field name="gross_wt" readonly="1"  />
+                    <field name="purity_id" readonly="1"  />
+                    <field name="pure_wt" readonly="1"  />
+                    <field name="purity_diff" readonly="1"  />
+                    <field name="make_rate" readonly="1"  />
+                    <field name="make_value" readonly="1"  />
+                    <field name="gold_rate" readonly="1"  />
+                    <field name="gold_value" readonly="1"  />
                 </xpath>
                 <xpath expr="//notebook/page[@id='aml_tab']/field[@name='line_ids']/tree/field[@name='product_id']" position="after">
-                    <field name="gross_wt" invisible="1"/>
-                    <field name="purity_id" invisible="1"/>
-                    <field name="pure_wt" invisible="1"/>
-                    <field name="purity_diff" invisible="1"/>
-                    <field name="make_rate" invisible="1"/>
-                    <field name="make_value" invisible="1"/>
-                    <field name="gold_rate" invisible="1"/>
-                    <field name="gold_value" invisible="1"/>
+                  <field name="carat" readonly="1"  />
+                    <field name="gross_wt" invisible="1"  />
+                    <field name="purity_id" invisible="1"  />
+                    <field name="pure_wt" invisible="1"  />
+                    <field name="purity_diff" invisible="1"  />
+                    <field name="make_rate" invisible="1"  />
+                    <field name="make_value" invisible="1"  />
+                    <field name="gold_rate" invisible="1"  />
+                    <field name="gold_value" invisible="1"  />
                 </xpath>
-                <field name="ref" position="after">
-                    <field name="purchase_type" attrs="{'invisible': [('purchase_type', '=', False)],'readonly': True}"/>
-                    <field name="make_value_move" invisible="1" />
-                    <field name="pure_wt_value"  invisible="1" />
-                    <field name="gold_rate_value"  invisible="1" />
-
-                </field>
-
-                <xpath expr="//notebook/page[@id='invoice_tab']/field[@name='invoice_line_ids']/tree/field[@name='price_unit']" position="attributes">
+                <xpath expr="//form/sheet/notebook" position="inside">
+                  <page string="Unfixed Details" attrs="{'invisible': [('is_unfixed', '!=', True)]}">
+                    <group>
+                      <group>
+                        <field name="is_unfixed" invisible="1"/>
+                        <field name="purchase_type" attrs="{'invisible': [('is_unfixed', '!=', True)],'readonly': True}"/>
+                        <field name="gold_rate_value" attrs="{'invisible': [('is_unfixed', '!=', True)],'readonly': True}"/>
+                        <field name="unfixed_fixed_gold" attrs="{'invisible': [('unfixed_fixed_gold', '=', 0.00)]}" readonly="1" force_save="1"/>
+                        <field name="unfixed_fixed_value" attrs="{'invisible': [('unfixed_fixed_value', '=', 0.00)]}" readonly="1" force_save="1"/>
+                        <field name="unfixed_fixed_paid" attrs="{'invisible': [('unfixed_fixed_value', '=', 0.00)]}" readonly="1" force_save="1"/>
+                        <field name="unfixed_fixed_remain" attrs="{'invisible': [('unfixed_fixed_value', '=', 0.00)]}" readonly="1" force_save="1"/>
+                      </group>
+                      <group>
+                          <group>
+                            <field name="fixing_move" attrs="{'invisible': [('unfixed_fixed_gold', '=', 0.00)]}" readonly="1" force_save="1"/>
+                            <field name="unfixing_move" attrs="{'invisible': [('unfixed_fixed_gold', '=', 0.00)]}" readonly="1" force_save="1"/>
+                          </group>
+                          <group>
+                            <field name="unfixed_stock_picking" string="Stock Operation" readonly="1" />
+                            <field name="unfixed_stock_picking_two" nolabel="1"  attrs="{'invisible': [('unfixed_stock_picking_two', '=', False)],'readonly': True}"/>
+                            <field name="unfixed_stock_picking_three" nolabel="1"  attrs="{'invisible': [('unfixed_stock_picking_three', '=', False)],'readonly': True}"/>
+                          </group>
+                      </group>
+                    </group>
+                    <group>
+                      <group>
+                        <field name="make_value_move" attrs="{'invisible': [('is_unfixed', '!=', True)],'readonly': True}" force_save="1" />
+                        <field name="make_value_move_perm"  attrs="{'invisible': [('is_unfixed', '!=', True)],'readonly': True}" force_save="1" />
+                        <field name="make_value_move_perm_flag" invisible="1"   force_save="1" />
+                        <field name="make_value_move_paid" attrs="{'invisible': [('is_unfixed', '!=', True)],'readonly': True}"  force_save="1" />
+                      </group>
+                      <group>
+                        <field name="pure_wt_value" attrs="{'invisible': [('is_unfixed', '!=', True)],'readonly': True}"  force_save="1" />
+                        <field name="pure_wt_value_perm"  attrs="{'invisible': [('is_unfixed', '!=', True)],'readonly': True}" force_save="1" />
+                        <field name="pure_wt_value_perm_flag"  invisible="1"  force_save="1" />
+                        <field name="pure_wt_value_paid"  attrs="{'invisible': [('is_unfixed', '!=', True)],'readonly': True}"  force_save="1" />
+                      </group>
+                    </group>
+                  </page>
+                </xpath>
+                <!-- <xpath expr="//notebook/page[@id='invoice_tab']/field[@name='invoice_line_ids']/tree/field[@name='price_unit']" position="attributes">
                     <attribute name="attrs">{'readonly': ['|',('parent.purchase_type', '=', "unfixed"),('parent.purchase_type', '=', "fixed")]}</attribute>
-                    <attribute name="force_save">1</attribute> 
-                </xpath>
+                    <attribute name="force_save">1</attribute>
+                </xpath> -->
 
             </field>
         </record>
@@ -148,25 +188,20 @@
             <field name="inherit_id" ref="account.view_move_form"/>
             <field name="arch" type="xml">
                     <xpath expr="//header" position="inside">
-                        <button  name="%(action_stock_moves)d" 
-                        type="action" context="{'pure_weight': pure_wt_value}"  
-                        groups="account.group_account_invoice"
-                        attrs="{'invisible': ['|', '|','|',('state', '!=', 'posted'),('invoice_payment_state', '!=', 'not_paid'),('purchase_type', '!=', 'unfixed'),('type', 'not in', ('in_invoice'))]}"  string="register gold" class="oe_highlight"/>
-                    
+                      <button  name="%(action_stock_moves)d" type="action" context="{'pure_weight': pure_wt_value_perm}" groups="account.group_account_invoice" attrs="{'invisible': ['|', '|','|','|',('pure_wt_value','=',0.00),('state', '!=', 'posted'),('invoice_payment_state', '!=', 'not_paid'),('purchase_type', '!=', 'unfixed'),('type', 'not in', ('in_invoice'))]}"  string="Register Gold" class="oe_highlight"/>
+                      <button  name="%(gold_purchases.action_fixing_unfixed_bill_wiz)d" type="action" string="Convert Into Fixed" class="oe_highlight" attrs="{'invisible': ['|', '|','|','|',('pure_wt_value','=',0.00),('state', '!=', 'posted'),('invoice_payment_state', '!=', 'not_paid'),('purchase_type', '!=', 'unfixed'),('type', 'not in', ('in_invoice'))]}" context="{'remaining_gold': pure_wt_value,'gold_rate': gold_rate_value}"/>
                     </xpath>
 
                     <xpath expr="//field[@name='fiscal_position_id']" position="after">
-                    
-                    
-                    <field name="unfixed_move_id"  string="unfixed move" readonly="1" /> 
+
+
+                    <field name="unfixed_move_id"  string="unfixed move" readonly="1" />
                     <field name="unfixed_move_id_two" nolabel="1"  string="unfixed move two" attrs="{'invisible': [('unfixed_move_id_two', '=', False)],'readonly': True}" />
                     <field name="unfixed_move_id_three" nolabel="1"  string="unfixed move three" attrs="{'invisible': [('unfixed_move_id_three', '=', False)],'readonly': True}" />
-                   
-                    <field name="unfixed_stock_picking" string="Stock Operation" readonly="1" /> 
-                    <field name="unfixed_stock_picking_two" nolabel="1"  attrs="{'invisible': [('unfixed_stock_picking_two', '=', False)],'readonly': True}"/>
-                    <field name="unfixed_stock_picking_three" nolabel="1"  attrs="{'invisible': [('unfixed_stock_picking_three', '=', False)],'readonly': True}"/>  
-                    
-                    
+
+
+
+
                     </xpath>
 
             </field>
@@ -178,9 +213,27 @@
             <field name="inherit_id" ref="account.view_account_payment_invoice_form"/>
             <field name="arch" type="xml">
             <xpath expr="//field[@name='journal_id']" position="after">
-               <field name="is_unfixed_wizard" invisible="1" /> 
+               <field name="is_unfixed_wizard" invisible="1" />
                <field name="unfixed_option" attrs="{'invisible': [('is_unfixed_wizard', '=', False)],'required': [('is_unfixed_wizard', '=', True)]}"/>
             </xpath>
+            </field>
+        </record>
+
+        <record id="view_account_payment_register_form_unfixed_attrs" model="ir.ui.view">
+            <field name="name">account.payment.form.register.unfixed.attrs</field>
+            <field name="model">account.payment</field>
+            <field name="inherit_id" ref="account.view_account_payment_form"/>
+            <field name="arch" type="xml">
+            <field name="amount" position="attributes">
+              <attribute name="context">{'default_amount':0.00}</attribute>
+            </field>
+            <field name="communication" position="after">
+              <field name="is_unfixed_wizard" invisible="1" />
+            </field>
+            <group name="payment_difference" position="attributes">
+              <!-- <attribute name="attrs">{'invisible':[('is_unfixed_wizard','=',True)]}</attribute> -->
+              <attribute name="invisible">1</attribute>
+            </group>
             </field>
         </record>
 

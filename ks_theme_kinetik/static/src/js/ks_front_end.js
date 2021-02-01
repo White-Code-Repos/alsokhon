@@ -1,9 +1,6 @@
 $(document).ready(function(){
-    $('.ks-loader-outer').fadeOut();
-//     Changed title of wishlist at detail page
-     $('.o_add_wishlist_dyn').attr('title','Add To Wishlist');
-    $('[data-toggle="tooltip"]').tooltip();
 
+     $('.ks-loader-outer').fadeOut();
 
       function mobileToggleView(){
             $('.search_container:not(.search-container-7) .mobile-toggle-button #search-btn').click(function(ev){
@@ -53,8 +50,6 @@ $(document).ready(function(){
         $(".ks-scroll-top").click(function() {
           $("html, body").animate({ scrollTop: 0 },1200);
         });
-        //     Class for payment page
-        $('.ks_shop_payment').parents('.row').addClass('ks_payment_page')
 
 
         //open filter
@@ -75,7 +70,7 @@ $(document).ready(function(){
             $('body').addClass('js-no-scroll');
         });
 
-        //close filter  '.filter-heading-panel'
+        //close filter
          $('.ks-filter-overlay').on('click', function(e) {
             $('#products_grid_before').addClass('ks-hide-filter');
             $('.ks-filter-overlay').delay(500).queue(function() {
@@ -186,8 +181,7 @@ $(document).ready(function(){
 
         var filter_len = $('.ks-filter-outer').length;
         if(!filter_len){
-            $('#products_grid_before').addClass("ks-only-categories");
-            $('.dropdown_ppg').addClass('d-none');
+            $('.ks_product_categories_before').removeClass("ks-only-categories").addClass("ks-only-categories");
         }
 
        var is_custom_sign_up = $(".ks-custom-login").length;
@@ -199,6 +193,11 @@ $(document).ready(function(){
           $('.navbar-expand-md').addClass('navbar-expand-lg ks-default-header');
           $('.ks-default-header').removeClass('navbar-expand-md');
 
+         }
+
+         $('.h3').parent().addClass('ks_suggested_products');
+         if ($('.ks_suggested_products').find('a').length==0){
+         $('.ks_suggested_products').addClass('d-none')
          }
 
          _.each($('.ks_menu_heading'),function(ev){
@@ -216,140 +215,4 @@ $(document).ready(function(){
          $('#product_detail').parents("main").next().addClass("ks_shop_page_footer");
 
          new WOW().init();
-         if ($('.ks-header-11').length){
-            if ($('.mainTransparent').length){
-             $(document).find('body').addClass('ks_transparent_header')
-        }}
-
-
-            var initScrollTop = $(window).scrollTop();
-            $('.parallax-3 img').css('transform','translateY('+(initScrollTop)+'px)');
-            $('.parallax-2 img').css('transform','translateY('+(initScrollTop)+'px)');
-            $('.ks-ny-hero-text').css('transform','translateY('+(initScrollTop)+'px)');
-
-        $(window).scroll(function() {
-            var scrollTop = $(window).scrollTop();
-            $('.parallax-3 img').css('transform','translateY('+(scrollTop*0.5)+'px)');
-            $('.parallax-2 img').css('transform','translateY('+(scrollTop/3)+'px)');
-            $('.ks-ny-hero-text').css('transform','translateY('+(scrollTop*0.5)+'px)');
-         });
-
-        (function() {
-            var requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame ||
-            function(callback) {
-                window.setTimeout(callback, 1000 / 60);
-            };
-            window.requestAnimationFrame = requestAnimationFrame;
-        })();
-
-        var flakes = [],
-         canvas = $("#snow-fall")
-         if (canvas.length){
-            canvas =$("#snow-fall")[0],
-            ctx = canvas.getContext("2d"),
-            flakeCount = 400,
-            mX = -100,
-            mY = -100
-
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-
-            function snow() {
-                ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-                for (var i = 0; i < flakeCount; i++) {
-                    var flake = flakes[i],
-                        x = mX,
-                        y = mY,
-                        minDist = 150,
-                        x2 = flake.x,
-                        y2 = flake.y;
-
-                    var dist = Math.sqrt((x2 - x) * (x2 - x) + (y2 - y) * (y2 - y)),
-                        dx = x2 - x,
-                        dy = y2 - y;
-
-                    if (dist < minDist) {
-                        var force = minDist / (dist * dist),
-                            xcomp = (x - x2) / dist,
-                            ycomp = (y - y2) / dist,
-                            deltaV = force / 2;
-
-                        flake.velX -= deltaV * xcomp;
-                        flake.velY -= deltaV * ycomp;
-
-                    } else {
-                        flake.velX *= .98;
-                        if (flake.velY <= flake.speed) {
-                            flake.velY = flake.speed
-                        }
-                        flake.velX += Math.cos(flake.step += .05) * flake.stepSize;
-                    }
-
-                    ctx.fillStyle = "rgba(255,255,255," + flake.opacity + ")";
-                    flake.y += flake.velY;
-                    flake.x += flake.velX;
-
-                    if (flake.y >= canvas.height || flake.y <= 0) {
-                        reset(flake);
-                    }
-
-
-                    if (flake.x >= canvas.width || flake.x <= 0) {
-                        reset(flake);
-                    }
-
-                    ctx.beginPath();
-                    ctx.arc(flake.x, flake.y, flake.size, 0, Math.PI * 2);
-                    ctx.fill();
-                }
-                requestAnimationFrame(snow);
-            };
-
-            function reset(flake) {
-                flake.x = Math.floor(Math.random() * canvas.width);
-                flake.y = 0;
-                flake.size = (Math.random() * 3) + 2;
-                flake.speed = (Math.random() * 1) + 0.5;
-                flake.velY = flake.speed;
-                flake.velX = 0;
-                flake.opacity = (Math.random() * 0.5) + 0.3;
-            }
-
-            function init() {
-                for (var i = 0; i < flakeCount; i++) {
-                    var x = Math.floor(Math.random() * canvas.width),
-                        y = Math.floor(Math.random() * canvas.height),
-                        size = (Math.random() * 3) + 2,
-                        speed = (Math.random() * 1) + 0.5,
-                        opacity = (Math.random() * 0.5) + 0.3;
-
-                    flakes.push({
-                        speed: speed,
-                        velY: speed,
-                        velX: 0,
-                        x: x,
-                        y: y,
-                        size: size,
-                        stepSize: (Math.random()) / 30,
-                        step: 0,
-                        opacity: opacity
-                    });
-                }
-
-                snow();
-            };
-
-            canvas.addEventListener("mousemove", function(e) {
-                mX = e.clientX,
-                mY = e.clientY
-            });
-
-            window.addEventListener("resize",function(){
-                canvas.width = window.innerWidth;
-                canvas.height = window.innerHeight;
-            })
-
-            init();
-    }
 });

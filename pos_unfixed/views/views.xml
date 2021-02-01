@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="assets" inherit_id="point_of_sale.assets">
+          <xpath expr="." position="inside">
+              <script type="text/javascript" src="/pos_unfixed/static/src/js/pos.js"></script>
+          </xpath>
+        </template>
+
+        <record id="view_pos_order_type" model="ir.ui.view">
+            <field name="name">pos.order.type</field>
+            <field name="model">pos.order</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+            <field name="arch" type="xml">
+                <field name="pos_reference" position="after">
+                    <field name="order_type" readonly="1" force_save="1"/>
+                </field>
+            </field>
+        </record>
+
+    </data>
+</odoo>

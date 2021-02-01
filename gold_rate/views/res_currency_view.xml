@@ -9,6 +9,7 @@
                     <group string="Gold Details">
                         <field name="is_gold"/>
                         <field name="gold_rate"/>
+                        <field name="premium"/>
                         <field name="uom_id"/>
                     </group>
                 </xpath>

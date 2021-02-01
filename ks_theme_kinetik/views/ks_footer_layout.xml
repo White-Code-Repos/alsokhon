@@ -32,7 +32,7 @@
                                         <div class="newsletter">
                                             <div class="row align-items-center justify-content-center">
                                                 <div class="col-12 col-md-4">
-                                                    <h3>Newsletter Signup</h3>
+                                                    <h3>NEWSLETTER SIGNUP</h3>
                                                 </div>
                                                 <div class="col-12 col-md">
                                                     <div class="input-group">
@@ -183,13 +183,8 @@
                                                 <div class="col-1 pr-0 text-right">
                                                     <i class="fa fa-map-marker"></i>
                                                 </div>
-                                                <div class="col-11 ks_address">
-                                                    <address itemscope="itemscope"
-                                                             itemtype="http://schema.org/Organization">
-                                                        <div t-field="res_company.partner_id" t-options='{
-                                                                "widget": "contact",
-                                                                "fields": ["address"]}'/>
-                                                    </address>
+                                                <div class="col-11">Ground Floor, Office - 123 , Sector- 63, Noida
+                                                    - 123456
                                                 </div>
                                             </div>
                                             <div class="row mb-3">
@@ -197,9 +192,7 @@
                                                     <i class="fa fa-phone"></i>
                                                 </div>
                                                 <div class="col-11">
-                                                    <a t-attf-href="tel:{{res_company.phone}}">
-                                                        <span t-field="res_company.phone"/>
-                                                    </a>
+                                                    <a href="tel:+9199999999">+91-999-999-9999</a>
                                                 </div>
                                             </div>
                                             <div class="row mb-2">
@@ -207,9 +200,7 @@
                                                     <i class="fa fa-envelope"></i>
                                                 </div>
                                                 <div class="col-11">
-                                                    <a t-attf-href="mailto:{{ res_company.email }}">
-                                                        <span t-field="res_company.email"/>
-                                                    </a>
+                                                    <a href="mailto:sales@ksolves.com">sales@ksolves.com</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -220,18 +211,14 @@
                         <div class="footer-bottom  px-3 py-3">
                             <div class="container">
                                 <div class="row align-items-center">
-                                    <div class="col-12 col-sm-5">
+                                    <div class="col-12 col-sm-6">
                                         <div class="copyright mb-3 mb-lg-0 text-center text-lg-left">
                                             <span>Copyright &amp;copy; 2019</span>
-                                            <span t-field="res_company.name" itemprop="name">Company Name</span><span>. All Right Reserved.</span>
+                                            <span t-att-field="res_company.name" itemprop="name">Company Name</span><span>. All Right Reserved.</span>
+<!--                                            <span>. </span>-->
                                          </div>
                                     </div>
-                                    <div class="col-12 col-sm-3">
-                                        <t t-if="request.website.viewref('ks_theme_kinetik.custom_header_layout_6').active or request.website.viewref('ks_theme_kinetik.custom_header_layout_11').active">
-                                            <t t-call="ks_theme_kinetik.ks_lang_option"/>
-                                        </t>
-                                    </div>
-                                    <div class="col-12 col-sm-4">
+                                    <div class="col-12 col-sm-6">
                                         <div class="payment-method mb-2 mb-lg-0">
                                             <ul class="row justify-content-center justify-content-lg-end">
                                                 <li>
@@ -281,17 +268,12 @@
                         <div class="footer-top px-3 border-top">
                             <div class="container">
                                 <div class="address pl-2 col-12 col-lg-10 mx-auto px-0">
-                                   <div class="row pt-3">
-                                        <div class="col-12 col-sm-6 col-md-5 col-lg-4 circle-list">
+                                    <div class="row align-items-center pt-4">
+                                        <div class="col-12 col-sm-6 col-md-5 col-lg-4 pb-4 circle-list">
                                             <div class="text-center">
                                                 <i class="fa fa-map-marker rounded-circle mx-auto"></i>
-                                                <div class="pt-3 ks_address">
-                                                    <address itemscope="itemscope"
-                                                             itemtype="http://schema.org/Organization">
-                                                        <div t-field="res_company.partner_id" t-options='{
-                                                                "widget": "contact",
-                                                                "fields": ["address"]}'/>
-                                                    </address>
+                                                <div class="pt-3">
+                                                    Ground Floor, Office - 123, Sector- 63, Noida - 123456
                                                 </div>
                                             </div>
                                         </div>
@@ -299,9 +281,7 @@
                                             <div class="text-center">
                                                 <i class="fa fa-phone rounded-circle"></i>
                                                 <div class="pt-3">
-                                                    <a t-attf-href="tel:{{res_company.phone}}">
-                                                        <span t-field="res_company.phone"/>
-                                                    </a>
+                                                    <a href="tel:+9199999999">+91-999-999-9999</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -309,9 +289,7 @@
                                             <div class="text-center">
                                                 <i class="fa fa-envelope rounded-circle"></i>
                                                 <div class="pt-3">
-                                                    <a t-attf-href="mailto:{{ res_company.email }}">
-                                                        <span t-field="res_company.email"/>
-                                                    </a>
+                                                    <a href="tel:+917428721493">sales@ksolves.com</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -360,15 +338,8 @@
                                 </div>
                             </div>
                         </div>
-                         <div class="text-center py-2 border-top">
-                            <div class="copyright row justify-content-center">
-                                <span>Copyright &amp;copy; 2019</span>
-                                <span t-field="res_company.name" itemprop="name">Company Name</span>
-                                <span class="ks_footer_2 mr-4">. All Right Reserved.</span>
-                                <t t-if="request.website.viewref('ks_theme_kinetik.custom_header_layout_6').active or request.website.viewref('ks_theme_kinetik.custom_header_layout_11').active">
-                                    <t t-call="ks_theme_kinetik.ks_lang_option"/>
-                                </t>
-                            </div>
+                        <div class="text-center py-2 border-top">
+                            <div class="copyright">Copyright © 2019 Ksolves. All Rights Reserved.</div>
                         </div>
                     </div>
                 </footer>
@@ -477,9 +448,9 @@
                             <div class="container">
                                 <div class="row no-gutters align-items-center">
                                     <div class="col-12 col-sm-12 col-lg-4 pb-4 pb-lg-0 mt-3 mt-lg-0 text-center text-lg-left">
-                                        <a href="#" class="mr-4 d-inline-block">Return Policy</a>
-                                        <a href="#" class="mr-4 d-inline-block">Privacy Policy</a>
-                                        <a href="#" class="d-inline-block">Terms And Conditions</a>
+                                        <a href="#" class="mr-4">Return Policy</a>
+                                        <a href="#" class="mr-4">Privacy Policy</a>
+                                        <a href="#">Terms And Conditions</a>
                                     </div>
                                     <div class=" col-lg-4 col-6 m-auto">
                                         <div class="copyright mb-3 mb-lg-0 text-center ks-footer-logo">
@@ -520,13 +491,9 @@
                             <div class="container">
                                 <div class="row">
                                     <div class="col-12 text-center">
-                                        <div class="copyright">
-                                            <span>Copyright &amp;copy; 2019</span>
-                                            <span t-field="res_company.name" itemprop="name">Company Name</span>
-                                            <span>. All Right Reserved.</span>
-                                            <t t-if="request.website.viewref('ks_theme_kinetik.custom_header_layout_6').active or request.website.viewref('ks_theme_kinetik.custom_header_layout_11').active">
-                                                <t t-call="ks_theme_kinetik.ks_lang_option"/>
-                                            </t>
+                                        <div class="copyright">Copyright © 2019 Ksolves. All Rights Reserved.</div>
+                                        <div class="pt-3 pb-2">
+                                            <img src="/ks_theme_kinetik/static/src/img-ui/footers/payment.png" alt="payment" class="img-fluid"/>
                                         </div>
                                     </div>
                                 </div>
@@ -547,12 +514,12 @@
             <div id="footer">
                 <footer id="footer_layout_4">
                     <div class="bg-light">
-                        <div class="footer-top py-3 px-3 border-bottom">
+                        <div class="footer-top py-4 px-3 border-bottom">
                             <div class="container">
                                 <div class="newsletter-panel d-none">
                                     <div class="row align-items-center justify-content-center">
                                         <div class="col-12 col-md-3">
-                                            <h3>Newsletter Signup</h3>
+                                            <h3>NEWSLETTER SIGNUP</h3>
                                         </div>
                                         <div class="col-12 col-md">
                                             <div class="input-group">
@@ -568,36 +535,27 @@
                                 <!-- newsletter-panel / end -->
                                 <div class="address pl-2">
                                     <div class="row align-items-center">
-                                        <div class="col-12 col-sm-6 col-md-5 col-lg-3 mb-3 mb-lg-0 circle-list">
+                                        <div class="col-12 col-sm-6 col-md-5 col-lg-4 mb-3 mb-lg-0 circle-list">
                                             <div class="row align-items-center">
                                                 <i class="fa fa-map-marker rounded-circle"></i>
-                                                <div class="col ks_address">
-                                                    <address itemscope="itemscope"
-                                                             itemtype="http://schema.org/Organization">
-                                                        <div t-field="res_company.partner_id" t-options='{
-                                                                "widget": "contact",
-                                                                "fields": ["address"]}'/>
-                                                    </address>
+                                                <div class="col">
+                                                    Ground Floor, Office - 123, Sector- 63, Noida - 123456
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-12 col-sm-6 col-md mb-3 col-lg-3 mb-lg-0 circle-list ">
+                                        <div class="col-12 col-sm-6 col-md mb-3 mb-lg-0 circle-list ">
                                             <div class="row align-items-center">
                                                 <i class="fa fa-phone rounded-circle"></i>
                                                 <div class="col">
-                                                    <a t-attf-href="tel:{{res_company.phone}}">
-                                                        <span t-field="res_company.phone"/>
-                                                    </a>
+                                                    <a href="tel:+9199999999">+91-999-999-9999</a>
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="col-12 col-sm-6 col-md mb-3 col-lg-3 mb-lg-0 circle-list">
+                                        <div class="col-12 col-sm-6 col-md mb-3 mb-lg-0 circle-list">
                                             <div class="row align-items-center flex-nowrap">
                                                 <i class="fa fa-envelope rounded-circle"></i>
                                                 <div class="col">
-                                                    <a t-attf-href="mailto:{{ res_company.email }}">
-                                                        <span t-field="res_company.email"/>
-                                                    </a>
+                                                    <a href="tel:+917428721493">sales@ksolves.com</a>
                                                 </div>
                                             </div>
                                         </div>
@@ -700,7 +658,7 @@
                                     </div>
                                     <div class="col-12 col-lg-5 border-left py-3 py-lg-5">
                                         <div class="newsletter pl-lg-5">
-                                            <h3 class="mb-3 mb-lg-4">Subscribe To Our Newsletter</h3>
+                                            <h3 class="mb-3 mb-lg-4">SUBSCRIBE TO OUR NEWSLETTER</h3>
                                             <p>Get The Latest News And Articles Sent Straight To Your Inbox Weekly</p>
                                             <div class="input-group pt-3">
                                                 <input type="text" class="form-control border-radius-0"
@@ -744,18 +702,13 @@
                         <div class="footer-bottom  px-3 py-3">
                             <div class="container">
                                 <div class="row align-items-center">
-                                    <div class="col-12 col-sm-5">
+                                    <div class="col-12 col-sm-6">
                                         <div class="copyright mb-2 mb-lg-0 text-center text-md-left">
                                             <span>Copyright &amp;copy; 2019</span>
                                             <span t-field="res_company.name" itemprop="name">Company Name</span><span>. All Right Reserved.</span>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-sm-2">
-                                        <t t-if="request.website.viewref('ks_theme_kinetik.custom_header_layout_6').active or request.website.viewref('ks_theme_kinetik.custom_header_layout_11').active">
-                                            <t t-call="ks_theme_kinetik.ks_lang_option"/>
-                                        </t>
-                                    </div>
-                                    <div class="col-12 col-sm-5">
+                                    <div class="col-12 col-sm-6">
                                         <div class="payment text-center text-md-right">
                                             <img src="/ks_theme_kinetik/static/src/img-ui/footers/payment.png" alt="payment" class="img-fluid"/>
                                         </div>
@@ -778,12 +731,12 @@
         <xpath expr="//div[@id='footer']" position="replace">
             <footer id="footer">
                 <div class="bg-dark">
-                    <div class="footer-top py-3 px-3 border-bottom">
+                    <div class="footer-top py-4 px-3 border-bottom">
                         <div class="container">
                             <div class="newsletter-panel d-none">
                                 <div class="row align-items-center justify-content-center">
                                     <div class="col-12 col-md-3">
-                                        <h3>Newsletter Signup</h3>
+                                        <h3>NEWSLETTER SIGNUP</h3>
                                     </div>
                                     <div class="col-12 col-md">
                                         <div class="input-group">
@@ -798,36 +751,27 @@
                             <!-- newsletter-panel / end -->
                             <div class="address pl-2">
                                 <div class="row align-items-center">
-                                    <div class="col-12 col-sm-6 col-md-5 col-lg-3 mb-3 mb-lg-0 circle-list">
+                                    <div class="col-12 col-sm-6 col-md-5 col-lg-4 mb-3 mb-lg-0 circle-list">
                                         <div class="row align-items-center">
                                             <i class="fa fa-map-marker rounded-circle"></i>
-                                            <div class="col ks_address">
-                                                <address itemscope="itemscope"
-                                                         itemtype="http://schema.org/Organization">
-                                                    <div t-field="res_company.partner_id" t-options='{
-                                                                "widget": "contact",
-                                                                "fields": ["address"]}'/>
-                                                </address>
+                                            <div class="col">
+                                                Ground Floor, Office - 123, Sector- 63, Noida - 123456
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-sm-6 col-md mb-3 col-lg-3 mb-lg-0 circle-list ">
+                                    <div class="col-12 col-sm-6 col-md mb-3 mb-lg-0 circle-list ">
                                         <div class="row align-items-center">
                                             <i class="fa fa-phone rounded-circle"></i>
                                             <div class="col">
-                                                <a t-attf-href="tel:{{res_company.phone}}">
-                                                    <span t-field="res_company.phone"/>
-                                                </a>
+                                                <a href="tel:+9199999999">+91-999-999-9999</a>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-12 col-sm-6 col-md mb-3 col-lg-3 mb-lg-0 circle-list">
+                                    <div class="col-12 col-sm-6 col-md mb-3 mb-lg-0 circle-list">
                                         <div class="row align-items-center flex-nowrap">
                                             <i class="fa fa-envelope rounded-circle"></i>
                                             <div class="col">
-                                                <a t-attf-href="mailto:{{ res_company.email }}">
-                                                    <span t-field="res_company.email"/>
-                                                </a>
+                                                <a href="tel:+917428721493">Sales</a>
                                             </div>
                                         </div>
                                     </div>
@@ -930,7 +874,7 @@
                                     </div>
                                 <div class="col-12 col-lg-5 border-left py-3 py-lg-5">
                                     <div class="newsletter pl-lg-5">
-                                        <h3 class="mb-3 mb-lg-4">Subscribe To Our Newsletter</h3>
+                                        <h3 class="mb-3 mb-lg-4">SUBSCRIBE TO OUR NEWSLETTER</h3>
                                         <p>Get The Latest News And Articles Sent Straight To Your Inbox Weekly</p>
                                         <div class="input-group pt-3">
                                             <input type="text" class="form-control border-radius-0"
@@ -976,18 +920,13 @@
                     <div class="footer-bottom  px-3 py-3">
                         <div class="container">
                             <div class="row align-items-center">
-                                <div class="col-12 col-sm-5">
+                                <div class="col-12 col-sm-6">
                                     <div class="copyright mb-2 mb-lg-0 text-center text-lg-left">
                                         <span>Copyright &amp;copy; 2019</span>
                                         <span t-field="res_company.name" itemprop="name">Company Name</span><span>. All Right Reserved.</span>
                                     </div>
                                 </div>
-                                <div class="col-12 col-sm-2">
-                                    <t t-if="request.website.viewref('ks_theme_kinetik.custom_header_layout_6').active or request.website.viewref('ks_theme_kinetik.custom_header_layout_11').active">
-                                        <t t-call="ks_theme_kinetik.ks_lang_option"/>
-                                    </t>
-                                </div>
-                                <div class="col-12 col-sm-5">
+                                <div class="col-12 col-sm-6">
                                     <div class="payment text-center text-lg-right">
                                         <img src="/ks_theme_kinetik/static/src/img-ui/footers/payment.png" alt="payment" class="img-fluid"/>
                                     </div>
@@ -1019,35 +958,4 @@
             </xpath>
         </template>
 
-    <template id="ks_lang_option" name="language">
-        <t t-if="(request.is_frontend_multilang and len(languages) &gt; 1) or editable">
-            <span class="lang_dropdown top__links text-sm-center  mr-0 justify-content-center">
-                <div class="js_language_selector dropup" id="lang"
-                     t-if="(request.is_frontend_multilang and len(languages) &gt; 1) or editable">
-                    <label data-toggle="dropdown" type="button" data-caret="true"
-                           class="dropdown-toggle mb-0">
-                        <span t-esc="list(filter(lambda lg : lg[0] == lang, languages))[0][2].split('/').pop()"/>
-                    </label>
-                    <ul role="menu" class="dropdown-menu dropdown-menu-right js_language_selector">
-                        <li groups="website.group_website_publisher">
-                            <t t-set="url_return"
-                               t-value="url_for('', '[lang]') + '?' + keep_query()"/>
-                            <a class="dropdown-item"
-                               t-attf-href="/web#action=base.action_view_base_language_install&amp;website_id=#{website.id}&amp;url_return=#{url_return}">
-                                <i class="fa fa-plus mr-2"/>
-                                Add New
-                            </a>
-                        </li>
-                        <t t-foreach="languages" t-as="lg">
-                            <a t-att-href="url_for(request.httprequest.path + '?' + keep_query(), lang_code=lg[0])"
-                               class="dropdown-item js_change_lang"
-                               t-att-data-url_code="lg[1]">
-                                <t t-esc="lg[2].split('/').pop()"/>
-                            </a>
-                        </t>
-                    </ul>
-                </div>
-            </span>
-        </t>
-    </template>
 </odoo>

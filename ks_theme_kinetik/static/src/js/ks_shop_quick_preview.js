@@ -34,11 +34,10 @@ odoo.define('website_product_quick_preview', function(require){
             if (!ks_prod_id){
                 var ks_prod_id=ks_prod.productTemplateId
                 }
-            var modal_html =  $(QWeb.render('ks_theme_kinetik.products_modal', {}));
-            $('#product_modal').html("");
             ajax.jsonRpc("/shop/product", 'call', {'product_id':ks_prod_id}).then(function (data_list) {
             if(data_list[1]==0){
             var data=data_list[0];
+            var modal_html =  $(QWeb.render('ks_theme_kinetik.products_modal', {}));
             $('.oe_website_sale div:first').append(modal_html);
             $('#product_modal').html(data);
             $('#product_quick_preview_Modal').modal('show');

@@ -12,7 +12,9 @@ class GoldPurity(models.Model):
     parts = fields.Float('Parts Gold')
     out_of_parts = fields.Float('Out Of Parts Gold')
     purity = fields.Float('Purity/Hallmark')
+    scrap_purity = fields.Float('Scrap Purity/Hallmark')
     gold_percent = fields.Float('Gold %', digits='Product Price')
+    scrap_percent = fields.Float('Scrap %', digits='Product Price')
     allow_delete = fields.Boolean(default=True)
     name = fields.Char('Karat', compute='get_name')
     parts_name = fields.Char('Parts Gold', compute='get_part_name')
@@ -43,6 +45,12 @@ class GoldPurity(models.Model):
         for rec in self:
             if not (0 < rec.purity <= 1000):
                 raise UserError(_('Purity should be between 0 to 1000.'))
+
+    @api.constrains('scrap_purity')
+    def check_purity_scrap(self):
+        for rec in self:
+            if not (0 < rec.scrap_purity <= 1000):
+                raise UserError(_('Scrap Purity should be between 0 to 1000.'))
 
     @api.constrains('gold_percent')
     def check_gold_percent(self):

@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-        
+
         <!-- <record id="view_name_filter" model="ir.ui.view">
-         <field name="name">xxx</field> 
+         <field name="name">xxx</field>
          <field name="model">model name</field>
-         <field name="arch" type="xml"> 
-                <search string="xxx"> 
-                <field name="name" string="xxx"/> 
-                <field name="department_id"/> 
-                <group expand="0" string="Group By..."> 
-                <filter string="Division" icon="terp-personal" domain="[]" context="{'group_by':'division_id'}"/> 
-                </group> 
-                </search> 
+         <field name="arch" type="xml">
+                <search string="xxx">
+                <field name="name" string="xxx"/>
+                <field name="department_id"/>
+                <group expand="0" string="Group By...">
+                <filter string="Division" icon="terp-personal" domain="[]" context="{'group_by':'division_id'}"/>
+                </group>
+                </search>
           </field>
         </record> -->
 
@@ -20,34 +20,34 @@
             <field name="model">stock.move.gold</field>
             <field name="arch" type="xml">
                 <form string="moves">
-                    <header> 
-                        
-                    </header>
-                    <group>
-                        <span colspan="4" nolabel="1">This wizard will generate stock move.</span>
-                    </group>
-                    
-                        <separator string="moves" colspan="4"/>
-                        <group>
-                        <field name="pure_weight" readonly="1"/>
-                        <field name="pure_remainning" readonly="1"/>
-                        </group>
+                  <header>
 
-                        <newline/>
-                        <field name="move_ids" nolabel="1"  context="{'group_by':'product_id'}" domain="[('is_scrap', '=', True),('is_full_paid', '=', False),('picking_id.picking_type_id.code', '=', 'incoming')]" >
-                        <tree editable="bottom" >
-                            <field name="product_id" readonly="1"/>
-                            <field name="qty_done" string="quantity" readonly="1"/>
-                            <field name="gross_weight" readonly="1" />
-                            <field name="purity" readonly="1" />
-                            <field name="quantity" readonly="1"/>
-                            <field name="paid_gross"/>
-                            <field name="paid_pure" readonly="1" force_save = "1" />
-                        </tree>
-                        </field>
-                    
+                  </header>
+                  <group>
+                      <span colspan="4" nolabel="1">This wizard will generate stock move.</span>
+                  </group>
+
+                      <separator string="moves" colspan="4"/>
+                      <group>
+                      <field name="pure_weight" readonly="1"/>
+                      <field name="pure_remainning" readonly="1"/>
+                      </group>
+                      <newline/>
+                      <field name="move_ids" nolabel="1" context="{'group_by':'product_id'}" domain="[('product_id.scrap','=',True),('product_id.active','=',True)]">
+                      <tree editable="bottom">
+                        <!-- <field name="incoming_flag" invisible="1"/> -->
+                        <!-- <field name="scrap_state_read" invisible="1"/> -->
+                          <field name="name" readonly="1"/>
+                          <field name="product_id" readonly="1"/>
+                          <field name="product_qty" string="quantity" readonly="1"/>
+                          <field name="gross_weight" readonly="1"/>
+                          <field name="purity" readonly="1"/>
+                          <field name="paid_gross"/>
+                          <field name="paid_pure" readonly="1" force_save="1"/>
+                      </tree>
+                      </field>
+              <button icon="fa-cogs" string="Generate" name="compute_sheet" type="object" class="oe_highlight"/>
                </form>
-               <button icon="fa-cogs" string="Generate" name="compute_sheet" type="object" class="oe_highlight"  />
             </field>
         </record>
 

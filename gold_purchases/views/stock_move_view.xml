@@ -60,14 +60,17 @@
             <field name="inherit_id" ref="stock.view_move_line_tree"/>
             <field name="arch" type="xml">
                 <field name="qty_done" position="before">
-                    <field name="gross_weight" readonly="0"/>
-                    <field name="pure_weight" readonly="1"/>
-                    <field name="purity" readonly="1"/>
+                  <field name="carat" readonly="0" attrs="{'column_invisible':[('parent.assembly','!=',True),('parent.diamond','!=',True)]}"/>
+                    <field name="gross_weight" readonly="0" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
+                    <field name="pure_weight" readonly="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
+                    <field name="purity_id" readonly="1" force_save="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
+                    <field name="purity" readonly="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
                     <field name="item_category_id"/>
                     <field name="sub_category_id" attrs="{'invisible': [('item_category_id','=', False)]}"
                            domain="[('parent_category_id', '=', item_category_id)]"/>
                     <field name="selling_karat_id" readonly="1"/>
                     <field name="selling_making_charge"/>
+                    <field name="buying_making_charge" readonly="1" force_save="1"/>
                 </field>
                  <xpath expr="//field[@name='date']" position="attributes">
                     <attribute name="attrs">{'column_invisible': True}</attribute>
@@ -85,7 +88,7 @@
                     <attribute name="attrs">{'column_invisible': True}</attribute>
                     <attribute name="force_save">1</attribute>
                 </xpath>
-                
+
             </field>
         </record>
 
@@ -94,20 +97,30 @@
             <field name="model">stock.move.line</field>
             <field name="inherit_id" ref="stock.view_stock_move_line_operation_tree"/>
             <field name="arch" type="xml">
+                <field name="location_dest_id" position="before">
+                    <field name="image" widget="image"
+                           options='{"size": [60, 60]}'/>
+                </field>
                 <field name="product_uom_id" position="after">
-                    <field name="gross_weight" readonly="0" />
-                    <field name="pure_weight" readonly="1"/>
-                    <field name="purity" readonly="1"/>
-                    <field name="item_category_id" readonly="1" force_save="1"/>
+                  <field name="carat" readonly="0"  attrs="{'column_invisible':[('parent.assembly','!=',True),('parent.diamond','!=',True)]}"/>
+                    <field name="gross_weight" readonly="0"  attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
+                    <field name="pure_weight" readonly="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
+                    <field name="purity_id" readonly="1" force_save="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
+                    <field name="purity" readonly="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
+                    <field name="item_category_id" readonly="1" force_save="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
                     <field name="sub_category_id" readonly="1" force_save="1" attrs="{'invisible': [('item_category_id','=', False)]}"
                            domain="[('parent_category_id', '=', item_category_id)]"/>
-                    <field name="selling_karat_id" readonly="1" force_save="1"/>
-                    <field name="selling_making_charge" readonly="1" force_save="1"/>
+                    <field name="selling_karat_id" readonly="1" force_save="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
+                    <field name="selling_making_charge" readonly="1" force_save="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
+                    <field name="buying_making_charge" readonly="1" force_save="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
                 </field>
                 <xpath expr="//field[@name='product_uom_id']" position="attributes">
                     <attribute name="attrs">{'readonly': True}</attribute>
                     <attribute name="force_save">1</attribute>
                 </xpath>
+                <field name="lot_id" position="attributes">
+                  <attributes name="options">{'no_create_edit':True}</attributes>
+                </field>
             </field>
         </record>
 
@@ -117,14 +130,18 @@
             <field name="inherit_id" ref="stock.view_move_line_form"/>
             <field name="arch" type="xml">
                 <field name="product_uom_id" position="after">
-                    <field name="gross_weight" readonly="0"/>
-                    <field name="pure_weight" readonly="1"/>
-                    <field name="purity" readonly="1"/>
+                  <!-- <field name="carat" readonly="0"  attrs="{'invisible':[('parent.assembly','!=',True),('parent.diamond','!=',True)]}"/> -->
+                  <field name="carat" readonly="0" />
+                    <field name="gross_weight" readonly="0" />
+                    <field name="pure_weight" readonly="1" />
+                    <field name="purity_id" readonly="1" force_save="1" />
+                    <field name="purity" readonly="1" />
                     <field name="item_category_id"/>
                     <field name="sub_category_id" attrs="{'invisible': [('item_category_id','=', False)]}"
                            domain="[('parent_category_id', '=', item_category_id)]"/>
                     <field name="selling_karat_id"  readonly="1"/>
                     <field name="selling_making_charge"/>
+                    <field name="buying_making_charge" readonly="1" force_save="1"/>
                 </field>
             </field>
         </record>
@@ -135,8 +152,8 @@
             <field name="inherit_id" ref="stock.stock_inventory_line_tree2"/>
             <field name="arch" type="xml">
                 <field name="product_uom_id" position="after">
-                    <field name="gross_weight"/>
-                    <field name="pure_weight"/>
+                    <field name="gross_weight" attrs="{'column_invisible':[('product_id.categ_id.is_gold','!=',True)]}"/>
+                    <field name="pure_weight" attrs="{'column_invisible':[('product_id.categ_id.is_gold','!=',True)]}"/>
                 </field>
             </field>
         </record>
@@ -147,9 +164,13 @@
             <field name="inherit_id" ref="stock.view_move_tree"/>
             <field name="arch" type="xml">
                 <field name="product_uom" position="after">
-                    <field name="gross_weight"/>
-                    <field name="pure_weight"/>
-                    <field name="purity"/>
+                  <field name="gold" invisible="1"/>
+                  <field name="diamond" invisible="1"/>
+                  <field name="assembly" invisible="1"/>
+                  <field name="carat" attrs="{'column_invisible':[('diamond','!=',True)]}"/>
+                    <field name="gross_weight" attrs="{'column_invisible':[('gold','!=',True)]}"/>
+                    <field name="pure_weight" attrs="{'column_invisible':[('gold','!=',True)]}"/>
+                    <field name="purity" attrs="{'column_invisible':[('gold','!=',True)]}"/>
                 </field>
             </field>
         </record>
@@ -159,16 +180,23 @@
             <field name="model">stock.picking</field>
             <field name="inherit_id" ref="stock.view_picking_form"/>
             <field name="arch" type="xml">
+              <field name="origin" position="after">
+                <field name="gold" invisible="1"/>
+                <field name="diamond" invisible="1"/>
+                <field name="assembly" invisible="1"/>
+              </field>
                 <xpath expr="//field[@name='move_ids_without_package']/tree/field[@name='product_uom']"
                        position="after">
-                    <field name="gross_weight" readonly="0"/>
-                    <field name="pure_weight" readonly="1"/>
-                    <field name="purity" readonly="1"/>
-                    <field name="item_category_id" required="1"/>
+                     <field name="carat" readonly="0" attrs="{'column_invisible':[('parent.assembly','!=',True),('parent.diamond','!=',True)]}"/>
+                    <field name="gross_weight" readonly="0" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
+                    <field name="pure_weight" readonly="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
+                    <field name="purity" readonly="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
+                    <field name="item_category_id" required="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
                     <field name="sub_category_id" attrs="{'invisible': [('item_category_id','=', False)], 'required': [('item_category_id', '!=', False)]}"
                            domain="[('parent_category_id', '=', item_category_id)]"/>
-                    <field name="selling_karat_id"  readonly="1"/>
-                    <field name="selling_making_charge"/>
+                    <field name="selling_karat_id"  readonly="1" invisible="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
+                    <field name="selling_making_charge" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
+                    <field name="buying_making_charge" readonly="1" force_save="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
                 </xpath>
             </field>
         </record>
@@ -182,20 +210,25 @@
                 <field name="move_line_nosuggest_ids" position="replace">
                     <group>
                         <group>
-                            <field name="gross_weight" invisible="1"/>
-                            <field name="pure_weight" invisible="1"/>
-                            <field name="purity" invisible="1"/>
+                          <field name="gold" invisible="1"/>
+                          <field name="diamond" invisible="1"/>
+                          <field name="assembly" invisible="1"/>
+                            <field name="carat" invisible="1" attrs="{'column_invisible':[('diamond','!=',True)]}"/>
+                            <field name="gross_weight" invisible="1" attrs="{'column_invisible':[('gold','!=',True)]}"/>
+                            <field name="pure_weight" invisible="1" attrs="{'column_invisible':[('gold','!=',True)]}"/>
+                            <field name="purity" invisible="1" attrs="{'column_invisible':[('gold','!=',True)]}"/>
                         </group>
                         <group>
                             <field name="item_category_id" invisible="1"/>
                             <field name="sub_category_id" invisible="1"/>
                             <field name="selling_karat_id" invisible="1"/>
                             <field name="selling_making_charge" invisible="1"/>
+                            <field name="buying_making_charge" invisible="1"/>
                         </group>
                     </group>
                     <field name="move_line_nosuggest_ids"
                            attrs="{'readonly': ['|', ('state', '=', 'cancel'), '&amp;', ('state', '=', 'done'), ('is_locked', '=', True)]}"
-                           context="{'tree_view_ref': 'stock.view_stock_move_line_operation_tree','default_picking_id': picking_id, 'default_move_id': id, 'default_product_id': product_id, 'default_location_id': location_id, 'default_location_dest_id': location_dest_id, 'default_company_id': company_id, 'default_selling_karat_id': selling_karat_id, 'default_item_category_id': item_category_id, 'default_sub_category_id': sub_category_id, 'default_gross_weight': gross_weight, 'default_pure_weight': pure_weight, 'default_purity': purity, 'default_selling_making_charge': selling_making_charge}"/>
+                           context="{'tree_view_ref': 'stock.view_stock_move_line_operation_tree','default_picking_id': picking_id, 'default_move_id': id, 'default_product_id': product_id, 'default_location_id': location_id, 'default_location_dest_id': location_dest_id, 'default_company_id': company_id, 'default_selling_karat_id': selling_karat_id, 'default_item_category_id': item_category_id, 'default_sub_category_id': sub_category_id, 'default_gross_weight': gross_weight, 'default_pure_weight': pure_weight, 'default_purity': purity, 'default_selling_making_charge': selling_making_charge, 'default_buying_making_charge': buying_making_charge, 'default_carat': carat}"/>
                 </field>
             </field>
         </record>

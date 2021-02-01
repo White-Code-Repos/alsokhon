@@ -108,7 +108,7 @@
                                                         </t>
                                                     </div>
                                                 </div>
-                                                <div class="fp__price ks_price_info d-flex justify-content-center align-items-center">
+                                                <div class="fp__price">
                                                     <div class="fp__current_price d-flex">
                                                         <t t-if="website_currency_position == 'before'">
                                                             <t t-esc="prods.website_currency_id"/>
@@ -138,12 +138,12 @@
                                                 <div class="col">
                                                     <a type="button" role="button"
                                                        class="btn btn-secondary btn-sm o_add_wishlist"
-                                                       t-att-disabled='in_wish or None' title="Add To Wishlist"
+                                                       t-att-disabled='in_wish or None' title="Add to Wishlist"
                                                        t-att-data-product-template-id="prods.prod_id"
                                                        t-att-data-product-product-id="prods.ks_product_var_id"
                                                        data-action="o_wishlist">
                                                         <span class="fa fa-heart" role="img"
-                                                              aria-label="Add To Wishlist"/>
+                                                              aria-label="Add to wishlist"/>
                                                     </a>
                                                 </div>
                                             </t>
@@ -164,10 +164,10 @@
                                                           class="text-center">
                                                         <input name="product_id" t-att-value="prods.ks_product_var_id"
                                                                type="hidden"/>
-                                                         <a href="#" role="button" class="btn btn-secondary btn-sm a-submit ks_custom_cart_link" aria-label="Add To Cart" title="Add To Cart">
+                                                         <a href="#" role="button" class="btn btn-secondary btn-sm a-submit ks_custom_cart_link" aria-label="Shopping cart" title="Shopping cart">
                                                             Add To Cart
                                                           </a>
-                                                        <a class="ks_add_to_cart btn btn-secondary btn-sm a-submit" title="Add To Cart">
+                                                        <a class="ks_add_to_cart btn btn-secondary btn-sm a-submit">
                                                                <input name="product_product_id" t-att-value="prods.ks_product_var_id" type="hidden"/>
                                                             <span class="fa fa-shopping-cart"/>
                                                         </a>

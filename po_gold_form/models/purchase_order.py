@@ -11,7 +11,7 @@ class PurchaseOrder(models.Model):
     @api.onchange('currency_id', 'date_order', 'order_type')
     def get_gold_rate(self):
         if self.date_order and self.currency_id and self.currency_id.is_gold \
-                and self.order_type and self.order_type.gold:
+                and self.order_type and self.order_type.gold or self.order_type.assembly:
             rates = self.env['gold.rates'].search([
                 ('currency_id', '=', self.currency_id.id),
                 ('name', '=', self.date_order.date()),
@@ -21,6 +21,7 @@ class PurchaseOrder(models.Model):
             ozs = self.env.ref('uom.product_uom_oz')
             if rates and ozs:
                 self.gold_rate = (1.000/rates[0].rate)*ozs.factor
+                self.gold_rate = self.gold_rate + self.currency_id.premium
             else:
                 self.gold_rate = 0.00
         else:

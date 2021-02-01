@@ -46,8 +46,6 @@
                    t-thumbnail="/ks_theme_kinetik/static/src/img-ui/snippets_icons/header_001.png"/>
                 <t t-snippet="ks_theme_kinetik.ks_video_static"
                    t-thumbnail="/ks_theme_kinetik/static/src/img-ui/snippets_icons/video.png"/>
-                <t t-snippet="ks_theme_kinetik.ks_deal_of_the_day_base"
-                   t-thumbnail="/ks_theme_kinetik/static/src/img-ui/snippets_icons/deal.png"/>
             </div>
         </xpath>
     </template>
@@ -86,8 +84,6 @@
                        t-thumbnail="/ks_theme_kinetik/static/src/img-ui/snippets_icons/Slider-2-Image-.png"/>
                     <t t-snippet="ks_theme_kinetik.slider_003"
                        t-thumbnail="/ks_theme_kinetik/static/src/img-ui/snippets_icons/right_f_full.png"/>
-                    <t t-snippet="ks_theme_kinetik.slider_004"
-                       t-thumbnail="/ks_theme_kinetik/static/src/img-ui/snippets_icons/Slider-Image-1.png"/>
                     <!--                    <t t-snippet="ks_theme_kinetik.ks_product_slider_multab"-->
                     <!--                       t-thumbnail="/ks_theme_kinetik/static/src/img-ui/snippets_icons/offer-snippet.png"/>-->
                 </div>
@@ -279,7 +275,7 @@
             <div id="custom_snippets" class="o_panel">
                 <div class="o_panel_header">
                     <i class="fa fa-th-large"/>
-                    Testimonial
+                    Testinomial
                 </div>
                 <div class="o_panel_body">
                     <t t-snippet="ks_theme_kinetik.testinomial_1"
@@ -316,7 +312,7 @@
             <div id="custom_snippets" class="o_panel">
                 <div class="o_panel_header">
                     <i class="fa fa-th-large"/>
-                    Accordion
+                    Acordian
                 </div>
                 <div class="o_panel_body">
                     <t t-snippet="ks_theme_kinetik.Acordian_1"
@@ -356,7 +352,7 @@
             <div id="custom_snippets_new" class="o_panel">
                 <div class="o_panel_header">
                     <i class="fa fa-th-large"/>
-                    Deal Of The Day
+                    Deal Of the day
                 </div>
                 <div class="o_panel_body">
                     <t t-snippet="ks_theme_kinetik.deal_of_the_day_2"
@@ -419,7 +415,7 @@
             <div id="custom_snippets_new" class="o_panel">
                 <div class="o_panel_header">
                     <i class="fa fa-th-large"/>
-                    Call To Action With Info
+                    Call to action with Info
                 </div>
                 <div class="o_panel_body">
                     <t t-snippet="ks_theme_kinetik.call_to_action_1"
@@ -448,7 +444,7 @@
             <div id="custom_snippets_new" class="o_panel">
                 <div class="o_panel_header">
                     <i class="fa fa-th-large"/>
-                    Sliding Products
+                    Sliding product
                 </div>
                 <div class="o_panel_body">
                     <t t-snippet="ks_theme_kinetik.sliding_product_1"
@@ -484,7 +480,7 @@
             <div id="custom_snippets_new" class="o_panel">
                 <div class="o_panel_header">
                     <i class="fa fa-th-large"/>
-                    Service And Skills
+                    Service and Skills
                 </div>
                 <div class="o_panel_body">
                     <t t-snippet="ks_theme_kinetik.service_and_skill_1"
@@ -519,14 +515,9 @@
                        t-thumbnail="/ks_theme_kinetik/static/src/img-ui/snippets_icons/Landing-Page.png"/>
                     <t t-snippet="ks_theme_kinetik.ks_landing_books"
                        t-thumbnail="/ks_theme_kinetik/static/src/img-ui/snippets_icons/Landing-Page.png"/>
-                     <t t-snippet="ks_theme_kinetik.ks_landing_hotel"
-                       t-thumbnail="/ks_theme_kinetik/static/src/img-ui/snippets_icons/Landing-Page.png"/>
-                    <t t-snippet="ks_theme_kinetik.ks_landing_christmas"
-                       t-thumbnail="/ks_theme_kinetik/static/src/img-ui/snippets_icons/Landing-Page.png"/>
-                    <t t-snippet="ks_theme_kinetik.ks_landing_new_year"
-                       t-thumbnail="/ks_theme_kinetik/static/src/img-ui/snippets_icons/Landing-Page.png"/>
                 </div>
             </div>
         </xpath>
     </template>
+
 </odoo>

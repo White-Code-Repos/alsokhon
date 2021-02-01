@@ -28,7 +28,7 @@ odoo.define('website_recently_viewed_snippet', function(require){
                   items:4,
                   rtl: ks_rtl,
                   autoplay:true,
-                  margin:14,
+                  margin:30,
                   speed:100,
                   nav:true,
                   autoplayHoverPause: true,
@@ -37,8 +37,7 @@ odoo.define('website_recently_viewed_snippet', function(require){
                   responsive:{
                         0:{
                             items: 2,
-                            dots: true,
-                            margin:0,
+                            dots: true
                         },
                         960:{
                             items: 3,

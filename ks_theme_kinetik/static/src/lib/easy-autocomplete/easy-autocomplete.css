@@ -247,7 +247,6 @@
   position: absolute;
   width: 100%;
   z-index: 200;
-  box-shadow: 0 0 2px #ccc;
 }
 .easy-autocomplete-container ul {
   background: none repeat scroll 0 0 #ffffff;

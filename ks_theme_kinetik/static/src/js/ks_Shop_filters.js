@@ -3,43 +3,9 @@ odoo.define('ks_ecommerce_theme.ks_footer', function (require) {
 
     var ajax = require('web.ajax');
     var wSaleUtils = require('website_sale.utils');
-    var core = require('web.core');
-    var _t = core._t;
     var ks_p_id;
 
     $(document).ready(function(){
-        if($('.o_rtl').length){
-        var ks_rtl=true;}
-        $('.ks-hotel-gallery').owlCarousel({
-            loop:true,
-            margin:30,
-            nav:true,
-            rtl: ks_rtl,
-            dots: false,
-            navText:['<i class="fa fa fa-angle-left"></i>','<i class="fa fa fa-angle-right"></i>'],
-            autoplay: true,
-            speed: 1000,
-            responsive:{
-                0:{
-                    items:1,
-                    dots: true,
-                    nav: false
-                },
-                600:{
-                    items:3,
-                    dots: true,
-                    nav: false
-                },
-                1000:{
-                    items:4,
-                    dots: true,
-                    nav: false
-                },
-                1400: {
-                   items:4,
-                }
-            }
-        })
          $('.ks-search-clear').on("click",function(e){
          location.href='/shop';
          })
@@ -73,8 +39,8 @@ odoo.define('ks_ecommerce_theme.ks_footer', function (require) {
                 $("#product_quick_preview_Modal").modal('show');
                 });
 
-    $('.product-select').on('click',function(e){
-                $('.ks_text').val(e.target.text)
+    $('.product-select').on('change',function(e){
+                $('.ks_text').val($( ".product-select option:selected" ).text())
                  var ks_order = $('.ks_sort_per_page').val();
                  if (ks_order !== undefined){
                 $("form.js_attributes").append('<input type="hidden" name="order" value="'+ks_order+'"/>').submit();
@@ -101,8 +67,7 @@ odoo.define('ks_ecommerce_theme.ks_footer', function (require) {
                   _.each($('.ks_brand_active').find('input'), function(ev) {
                      if (ev){
                       $('.filter-selectedFilterContainer').removeClass('d-none');
-                      $('.brand_filter_list').removeClass('d-none');
-                      $('.brand_filter_list').append('<div class="ks_var_filter_list '+$(ev).val()+'"></div>')
+                      $('.brand_filter_list').append('<div class="'+$(ev).val()+'"</div>')
                       $('.brand_filter').removeClass('d-none');
                       $('.'+$(ev).val()).append($(ev).parent().html());
                       $('.'+$(ev).val()).append('<span class="remove_brand_filter fa fa-times"></span>')
@@ -112,13 +77,12 @@ odoo.define('ks_ecommerce_theme.ks_footer', function (require) {
                     _.each($('input[name="attrib"]:checked'), function(ev) {
                      if (ev){
                        $('.filter-selectedFilterContainer').removeClass('d-none');
-                      $('.variants_filter_list').removeClass('d-none');
-                      $('.variants_filter_list').append('<div class="ks_var_filter_list '+$(ev).val()+'"></div>')
+                      $('.variants_filter_list').append('<div class="'+$(ev).val()+'"</div>')
                       $('.variants_filter').removeClass('d-none');
                       $('.'+$(ev).val()).append($(ev).parent().html());
                       if ($(ev).attr('title')){
                       var color=$(ev).attr('title');
-//                      $('.'+$(ev).val()).append('<label>'+color+'</label>');
+                      $('.'+$(ev).val()).append('<label>'+color+'</label>');
                       }
                       $('.'+$(ev).val()).append('<span class="remove_variant_filter fa fa-times"></span>')
                       $('.'+$(ev).val()).find('input').addClass('d-none')
@@ -128,8 +92,7 @@ odoo.define('ks_ecommerce_theme.ks_footer', function (require) {
                        _.each($('select[name="attrib"]  option:selected'), function(ev) {
                         if(ev){
                            $('.filter-selectedFilterContainer').removeClass('d-none');
-                         $('.variants_filter_list').removeClass('d-none');
-                         $('.variants_filter_list').append('<div class="ks_var_filter_list '+$(ev).val()+'"></div>');
+                         $('.variants_filter_list').append('<div class="'+$(ev).val()+'"</div>');
                          $('.variants_filter').removeClass('d-none');
                          $('.'+$(ev).val()).append('<label>'+$(ev).text()+'</label>')
                          $('.'+$(ev).val()).append('<span class="remove_variant_filter fa fa-times"></span>')
@@ -143,36 +106,11 @@ odoo.define('ks_ecommerce_theme.ks_footer', function (require) {
                     var selected_max=parseInt($('#ks-selected_input_max_hidden').val())
                     var min=parseInt($('#ks-price-filter').attr('data-slider-min'));
                     var max=parseInt($('#ks-price-filter').attr('data-slider-max'));
-                    if ($('.ks_filter_button').length){
-                    if ($('#ks-price-filter').attr('data-slider-min')==undefined){
-                        min=0
-                    }}
-                    if ((selected_min)>min | (selected_max)<max && $('#ks-price-filter').length !=0){
-                         $('.filter-selectedFilterContainer').removeClass('d-none');
-                         $('.price_filter_list').append('<label id=price_list_shop>Price: </label><span class=ks-selected-items>'+selected_min+'-'+selected_max+'</span><a class="remove_price_filter fa fa-times"><a/>')
-                         $('.ks_price_slider').append('<span class="ks_price_loading d-none">'+selected_min+','+selected_max+'</span>')
+                    if ((selected_min)>min | (selected_max)<max){
+                                 $('.filter-selectedFilterContainer').removeClass('d-none');
+                               $('.price_filter_list').append('<label id=price_list_shop>Price: </label><span class=ks-selected-items>'+selected_min+'-'+selected_max+'</span><a class="remove_price_filter fa fa-times"><a/>')
                        }
-
-                  if ($('.dropdown_sorty_by button.dropdown-toggle').find('span').text().trim().split(':')[0]==='Sorting by '){
-                            var ks_order=$('.dropdown_sorty_by button.dropdown-toggle').find('span').text().trim().split(':')[1]
-                            $('.filter-selectedFilterContainer').removeClass('d-none');
-                            $('.SortByList').append('<label id=order_list_shop>Sort By: </label><span class=ks-selected-items>'+ks_order+'</span><a class="remove_order_filter fa fa-times"><a/>')
-                  }
                 })
-     $(document).on('click','.remove_order_filter',function(ev){
-                     _.each($('.ks_sortable'), function(e) {
-                            if ($(e).parent().text().trim()== $(ev.currentTarget).parent().text().split(':')[1].trim()){
-                                    var dict={'Most Popular':'ks_view_count+desc','Newest Arrivals':'create_date+desc','Highest Rating':'ks_rating_avg+desc','Highest Sale':'ks_sale_count+desc',
-                                               'Catalog price-High to Low':'list_price+desc','Catalog price-Low to High':'list_price+asc','Name-A to Z':'name+asc','Name-Z to A':'name+desc'
-                                                }
-
-                                   var get_order=dict[$(e).parent().text().trim()]
-                                    location.href=$(e).parent().attr('href').replace(get_order,'')
-                            }
-                     })
-     })
-
-
 
      $(document).on('click','.remove_filter',function(ev){
                     $(ev.currentTarget).attr('href','/shop?'+$('.ks_active').parent().find('a').attr('href').split('?').splice(1)[0]);
@@ -183,7 +121,7 @@ odoo.define('ks_ecommerce_theme.ks_footer', function (require) {
                     var brand_key=$(ev.currentTarget).parent()[0].className
                      _.each($('input[name="brnd"]:checked'), function(ev) {
                      if (ev){
-                        var a= "ks_var_filter_list " + $(ev).val();
+                        var a=$(ev).val();
                         if (a==brand_key){
                         $(ev).attr('checked',false);
                         var ks_order = $('.ks_sort_per_page').val();
@@ -200,9 +138,6 @@ odoo.define('ks_ecommerce_theme.ks_footer', function (require) {
       $(document).on('click','.remove_price_filter',function(ev){
                     var min=parseInt($('#ks-price-filter').attr('data-slider-min'));
                     var max=parseInt($('#ks-price-filter').attr('data-slider-max'));
-                    if ($('#ks-price-filter').attr('data-slider-min')==undefined){
-                        min=0
-                    }
                     var selected_min=parseInt($('#ks-selected_input_min_hidden').val(min))
                     var selected_max=parseInt($('#ks-selected_input_max_hidden').val(max))
                     var selected_min=parseInt($('#ks-selected_input_min').val(min))
@@ -220,7 +155,7 @@ odoo.define('ks_ecommerce_theme.ks_footer', function (require) {
                     var variant_key=$(ev.currentTarget).parent()[0].className
                     _.each($('.ks_attrib_active'), function(ev) {
                      if (ev){
-                        var a="ks_var_filter_list " + $(ev).find('input').val();
+                        var a=$(ev).find('input').val();
                         if (a==variant_key){
                         $(ev).find('input').attr('checked',false);
                          var ks_order = $('.ks_sort_per_page').val();
@@ -236,7 +171,7 @@ odoo.define('ks_ecommerce_theme.ks_footer', function (require) {
           if ($('select[name="attrib"]  option:selected').val()!=""){
                 _.each($('.ks_select_attrib option:selected'), function(ev) {
                 if (ev){
-                    var b="ks_var_filter_list " + $(ev).val();
+                    var b=$(ev).val();
                     if (b==variant_key){
                     $(ev).attr('selected',false);
                     var ks_order = $('.ks_sort_per_page').val();
@@ -263,16 +198,14 @@ odoo.define('ks_ecommerce_theme.ks_footer', function (require) {
                  return false;
              }
            });
-        $(".slider-horizontal").on('pointerup',function(){
-             var ks_price_val = $("#ks-price-filter").val();
+
+    $('.ks-price-filter-apply').on("click",function(e){
+            var ks_price_val = $("#ks-price-filter").val();
+
             $("form.js_attributes").submit();
             return false
-       })
-//    $('.ks-price-filter-apply').on("click",function(e){
-//            var ks_price_val = $("#ks-price-filter").val();
-//            $("form.js_attributes").submit();
-//            return false
-//         });
+
+         });
 
 //  this is for view mode toggling at shop page
     $('.list-view-group li').click(function(e){
@@ -324,7 +257,6 @@ odoo.define('ks_ecommerce_theme.ks_footer', function (require) {
                               rtl:ks_rtl,
                               loop:ks_repeat,
                               speed:ks_speed,
-                              navText:['<i class="fa fa fa-angle-left"></i>','<i class="fa fa fa-angle-right"></i>'],
                            });
                      }
                      if(name == "Alternate")
@@ -337,7 +269,6 @@ odoo.define('ks_ecommerce_theme.ks_footer', function (require) {
                               rtl:ks_rtl,
                               loop:ks_repeat,
                               speed:ks_speed,
-                              navText:['<i class="fa fa fa-angle-left"></i>','<i class="fa fa fa-angle-right"></i>'],
                            });
                      }
                 }

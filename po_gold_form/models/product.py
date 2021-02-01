@@ -7,3 +7,4 @@ class ProductCategory(models.Model):
 
     is_gold = fields.Boolean('Is Gold')
     is_scrap = fields.Boolean(string='Scrap')
+    is_assembly = fields.Boolean('Assembly')

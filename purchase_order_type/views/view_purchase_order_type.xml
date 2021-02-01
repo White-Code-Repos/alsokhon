@@ -41,7 +41,11 @@
                             <field name="is_fixed" attrs="{'invisible': [('is_unfixed', '=', True)]}"/>
                             <field name="is_unfixed" attrs="{'invisible': [('is_fixed', '=', True)]}"/>
                             <field name="gold" />
+                            <field name="diamond" />
+                            <field name="assembly" />
                             <field name="stock_picking_type_id" attrs="{'invisible': [('is_unfixed', '=', False)],'required': [('is_unfixed', '=', True)]}"/>
+                            <field name="assembly_picking_type_id" attrs="{'invisible': [('assembly', '=', False)],'required': [('assembly', '=', True)]}"/>
+                            <field name="assembly_picking_type_id_back" attrs="{'invisible': [('assembly', '=', False)],'required': [('assembly', '=', True)]}"/>
                         </group>
                         <group>
                             <field name="payment_term_id"/>

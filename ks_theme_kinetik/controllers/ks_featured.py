@@ -43,16 +43,9 @@ class WebsiteShopFeatured(http.Controller):
             is_ks_cart = request.website.viewref('website_sale.products_add_to_cart').active
             is_ks_compare = request.website.viewref('website_sale_comparison.add_to_compare').active
             is_ks_product_det = request.website.viewref('website_sale.products_description').active
-            rating = request.website.viewref('ks_theme_kinetik.ks_product_comment').active
-            percentage_discount_show = request.website.viewref('ks_theme_kinetik.percent_discount').active
-            prod_price = prods._get_combination_info(prods._get_first_possible_combination(), add_qty=1, pricelist='')[
-                'price']
+            prod_price = prods._get_combination_info(prods._get_first_possible_combination(), add_qty=1, pricelist='')['list_price']
             if not prod_price:
                 prod_price = prods['list_price']
-            if (prod_price == 0):
-                per_dis = 0
-            else:
-                per_dis = int(((prods.list_price - prod_price) / prods.list_price) * 100)
             values = {
                 'product_name': prods.name,
                 'product_img': ks_img_url,
@@ -61,8 +54,6 @@ class WebsiteShopFeatured(http.Controller):
                 'description_sale': prods.description_sale,
                 'prod_brand': prods.id,
                 'product': prods,
-                'percentage_discount': per_dis,
-                'percen_show': percentage_discount_show,
                 'website_public_price':prod_price ,
                 'website_currency_id': ks_currency_id.symbol,
                 'website_currency_position': ks_currency_id.position,
@@ -78,9 +69,6 @@ class WebsiteShopFeatured(http.Controller):
                 'is_ks_compare': is_ks_compare,
                 'is_ks_product_det': is_ks_product_det,
                 'prod_url': "/shop/product/%s" % (prods['id'],),
-                'rating_count': prods.rating_count,
-                'rating_avg': prods.rating_avg /2,
-                'is_rating': rating,
             }
             products.append(values)
         return products

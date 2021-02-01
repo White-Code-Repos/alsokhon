@@ -6,8 +6,7 @@ odoo.define('ks_ecommerce_theme.ks_load_more_products', function (require) {
          $(document).on('click','.product_load_more',function(ev){
                $(ev.currentTarget).addClass('disabled')
                var offset=$('.page_number').val();
-               var ppg=$('.product_per_page').val();
-               var load_class = $($('.o_wsale_products_grid_table_wrapper').children().last()).attr('class');
+               var ppg=$('.page_number').val();
                var active_page=$($('.page-item.active')[0]).text().trim();
                var ks_filters = $('form.js_attributes').serializeArray();
                var ks_order = $('.ks_sort_per_page').val();
@@ -15,11 +14,7 @@ odoo.define('ks_ecommerce_theme.ks_load_more_products', function (require) {
                var min_price=$("#ks-selected_input_min_hidden").val();
                var max_price=$("#ks-selected_input_max_hidden").val();
                var ks_search=$('input[name=search]').val()
-               ks_filters.push({"name": "offset","value": offset});
-               if(load_class.includes("ks_all_product")){
-                 load_class = $($('.ks-product-list')).attr("class");
-               }
-               ks_filters.push({"name":"load_class", "value":load_class})
+               ks_filters.push({"name": "num","value": offset});
                 var ks_brnds = $('input[name="brnd"]:checked');
                      if(ks_brnds){
                 _.each(ks_brnds,function(brnd){

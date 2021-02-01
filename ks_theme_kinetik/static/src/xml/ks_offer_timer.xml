@@ -43,7 +43,7 @@
                                 <input name="id" value="offer_timer"
                                        type="hidden"/>
                                 <a class="btn ks-btn-theme">
-                                    <span>Shop Now</span>
+                                    <span>+ Shop Now +</span>
                                 </a>
                             </form>
                         </section>

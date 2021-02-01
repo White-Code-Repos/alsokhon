@@ -11,7 +11,9 @@
                     <field name="name"/>
                     <field name="parts_name"/>
                     <field name="purity"/>
+                    <field name="scrap_purity"/>
                     <field name="gold_percent"/>
+                    <field name="scrap_percent"/>
                 </tree>
             </field>
         </record>
@@ -29,6 +31,10 @@
                                 <field name="karat" required="1"/>
                                 <field name="purity" required="1"/>
                                 <field name="gold_percent" required="1"/>
+                            </group>
+                            <group>
+                              <field name="scrap_purity"/>
+                              <field name="scrap_percent"/>
                             </group>
                             <group>
                                 <div class="o_row">

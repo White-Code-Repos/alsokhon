@@ -6,8 +6,6 @@
             <div data-oe-model="model" data-oe-type="html" class="o_editable oe_structure"></div>
         </xpath>
     </template>
-    <template id="ks_theme_kinetik.percent_discount" customize_show="True" active="False" inherit_id="website.layout"
-              name="Discount Percentage On Product"/>
     <template id="ks_theme_kinetik.loader" customize_show="True" active="False" inherit_id="website.layout"
               name="Display Loader"/>
     <template id="ks_theme_kinetik.call_us" customize_show="True" active="False" inherit_id="website.layout"
@@ -76,6 +74,14 @@
 
                                 </li>
                             </t>
+                            <li class="top__links text-sm-center pl-sm-0 pl-3">
+                                <a href="/about">About Us</a>
+                            </li>
+                            <li class="top__links text-sm-center pl-sm-0 pl-3">
+                                <a href="/contactus">Contact Us</a>
+                            </li>
+
+
                         </ul>
                         <ul class="list-unstyled m-auto m-sm-1 ks-header-2-top-social">
                             <a href="#" target="_blank">
@@ -266,6 +272,12 @@
 
                             </li>
                         </t>
+                        <li class="top__links">
+                            <a href="/about">About Us</a>
+                        </li>
+                        <li class="top__links">
+                            <a href="/contactus">Contact Us</a>
+                        </li>
                     </ul>
                 </div>
                 <div class="row container-lg m-auto align-items-center no-gutters">
@@ -426,6 +438,12 @@
 
                                 </li>
                             </t>
+                            <li class="top__links text-sm-center pl-sm-0 pl-3 ">
+                                <a href="/about">About Us</a>
+                            </li>
+                            <li class="top__links text-sm-center pl-sm-0 pl-3">
+                                <a href="/contactus">Contact Us</a>
+                            </li>
                         </ul>
                         <ul class="list-unstyled m-auto m-sm-0 ks-header-2-top-social py-1 py-sm-0">
                             <a href="#" target="_blank">
@@ -617,6 +635,12 @@
 
                                 </li>
                             </t>
+                            <li class="top__links text-sm-center">
+                                <a href="/about">About Us</a>
+                            </li>
+                            <li class="top__links text-sm-center">
+                                <a href="/contactus">Contact Us</a>
+                            </li>
                         </ul>
                     </div>
                     <div class="col-sm-6">
@@ -731,6 +755,12 @@
                 <div class="row ks-header-2-top justify-content-between align-items-center d-none">
                     <ul id="top-nav"
                         class="list-unstyled row mx-0  m-auto mx-2 ks_top_menu justify-content-center">
+                        <li class="top__links text-sm-center pl-sm-0 pl-3 mb-lg-0 mb-2">
+                            <a href="/about">About Us</a>
+                        </li>
+                        <li class="top__links text-sm-center pl-sm-0 pl-3 mb-lg-0 mb-2">
+                            <a href="/contactus">Contact Us</a>
+                        </li>
                         <t t-if="(request.is_frontend_multilang and len(languages) &gt; 1) or editable">
                             <li class="lang_dropdown top__links text-sm-center mb-lg-0 mb-2 mr-2">
                                 <div class="js_language_selector" id="lang"
@@ -909,127 +939,6 @@
         <xpath expr="//header//ul[@id='top_menu']/li[contains(@t-attf-class, 'o_wsale_my_cart')]" position="replace"/>
 
 
-    </template>
-
-    <!--    header 11 (transparent header)-->
-     <template id="custom_header_layout_11" inherit_id="website.layout" name="Header 11" customize_show="True"
-              active="False">
-        <xpath expr="//header" position="attributes">
-            <attribute name="t-attf-class" add="#{'row ks-header-6 ks-header-11 container-lg align-items-center'}" separator=" "/>
-        </xpath>
-        <xpath expr="//header[1]//nav[1]" position="attributes">
-            <attribute name="class">navbar navbar-expand-lg navbar-light bg-light</attribute>
-        </xpath>
-
-        <xpath expr="//header[1]//nav[1]" position="before">
-            <div class="col-lg-2 ks-header-6-logo  col-6">
-                <a href="/" class="navbar-brand logo">
-                    <span t-field="res_company.logo" t-options="{'widget': 'image'}" role="img"
-                          t-att-aria-label="'Logo of %s' % res_company.name" t-att-title="res_company.name"/>
-                </a>
-            </div>
-        </xpath>
-        <xpath expr="//header[1]//nav[1]" position="attributes">
-            <attribute name="class">
-                navbar-expand-lg ks_header_2 ks-header-2-main col-lg-7 ks-header-6-main px-0 col-6
-            </attribute>
-        </xpath>
-        <xpath expr="//header[1]//nav[1]" position="after">
-            <!--<t t-call-assets="ks_theme_kinetik.assets_header_css_6" t-js="false"/>-->
-            <div class="col-lg-3  col-12 ks_mycart align-items-center  ks-header-2-menu-icon justify-content-lg-end ks-header-6-items">
-                <div class="d-flex flex-nowrap align-items-center justify-content-lg-end justify-content-between">
-                    <div class="nav-item dropdown remove_after_content">
-                        <t>
-                            <div class="nav-item divider" groups="base.group_public"/>
-                            <div groups="base.group_public" class="nav-item ks">
-                                   <t t-set="ks_is_sign_in" t-value="request.env['ir.ui.view'].search([('key','=','portal.portal_show_sign_in'),('website_id','=',request.website.id),('active','=',False) or ('active','=',True)],limit=1)"/>
-                                    <t t-if="ks_is_sign_in.active if ks_is_sign_in else True">
-                                         <a t-attf-href="/web/login" class="ks-custom-login">
-                                        <b>Sign in</b>
-                                    </a>
-                                </t>
-                            </div>
-                        </t>
-                        <div class="nav-item dropdown" t-ignore="true" t-if="not user_id._is_public()">
-                            <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                                <b>
-                                    <span t-esc="user_id.name[:23] + '...' if user_id.name and len(user_id.name) &gt; 25 else user_id.name"/>
-                                </b>
-                            </a>
-                            <div class="dropdown-menu js_usermenu" role="menu">
-                                <a id="o_logout" class="dropdown-item" t-attf-href="/my/home"
-                                   role="menuitem">My Account
-                                </a>
-                                <a id="o_logout" class="dropdown-item"
-                                   t-attf-href="/web/session/logout?redirect=/"
-                                   role="menuitem">Logout
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="top_menu">
-                        <div id="custom_cart">
-                            <t t-set="website_sale_order" t-value="website.sale_get_order()"/>
-                            <div class="nav-item divider d-none"/>
-                            <!-- Make sure the cart and related menus are not folded (see autohideMenu) -->
-                            <div id="my_cart_2"
-                                 t-attf-class="nav-item o_wsale_my_cart #{'' if website_sale_order and website_sale_order.cart_quantity else ' d-none'}">
-                                <a href="/shop/cart" class="nav-link ks_kkkk align-items-center p-0">
-                                    <i class="fa fa-shopping-cart nav__icons ml-4 position-relative" />
-                                    <sup t-attf-class="my_cart_quantity o_animate_blink badge badge-primary cart__info cart__count"
-                                         t-esc="website_sale_order and website_sale_order.cart_quantity or '0'"/>
-                                </a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="ks-header-6-wish">
-                        <t t-if="request.website.viewref('website_sale_wishlist.add_to_wishlist').active">
-                            <t t-set='wishcount' t-value="len(request.env['product.wishlist'].current())"/>
-                            <ul class="nav navbar-nav">
-                                <li id="my_wish" class="nav-item o_wsale_my_wish"
-                                    t-att-style="not wishcount and 'display:none;'">
-                                    <a href="/shop/wishlist" class="nav-link ks_kk">
-                                        <i class="fa fa-heart"/>
-                                        <sup t-attf-class="my_wish_quantity o_animate_blink badge badge-primary">
-                                            <t t-esc='wishcount'/>
-                                        </sup>
-                                    </a>
-                                </li>
-                            </ul>
-                        </t>
-                    </div>
-                    <div>
-                        <i class="fa fa-search ks-search-trigger" />
-                    </div>
-                    <div class="search_container ks-header-6-search">
-                        <form action="/shop" method="get">
-                            <div class="input-group">
-                                <input type="text" name="search" class="search-query form-control oe_search_box"
-                                       placeholder="Search..." required="True" t-att-value="search"/>
-                                <button type="submit" class="btn oe_search_button d-none d-lg-block">
-                                    <i class="fa fa-search nav__search_icon hydrated" id="search-btn"/>
-                                </button>
-                                <button type="submit" class="btn oe_search_button mobile-toggle-button d-block d-lg-none">
-                                    <i class="fa fa-search nav__search_icon hydrated" id="search-btn"/>
-                                </button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </xpath>
-        <xpath expr="//header[1]//div[hasclass('container')]//a[1]" position="replace">
-            <div class="ks_removed_a">
-            </div>
-        </xpath>
-        <xpath expr="//header[1]//div[hasclass('container')]//ul[@id='top_menu']" position="attributes">
-            <attribute name="class">list-unstyled d-flex</attribute>
-        </xpath>
-        <!--This is used to replace login info after login-->
-        <xpath expr="//header//div[@id='top_menu_collapse']//li[hasclass('nav-item','dropdown')]" position="replace"/>
-        <!--        This is used to replace wishlist option for the header-->
-        <xpath expr="//header//div[@id='top_menu_collapse']//li[hasclass('o_wsale_my_wish')]" position="replace"/>
-        <xpath expr="//header//ul[@id='top_menu']/li[contains(@t-attf-class, 'o_wsale_my_cart')]" position="replace"/>
     </template>
 
     <!-- Header 6   -->
@@ -1223,6 +1132,12 @@
 
                                 </li>
                             </t>
+                            <li class="top__links">
+                                <a href="/about">About Us</a>
+                            </li>
+                            <li class="top__links">
+                                <a href="/contactus">Contact Us</a>
+                            </li>
                         </ul>
                         <ul class="list-unstyled m-auto m-sm-1 ks-header-2-top-social">
                             <a href="#" target="_blank">
@@ -1420,6 +1335,12 @@
 
                                 </li>
                             </t>
+                            <li class="top__links text-sm-center ">
+                                <a href="/about">About Us</a>
+                            </li>
+                            <li class="top__links text-sm-center">
+                                <a href="/contactus">Contact Us</a>
+                            </li>
                         </ul>
                         <ul class="list-unstyled m-auto m-sm-0 ks-header-2-top-social py-1 py-sm-0 order-2 pr-3">
                             <a href="#" target="_blank">
@@ -1610,6 +1531,12 @@
 
                             </li>
                         </t>
+                        <li class="top__links text-sm-center">
+                            <a href="/about">About Us</a>
+                        </li>
+                        <li class="top__links text-sm-center">
+                            <a href="/contactus">Contact Us</a>
+                        </li>
                     </ul>
                 </div>
                 <div class="col-sm-5 py-2">
@@ -1829,7 +1756,7 @@
         </xpath>
     </template>
 
-    <template id="website.layout_logo_show" inherit_id="website.layout" customize_show="True" name="Show Logo">
+        <template id="website.layout_logo_show" inherit_id="website.layout" customize_show="True" name="Show Logo">
         <xpath expr="//a[hasclass('navbar-brand')]" position="replace">
             <a href="/" class="navbar-brand logo ks_custom_logo">
              <span t-field="res_company.logo" t-options="{'widget': 'image'}" role="img" t-att-aria-label="'Logo of %s' % res_company.name" t-att-title="res_company.name" />

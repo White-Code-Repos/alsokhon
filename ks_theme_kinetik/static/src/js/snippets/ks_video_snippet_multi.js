@@ -35,36 +35,34 @@ odoo.define('ks_theme_kinetik.ks_video_snippts', function(require) {
             })
         },
     })
-     options.registry.video_actions = options.Class.extend({
+    options.registry.video_actions = options.Class.extend({
         on_prompt:function(ks_self){
                 var dialog = new ks_SnippetSelectionDialog(ks_self, {
                     title: _t('Select Video'),
                 });
                 dialog.open();
                 dialog.on('save', this, function () {
-                     data_1 = {}
+                     var data_2 =  data_global;
                      data_1 = {
                         'video_message' : $('.ks_message_video').val(),
                         'button_message' : $('.ks_message_button').val(),
                         'button_url' : $('.ks_url_button').val()
                         }
-                        if(!_.isEmpty(data_global)){
+                        if(data_2){
                                  var ext = data_global['name'].split('.').pop().toLowerCase();
                                   if($.inArray(ext, ['mp4','3gp','webm']) == 0) {
-                                            ajax.post('/product_video/data/create', data_global).then(function(attachment){
+                                            ajax.post('/product_video/data/create', data_2).then(function(attachment){
                                             var ks_new_slider = new animation.registry.ks_video_snippet(ks_self);
                                             ks_new_slider.start(attachment.id,data_1,ks_self);
                                             }.bind(this))
-                                           data_global={}
                                   }
                                    else{
-                                         alert('Invalid extension!');
-                                         data_global={}
+                                         alert('Select a valid video');
                                      }
 
                         }
                         else{
-                             alert('Please select a video');
+                             alert('Select a valid video');
                         }
 
                 });

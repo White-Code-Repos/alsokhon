@@ -8,4 +8,3 @@ access_ks_product_slider_tabs,ks_product.slider_tabs,model_ks_product_slider_tab
 access_ks_product_slider_lines,ks_product.slider_lines,model_ks_product_slider_line,,1,1,1,1
 access_product_template_res_users,product.template.res.users,model_product_template_res_users,,1,1,1,1
 access_ks_theme_kinetik_ks_breadcumb,ks_theme_kinetik.ks_breadcumb,model_ks_theme_kinetik_ks_breadcumb,,1,1,1,1
-access_ks_theme_kinetik_ks_settings,ks_theme_kinetik.ks_settings,model_ks_theme_kinetik_ks_settings,,1,1,1,1

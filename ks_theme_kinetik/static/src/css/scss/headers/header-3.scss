@@ -314,6 +314,10 @@ header.o_header_affix.affix.affixed {
     }
 }
 
+#wrapwrap .ks-header-3  ~ .o_header_affix.affixed {
+    z-index: 1000 !important;
+}
+
 .ks-header-3-topmost {
     + .o_affix_enabled {
         .container {
@@ -331,9 +335,6 @@ header.o_header_affix.affix.affixed {
         .container-lg {
             padding: 0;
         }
-    }
-    label.dropdown-toggle {
-        color: $black;
     }
 }
 

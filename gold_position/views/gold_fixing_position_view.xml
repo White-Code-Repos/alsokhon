@@ -1,0 +1,78 @@
+<odoo>
+    <record id="gold_fixing_position_report_form" model="ir.ui.view">
+        <field name="name">gold.fixing.position.report.form</field>
+        <field name="model">gold.fixing.position.report</field>
+        <field name="arch" type="xml">
+            <form edit="0" create="0">
+                <sheet>
+                    <group colspan="4" col="4">
+                        <field name="name"/>
+                        <field name="date"/>
+                        <field name="quantity_in"/>
+                        <field name="quantity_out"/>
+                        <field name="quantity_balance"/>
+                        <field name="rate_kilo"/>
+                        <field name="value"/>
+                        <field name="rate_gram"/>
+                        <field name="amount_balance"/>
+                        <field name="amount_average"/>
+                        <field name="gold_capital"/>
+                        <field name="current_position"/>
+                        <field name="capital_difference"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="gold_fixing_position_report_tree" model="ir.ui.view">
+        <field name="name">gold.fixing.position.report.tree</field>
+        <field name="model">gold.fixing.position.report</field>
+        <field name="arch" type="xml">
+            <tree default_order="date asc, name desc" create="0"
+                  import="0" js_class="gold_fixing_position_report_list">
+                <field name="date"/>
+                <field name="name"/>
+                <field name="quantity_in"/>
+                <field name="quantity_out"/>
+                <field name="quantity_balance"/>
+                <field name="rate_kilo"/>
+                <field name="value"/>
+                <field name="amount_balance"/>
+                <field name="amount_average"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="gold_fixing_position_report_search" model="ir.ui.view">
+        <field name="name">gold.fixing.position.report.search</field>
+        <field name="model">gold.fixing.position.report</field>
+        <field name="arch" type="xml">
+            <search string="Gold Fixing Registry">
+                <field name="name"/>
+                <field name="date"/>
+                <filter string="name" name="group_by_name" context="{'group_by':'name'}"/>
+                <filter string="date" name="group_by_date" context="{'group_by':'date:day'}"/>
+            </search>
+        </field>
+    </record>
+
+    <record id="gold_fixing_position_report_action" model="ir.actions.act_window">
+        <field name="name">Gold Fixing Registry</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">gold.fixing.position.report</field>
+        <field name="view_mode">tree,form</field>
+        <field name="context">{"search_default_group_by_date":1}</field>
+        <field name="view_id" ref="gold_fixing_position_report_tree"/>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="menu_gold_fixing_position_report"
+              action="gold_fixing_position_report_action"
+              name="Gold Fixing Registry"
+              parent="account.account_reports_management_menu"
+              sequence="15"/>
+</odoo>

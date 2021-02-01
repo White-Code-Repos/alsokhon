@@ -10,8 +10,7 @@ class WebsiteShopBrands(http.Controller):
     ], type='json', auth="public", website=True)
     def ProductBrandsHomePage(self):
         request.env["ir.qweb"].clear_caches()
-        all_brands = request.env['ks_product_manager.ks_brand'].search([("ks_is_published", '=', True),
-                                                                        ('website_id', '=', request.website.id)])
+        all_brands = request.env['ks_product_manager.ks_brand'].search([("ks_is_published", '=', True)])
         products_brands = []
         for prods in all_brands:
             values = {

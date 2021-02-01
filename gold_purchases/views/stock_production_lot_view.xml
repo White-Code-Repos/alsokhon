@@ -6,14 +6,50 @@
             <field name="model">stock.production.lot</field>
             <field name="inherit_id" ref="stock.view_production_lot_form"/>
             <field name="arch" type="xml">
+              <page name="description" position="after">
+                <page name="assembly_description_gold" string="Assembly Gold Description" attrs="{'invisible':[('assembly','!=',True)]}">
+                  <field name="assembly_description_gold">
+                    <tree editable="top">
+                      <field name="product_id"/>
+                      <field name="quantity" sum="quantity"/>
+                      <field name="gross_weight" sum="gross_weight"/>
+                      <field name="purity_id"/>
+                      <field name="purity"/>
+                      <field name="polish_rhodium"/>
+                      <field name="pure_weight" sum="pure_weight"/>
+                    </tree>
+                  </field>
+                </page>
+                <page name="assembly_description_diamond" string="Assembly Stone Description" attrs="{'invisible':[('assembly','!=',True)]}">
+                  <field name="assembly_description_diamond">
+                    <tree editable="top">
+                      <field name="product_id"/>
+                      <field name="carat"/>
+                      <field name="carat_price"/>
+                      <field name="stones_value"/>
+                      <field name="stones_quantity" sum="stones_quantity"/>
+                      <field name="stone_setting_rate"/>
+                      <field name="stone_setting_value" sum="stone_setting_value" readonly="1" force_save="1"/>
+                    </tree>
+                  </field>
+                </page>
+              </page>
                 <field name="company_id" position="after">
-                    <field name="gross_weight"/>
-                    <field name="purity"/>
-                    <field name="pure_weight"/>
-                    <field name="item_category_id"/>
-                    <field name="sub_category_id"/>
-                    <field name="selling_karat_id"/>
-                    <field name="selling_making_charge" widget="monetary"/>
+                  <field name="carat" attrs="{'invisible':[('diamond','!=',True),('assembly','!=',True)]}"/>
+
+                  <field name="diamond" invisible="1"/>
+                  <field name="gold" invisible="1"/>
+                    <field name="assembly" invisible="1"/>
+                    <field name="gross_weight" readonly="1" force_save="1" attrs="{'invisible':[('gold','!=',True),('assembly','!=',True)]}"/>
+                    <field name="purity" readonly="1" force_save="1" attrs="{'invisible':[('gold','!=',True),('assembly','!=',True)]}"/>
+                    <field name="purity_id" readonly="1" force_save="1" attrs="{'invisible':[('gold','!=',True),('assembly','!=',True)]}"/>
+                    <field name="pure_weight" readonly="1" force_save="1" attrs="{'invisible':[('gold','!=',True),('assembly','!=',True)]}"/>
+                    <field name="remaining_weight" readonly="1" force_save="1" invisible="1"/>
+                    <field name="item_category_id" readonly="1" force_save="1"/>
+                    <field name="sub_category_id" readonly="1" force_save="1"/>
+                    <field name="selling_karat_id" readonly="1" force_save="1"/>
+                    <field name="selling_making_charge" widget="monetary" readonly="1" force_save="1"/>
+                    <field name="buying_making_charge" widget="monetary" readonly="1" force_save="1"/>
                 </field>
             </field>
         </record>
@@ -24,15 +60,21 @@
             <field name="inherit_id" ref="stock.view_production_lot_tree"/>
             <field name="arch" type="xml">
                 <field name="product_id" position="after">
-                    <field name="gross_weight" invisible="1"/>
-                    <field name="purity" invisible ="1"/>
-                    <field name="is_scrap" invisible ="1"/>
-                    <field name="pure_weight"/>
+                  <field name="carat" invisible="1" attrs="{'column_invisible':[('diamond','!=',True),('assembly','!=',True)]}"/>
+
+                  <field name="gold" invisible="1"/>
+                  <field name="diamond" invisible="1"/>
+                    <field name="assembly" invisible="1"/>
+                    <field name="gross_weight" invisible="1" attrs="{'column_invisible':[('gold','!=',True),('assembly','!=',True)]}"/>
+                    <field name="purity" invisible ="1" attrs="{'column_invisible':[('gold','!=',True),('assembly','!=',True)]}"/>
+                    <field name="is_scrap" invisible ="1" attrs="{'column_invisible':[('gold','!=',True),('assembly','!=',True)]}"/>
+                    <field name="pure_weight" attrs="{'column_invisible':[('gold','!=',True),('assembly','!=',True)]}"/>
                     <field name="item_category_id" invisible ="1"/>
                     <field name="sub_category_id" invisible ="1"/>
                     <field name="selling_karat_id" invisible ="1"/>
                     <field name="selling_making_charge" widget="monetary" invisible ="1"/>
-                </field>
+                    <field name="buying_making_charge" widget="monetary" invisible ="1"/>
+              </field>
             </field>
         </record>
 

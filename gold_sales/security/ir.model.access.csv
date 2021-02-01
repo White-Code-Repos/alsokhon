@@ -1,0 +1,5 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_unfixed_wizard_sale,access_unfixed_wizard_sstock_sale,model_stock_move_gold_sale,,1,1,1,1
+access_unfixed_fixing_sale,access_unfixed_fixing_sstock_sale,model_fixing_unfixed_inv,,1,1,1,1
+access_assembly_details_gold,access_assembly_detailsg_ss_sale_gold,model_assembly_description_sale_gold,,1,1,1,1
+access_assembly_details_diamond,access_assembly_detailsg_ss_sale_diamond,model_assembly_description_sale_diamond,,1,1,1,1

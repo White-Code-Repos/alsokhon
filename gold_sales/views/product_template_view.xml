@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <record id="gold_sale_product_category_form_view_inherited" model="ir.ui.view">
+            <field name="name">gold.sale.product.category.form.view.inherit</field>
+            <field name="model">product.category</field>
+            <field name="inherit_id" ref="product.product_category_form_view"/>
+            <field name="arch" type="xml">
+                <xpath expr="//sheet" position="inside">
+                    <group string="Gold Accounting" attrs="{'invisible': [('is_gold', '=', False)]}">
+                        <field name="gold_stock_output_account" attrs="{'required': [('is_gold', '=', True)]}"/>
+                        <field name="gold_sale_journal" domain="[('gold', '=', True)]" attrs="{'required': [('is_gold', '=', True)]}"/>
+                    </group>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

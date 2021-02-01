@@ -53,8 +53,6 @@
                                        attrs="{'invisible':[('ks_item_selection_method','!=','Cats')]}"/>
                                 <field name="ks_is_category_tab_layout"
                                        attrs="{'invisible':[('ks_item_selection_method','!=','Cats')]}"/>
-                                <field name="ks_show_sub_categories"
-                                       attrs="{'invisible':[('ks_item_selection_method','!=','Cats')]}"/>
                             </group>
                         </group>
                     </page>
@@ -149,53 +147,6 @@
         <field name="arch" type="xml">
             <xpath expr="//field[@name='ks_categ_tag']" position="after">
                <field name="ks_product_category_slogan"/>
-            </xpath>
-        </field>
-    </record>
-    <record id="product_video_1" model="ir.ui.view" >
-         <field name="name">product.image.view.form</field>
-        <field name="model">product.image</field>
-        <field name="type">form</field>
-         <field name="inherit_id" ref="website_sale.view_product_image_form"/>
-        <field name="arch" type="xml">
-            <xpath expr="//label[@for='video_url']" position="replace">
-                <label for="video" string="UPLOAD VIDEO"/><br/>
-            </xpath>
-            <xpath expr="//field[@name='video_url']" position="replace">
-                <field name="product_video"/>
-            </xpath>
-            <xpath expr="//div[hasclass('o_website_sale_image_modal_container')]" position="replace">
-                <div class="col-md-6 col-xl-7 text-center o_website_sale_image_modal_container">
-                        <div class="row">
-                            <div class="col">
-                                <field name="image_1920" widget="image"/>
-                            </div>
-                        </div>
-                    </div>
-            </xpath>
-        </field>
-    </record>
-    <!-- view specific to product.template -->
-    <record id="product_template_only_form_view_1" model="ir.ui.view">
-        <field name="name">product.template.product.form</field>
-        <field name="model">product.template</field>
-        <field name="inherit_id" ref="product.product_template_form_view"/>
-        <field name="arch" type="xml">
-            <field name="type" position="after">
-                <field name="size_chart_name" invisible="1"/>
-                <field name="size_chart" filename="size_chart_name" widget="binary"/>
-            </field>
-        </field>
-    </record>
-    <record id="product_brand_2" model="ir.ui.view">
-        <field name="name">ks_product_manager_ks_brand form</field>
-        <field name="model">ks_product_manager.ks_brand</field>
-        <field name="type">form</field>
-        <field name="inherit_id" ref="ks_theme_base.ks_brand_form"/>
-        <field name="arch" type="xml">
-            <xpath expr="//field[@name='ks_is_published']" position="after">
-                <field name="ks_brand_description"/>
-                <field name="website_id" options="{'no_create': True}" groups="website.group_multi_website"/>
             </xpath>
         </field>
     </record>

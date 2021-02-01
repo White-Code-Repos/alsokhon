@@ -119,20 +119,16 @@
                                             </t>
                                             <span class="ks_text_line"><t t-esc="cats.name"/></span>
                                         </a>
-                                        <t t-if="submenu.ks_show_sub_categories">
-                                            <ul class="list-unstyled submenu_inside">
-                                                <t t-foreach="cats.child_id" t-as="cats">
-                                                    <li class="mb-2">
-                                                        <a t-att-href="'/shop/category/%s' % slug(cats)"
-                                                           t-att-style="'color:'+str(submenu.ks_font_color_sub_cat)">
-                                                            <span class="ks_text_line">
-                                                                <t t-esc="cats.name"/>
-                                                            </span>
-                                                        </a>
-                                                    </li>
-                                                </t>
-                                            </ul>
-                                        </t>
+                                        <ul class="list-unstyled submenu_inside">
+                                            <t t-foreach="cats.child_id" t-as="cats">
+                                                <li class="mb-2">
+                                                    <a t-att-href="'/shop/category/%s' % slug(cats)"
+                                                       t-att-style="'color:'+str(submenu.ks_font_color_sub_cat)">
+                                                        <span class="ks_text_line"><t t-esc="cats.name"/></span>
+                                                    </a>
+                                                </li>
+                                            </t>
+                                        </ul>
                                     </li>
                                 </t>
                             </t>
@@ -174,7 +170,7 @@
                     </ul>
                 </div>
                 <t t-if="submenu.ks_is_slider=='slider'">
-                    <div t-att-class="'submenu_img px-lg-4 px-3 pb-lg-4 pb-3 pt-lg-4 order-lg-2 menu-slider m-sm-auto ks_right_float text-center mt-sm-0 mt-3' if submenu.ks_slider_position=='left' else 'submenu_img px-lg-4 px-3 pb-lg-4 pb-3 pt-lg-4 order-lg-2 menu-slider m-auto text-center'">
+                    <div t-att-class="'submenu_img px-lg-4 px-3 pb-lg-4 pb-3 pt-lg-4 order-lg-2 menu-slider m-auto ks_right_float text-center' if submenu.ks_slider_position=='left' else 'submenu_img px-lg-4 px-3 pb-lg-4 pb-3 pt-lg-4 order-lg-2 menu-slider m-auto text-center'">
                        <span class="theme__heading ks_menu_heading mb-4 d-block"> <t t-esc="submenu.ks_slider_title"/></span>
                         <t t-if="submenu.ks_item_slider_selection_method=='cats'">
                             <div id="slider_carousel" class="carousel slide" data-ride="carousel" t-att-data-interval="submenu.ks_slider_Speed">
@@ -191,10 +187,10 @@
                                             </a>
                                         </div>
                                     </t>
-                                    <a class="carousel-control-prev" data-target="#slider_carousel" data-slide="prev">
+                                    <a class="carousel-control-prev" href="#slider_carousel" data-slide="prev">
                                         <span class="carousel-control-prev-icon"></span>
                                     </a>
-                                    <a class="carousel-control-next" data-target="#slider_carousel" data-slide="next">
+                                    <a class="carousel-control-next" href="#slider_carousel" data-slide="next">
                                         <span class="carousel-control-next-icon"></span>
                                     </a>
                                 </div>
@@ -209,17 +205,15 @@
                                                class="featured__product">
                                                 <div class="fp__img position-relative text-center">
                                                     <img t-attf-src="/web/image/product.template/#{prods.id}/image_256/"/>
-                                                    <div class="text-truncate">
-                                                        <t t-esc="prods.name"/>
-                                                    </div>
+                                                    <t t-esc="prods.name"/>
                                                 </div>
                                             </a>
                                         </div>
                                     </t>
-                                    <a class="carousel-control-prev" data-target="#slider_carousel" data-slide="prev">
+                                    <a class="carousel-control-prev" href="#slider_carousel" data-slide="prev">
                                         <span class="carousel-control-prev-icon"></span>
                                     </a>
-                                    <a class="carousel-control-next" data-target="#slider_carousel" data-slide="next">
+                                    <a class="carousel-control-next" href="#slider_carousel" data-slide="next">
                                         <span class="carousel-control-next-icon"></span>
                                     </a>
                                 </div>
@@ -241,10 +235,10 @@
                                             </a>
                                         </div>
                                     </t>
-                                    <a class="carousel-control-prev" data-target="#slider_carousel" data-slide="prev">
+                                    <a class="carousel-control-prev" href="#slider_carousel" data-slide="prev">
                                         <span class="carousel-control-prev-icon"></span>
                                     </a>
-                                    <a class="carousel-control-next" data-target="#slider_carousel" data-slide="next">
+                                    <a class="carousel-control-next" href="#slider_carousel" data-slide="next">
                                         <span class="carousel-control-next-icon"></span>
                                     </a>
                                 </div>

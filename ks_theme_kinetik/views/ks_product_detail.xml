@@ -69,7 +69,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="col-lg-6 product-detail-carousel">
+                        <div class="col-lg-6">
                             <t t-set="product_images"
                                t-value="product_variant._get_images() if product_variant else product._get_images()"/>
                             <div id="o-carousel-product" class="carousel slide" data-ride="carousel" data-interval="0">
@@ -82,7 +82,7 @@
                                                     <t t-raw="product_image.embed_code"/>
                                                 </div>
                                                 <div t-else="" t-field="product_image.image_1920"
-                                                     class="d-flex align-items-center justify-content-center h-100"
+                                                     class="d-flex align-items-center justify-content-center "
                                                      t-options='{"widget": "image", "preview_image": "image_1024", "class": "product_detail_img mh-100", "alt-field": "name", "zoom": product_image.can_image_1024_be_zoomed and "image_1920", "itemprop": "image"}'/>
                                             </div>
                                         </t>
@@ -101,19 +101,19 @@
                                     </t>
                                 </div>
                                 <div t-ignore="True" class="d-none d-md-block text-center">
-                                    <div t-if="len(product_images) > 1"
+                                    <ol t-if="len(product_images) > 1"
                                         class="carousel-indicators d-inline-block position-static mx-auto my-0 p-1 text-left">
                                         <t t-foreach="product_images" t-as="product_image">
-                                            <div t-attf-class="d-inline-block m-1 align-top  {{'active' if product_image_first else ''}}"
+                                            <li t-attf-class="d-inline-block m-1 align-top {{'active' if product_image_first else ''}}"
                                                 data-target="#o-carousel-product"
                                                 t-att-data-slide-to="str(product_image_index)">
                                                 <div t-field="product_image.image_128"
                                                      t-options='{"widget": "image", "qweb_img_responsive": False, "class": "o_image_64_contain", "alt-field": "name"}'/>
                                                 <i t-if="product_image._name == 'product.image' and product_image.embed_code"
                                                    class="fa fa-2x fa-play-circle-o o_product_video_thumb"/>
-                                            </div>
+                                            </li>
                                         </t>
-                                    </div>
+                                    </ol>
                                 </div>
                             </div>
                         </div>
@@ -132,24 +132,11 @@
                                     </li>
                                 </ol>
                             </div>
-                            <div class="ks_product_data_info">
-                                <h1 itemprop="name" t-field="product.name" class="ks-product-name" >Product Name</h1>
-                            </div>
-                            <t t-if="request.website.viewref('ks_theme_kinetik.ks_product_comment').active">
-                                <t t-call="ks_theme_kinetik.ks_rating_widget_stars_static">
-                                    <t t-set="rating_avg" t-value="product.rating_avg"/>
-                                    <t t-set="rating_count" t-value="product.rating_count"/>
-                                </t>
-                            </t>
-                            <t t-if="product.description_sale">
-                                <div class="product_short_description">
-                                    <t t-esc="product.description_sale"/>
-                                </div>
-                            </t>
+                            <h1 itemprop="name" t-field="product.name" class="ks-product-name" >Product Name</h1>
+                            <h3 class="my-3 ks-product-brand" ><t t-esc="product.ks_product_brand_id.name"/></h3>
                             <span itemprop="url" style="display:none;"
                                   t-esc="'%sshop/product/%s' % (request.httprequest.url_root, slug(product))"/>
                             <form t-if="product._is_add_to_cart_possible()" action="/shop/cart/update" method="POST">
-                                <t t-call="website_sale.product_price"/>
                                 <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                                 <div class="js_product js_main_product">
                                     <t t-placeholder="select">
@@ -166,75 +153,60 @@
                                                 t-att-data-attribute_exclusions="{'exclusions: []'}"/>
                                         </t>
                                     </t>
-<!--                                    <p t-if="True" class="css_not_available_msg alert alert-warning">This combination-->
-<!--                                        does not exist.-->
-<!--                                    </p>-->
+                                    <t t-call="website_sale.product_price"/>
+                                    <p t-if="True" class="css_not_available_msg alert alert-warning">This combination
+                                        does not exist.
+                                    </p>
                                     <div id="product_option_block"/>
-                                     <div id="ks_wishlist_option" class="ks_action_buttons d-flex align-items-center">
-                                        <a role="button" id="add_to_cart" class="btn btn-primary btn-lg js_check_product a-submit theme-btn cart__btn justify-content-center ks_modal_optional"
+                                    <div class="product_timer">
+                                        <input type="hidden" name="timer"
+                                               t-att-value="seconds"/>
+
+                                        <!--<t t-if="seconds">-->
+                                        <div class="clock">
+                                        </div>
+                                        <!--</t>-->
+                                    </div>
+                                    <div class="ks_action_buttons d-flex align-items-center">
+                                        <a role="button" id="add_to_cart" class="btn btn-primary btn-lg mt8 js_check_product a-submit theme-btn cart__btn justify-content-center ks_modal_optional"
+                                           href="#"
+                                           t-att-data-product-product-id="product_variant.id"
+                                           t-att-data-product-template-id="product.id"
+                                        >
+                                            Add to Cart
+                                        </a>
+                                    </div>
+                                    <!--                                    <a role="button" id="buy_now" class="btn btn-outline-primary btn-lg mt16 d-block d-sm-inline-block" href="#"><i class="fa fa-bolt"/> Buy Now</a>-->
+                                    <div id="product_option_block"/>
+                                </div>
+                            </form>
+                            <p t-elif="not product.active" class="alert alert-warning">This product is no longer
+                                available.
+                            </p>
+                            <p t-else="" class="alert alert-warning">This product has no valid combination.</p>
+
+                        </div>
+                         <form t-if="product._is_add_to_cart_possible()" action="/shop/cart/update" method="POST">
+                               <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                              <input type="hidden" class="product_id" name="product_id"
+                                               t-att-value="product_variant.id"/>
+                             <input type="hidden" class="product_template_id" name="product_template_id"
+                                               t-att-value="product.id"/>
+                         <div class="custom_add_to_cart_and_call">
+                             <t t-if="request.website.viewref('ks_theme_kinetik.call_us').active">
+                                 <a role="button" id="ks_call_id" class="ks_call_button"
+                                       t-attf-href="tel:{{ res_company.phone }}">  <i class="fa fa-phone"></i>  </a>
+                             </t>
+                             <a role="button" id="add_to_cart" class="btn btn-primary btn-lg mt8 js_check_product a-submit theme-btn cart__btn justify-content-center ks_modal_optional"
                                            href="#"
                                             t-att-data-product-product-id="product_variant.id"
                                                        t-att-data-product-template-id="product.id"
                                             >
                                             Add to Cart
                                         </a>
-                                    </div>
-                                    <!--                                    <a role="button" id="buy_now" class="btn btn-outline-primary btn-lg mt16 d-block d-sm-inline-block" href="#"><i class="fa fa-bolt"/> Buy Now</a>-->
-<!--                                    <div id="product_option_block"/>-->
-                                </div>
-                            </form>
-                            <p t-if="True" id="ks_alert_wrng" class="css_not_available_msg alert alert-warning ">This combination
-                                does not exist.
-                            </p>
-                            <p t-elif="not product.active" class="alert alert-warning">This product is no longer
-                                available.
-                            </p>
-                            <p t-else="" class="alert alert-warning">This product has no valid combination.</p>
-                            <t t-if="ks_brand_icon or ks_brand_description">
-                                <div class="row align-items-center no-gutters ks_brand_panel">
-                                    <t t-if="ks_brand_icon">
-                                        <div class="col-4">
-                                            <div class="ks_brand_thum_image">
-                                                <img t-att-src="'/web/image/ks_product_manager.ks_brand/%s/ks_brand_logo' %(ks_brand_icon)"/>
-                                            </div>
-                                        </div>
-                                    </t>
-                                    <t t-if="ks_brand_description">
-                                        <div class="col">
-                                            <div class="ks_brand_desc_content">
-                                                <t t-esc="ks_brand_description"/>
-                                            </div>
-                                        </div>
-                                    </t>
-                                </div>
-                            </t>
-                        </div>
-                        <form t-if="product._is_add_to_cart_possible()" action="/shop/cart/update" method="POST">
-                            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                            <input type="hidden" class="product_id" name="product_id"
-                                   t-att-value="product_variant.id"/>
-                            <input type="hidden" class="product_template_id" name="product_template_id"
-                                   t-att-value="product.id"/>
-                            <div class="custom_add_to_cart_and_call">
-                                <t t-if="request.website.viewref('ks_theme_kinetik.call_us').active">
-                                    <a role="button" id="ks_call_id" class="ks_call_button"
-                                       t-attf-href="tel:{{ res_company.phone }}">
-                                        <i class="fa fa-phone"></i>
-                                    </a>
-                                </t>
-                                <input type="text" class="mobile-add d-none" data-min="1" name="add_qty"
-                                  value=""/>
-                                <a role="button" id="add_to_cart"
-                                   class="btn btn-primary btn-lg js_check_product a-submit cart__btn justify-content-center ks_modal_optional"
-                                   href="#"
-                                   t-att-data-product-product-id="product_variant.id"
-                                   t-att-data-product-template-id="product.id"
-                                >
-                                    Add To Cart
-                                </a>
 
-                            </div>
-                        </form>
+                                </div>
+                         </form>
                         <div class="w-100 mb-3 mb-lg-5 ks-product-description">
                             <ul id="productTab" role="tablist" class="nav nav-tabs justify-content-center">
                                 <li class="px-3 nav-item">
@@ -251,83 +223,56 @@
                                 </li>
                             </ul>
                             <div id="productTabContent" class="tab-content px-lg-4 py-4">
-                               <div id="description" role="tabpanel" aria-labelledby="description-tab"
+                                <div id="description" role="tabpanel" aria-labelledby="description-tab"
                                      class="tab-pane fade active show">
-                                    <div itemprop="description" class="oe_structure mt16" t-field="product.website_description" id="product_full_description" />
+                                    <t t-esc="product.description_sale"/>
                                     <br/>
                                 </div>
                                 <div id="details" role="tabpanel" aria-labelledby="details-tab" class="tab-pane fade">
-                                    <table class="table details-table table-bordered">
-                                        <t t-if="product.ks_product_brand_id.name">
-                                            <tr>
-                                                <th>Brand</th>
-                                                <td>
-                                                    <t t-esc="product.ks_product_brand_id.name"/>
-                                                </td>
-                                            </tr>
-                                        </t>
-                                        <t t-if="product.public_categ_ids">
-                                            <tr>
-                                                <th>Category</th>
-                                                <td>
-                                                    <t t-set="i" t-value="0"/>
-                                                    <t t-set="k" t-value="0"/>
-                                                    <t t-foreach="product.public_categ_ids" t-as="categ">
-                                                        <t t-set="i" t-value="i+1"/>
-                                                    </t>
-                                                    <t t-foreach="product.public_categ_ids" t-as="categ">
-                                                        <t t-set="k" t-value="k+1"/>
-                                                        <t t-if=" k != i">
-                                                            <t t-esc="categ.name"/>
-                                                            <span>,</span>
-                                                        </t>
-                                                        <t t-else="">
-                                                            <t t-esc="categ.name"/>
-                                                        </t>
-                                                    </t>
-                                                </td>
-                                            </tr>
-                                        </t>
-                                        <t t-if="product.weight">
-                                            <tr>
-                                                <th>Weight</th>
-                                                <td>
-                                                    <t t-esc="product.weight"/>
-                                                    <t t-esc="product.weight_uom_name"/>
-                                                </td>
-                                            </tr>
-                                        </t>
-                                        <t t-if="product.volume">
-                                            <tr>
-                                                <th>Volume</th>
-                                                <td>
-                                                    <t t-esc="product.volume"/>
-                                                    m³
-                                                </td>
-                                            </tr>
-                                        </t>
-                                        <t t-if="product.type">
-                                            <tr>
-                                                <th>Type</th>
-                                                <td>
-                                                    <t t-if="product.type == 'consu'">
-                                                        <span>Consumable</span>
-                                                    </t>
-                                                    <t t-if="product.type == 'product'">
-                                                        <span>Storable Product</span>
-                                                    </t>
-                                                    <t t-if="product.type == 'service'">
-                                                        <span>Service</span>
-                                                    </t>
-                                                </td>
-                                            </tr>
-                                        </t>
-                                    </table>
+                                    <t t-if="product.ks_product_brand_id.name">
+                                        <p>
+                                            <b>Brand:</b>
+                                            <t t-esc="product.ks_product_brand_id.name"/>
+                                        </p>
+                                    </t>
+
+                                    <t t-if="product.public_categ_ids">
+                                        <p>
+                                            <b>Category:</b>
+                                            <t t-foreach="product.public_categ_ids" t-as="categ">
+                                                <t t-esc="categ.name"/>
+                                            </t>
+                                        </p>
+                                    </t>
+
+                                    <t t-if="product.weight">
+                                        <p>
+                                            <b>Weight:</b>
+                                            <t t-esc="product.weight"/>
+                                            <t t-esc="unit_of_measure_name"/>
+                                        </p>
+                                    </t>
+
+                                    <t t-if="product.volume">
+                                        <p>
+                                            <b>Volume:</b>
+                                            <t t-esc="product.volume"/>
+                                            m³
+                                        </p>
+                                    </t>
+
+                                    <p>
+                                        <b>
+                                            Type:
+                                        </b>
+                                        <t t-esc="product.type"/>
+                                    </p>
                                 </div>
                                 <div id="reviews" role="tabpanel" aria-labelledby="reviews-tab" class="tab-pane fade">
                                     <!--This div is used to place review and rating under review option of our owm-->
                                     <div class="o_shop_discussion_rating ks_rating">
                                         <section class="container mt16 mb16">
+                                            <hr/>
                                             <div class="row">
                                                 <div class="col-lg-8 offset-lg-2">
                                                     <t t-call="portal.message_thread">
@@ -341,179 +286,33 @@
                                 </div>
                             </div>
                         </div>
-<!--                        <p class="text-muted">-->
-<!--                            30-day money-back guarantee-->
-<!--                            <br/>-->
-<!--                            Free Shipping in U.S.-->
-<!--                            <br/>-->
-<!--                            Buy now, get in 2 days-->
-<!--                        </p>-->
                     </div>
                 </section>
-<!--                <div itemprop="description" t-field="product.website_description" id="product_full_description" />-->
+                <div itemprop="description" t-field="product.website_description" id="product_full_description" />
             </div>
         </xpath>
     </template>
-    <template id="website_sale_wishlist.product_add_to_wishlist" inherit_id="ks_theme_kinetik.kps_product" name='Add to wishlist in product page' priority="20">
-        <xpath expr="//div[@id='ks_wishlist_option']" position="inside">
-            <t t-if="request.website.viewref('website_sale_wishlist.add_to_wishlist').active">
-                <t t-set="product_variant" t-value="product_variant or product._create_first_product_variant()"/>
-                <t t-set="in_wish" t-value="product_variant and product_variant._is_in_wishlist()"/>
-                <button t-if="product_variant" type="button" role="button" class="btn btn-link mt16 o_add_wishlist_dyn" t-att-disabled='in_wish or None'
-                        t-att-data-product-template-id="product.id" t-att-data-product-product-id="product_variant.id" data-action="o_wishlist">
-                    <span class="fa fa-heart" role="img" aria-label="Add to wishlist"></span></button>
-            </t>
-        </xpath>
-    </template>
-
-    <template id="ks_product_offer_detail_page" inherit_id="ks_theme_kinetik.kps_product" name="Product Size Chart"
-              customize_show="True">
-        <xpath expr="//div[@id='product_details']/div[2]/h1" position="after">
-            <t t-if="product.size_chart">
-                <span class="ks_product_pdf">
-                    <input type="hidden" name="product_tmp_id" t-att-value="product.id"/>
-                    <button class="btn btn-size-chart" data-toggle="modal" data-target="#size_chart_modal">
-                        <span class="fa fa-eye mr-2 "/>
-                        <span>Size Chart</span>
-                    </button>
-                </span>
-            </t>
-        </xpath>
-        <xpath expr="//div[@id='product_details']" position="after">
-            <!-- size chart Modal -->
-            <div id="size_chart_modal" class="modal fade" role="dialog">
-                <div class="modal-dialog size_chart_preview_modal">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h4 class="modal-title">
-                                <span>Product Size Chart</span>
-                            </h4>
-                            <button type="button" class="close" data-dismiss="modal">
-                                <span class="fa fa-close"/>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            <iframe t-att-src="'/product/sizechart/size_chart/'+str(product.id)" method="get"
-                                    height="100%" width="100%"/>
-                        </div>
-                        <div class="modal-footer">
-                            <a t-att-href="'/product/sizechart/download/'+str(product.id)">
-                                <button type="button" class="btn btn-primary pull-right mr-8">
-                                    <span class="fa fa-download"/>
-                                </button>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </xpath>
-    </template>
-
     <template id="ks_product_attributes" inherit_id="ks_theme_kinetik.kps_product" name="Product attributes" >
-        <xpath expr="//div[@id='details']//table/t[last()]" position="after">
+        <xpath expr="//div[@id='details']" position="inside">
             <!--             <div id="product_attributes_simple">-->
             <hr t-if="sum([(1 if len(l.value_ids)==1 else 0) for l in product.attribute_line_ids])" class="d-none"/>
              <t t-set="single_value_attributes" t-value="product.valid_product_template_attribute_line_ids._prepare_single_value_for_display()"/>
             <t t-if="single_value_attributes">
-                <tr>
-                    <th>Variant:</th>
-                    <td class="p-0">
-                        <div class="text-muted text-black ks_single_attribute">
-                            <ul class="single_attributes p-0 m-0">
-                                <t t-set="single_value_attributes"
-                                   t-value="product.valid_product_template_attribute_line_ids._prepare_single_value_for_display()"/>
-                                <t t-foreach="single_value_attributes" t-as="attribute">
-                                    <li class="row border-bottom">
-                                        <div class="col-12 col-sm-3 col-md-2 py-1 border-right">
-                                            <b t-field="attribute.name"/>:
-                                        </div>
-                                        <div class="col py-1">
-                                            <t t-foreach="single_value_attributes[attribute]" t-as="ptal">
-                                                <span t-field="ptal.product_template_value_ids._only_active().name"/>
-                                                <t t-if="not ptal_last"></t>
-                                            </t>
-                                        </div>
-                                    </li>
-                                </t>
-                            </ul>
-                        </div>
-                    </td>
-                </tr>
+            <p class="text-muted text-black ks_single_attribute">
+                <t t-set="single_value_attributes" t-value="product.valid_product_template_attribute_line_ids._prepare_single_value_for_display()"/>
+                <t t-foreach="single_value_attributes" t-as="attribute">
+                    <b><b t-field="attribute.name"/>:</b>
+                    <t t-foreach="single_value_attributes[attribute]" t-as="ptal">
+                        <span t-field="ptal.product_template_value_ids._only_active().name"/><t t-if="not ptal_last">, </t>
+                    </t>
+                    <br/>
+                </t>
+            </p>
             </t>
             <!--                                </div>-->
         </xpath>
     </template>
 
-    <template id="website_sale_comparison.product_compare" name="Comparator Page">
-        <t t-call="website.layout">
-            <t t-set="additional_title">Shop Comparator</t>
-            <div id="wrap" class="js_sale">
-                <div class="oe_structure" id="oe_structure_website_sale_comparison_product_compare_1"/>
-                <div class="container oe_website_sale">
-                    <section class="container">
-                        <h3>Compare Products</h3>
-                        <div class="compare-panel">
-                            <table class="table table-bordered table-hover text-center mt16 table-comparator" id="o_comparelist_table">
-                            <t t-set="categories" t-value="products._prepare_categories_for_display()"/>
-                            <thead>
-                                <tr>
-                                    <td t-if="len(categories)" class='o_ws_compare_image td-top-left border-bottom-0'/>
-                                    <td t-foreach="products" t-as="product" class="o_ws_compare_image position-relative border-bottom-0">
-                                        <a href="#" t-att-data-product_product_id="product.id" class="o_comparelist_remove" t-if="len(products) &gt; 2">
-                                            <strong>x</strong>
-                                        </a>
-                                        <a t-att-href="product.website_url">
-                                            <img t-attf-src="/web/image/product.product/#{product.id}/image_256" class="img img-fluid" style="margin:auto;" alt="Product image"/>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td t-if="len(categories)" class='td-top-left border-top-0'/>
-                                    <td t-foreach="products" t-as="product" class="border-top-0">
-                                        <t t-set="combination_info" t-value="product._get_combination_info_variant()"/>
-                                        <div class='product_summary'>
-                                            <a class="o_product_comparison_table" t-att-href="product.website_url">
-                                                <span t-esc="combination_info['display_name']"></span><br/>
-                                            </a>
-
-                                            <span>
-                                                <strong>Price:</strong>
-                                                 <span t-esc="combination_info['price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"></span>
-                                                <del t-attf-class="text-danger mr8 {{'' if combination_info['has_discounted_price'] else 'd-none'}}" style="white-space: nowrap;" t-esc="combination_info['list_price']" t-options="{'widget': 'monetary', 'display_currency': website.currency_id}" />
-                                            </span>
-
-                                            <form action="/shop/cart/update" method="post" class="text-center">
-                                                <input name="product_id" t-att-value="product.id" type="hidden"/>
-                                                <a role="button" class="btn btn-primary btn-block a-submit" href="#"><i class="fa fa-shopping-cart"></i>&amp;nbsp;Add to Cart</a>
-                                            </form>
-                                        </div>
-                                    </td>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <t t-foreach="categories" t-as="category">
-                                    <t t-if="len(categories) &gt; 1">
-                                        <tr class="clickable" data-toggle="collapse" t-att-data-target="'.o_ws_category_%d' % category.id">
-                                            <th class="text-left" t-att-colspan="len(products) + 1"><i class="fa fa-chevron-circle-down o_product_comparison_collpase" role="img" aria-label="Collapse" title="Collapse"></i><span t-if="category" t-field="category.name"/><span t-else="">Uncategorized</span></th>
-                                        </tr>
-                                    </t>
-                                    <tr t-foreach="categories[category]" t-as="attribute" t-att-class="'collapse show o_ws_category_%d' % category.id">
-                                        <td><span t-field="attribute.name"/></td>
-                                        <td t-foreach="categories[category][attribute]" t-as="product">
-                                            <t t-foreach="categories[category][attribute][product]" t-as="ptav">
-                                                <span t-field="ptav.name"/><t t-if="not ptav_last">, </t>
-                                            </t>
-                                        </td>
-                                    </tr>
-                                </t>
-                            </tbody>
-                        </table>
-                        </div>
-                    </section>
-                </div>
-            </div>
-        </t>
-    </template>
     <template id = "website_sale.recommended_products" inherit_id="ks_theme_kinetik.kps_product" customize_show="True" name="Alternative Products" active="False">
         <xpath expr="//div[@id='product_full_description']" position="after">
             <div class="w-100 d-flex justify-content-center row ks-alternate-product-row">
@@ -527,23 +326,21 @@
                                     <div class="mt16 text-center">
                                         <div t-field="alt_product.image_512"
                                              t-options="{'widget': 'image', 'class': 'rounded shadow o_alternative_product o_image_64_max' }"/>
-                                        <div class="fp__name text-truncate text-left">
+                                        <h5 class="mt-3 mt-xl-4">
                                             <span t-att-title="alt_product.name" t-field="alt_product.name"
                                                   class="o_text_overflow" style="display: block;"/>
-                                        </div>
-                                         <div class="fp__price ks_price_info d-flex justify-content-center align-items-center">
-                                             <div class="fp__current_price d-flex">
-                                                 <span t-if="alt_product.list_price" t-esc="alt_product.list_price"
-                                                       t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
-                                                 <span itemprop="priceCurrency" style="display:none;"
-                                                       t-esc="website.currency_id.name"/>
-                                             </div>
+                                        </h5>
+                                        <div class="ks-price">
                                             <t t-if="True"><!-- compatibility 12.0 -->
-                                                <del t-attf-class="ks_public_price {{'' if combination_info['has_discounted_price'] else 'd-none'}}"
+                                                <del t-attf-class="text-danger mr8 {{'' if combination_info['has_discounted_price'] else 'd-none'}}"
                                                      style="white-space: nowrap;"
                                                      t-esc="combination_info['list_price']"
                                                      t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
                                             </t>
+                                            <span t-if="alt_product.list_price" t-esc="alt_product.list_price"
+                                                  t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                                            <span itemprop="priceCurrency" style="display:none;"
+                                                  t-esc="website.currency_id.name"/>
                                         </div>
                                     </div>
                                 </a>
@@ -551,7 +348,7 @@
                         </t>
                     </div>
                 </div>
-                <div class="ks_alternate_slider ks_accessories_slider container mt32 col-md-6 col-12 pl-xl-5" t-if="product.accessory_product_ids and product.ks_is_accessories_slider">
+                <div class="ks_alternate_slider container mt32 col-md-6 col-12 pl-xl-5" t-if="product.accessory_product_ids and product.ks_is_accessories_slider">
                     <h3 class="theme__heading">Accessories</h3>
                     <div class="row mt16 owl-carousel owl-theme accessories-prod-owl" style="">
                         <t t-foreach="product.accessory_product_ids" t-as="alt_product">
@@ -561,23 +358,21 @@
                                     <div class="mt16 text-center">
                                         <div t-field="alt_product.image_512"
                                              t-options="{'widget': 'image', 'class': 'rounded shadow o_accessory_product o_image_64_max' }"/>
-                                        <div class="fp__name text-truncate text-left">
+                                        <h5 class="mt-3 mt-xl-4">
                                             <span t-att-title="alt_product.name" t-field="alt_product.name"
                                                   class="o_text_overflow" style="display: block;"/>
-                                        </div>
-                                         <div class="fp__price ks_price_info d-flex justify-content-center align-items-center">
-                                             <div class="fp__current_price d-flex">
-                                                 <span t-if="alt_product.list_price" t-esc="alt_product.list_price"
-                                                       t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
-                                                 <span itemprop="priceCurrency" style="display:none;"
-                                                       t-esc="website.currency_id.name"/>
-                                             </div>
+                                        </h5>
+                                        <div class="ks-price">
                                             <t t-if="True"><!-- compatibility 12.0 -->
-                                                <del t-attf-class="ks_public_price {{'' if combination_info['has_discounted_price'] else 'd-none'}}"
+                                                <del t-attf-class="text-danger mr8 {{'' if combination_info['has_discounted_price'] else 'd-none'}}"
                                                      style="white-space: nowrap;"
                                                      t-esc="combination_info['list_price']"
                                                      t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
                                             </t>
+                                            <span t-if="alt_product.list_price" t-esc="alt_product.list_price"
+                                                  t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
+                                            <span itemprop="priceCurrency" style="display:none;"
+                                                  t-esc="website.currency_id.name"/>
                                         </div>
                                     </div>
                                 </a>
@@ -604,8 +399,8 @@
     <template id="ks_multiimage_layout" inherit_id='ks_theme_kinetik.kps_product' customize_show="True" active="False" name="Product Vertical View">
         <xpath expr="//div[@id='o-carousel-product']" position="replace">
             <div id="o-carousel-product-vertical" class="carousel slide ks-slider-vertical" data-ride="carousel" data-interval="0">
-                <div class="carousel-outer  justify-content-lg-end justify-content-sm-baseline justify-content-center flex-sm-nowrap">
-                    <div class="carousel-inner ks_inner">
+                <div class="carousel-outer  justify-content-lg-end justify-content-sm-baseline justify-content-center pr-lg-5 flex-sm-nowrap">
+                    <div class="carousel-inner">
                         <t t-foreach="product_images" t-as="product_image">
                             <div t-attf-class="carousel-item #{' active' if product_image_first else ''}">
                                 <div t-if="product_image._name == 'product.image' and product_image.embed_code"
@@ -633,21 +428,19 @@
                                   title="Next"/>
                         </a>
                     </t>
-                    <div class="ks-vs-inner">
-                        <ol t-if="len(product_images) > 1"
-                            class="carousel-indicators ks-vertical-media">
-                            <t t-foreach="product_images" t-as="product_image">
-                                <li t-attf-class="d-inline-block align-top {{'active' if product_image_first else ''}}"
-                                    data-target="#o-carousel-product-vertical"
-                                    t-att-data-slide-to="str(product_image_index)">
-                                    <div t-field="product_image.image_128"
-                                         t-options='{"widget": "image", "qweb_img_responsive": False, "class": "o_image_64_contain", "alt-field": "name"}'/>
-                                    <i t-if="product_image._name == 'product.image' and product_image.embed_code"
-                                       class="fa fa-2x fa-play-circle-o o_product_video_thumb"/>
-                                </li>
-                            </t>
-                        </ol>
-                    </div>
+                    <ol t-if="len(product_images) > 1"
+                        class="carousel-indicators">
+                        <t t-foreach="product_images" t-as="product_image">
+                            <li t-attf-class="d-inline-block align-top {{'active' if product_image_first else ''}}"
+                                data-target="#o-carousel-product-vertical"
+                                t-att-data-slide-to="str(product_image_index)">
+                                <div t-field="product_image.image_128"
+                                     t-options='{"widget": "image", "qweb_img_responsive": False, "class": "o_image_64_contain", "alt-field": "name"}'/>
+                                <i t-if="product_image._name == 'product.image' and product_image.embed_code"
+                                   class="fa fa-2x fa-play-circle-o o_product_video_thumb"/>
+                            </li>
+                        </t>
+                    </ol>
                 </div>
             </div>
         </xpath>
@@ -688,39 +481,20 @@
     <template id="website_sale.product_quantity" inherit_id="website_sale.product" customize_show="True"
               name="Select Quantity" active="True" priority="25">
         <xpath expr="//a[@id='add_to_cart']" position="before">
-            <div class="row w-100 no-gutters ks_quantity_panel">
-                <div class="col-12 col-lg ks_css_quantity">
-                    <div class="css_quantity input-group oe_website_spinner">
-                        <div class="input-group-prepend">
-                            <a t-attf-href="#" class="btn btn-secondary js_add_cart_json" aria-label="Remove one"
-                               title="Remove one">
-                                <i class="fa fa-minus"></i>
-                            </a>
-                        </div>
-                        <input type="text" class="form-control quantity" data-min="1" name="add_qty"
-                               t-att-value="add_qty or 1"/>
-                        <div class="input-group-append">
-                            <a t-attf-href="#" class="btn btn-secondary float_left js_add_cart_json"
-                               aria-label="Add One"
-                               title="Add One">
-                                <i class="fa fa-plus"></i>
-                            </a>
-                        </div>
-                    </div>
+            <div class="css_quantity input-group oe_website_spinner" >
+                <div class="input-group-prepend">
+                    <a t-attf-href="#" class="btn btn-secondary js_add_cart_json" aria-label="Remove one"
+                       title="Remove one">
+                        <i class="fa fa-minus"></i>
+                    </a>
                 </div>
-                <div class="col-12 col-lg ks_product_timer">
-                     <div class="product_timer">
-<!--                         <t t-if="seconds">-->
-                             <div class="ks_timer_box d-none">
-                                <div class="ks_product_timer_title">Offer Ends In !!</div>
-                                <input type="hidden" name="timer"
-                                   t-att-value="seconds"/>
-                                <!--<t t-if="seconds">-->
-                                <div class="clock"></div>
-                                <!--</t>-->
-                             </div>
-<!--                         </t>-->
-                    </div>
+                <input type="text" class="form-control quantity" data-min="1" name="add_qty"
+                       t-att-value="add_qty or 1"/>
+                <div class="input-group-append">
+                    <a t-attf-href="#" class="btn btn-secondary float_left js_add_cart_json" aria-label="Add one"
+                       title="Add one">
+                        <i class="fa fa-plus"></i>
+                    </a>
                 </div>
             </div>
         </xpath>
@@ -728,10 +502,10 @@
 
     <!--This is used to place add social share in detail page -->
     <template id="products_share_option" inherit_id="ks_theme_kinetik.kps_product" name="Share This" active="True">
-        <xpath expr="//form" position="after">
+        <xpath expr="//div[@id='reviews']" position="after">
             <div class="css_share_on_social_media">
                 <ul class="social-icons">
-                    <h1 id="share_this" role="tab"><i class="fa fa-share-alt mr-2"></i> Share This</h1>
+                    <h1 id="share_this" role="tab">Share This</h1>
                     <li>
                         <a t-att-href="current_url_fb" target="_blank" >
                             <i class='fa fa-facebook'/>
@@ -757,74 +531,8 @@
     <!--    this is used for add buy now option at detail page-->
     <template id="website_sale.product_buy_now" inherit_id="ks_theme_kinetik.kps_product" active="False" customize_show="True" name="Buy Now Button">
         <xpath expr="//a[@id='add_to_cart']" position="after">
-            <a role="button" id="buy_now" class="btn btn-outline-primary btn-lg d-block d-sm-inline-block" href="#"><i class="fa fa-bolt"/> Buy Now</a>
+            <a role="button" id="buy_now" class="btn btn-outline-primary btn-lg mt16 d-block d-sm-inline-block" href="#"><i class="fa fa-bolt"/> Buy Now</a>
         </xpath>
     </template>
-    <!--    it is replace exiting suggestive option-->
-    <template id='website_sale_comparison.recommended_product' inherit_id="website_sale.recommended_products"
-              name="Alternative Products"/>
-    <template id='suggested products' inherit_id="ks_theme_kinetik.kps_product" name="Alternative Products">
-        <xpath expr="//a[@id='add_to_cart']" position="after">
-            <!--
-                Create the first variant if it doesn't exist for the current
-                product and every alternative product because the product
-                comparator need the variants and not the templates.
-            -->
-            <t t-set="product_variant" t-value="product_variant or product._create_first_product_variant()"/>
-            <t t-set="id_list" t-value="[product_variant.id] if product_variant else []"/>
-            <t t-foreach="product.alternative_product_ids" t-as="alt_product">
-                <t t-set="alt_product_variant_id" t-value="alt_product._create_first_product_variant().id"/>
-                <t t-if="alt_product_variant_id" t-set="id_list" t-value="id_list + [alt_product_variant_id]"/>
-            </t>
-            <t t-set="ids" t-value="','.join([str(id) for id in id_list])"/>
-            <div class="ks_suggested_products">
-                <a t-if="len(id_list) > 1" role="button" class="btn btn-outline-primary" data-toggle="tooltip" data-placement="top" title="Compare" t-attf-href="/shop/compare/?products=#{ids}">
-                    <i class="fa fa-exchange"></i>
-                </a>
-            </div>
-        </xpath>
-    </template>
-    <template id="website_sale.product_price">
-        <div itemprop="offers" itemscope="itemscope" itemtype="http://schema.org/Offer" class="product_price mt16">
-            <h4 class="oe_price_h4 css_editable_mode_hidden">
-                <b class="oe_price" style="white-space: nowrap;" t-esc="combination_info['price']"
-                   t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"/>
-                <span itemprop="price" style="display:none;" t-esc="combination_info['price']"/>
-                <span itemprop="priceCurrency" style="display:none;" t-esc="website.currency_id.name"/>
-                <span t-attf-class="ks_public_price oe_default_price {{'' if combination_info['has_discounted_price'] else 'd-none'}}"
-                      style="text-decoration: line-through; white-space: nowrap;"
-                      t-esc="combination_info['list_price']"
-                      t-options="{'widget': 'monetary', 'display_currency': website.currency_id}"
-                />
-                <t t-if="request.website.viewref('ks_theme_kinetik.percent_discount').active">
-                    <t t-if="combination_info['list_price'] == 0" t-set="percentage_discount" t-value="0"/>
-                    <t t-else="" t-set="percentage_discount"
-                       t-value="((combination_info['list_price']-combination_info['price'])/combination_info['list_price'])*100"/>
-                    <t t-if="percentage_discount>0">
-                        <div class="ks_snippet_percentage_discount_2">
-                            <div class="Percentage-offer">
-                                <span>(</span>
-                                <t t-esc="int(percentage_discount)"/>%
-                                <span class="ks_percentage_info">oFF)</span>
-                            </div>
-                        </div>
-                    </t>
-                </t>
-            </h4>
-            <h4 class="css_non_editable_mode_hidden decimal_precision"
-                t-att-data-precision="str(website.currency_id.decimal_places)">
-                <span t-field="product.list_price"
-                      t-options='{
-                   "widget": "monetary",
-                   "display_currency": product.currency_id,
-               }'/>
-            </h4>
-            <h4 class="d-none oe_not_available bg-warning">Option not available</h4>
-        </div>
-    </template>
-    <template id="website_sale_stock.website_sale_stock_product" inherit_id="ks_theme_kinetik.kps_product" priority="4">
-        <xpath expr="//p[@id='ks_alert_wrng']" position="before">
-            <div class="availability_messages o_not_editable"/>
-        </xpath>
-    </template>
+
 </odoo>

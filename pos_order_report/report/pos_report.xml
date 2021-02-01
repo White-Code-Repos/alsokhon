@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+      <record id="paperformat_pos_summary_report" model="report.paperformat">
+          <field name="name">Pos Summary</field>
+          <field name="default" eval="False"/>
+          <field name="format">A4</field>
+          <field name="page_width">0</field>
+          <field name="page_width">0</field>
+          <field name="orientation">Portrait</field>
+          <field name="margin_top">30</field>
+          <field name="margin_bottom">28</field>
+          <field name="margin_right">7</field>
+          <field name="margin_left">7</field>
+          <field name="header_line" eval="False"/>
+          <field name="header_spacing">15</field>
+          <field name="dpi">90</field>
+        </record>
+
+        <report
+            id="internal_action_report_pos_order"
+            string="Order without Logo"
+            model="pos.order"
+            report_type="qweb-pdf"
+            file="pos_order_report.internal_report_pos_order"
+            name="pos_order_report.internal_report_pos_order"
+            paperformat="pos_order_report.paperformat_pos_summary_report"
+            print_report_name="'Order - %s' % (object.name)"
+        />
+
+        <report
+            id="action_external_report_pos_order"
+            string="Order with Logo"
+            model="pos.order"
+            report_type="qweb-pdf"
+            file="pos_order_report.external_report_pos_order"
+            name="pos_order_report.external_report_pos_order"
+            print_report_name="'Order - %s' % (object.name)"
+        />
+
+
+
+
+    </data>
+</odoo>

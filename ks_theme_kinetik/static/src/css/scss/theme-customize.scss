@@ -147,6 +147,7 @@
             background-color: transparent;
         }
     }
+
 }
 
 //remove this
@@ -212,10 +213,6 @@ ol.breadcrumb.p-0.d-flex.justify-content-end {
 
 .ks_btn_style_10 {
     @include btn-10-style;
-}
-
-.ks_btn_style_11 {
-    @include btn-11-style;
 }
 
 #ksbuttonstyles {
@@ -376,9 +373,4 @@ ol.breadcrumb.p-0.d-flex.justify-content-end {
 .owl-item {
  -webkit-backface-visibility: hidden;
  -webkit-transform: translateZ(0) scale(1.0, 1.0);
-}
-
-body .modal.o_technical_modal .btn:not(.o_btn_preview).btn-secondary:focus, body .modal.o_technical_modal .btn:not(.o_btn_preview).btn-secondary.focus,
-body .modal.o_technical_modal .btn:not(.o_btn_preview).btn-secondary:not(:disabled):not(.disabled):active:focus {
-    box-shadow: none;
 }

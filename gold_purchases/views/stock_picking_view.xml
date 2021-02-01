@@ -6,6 +6,7 @@
             <field name="model">stock.picking</field>
             <field name="inherit_id" ref="stock.view_picking_form"/>
             <field name="arch" type="xml">
+              
                 <xpath expr="//notebook/page[@name='extra']/group" position="inside">
                     <group string="Period Details">
                         <div class="o_row">
@@ -23,7 +24,8 @@
                     </group>
                 </xpath>
                 <field name="origin" position="after">
-                    <field name="bill_unfixed" readonly="1"/>
+                  <field name="bill_unfixed" readonly="1" force_save="1"/>
+                  <field name="purchase_type" readonly="1" force_save="1"/>
                 </field>
 
             </field>

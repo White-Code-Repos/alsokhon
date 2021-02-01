@@ -2,14 +2,11 @@
 
 from odoo import http,fields
 from odoo.http import request
-from odoo.http import content_disposition
 import json
 from odoo.addons.website_sale.controllers.main import WebsiteSale
 from datetime import datetime
 from odoo.addons.http_routing.models.ir_http import slug
 from odoo import http
-import base64
-import mimetypes
 from odoo.addons.website_sale.controllers.variant import WebsiteSaleVariantController
 
 
@@ -180,49 +177,65 @@ class WebsiteSale(WebsiteSale):
         )
         return request.redirect("/")
 
-    @http.route('/product/sizechart/size_chart/<int:product_id>', type='http', auth="public", methods=['POST', 'GET'],
-                website=True)
-    def preview_size_chart(self, product_id, **kw):
-        product = request.env['product.template'].browse(product_id)
-        try:
-            if product.size_chart:
-                filecontent = base64.b64decode(product.size_chart)
-                filename = product.size_chart_name
-                content_type = mimetypes.guess_type(filename)
-                return request.make_response(
-                    filecontent,
-                    headers=[('Content-Type', content_type[0] or 'application/octet-stream')])
-        except Exception:
-            pass
-        return False
+    @http.route('/beauty', auth='public', website=True)
+    def ks_beauty(self, **kw):
+        return http.request.render('ks_theme_kinetik.ks_theme_beauty')
 
-    # To preview the size chart content
-    @http.route('/product/sizechart/download/<int:product_id>', type='http', auth="public", methods=['POST', 'GET'],
-                website=True)
-    def download_size_chart(self, product_id, **kw):
-        product = request.env['product.template'].browse(product_id)
-        try:
-            if product.size_chart:
-                filecontent = base64.b64decode(product.size_chart)
-                filename = product.size_chart_name
-                content_type = mimetypes.guess_type(filename)
-                return request.make_response(
-                    filecontent,
-                    headers=[('Content-Type', content_type[0] or 'application/octet-stream'),
-                             ('Content-Disposition', content_disposition(filename)),
-                             ])
-        except Exception:
-            pass
-        return False
+    @http.route('/fitness', auth='public', website=True)
+    def ks_gym(self, **kw):
+        return http.request.render('ks_theme_kinetik.ks_theme_gym')
+
+    @http.route('/corporate', auth='public', website=True)
+    def ks_corporate(self, **kw):
+        return http.request.render('ks_theme_kinetik.ks_theme_corporate')
+
+    @http.route('/medical', auth='public', website=True)
+    def ks_medical(self, **kw):
+        return http.request.render('ks_theme_kinetik.ks_theme_hospital')
+
+    @http.route('/furniture', auth='public', website=True)
+    def ks_furniture(self, **kw):
+        return http.request.render('ks_theme_kinetik.ks_theme_furniture')
+
+    @http.route('/food', auth='public', website=True)
+    def ks_food(self, **kw):
+        return http.request.render('ks_theme_kinetik.ks_theme_food')
+
+    @http.route('/pet', auth='public', website=True)
+    def ks_pet_shop(self, **kw):
+        return http.request.render('ks_theme_kinetik.ks_theme_pet')
+
+    @http.route('/jewel', auth='public', website=True)
+    def ks_jewellery_shop(self, **kw):
+        return http.request.render('ks_theme_kinetik.ks_theme_jewellery')
+
+    @http.route('/watch', auth='public', website=True)
+    def ks_watch_shop(self, **kw):
+        return http.request.render('ks_theme_kinetik.ks_theme_watch')
+
+    @http.route('/about', auth='public', website=True)
+    def ks_about(self, **kw):
+        return http.request.render('ks_theme_kinetik.ks_theme_about_us')
+
+    @http.route('/team', auth='public', website=True)
+    def ks_team(self, **kw):
+        return http.request.render('ks_theme_kinetik.ks_theme_team')
+
+    @http.route('/price', auth='public', website=True)
+    def ks_price(self, **kw):
+        return http.request.render('ks_theme_kinetik.ks_theme_pricing')
+
+    @http.route('/services', auth='public', website=True)
+    def ks_services(self, **kw):
+        return http.request.render('ks_theme_kinetik.ks_theme_services')
+
+    @http.route('/books', auth='public', website=True)
+    def ks_services(self, **kw):
+        return http.request.render('ks_theme_kinetik.ks_theme_books')
 
     @http.route(['/shop/product/<model("product.template"):product>'], type='http', auth="public", website=True)
     def product(self, product, category='', search='', **kwargs):
         seconds = 0
-        mimetype = 'video/mp4'
-        name = 'product_video'
-        public = '1'
-        request.cr.execute('UPDATE ir_attachment SET mimetype=%s WHERE name=%s', (mimetype, name))
-        request.cr.execute('UPDATE ir_attachment SET public=%s WHERE name=%s', (public, name))
         values = super(WebsiteSale, self).product(product, category, search)
         values.qcontext.update({
             "current_url_fb": "http://www.facebook.com/sharer/sharer.php?u=" + request.httprequest.base_url,
@@ -230,14 +243,8 @@ class WebsiteSale(WebsiteSale):
             "current_url_lin": "http://www.linkedin.com/shareArticle?mini=true-url=" + request.httprequest.base_url,
             "current_url_gplus": "https://plus.google.com/share?url=" + request.httprequest.base_url,
             "seconds": seconds,
-            'unit_of_measure_name':request.env['product.template'].browse(product.id).sudo()._get_weight_uom_name_from_ir_config_parameter(),
-            'ks_brand_icon': product.ks_product_brand_id.id,
-            'ks_brand_description': product.ks_product_brand_id.ks_brand_description,
+            'unit_of_measure_name':request.env['product.template'].browse(product.id).sudo()._get_weight_uom_name_from_ir_config_parameter()
         })
-        # use for sorting based most viewed product
-        view_count=request.env['product.template'].browse(product.id).ks_view_count
-        request.cr.execute('UPDATE product_template SET ks_view_count=%s WHERE id=%s', (view_count + 1, product.id))
-        # this is for recently viewed product
         query = "select product_template_id FROM product_template_res_users where res_user_id = %s ORDER BY recently_viewed_date DESC"
         request.env.cr.execute(query, (request.env.user.id,))
         ids = request.env.cr.fetchall()

@@ -4,7 +4,6 @@ from odoo.addons.http_routing.models.ir_http import slug, unslug
 import json
 from odoo.addons.website.controllers.main import QueryURL
 import base64
-from datetime import datetime
 
 
 class Ks_WebsiteProductGrid(http.Controller):
@@ -37,22 +36,13 @@ class Ks_WebsiteProductGrid(http.Controller):
             ks_slider_id = post.get('id', False)
             ks_slide_rec = request.env['ks_product.slider'].sudo().search([("id", "=", ks_slider_id)], limit=1)
             snippet_name = ks_slide_rec.name
-            if ks_slide_rec.ks_item_selection_method == 'brands':
-                items = ks_slide_rec.ks_items_per_slide_for_brands
-            elif ks_slide_rec.ks_item_selection_method == 'blogs':
-                items = ks_slide_rec.ks_items_per_slide_for_blogs
-            else:
-                items = ks_slide_rec.ks_items_per_slide
             vals.update({
                 "slider_id": "product-owl-id-" + str(ks_slide_rec.id),
                 "grid_name": snippet_name,
                 "loop": ks_slide_rec.ks_loop,
                 "auto_slide": ks_slide_rec.ks_auto_slide,
                 "speed": ks_slide_rec.ks_Speed,
-                "items": items,
-                'template_type': ks_slide_rec.ks_template_type,
-                'blog_template_type': ks_slide_rec.ks_blog_template,
-                'ks_animation': 'box-animation' if ks_slide_rec.ks_is_animation else '',
+                "items": ks_slide_rec.ks_items_per_slide,
                 "navs": ks_slide_rec.ks_nav_links,
                 "full_width_class": '' if ks_slide_rec.ks_is_full_width else 'container',
                 'rtl': request.env['res.lang'].search([('code', '=', request.env.lang)]).direction == 'rtl'
@@ -107,9 +97,6 @@ class Ks_WebsiteProductGrid(http.Controller):
                     'ks_name': blog.name,
                     'ks_Subtitle': blog.subtitle,
                     'id': blog.id,
-                    'author_image': "/web/image/blog.post/" + str(blog.id) + "/author_avatar",
-                    'blog_name': blog.blog_id.name,
-                    'author_name': blog.author_id.name,
                     'ks_blog_content': blog.teaser,
                     'ks_link_redirect': ks_link_redirect
                 }
@@ -131,21 +118,16 @@ class Ks_WebsiteProductGrid(http.Controller):
         is_ks_cart = request.website.viewref('website_sale.products_add_to_cart').active
         is_ks_compare = request.website.viewref('website_sale_comparison.add_to_compare').active
         is_ks_product_det = request.website.viewref('website_sale.products_description').active
-        rating = request.website.viewref('ks_theme_kinetik.ks_product_comment').active
-        percentage_discount_show = request.website.viewref('ks_theme_kinetik.percent_discount').active
+
         if ks_products:
             for prods in ks_products:
                 if prods.is_published:
                     ks_product_var_id = prods['product_variant_id'].id
                 ks_img_url = "/web/image/product.template/" + str(prods['id']) + "/image_256"
                 base_url = request.env['ir.config_parameter'].sudo().get_param('web.base.url')
-                prod_price=prods._get_combination_info(prods._get_first_possible_combination(), add_qty=1, pricelist='')['price']
+                prod_price=prods._get_combination_info(prods._get_first_possible_combination(), add_qty=1, pricelist='')['list_price']
                 if not prod_price:
                     prod_price=prods['list_price']
-                if (prod_price == 0):
-                    per_dis = 0
-                else:
-                    per_dis = int(((prods.list_price-prod_price) / prods.list_price) * 100)
                 values = {
                     'product_name': prods['name'],
                     'website_currency_id': ks_currency_id.symbol,
@@ -153,8 +135,6 @@ class Ks_WebsiteProductGrid(http.Controller):
                     'website_price':  float("{0:.2f}".format(prod_price)),
                     'product_img': ks_img_url,
                     'prod_id': prods['id'],
-                    'percentage_discount': per_dis,
-                    'percen_show': percentage_discount_show,
                     'prod_url': "/shop/product/%s" % (prods['id'],),
                     'brand_name': prods.ks_product_brand_id.name,
                     'ks_product_var_id': ks_product_var_id,
@@ -164,10 +144,7 @@ class Ks_WebsiteProductGrid(http.Controller):
                     'is_ks_compare': is_ks_compare,
                     'is_ks_product_det': is_ks_product_det,
                     'prod_image':ks_img_url,
-                    'is_rating': rating,
-                    'rating_avg': prods.rating_avg /2,
-                    'rating_count': prods.rating_count,
-                    'prod_price': float("{0:.2f}".format(prods.list_price)),
+                    'prod_price':prod_price
 
                 }
                 ks_prods.append(values)
@@ -194,8 +171,6 @@ class Ks_WebsiteProductMultiTabs(http.Controller):
         is_ks_cart = request.website.viewref('website_sale.products_add_to_cart').active
         is_ks_compare = request.website.viewref('website_sale_comparison.add_to_compare').active
         is_ks_product_det = request.website.viewref('website_sale.products_description').active
-        rating = request.website.viewref('ks_theme_kinetik.ks_product_comment').active
-        percentage_discount_show = request.website.viewref('ks_theme_kinetik.percent_discount').active
         ks_currency_id = request.env['website'].get_current_website().currency_id
         keep = QueryURL('/shop')
         ks_tabs=ks_multi_tab_data.tabs_line_ids_line
@@ -227,24 +202,18 @@ class Ks_WebsiteProductMultiTabs(http.Controller):
                         ks_product_var_id = prods['product_variant_id'].id
                     ks_img_url = "/web/image/product.template/" + str(prods['id']) + "/image_256"
                     base_url = request.env['ir.config_parameter'].sudo().get_param('web.base.url')
-                    prod_price = prods._get_combination_info(prods._get_first_possible_combination(), add_qty=1, pricelist='')['price']
+                    prod_price = prods._get_combination_info(prods._get_first_possible_combination(), add_qty=1, pricelist='')[ 'list_price']
                     if not prod_price:
                         prod_price = prods['list_price']
-                    if (prod_price == 0):
-                        per_dis = 0
-                    else:
-                        per_dis = int(((prods.list_price - prod_price) / prods.list_price) * 100)
 
                     values = {
                         'product_name': prods['name'],
                         'website_currency_id': ks_currency_id.symbol,
                         'website_currency_position': ks_currency_id.position,
-                        'website_price': float("{0:.2f}".format(prod_price)),
+                         'website_price': float("{0:.2f}".format(prod_price)),
                         'product_img': ks_img_url,
                         'prod_id': prods['id'],
-                        'prod_price': float("{0:.2f}".format(prods.list_price)),
-                        'percentage_discount': per_dis,
-                        'percen_show': percentage_discount_show,
+                        'prod_price': prods['list_price'],
                         'prod_url': "/shop/product/%s" % (prods['id'],),
                         'brand_name': prods.ks_product_brand_id.name,
                         'ks_product_var_id': ks_product_var_id,
@@ -253,9 +222,7 @@ class Ks_WebsiteProductMultiTabs(http.Controller):
                         'is_ks_cart': is_ks_cart,
                         'is_ks_compare': is_ks_compare,
                         'is_ks_product_det': is_ks_product_det,
-                        'rating_count': prods.rating_count,
-                        'is_rating': rating,
-                        'rating_avg': prods.rating_avg /2,
+
                     }
                     ks_prods.append(values)
                 total_tab.append([ks_prods,tab_name,'#tab-'+str(tab_id),'tab-'+str(tab_id)])
@@ -283,8 +250,6 @@ class Ks_WebsiteRecentlyViewedProducts(http.Controller):
         is_ks_cart = request.website.viewref('website_sale.products_add_to_cart').active
         is_ks_compare = request.website.viewref('website_sale_comparison.add_to_compare').active
         is_ks_product_det = request.website.viewref('website_sale.products_description').active
-        rating = request.website.viewref('ks_theme_kinetik.ks_product_comment').active
-        percentage_discount_show = request.website.viewref('ks_theme_kinetik.percent_discount').active
         values = []
         if not request.env.user.id == request.website.user_id.id:
           if ks_products:
@@ -293,25 +258,18 @@ class Ks_WebsiteRecentlyViewedProducts(http.Controller):
                  if prods.is_published:
                     ks_product_var_id = prods['product_variant_id'].id
                     ks_img_url = "/web/image/product.template/" + str(prods['id']) + "/image_256"
-                    prod_price = prods._get_combination_info(prods._get_first_possible_combination(), add_qty=1, pricelist='')['price']
+                    prod_price = prods._get_combination_info(prods._get_first_possible_combination(), add_qty=1, pricelist='')['list_price']
                     if not prod_price:
                         prod_price = prods['list_price']
-                    if (prod_price == 0):
-                        per_dis = 0
-                    else:
-                        per_dis = int(((prods.list_price - prod_price) / prods.list_price) * 100)
-
-                 values = {
+                    values = {
                         'product_name': prods['name'],
                         'website_currency_id': ks_currency_id.symbol,
                         'website_currency_position': ks_currency_id.position,
                         'website_price':float("{0:.2f}".format(prod_price)),
                         'prod_image': ks_img_url,
                         'prod_id': prods['id'],
-                        'prod_price': float("{0:.2f}".format(prods.list_price)),
+                        'prod_price': prods['list_price'],
                         'prod_url': "/shop/product/%s" % (prods['id'],),
-                        'percentage_discount': per_dis,
-                        'percen_show': percentage_discount_show,
                         'brand_name': prods.ks_product_brand_id.name,
                         'ks_product_var_id': ks_product_var_id,
                         'description_sale': prods.description_sale,
@@ -319,11 +277,9 @@ class Ks_WebsiteRecentlyViewedProducts(http.Controller):
                         'is_ks_cart': is_ks_cart,
                         'is_ks_compare': is_ks_compare,
                         'is_ks_product_det': is_ks_product_det,
-                        'is_rating':rating,
-                        'rating_avg':prods.rating_avg /2,
-                        'rating_count': prods.rating_count,
+
                     }
-                ks_prods.append(values)
+                    ks_prods.append(values)
 
         return  {
             'rtl':request.env['res.lang'].search([('code', '=', request.env.lang)]).direction == 'rtl',
@@ -332,7 +288,7 @@ class Ks_WebsiteRecentlyViewedProducts(http.Controller):
             "blogs": [],
             "brands": [],
             "grid_name":"Recently Viewed"
-            }
+        }
 
 class Ks_video_snippets(http.Controller):
     @http.route('/product_video/data/create', type='http', auth='public', methods=['POST'], website=True)
@@ -342,8 +298,7 @@ class Ks_video_snippets(http.Controller):
             'datas': base64.b64encode(file.read()),
             'res_model': 'mail.compose.message',
             'res_id': 0,
-            'public': 'ir.ui.view',
-            'mimetype': 'video/mp4'
+            'mimetype':'video/mp4'
         }).id
         return request.make_response(
                 data=json.dumps({"id": attachment_id}),
@@ -352,30 +307,9 @@ class Ks_video_snippets(http.Controller):
 
     @http.route('/product_video/data/read', type='http', auth='public', methods=['POST'], website=True)
     def attachment_add(self, **kwargs):
-        attachment = request.env['ir.attachment'].sudo().browse(int(kwargs.get('id', 0)))
+        attachment = request.env['ir.attachment'].browse(int(kwargs.get('id', 0)))
         return request.make_response(
             data=json.dumps(attachment.read(['id', 'name', 'mimetype', 'file_size', 'access_token'])[0]),
             headers=[('Content-Type', 'application/json')]
         )
-
-class ks_deal_seconds(http.Controller):
-    @http.route('/deal_of_day/data/second/create', type='http', auth='public', methods=['POST'], website=True)
-    def second_create(self, date_start, date_end, **kwargs):
-        if(len(date_start) and len(date_end)):
-            date_end = datetime.strptime(date_end, '%Y-%m-%d')
-            date_start = datetime.strptime(date_start, '%Y-%m-%d')
-            date_end = datetime(date_end.year, date_end.month, date_end.day, 23, 59, 59)
-            date_start = datetime(date_start.year, date_start.month, date_start.day)
-            now = datetime.now()
-            if (now >= date_start and date_end >= now):
-                seconds = int((date_end - now).total_seconds())
-            else:
-                seconds = 0
-        else:
-            seconds = 0
-        return request.make_response(
-            data=json.dumps({"seconds": seconds}),
-            headers=[('Content-Type', 'application/json')]
-        )
-
 

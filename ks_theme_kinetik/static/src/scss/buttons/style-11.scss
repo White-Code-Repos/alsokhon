@@ -1,15 +1,17 @@
 .ks-btn-theme,
-#{$primary-btn-name} {
-    @include btn-11-style;
-}
-.dropdown_sorty_by .dropdown-toggle:after {
-    display: block !important;
-}
-.dropdown_sorty_by a.dropdown-toggle.btn.btn-secondary {
-    &:hover {
-        &:after {
-            border: none;
-        }
-    }
+.btn-primary {
+    background: $btn-primary;
+    border-color: $btn-primary;
+    color: $text-color;
+    border-radius: $btn-radius;
+    transform: perspective(1px) translateZ(0);
+    box-shadow: 0 0 1px rgba(0, 0, 0, 0);
+    transition: 0.3s ease-in-out;
 
+    &:hover {
+        box-shadow: 0 0 8px rgba(0, 0, 0, 0.6);
+        background: $btn-primary;
+        color: $text-color;
+        border-color: $btn-primary;
+    }
 }

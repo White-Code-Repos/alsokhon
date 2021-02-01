@@ -41,7 +41,7 @@ odoo.define('ks_ecommerce_theme.product_multi_slider_base_multitab', function(re
                           $(slider).owlCarousel({
                               items:data.ks_items_per_slide,
                               autoplay:data.ks_auto_slide,
-                              margin:14,
+                              margin:30,
                               speed:data.ks_Speed,
                               loop:data.ks_loop,
                               nav:data.ks_nav_links,
@@ -52,8 +52,7 @@ odoo.define('ks_ecommerce_theme.product_multi_slider_base_multitab', function(re
                               responsive:{
                                     0:{
                                         items: 2,
-                                        dots: true,
-                                        margin:0,
+                                        dots: true
                                     },
                                     960:{
                                         items: 3,

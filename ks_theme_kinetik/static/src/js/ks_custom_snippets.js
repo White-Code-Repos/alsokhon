@@ -39,7 +39,6 @@ odoo.define('ks_ecommerce_theme.main', function (require) {
            responsive:{
                 0:{
                     items: 3,
-                    margin:0,
                 },
                 767: {
                     items: 4,
@@ -59,18 +58,12 @@ odoo.define('ks_ecommerce_theme.main', function (require) {
 
        var ks_vs_start = 0;
        var ks_vs_slide = 66;
-       var ks_vs_visible_slides = 4;
+       var ks_vs_visible_slides = 5;
        var ks_total_slides = $('.ks-slider-vertical .carousel-indicators li').length;
 
        if(typeof(ks_total_slides)  === "undefined" || ks_total_slides == 0) {
             $('.ks-slider-container').css('display','none');
        }
-
-       if(ks_total_slides < 4 ) {
-            $('.ks-vs-inner').css('height',(ks_total_slides * 100));
-            ks_vs_visible_slides = ks_total_slides;
-       }
-
 //
 //       if(ks_total_slides < 4 ) {
 //            $('.ks-vs-inner').css('height',(ks_total_slides * 71));

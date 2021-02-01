@@ -10,156 +10,43 @@
     font-size: 18px;
     margin-bottom: 0;
 }
-.dropdown_sorty_by,
-.dropdown_ppg{
-    &:hover{
-        .dropdown-menu{
-            display: block;
-        }
-    }
-    button {
-        &:after {
-            border: none !important;
-        }
-    }
-}
-.product-select {
-    width: 77px !important;
-    min-width: auto;
-    text-align: center;
 
-    .dropdown-item {
-        padding: 0.25rem 0;
-    }
+.product-select {
+    width: 55px;
+    height: 35px;
+    background: transparent;
 }
 
 .oe_product_cart {
-     .ribbon-wrapper {
-         width: auto;
-         height: auto;
-         overflow: inherit;
-         &::after{
-            position: absolute;
-            content: "";
-            width: 0;
-            height: 0;
-            border-left: 50px solid transparent;
-            border-right: 50px solid transparent;
-            border-top: 8px solid $primary;
-            left: -31px;
-            bottom: -2px;
-         }
+    .ribbon-wrapper {
+        width: auto;
+        height: auto;
+        box-shadow: -3px 5px 6px 0px rgba(0, 0, 0, 0.2);
 
-        .ribbon{
-            transform: rotate(0deg);
-            font-size: 12px;
-            font-weight: normal;
-            padding: 7px 5px 3px 5px;
-            text-align: center;
-            border-radius: 0px;
-            border-top-right-radius: 8px;
-            width: 100px;
-            top: -6px;
-            background: $primary;
-            border: none;
-            &:hover{
-                background: $primary;
+        .ribbon {
+            transform: none;
+            width: auto;
+            min-width: 20px;
+            writing-mode: vertical-rl;
+            text-orientation: upright;
+            text-transform: uppercase;
+            border-radius: 0;
+            padding: 10px 5px;
+            right: 0;
+            top: 0;
+            left: auto;
+
+            @media (max-width: 1200px) {
+                font-size: 12px;
             }
-            &:active{
-                box-shadow: none !important;
-                background: $primary;
-            }
-            &::after,
-            &::before{
-                    position: absolute;
-                content: "";
-            }
-             &::before{
-                height: 6px;
-                width: 6px;
-                left: -6px;
-                top: 0;
-                background: $primary;
-             }
-            &::after{
-                height: 6px;
-                width: 8px;
-                left: -8px;
-                top: 0;
-                border-radius: 8px 8px 0 0;
-                background: darken($primary, 30%);
+
+            @media (max-width: 575px) {
+                font-size: 8px;
             }
         }
-     }
+    }
 }
 
 .oe_product_cart .oe_product_image {
     height: auto;
-}
-
-@media (max-width: 767px){
-    #o-carousel-product .carousel-inner{
-            padding-left: 30px;
-            padding-right: 30px;
-        }
-}
-
-.table-comparator {
-    td {
-        min-width: 200px !important;
-        max-width: 200px;
-
-        &.td-top-left {
-           min-width: 100px !important;
-           max-width: 100px;
-        }
-    }
-    .product_summary {
-        > span {
-            color: $black;
-        }
-
-        a.o_product_comparison_table {
-            color: #757575;
-        }
-    }
-
-    .clickable {
-        th {
-            color: $primary;
-            cursor: pointer;
-        }
-    }
-
-    .collapse {
-        td:first-child {
-            color: $black;
-            min-width: 100px !important;
-            max-width: 100px;
-        }
-    }
-}
-.ks_compare_redesign {
-    max-width: 100%;
-    overflow-x: auto;
-    position: relative;
-    @extend .scroll-style;
-
-    &::-webkit-scrollbar {
-        height: 10px;
-    }
-
-    .table {
-        table-layout: auto !important;
-    }
-}
-
-#oe_structure_website_sale_comparison_product_compare_1 {
-    + .container > section.container {
-        padding: 20px 0;
-    }
-}
-
-#product_quick_preview_ModalLabel {
-    color: $black;
 }

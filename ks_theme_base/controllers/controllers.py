@@ -92,16 +92,6 @@ class WebsiteSale(main.WebsiteSale):
         To add other domains for the search box
     """
 
-    def _get_search_order(self, post):
-        # OrderBy will be parsed in orm and so no direct sql injection
-        # id is added to be sure that order is a unique sort key
-        default_order_by=request.env['ks_theme_kinetik.ks_settings'].search([]).default_order_by
-        if default_order_by:
-            order = post.get('order') or default_order_by
-        else:
-            order = post.get('order') or 'website_sequence ASC'
-        return 'is_published desc, %s, id desc' % order
-
     def _get_search_domain(self, search, category, attrib_values, brand=None, ks_max_selected_price= None,ks_min_selected_price=None):
         domain = request.website.sale_product_domain()
         try:
@@ -297,35 +287,10 @@ class WebsiteSale(main.WebsiteSale):
         if post.get('offset', False):
             pager =request.website.pager(url=url, total=len(search_product) - post['offset'], page=page, step=ppg, scope=7,
                                   url_args=post)
-            if 'ks_sale_count' in self._get_search_order(post):
-                for product in request.env['product.template'].search([]):
-                    ks_sale_count = sum(
-                        [p.sales_count for p in product.with_context(active_test=False).product_variant_ids])
-                    product.sudo().write({'ks_sale_count': ks_sale_count})
-                products = Product.search(domain, offset=post['offset'], limit=ppg, order=self._get_search_order(post))
-            elif 'ks_rating_avg' in self._get_search_order(post):
-                for product in request.env['product.template'].search([]):
-                    ks_rating_avg = product.rating_avg
-                    product.sudo().write({'ks_rating_avg': ks_rating_avg})
-                products = Product.search(domain, offset=post['offset'], limit=ppg, order=self._get_search_order(post))
-
-            else:
-                products = Product.search(domain, offset=post['offset'], limit=ppg,
-                                         order=self._get_search_order(post) )
+            products = Product.search(domain, offset=post['offset'], limit=ppg,
+                                      order=self._get_search_order(post))
         else:
-            if 'ks_sale_count' in self._get_search_order(post):
-                for product in request.env['product.template'].search([]):
-                    ks_sale_count = sum(
-                        [p.sales_count for p in product.with_context(active_test=False).product_variant_ids])
-                    product.sudo().write({'ks_sale_count': ks_sale_count})
-                products = Product.search(domain, offset=pager['offset'], limit=ppg, order=self._get_search_order(post))
-            elif 'ks_rating_avg' in self._get_search_order(post):
-                for product in request.env['product.template'].search([]):
-                    ks_rating_avg=product.rating_avg
-                    product.sudo().write({'ks_rating_avg': ks_rating_avg})
-                products = Product.search(domain, offset=pager['offset'], limit=ppg, order=self._get_search_order(post))
-            else:
-                products = Product.search(domain, offset=pager['offset'], limit=ppg, order=self._get_search_order(post))
+            products = Product.search(domain, offset=pager['offset'], limit=ppg, order=self._get_search_order(post))
 
         product_count = len(search_product)
         ProductAttribute = request.env['product.attribute']

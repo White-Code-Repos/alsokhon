@@ -1,1 +1,23 @@
-<svg id="Layer_1" data-name="Layer 1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25 25"><defs><style>.cls-1{fill:#313131;}</style></defs><title>Artboard 1</title><rect class="cls-1" x="0.5" y="0.5" width="5.87" height="5.87" rx="2.94"/><rect class="cls-1" x="9.36" y="0.5" width="5.87" height="5.87" rx="2.94"/><rect class="cls-1" x="18.5" y="0.58" width="5.87" height="5.87" rx="2.94"/><rect class="cls-1" x="0.5" y="9.56" width="5.87" height="5.87" rx="2.94"/><rect class="cls-1" x="9.36" y="9.56" width="5.87" height="5.87" rx="2.94"/><rect class="cls-1" x="18.5" y="9.64" width="5.87" height="5.87" rx="2.94"/><rect class="cls-1" x="0.5" y="18.47" width="5.87" height="5.87" rx="2.94"/><rect class="cls-1" x="9.36" y="18.47" width="5.87" height="5.87" rx="2.94"/><rect class="cls-1" x="18.5" y="18.55" width="5.87" height="5.87" rx="2.94"/></svg>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100px" height="100px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>3-products</title>
+    <desc>Created with Sketch.</desc>
+    <g id="3-products" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group" transform="translate(10.000000, 10.000000)" fill="#000000">
+            <rect id="Rectangle" x="0" y="0" width="20" height="20"></rect>
+            <rect id="Rectangle" x="30" y="0" width="20" height="20"></rect>
+            <rect id="Rectangle" x="60" y="0" width="20" height="20"></rect>
+        </g>
+        <g id="Group" transform="translate(10.000000, 70.000000)" fill="#000000">
+            <rect id="Rectangle" x="0" y="0" width="20" height="20"></rect>
+            <rect id="Rectangle" x="30" y="0" width="20" height="20"></rect>
+            <rect id="Rectangle" x="60" y="0" width="20" height="20"></rect>
+        </g>
+        <g id="Group" transform="translate(10.000000, 40.000000)" fill="#000000">
+            <rect id="Rectangle" x="0" y="0" width="20" height="20"></rect>
+            <rect id="Rectangle" x="30" y="0" width="20" height="20"></rect>
+            <rect id="Rectangle" x="60" y="0" width="20" height="20"></rect>
+        </g>
+    </g>
+</svg>

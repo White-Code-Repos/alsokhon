@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <!-- Template and notification section -->
+    <data noupdate="1">
+      <record id="email_template_pos_order" model="mail.template">
+              <field name="name">Pos Order: Send by email</field>
+              <field name="email_from">${(object.create_uid.email and '&quot;%s&quot; &lt;%s&gt;' % (object.name, object.create_uid.email) or '')|safe}</field>
+              <field name="subject">${object.name}</field>
+              <field name="partner_to">${object.partner_id.id}</field>
+              <field name="model_id" ref="pos_order_report.model_pos_order"/>
+              <field name="auto_delete" eval="False"/>
+              <field name="report_template" ref="pos_order_report.action_external_report_pos_order"/>
+              <field name="report_name">${(object.name or '').replace('/','_')}</field>
+              <field name="lang">${object.partner_id.lang}</field>
+              <field name="body_html"><![CDATA[
+                  # your Order Invoice
+              ]]></field>
+              <field name="auto_delete" eval="True"/>
+      </record>
+
+        <!-- <record id="email_template_pos_order" model="mail.template">
+            <field name="name">Pos Order: Send by email</field>
+            <field name="model_id" ref="pos_order_report.model_pos_order"/>
+            <field name="subject">${object.name} </field>
+            <field name="email_from">${(object.user_id.email_formatted or user.email_formatted) | safe}</field>
+            <field name="partner_to">${object.partner_id.id}</field>
+            <field name="body_html" type="html">
+<div style="margin: 0px; padding: 0px;">
+    <p style="margin: 0px; padding: 0px; font-size: 13px;">
+        Hello,
+        <br/><br/>
+        Your
+
+    </p>
+</div>
+            </field>
+            <field name="report_template" ref="action_external_report_pos_order"/>
+            <field name="report_name">${(object.name or '').replace('/','_')}</field>
+            <field name="lang">${object.partner_id.lang}</field>
+            <field name="user_signature" eval="False"/>
+            <field name="auto_delete" eval="True"/>
+        </record> -->
+
+
+    </data>
+</odoo>

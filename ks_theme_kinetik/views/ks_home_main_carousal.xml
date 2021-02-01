@@ -2,7 +2,7 @@
     <!--main slider after header -->
     <template id="ks_main_slider_snippet" name="Main Slider">
         <section class="ks_main_slider_snippet">
-            <div id="myCarousel" class="mainHomeSlider mainTransparent" >
+            <div id="myCarousel" class="mainHomeSlider" >
                 <!-- Indicators -->
             </div>
         </section>

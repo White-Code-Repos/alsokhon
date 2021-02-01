@@ -103,10 +103,10 @@
     'website': "https://www.ksolves.com",
     'license': 'OPL-1',
     'currency': 'EUR',
-    'price': '162.0',
+    'price': '180.0',
     'category': 'Theme/Ecommerce',
     'support': 'sales@ksolves.com',
-    'version': '1.4.0',
+    'version': '1.0.8',
     'live_test_url': 'https://demokinetik.kappso.com',
     'depends': ['ks_theme_base', 'website_sale_wishlist', 'website_sale_comparison',
                 'website_sale_stock', 'website_rating','website_crm','sale_product_configurator'],
@@ -127,6 +127,8 @@
         # Footer layout
         'views/ks_footer_layout.xml',
         'views/ks_footer_view.xml',
+        'data/ks_footer_data.xml',
+        'data/ks_demo_data.xml',
         # fonts
         'views/ks_fonts.xml',
         # buttons
@@ -138,7 +140,6 @@
         'views/ks_brand_snippet.xml',
         'views/ks_featured_snippet.xml',
         'views/ks_Blogs.xml',
-        # 'views/ks_blog_page.xml',
         'views/ks_all_static_snippets.xml',
         'views/ks_new_snippets.xml',
         'views/ks_product_detail.xml',
@@ -157,20 +158,16 @@
         'views/ks_recently_viewed_products.xml',
         'views/ks_update_all_slider_view.xml',
         'views/ks_breadcumb_image.xml',
-        'views/ks_deal_of_the_day_new.xml',
-        # 'views/ks_blog_detail.xml',
 
         # landing pages
         'views/ks_theme_beauty.xml',
         'views/ks_inherited_blogs.xml',
         'views/ks_website_contact_us_form.xml',
-        'data/ks_footer_data.xml',
-        'data/ks_demo_data.xml',
 
     ],
 
     'qweb': [
-        # 'static/src/xml/ks_offer_timer.xml',
+        'static/src/xml/ks_offer_timer.xml',
         'static/src/xml/ks_featured_snippet_inner.xml',
         'static/src/xml/ks_new_snippet.xml',
         'static/src/xml/ks_dynamic_blogs.xml',
@@ -189,14 +186,11 @@
         'static/src/xml/modal.xml',
         'static/src/xml/ks_product_offer.xml',
         'static/src/xml/ks_multitab_slider_inside.xml',
-        'static/src/xml/ks_product_slider.x<<<<<<< 13.0_stageml',
+        'static/src/xml/ks_product_slider.xml',
         'static/src/xml/ks_attach.xml',
-        'static/src/xml/ks_brand.xml',
-        'static/src/xml/ks_deal_of_the_day.xml',
-        'static/src/xml/pos_web_editor_backend.xml',
     ],
     'images': [
-            'static/description/banner.jpg',
+            'static/description/banner.gif',
             'static/description/list_screenshot.gif',
     ],
     'demo': [

@@ -23,8 +23,10 @@
         'views/stock_production_lot_view.xml',
         'views/purchase_order_view.xml',
         'views/stock_picking_view.xml',
-        'views/gold_purity_view.xml'
-        
+        'views/gold_purity_view.xml',
+        'views/stock_quant.xml',
+        'wizard/fixing_unfixed_bill.xml',
+        # 'reports/gold_fixing_register.xml',
     ],
 
 }

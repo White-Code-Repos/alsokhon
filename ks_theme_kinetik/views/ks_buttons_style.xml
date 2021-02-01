@@ -151,15 +151,6 @@
         </xpath>
     </template>
 
-    <template id="ks_button_style_layout_11" name="Button 11" customize_show="True"
-              inherit_id="web.assets_frontend" active="False" priority="110">
-        <xpath expr="." position="inside">
-            <link rel="stylesheet"
-                  type="text/css"
-                  href="/ks_theme_kinetik/static/src/scss/buttons/style-11.scss"/>
-        </xpath>
-    </template>
-
 
 
 </odoo>

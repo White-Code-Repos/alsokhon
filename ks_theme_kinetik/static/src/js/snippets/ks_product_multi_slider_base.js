@@ -10,8 +10,6 @@ odoo.define('ks_ecommerce_theme.product_multi_slider_base', function(require) {
     var website = require('website.utils');
     var _t = core._t;
     var qweb = core.qweb;
-    var ks_slider_items;
-
     ajax.loadXML('/ks_theme_kinetik/static/src/xml/ks_product_slider.xml', qweb);
     var WebsiteSaleProductSlider = Widget.extend({
         events: {},
@@ -41,20 +39,14 @@ odoo.define('ks_ecommerce_theme.product_multi_slider_base', function(require) {
                if($target){
                    $inner_temp.appendTo($target.empty());
                    var slider_id = "#"+data.slider_id;
-                   var sliders = $(slider_id);
-                   if (data['blogs'].length) {
-                    ks_slider_items = 1
-                   }
-                   else{
-                    ks_slider_items = 2
-                   }
+                   var sliders = $(slider_id)
                    _.each(sliders,function(slider){
                           $(slider).owlCarousel({
                               items:data.items,
                               autoplay:data.auto_slide,
                               autoplayTimeout:data.speed,
                               autoplayHoverPause:true,
-                              margin:14,
+                              margin:30,
                               rtl:ks_rtl,
                               loop:data.loop,
                               nav:data.navs,
@@ -62,16 +54,16 @@ odoo.define('ks_ecommerce_theme.product_multi_slider_base', function(require) {
                               responsiveClass: true,
                               responsive:{
                                     0:{
-                                        items: ks_slider_items,
+                                        items: 2,
                                         dots: true,
-                                        margin:0,
+                                        margin:10,
                                     },
                                     540:{
-                                        items: ks_slider_items,
+                                        items: 2,
                                         dots: true,
                                     },
                                     960:{
-                                        items: ks_slider_items + 1,
+                                        items: 3,
                                         dots: true
                                     },
                                     1200:{

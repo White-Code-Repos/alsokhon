@@ -1,1 +1,26 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 25.01 20.78"><defs><style>.cls-1{fill:#313131;}</style></defs><title>Asset 9</title><g id="Layer_2" data-name="Layer 2"><g id="Layer_2-2" data-name="Layer 2"><rect class="cls-1" width="5" height="5" rx="2.48"/><rect class="cls-1" x="6.67" width="5" height="5" rx="2.5"/><rect class="cls-1" x="13.34" width="5" height="5" rx="2.5"/><rect class="cls-1" x="20.01" width="5" height="5" rx="2.5"/><rect class="cls-1" y="7.89" width="5" height="5" rx="2.5"/><rect class="cls-1" x="6.67" y="7.89" width="5" height="5" rx="2.5"/><rect class="cls-1" x="13.34" y="7.89" width="5" height="5" rx="2.5"/><rect class="cls-1" x="20.01" y="7.89" width="5" height="5" rx="2.5"/><rect class="cls-1" y="15.78" width="5" height="5" rx="2.5"/><rect class="cls-1" x="6.67" y="15.78" width="5" height="5" rx="2.5"/><rect class="cls-1" x="13.34" y="15.78" width="5" height="5" rx="2.5"/><rect class="cls-1" x="20.01" y="15.78" width="5" height="5" rx="2.5"/></g></g></svg>
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="100px" height="100px" viewBox="0 0 100 100" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <!-- Generator: Sketch 58 (84663) - https://sketch.com -->
+    <title>4-products</title>
+    <desc>Created with Sketch.</desc>
+    <g id="4-products" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Group" transform="translate(10.000000, 10.000000)" fill="#000000">
+            <rect id="Rectangle" x="0" y="0" width="15" height="20"></rect>
+            <rect id="Rectangle" x="22" y="0" width="15" height="20"></rect>
+            <rect id="Rectangle" x="44" y="0" width="15" height="20"></rect>
+            <rect id="Rectangle" x="65" y="0" width="15" height="20"></rect>
+        </g>
+        <g id="Group" transform="translate(10.000000, 70.000000)" fill="#000000">
+            <rect id="Rectangle" x="0" y="0" width="15" height="20"></rect>
+            <rect id="Rectangle" x="22" y="0" width="15" height="20"></rect>
+            <rect id="Rectangle" x="44" y="0" width="15" height="20"></rect>
+            <rect id="Rectangle" x="65" y="0" width="15" height="20"></rect>
+        </g>
+        <g id="Group" transform="translate(10.000000, 40.000000)" fill="#000000">
+            <rect id="Rectangle" x="0" y="0" width="15" height="20"></rect>
+            <rect id="Rectangle" x="22" y="0" width="15" height="20"></rect>
+            <rect id="Rectangle" x="44" y="0" width="15" height="20"></rect>
+            <rect id="Rectangle" x="65" y="0" width="15" height="20"></rect>
+        </g>
+    </g>
+</svg>

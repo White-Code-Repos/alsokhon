@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_gold_position_form" model="ir.ui.view">
+        <field name="name">gold.position.form</field>
+        <field name="model">gold.position</field>
+        <field name="arch" type="xml">
+            <form string="Gold Position" create="false" duplicate="false"
+                  edit="false" delete="false">
+                <sheet>
+                    <group>
+                        <h2>
+                            <strong>
+                                Gold Capital:
+                            </strong>
+                            <field name="gold_capital" class="oe_inline"/>
+                        </h2>
+                    </group>
+
+                    <group>
+                        <h2>
+                            <strong>
+                                Current Position:
+                            </strong>
+                            <field name="current_position" class="oe_inline"/>
+                        </h2>
+                    </group>
+
+                    <group>
+                        <h2>
+                            <strong>
+                                Capital Difference:
+                            </strong>
+                            <field name="capital_difference" class="oe_inline"/>
+                        </h2>
+                    </group>
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_gold_position_action" model="ir.actions.act_window">
+        <field name="name">Gold Fixing Position</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">gold.position</field>
+        <field name="view_mode">form</field>
+        <field name="res_id">1</field>
+        <field name="domain">[]</field>
+        <field name="context">{}</field>
+    </record>
+
+    <menuitem id="menu_action_open_gold_position"
+              name="Gold Fixing Position"
+              action="view_gold_position_action"
+              parent="account_reports.account_reports_audit_reports_menu"
+              groups="account.group_account_user"/>
+
+<!--    <menuitem id="menu_action_account_report_gold_fixed"-->
+<!--                  action="action_gold_fixing_position"-->
+<!--                  name="Gold Fixing Position"-->
+<!--                  parent="account.account_reports_management_menu"-->
+<!--                  sequence="10"/>-->
+</odoo>

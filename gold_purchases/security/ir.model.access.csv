@@ -4,3 +4,14 @@ access_item_category,access_item_category,model_item_category,,1,1,1,1
 access_item_category_line,access_item_category_line,model_item_category_line,,1,1,1,1
 access_making_charges,access_making_charges,model_making_charges,,1,1,1,1
 access_unfixed_wizard,access_unfixed_wizard_sstock,model_stock_move_gold,,1,1,1,1
+access_unfixed_fixing,access_unfixed_fixing_sstock,model_fixing_unfixed_bill,,1,1,1,1
+access_assembly_gold,accessassembly_s_gold,model_assembly_component_gold,,1,1,1,1
+access_assembly_diamond,accessassembly_s_diamond,model_assembly_component_diamond,,1,1,1,1
+access_assembly_mix,accessassembly_s_mix,model_assembly_component_mix,,1,1,1,1
+access_assembly_gold_back,accessassembly_s_gold_back,model_assembly_back_component_gold,,1,1,1,1
+access_assembly_diamond_back,accessassembly_s_diamond_back,model_assembly_back_component_diamond,,1,1,1,1
+access_assembly_mix_back,accessassembly_s_mix_back,model_assembly_back_component_mix,,1,1,1,1
+access_assembly_descg,accessassembly_ss_descg,model_assembly_description_gold,,1,1,1,1
+access_assembly_descd,accessassembly_ss_descd,model_assembly_description_diamond,,1,1,1,1
+access_assembly_lotg,accessassembly_sss_lotg,model_assembly_description_lot_gold,,1,1,1,1
+access_assembly_lotd,accessassembly_sss_lotd,model_assembly_description_lot_diamond,,1,1,1,1

@@ -772,13 +772,8 @@ input:focus, textarea:focus {
 
 
 //pricing v-3
-.text-primary,
-a.text-primary {
+.text-primary {
     color: $primary !important;
-
-    &:hover {
-        color: #000 !important;
-    }
 }
 
 .ks-pricing {
@@ -1812,8 +1807,7 @@ input:focus, textarea:focus {
     	}
     	.custom-textarea {
     		width: 100%;
-    		height: 110px;
-    		min-height: 30px;
+    		height: 150px;
     		border: none;
     		border-bottom: 1px solid $black;
     	}
@@ -1917,8 +1911,7 @@ input:focus, textarea:focus {
     }
     .custom-textarea {
       width: 100%;
-      height: 110px;
-      min-height: 30px;
+      height:100px;
       border: none;
       border-bottom: 1px solid;
     }
@@ -1989,7 +1982,6 @@ input:focus, textarea:focus {
   .ks-banner-text-container {
     width: 50%;
     background: $full-banner-bg;
-    background: rgba(255, 255, 255, 0.3);
     color: white;
     padding: 20px;
     border-radius: 5px;
@@ -2329,67 +2321,4 @@ input:focus, textarea:focus {
       min-width: 40%;
     }
   }
-}
-.Ks-T1 {
-    position: absolute;
-    top: 80px;
-}
-
-.carousel-control-prev.ks-control-prev{
-        left: -40px;
-}
-.carousel-control-next.ks-control-next{
-        right: -40px;
-}
-.carousel-control-prev.ks-control-prev,
-.carousel-control-next.ks-control-next{
-    height: 30px;
-    width: 30px;
-    transform: translateY(50%);
-    top: 40%;
-    background: #fff;
-    padding: 7px 3px;
-    box-sizing: content-box;
-    text-align: center;
-    cursor: pointer;
-    transition: all ease-in-out 0.5s;
-    opacity: 1;
-
-    i{
-        font-size: 40px;
-    }
-}
-
-.ks-kinetik-slider {
-    width: 100%;
-    overflow: hidden;
-    position: relative;
-
-   &:hover{
-        .carousel-control-prev.ks-control-prev{
-           left: 0px;
-        }
-        .carousel-control-next.ks-control-next{
-            right: 0px;
-        }
-   }
-}
-.ks_cntct_l1,
-.ks_cntct_l2,
-.ks-contact{
-    ul.list{
-        .d-flex{
-            align-items: center;
-        }
-    }
-    .ks-form-info{
-        label{
-            margin: 0px;
-            line-height: 35px;
-        }
-        .custom-textarea,
-        .custom-input{
-            padding-left: 0px;
-        }
-    }
 }

@@ -22,7 +22,7 @@
                                <field name="diamond_labor_charges"/>
                            </div>
                           <div class="o_setting_right_pane">
-                                <label for="diamond_labor_charges" string="Diamond Labor Charges"/>
+                                <label for="diamond_labor_charges" string="Stone Labor Charges"/>
                           </div>
                       </div>
                          <div class="col-12 col-lg-6 o_setting_box">
@@ -30,7 +30,7 @@
                                <field name="g_d_labor_charges"/>
                            </div>
                           <div class="o_setting_right_pane">
-                                <label for="g_d_labor_charges" string="Gold/Diamond Labor Charges"/>
+                                <label for="g_d_labor_charges" string="Gold/Stone Labor Charges"/>
                           </div>
                       </div>
 

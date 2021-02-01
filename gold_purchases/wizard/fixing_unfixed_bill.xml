@@ -1,0 +1,31 @@
+<odoo>
+  <data>
+    <record model="ir.ui.view" id="gold_purchases.fixing_unfixed_bill_form">
+        <field name="name">fixing_unfixed_bill_form.form</field>
+        <field name="model">fixing.unfixed.bill</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+          <form>
+              <group>
+                  <span colspan="4" nolabel="1">Fixing Unfixed Bill</span>
+              </group>
+              <group>
+                <field name="gold_rate"/>
+                <!-- <field name="remaining_gold"/> -->
+                <field name="value"/>
+              </group>
+              <button icon="fa-cogs" string="Generate" name="process_fixing" type="object" class="oe_highlight"  />
+         </form>
+        </field>
+     </record>
+     <record id="gold_purchases.action_fixing_unfixed_bill_wiz" model="ir.actions.act_window">
+         <field name="name">Fixing Unfixed Bill</field>
+         <field name="res_model">fixing.unfixed.bill</field>
+         <field name="view_mode">form</field>
+         <field name="view_id" ref="gold_purchases.fixing_unfixed_bill_form"/>
+         <!-- <field name="context">{'default_value': context.get('pure_wt_value', False),'default_gold_rate': context.get('gold_rate', False),}</field> -->
+         <field name="target">new</field>
+     </record>
+
+   </data>
+</odoo>

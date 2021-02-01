@@ -177,10 +177,6 @@
                   type="text/scss"
                   href="/ks_theme_kinetik/static/src/scss/shop/shop_page.scss"
             />
-             <link rel="stylesheet"
-                  type="text/scss"
-                  href="/ks_theme_kinetik/static/src/scss/shop/blog-detail.scss"
-            />
             <link rel="stylesheet"
                   type="text/scss"
                   href="/ks_theme_kinetik/static/src/dynamic-snippet-scss/ks_trendy_style.scss"
@@ -252,10 +248,6 @@
                   type="text/scss"
                   href="/ks_theme_kinetik/static/src/dynamic-snippet-scss/ks_blog.scss"
             />
-             <link rel="stylesheet"
-                  type="text/scss"
-                  href="/ks_theme_kinetik/static/src/dynamic-snippet-scss/ks_list_blog.scss"
-            />
             <!--libs css-->
             <link rel="stylesheet" type="text/css"
                   href="/ks_theme_kinetik/static/src/lib/spectrum/spectrum.css"/>
@@ -282,8 +274,6 @@
             <link type="text/scss" rel="stylesheet"
                 href="/ks_theme_kinetik/static/src/css/scss/headers/header-10.scss"/>
             <link type="text/scss" rel="stylesheet"
-                href="/ks_theme_kinetik/static/src/css/scss/headers/header-11.scss"/>
-            <link type="text/scss" rel="stylesheet"
                 href="/ks_theme_kinetik/static/src/css/scss/headers/mega_menu.scss"/>
 
             <link type="text/scss" rel="stylesheet"
@@ -292,14 +282,6 @@
             <link rel="stylesheet"
                   type="text/css"
                   href="/ks_theme_kinetik/static/src/css/flipclock.css"
-            />
-            <link rel="stylesheet"
-                  type="text/css"
-                  href="/ks_theme_kinetik/static/src/css/product_pdf.css"
-            />
-            <link rel="stylesheet"
-                  type="text/scss"
-                  href="/ks_theme_kinetik/static/src/dynamic-snippet-scss/ks_brand_slider.scss"
             />
 
             <!--libs js-->
@@ -339,13 +321,12 @@
             <script src="/ks_theme_kinetik/static/src/js/snippets/ks_product_slider_multi.js" />
             <script src="/ks_theme_kinetik/static/src/js/snippets/ks_trendy_style.js" />
             <script src="/ks_theme_kinetik/static/src/js/snippets/ks_recently_viewed.js" />
-            <script src="/ks_theme_kinetik/static/src/lib/wow.js" />
+            <script src="ks_theme_kinetik/static/src/lib/wow.js" />
             <script src="/ks_theme_kinetik/static/src/js/ks_front_end.js" />
             <script src="/ks_theme_kinetik/static/src/js/ks_wish_list.js" />
             <script src="/ks_theme_kinetik/static/src/js/snippets/ks_product_grid_multi.js" />
             <script src="/ks_theme_kinetik/static/src/js/snippets/ks_video_snippet_multi.js" />
             <script src="/ks_theme_kinetik/static/src/js/snippets/ks_deal_of_the_day.js" />
-            <script src="/ks_theme_kinetik/static/src/js/snippets/ks_deal_of_the_day_multi.js" />
             <script src="/ks_theme_kinetik/static/src/js/snippets/flipclock.js" />
 
 

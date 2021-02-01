@@ -1,5 +1,5 @@
 <odoo>
-     <template id="ks_video_static" name="Embed Video">
+     <template id="ks_video_static" name="video snippet">
          <section data-js="ks_video_snippet_testimonial_options" class="website_sale_product_slider ">
             <div class="ks_video_snippet ks_video_static"  data-id="0" data-snippet_type="0">
                 <a href="#" data-action="ks_product_slider_multi" class="ks_product_slider_multi"

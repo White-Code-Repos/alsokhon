@@ -1,6 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <data>
+        <record id="view_stock_valuation_layer_tree" model="ir.ui.view">
+            <field name="name">stock.valuation.layer.tree</field>
+            <field name="model">stock.valuation.layer</field>
+            <field name="type">tree</field>
+            <field name="inherit_id" ref="stock_account.stock_valuation_layer_tree" />
+            <field name="priority" eval="8"/>
+            <field name="arch" type="xml">
+                <xpath expr="//field[@name='quantity']" position="after">
+                    <field name="pure_weight"/>
+                    <field name = "gold_rate" />
+                    <field name= "gross_weight" />
+                    <field name="purity" />
+                </xpath>
+            </field>
+        </record>
+
+        <record id="view_stock_valuation_layer_search" model="ir.ui.view">
+            <field name="name">stock.valuation.layer.search</field>
+            <field name="model">stock.valuation.layer</field>
+            <field name="type">search</field>
+            <field name="inherit_id" ref="stock_account.view_inventory_valuation_search" />
+            <!-- <field name="context">{"search_default_group_by_purity":1,"search_default_group_by_product_id":1}</field> -->
+            <field name="arch" type="xml">
+                <!-- <xpath expr="//field[@name='quantity']" position="after">
+                    <field name="pure_weight"/>
+                    <field name = "gold_rate" />
+                    <field name= "gross_weight" />
+                    <field name="purity" />
+                </xpath> -->
+                <filter name="group_by_product_id" position="before">
+                  <filter string="Purity" name="group_by_purity" context="{'group_by': 'purity'}"/>
+                </filter>
+            </field>
+        </record>
+        <record id="stock_account.action_stock_inventory_valuation" model="ir.actions.act_window">
+          <field name="search_view_id" ref="stock_account.view_inventory_valuation_search"></field>
+          <field name="context">{"search_default_group_by_purity":1,"search_default_group_by_product_id":1}</field>
+        </record>
+
+
         <!-- <record id="gold_purchases_product_product_form_view_inherited" model="ir.ui.view">
             <field name="name">gold.purchases.product.product.form.view.inherit</field>
             <field name="model">product.product</field>

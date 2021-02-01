@@ -95,7 +95,6 @@
                               <form t-if="product._is_add_to_cart_possible()" action="/shop/cart/update" method="POST">
                                 <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()" />
                                 <div class="js_product js_main_product">
-                                    <t t-call="website_sale.product_price" />
                                     <t t-placeholder="select">
                                         <input type="hidden" class="product_id" name="product_id" t-att-value="product_variant.id" />
                                         <input type="hidden" class="product_template_id" name="product_template_id" t-att-value="product.id" />
@@ -107,6 +106,7 @@
                                             <ul class="d-none js_add_cart_variants" t-att-data-attribute_exclusions="{'exclusions: []'}"/>
                                         </t>
                                     </t>
+                                    <t t-call="website_sale.product_price" />
                                     <p t-if="True" class="css_not_available_msg alert alert-warning">This combination does not exist.</p>
                                     <a role="button" id="add_to_cart" class="btn btn-primary btn-lg mt16 js_check_product a-submit d-block d-sm-inline-block" href="#"><i class="fa fa-shopping-cart"/> Add to Cart</a>
                                     <div id="product_option_block"/>
@@ -121,6 +121,13 @@
                             <p t-else="" class="alert alert-warning">This product has no valid combination.</p>
                             <hr t-if="product.description_sale"/>
                             <hr/>
+                            <p class="text-muted mt-4">
+                                30-day money-back guarantee
+                                <br/>
+                                Free Shipping in U.S.
+                                <br/>
+                                Buy now, get in 2 days
+                            </p>
                              <div id="product_attributes_simple">
                                     <hr t-if="sum([(1 if len(l.value_ids)==1 else 0) for l in product.attribute_line_ids])"/>
                                     <p class="text-muted">
@@ -142,8 +149,8 @@
                         </div>
                     </div>
                 </section>
-<!--                <div itemprop="description" t-field="product.website_description" class="oe_structure mt16"-->
-<!--                     id="product_full_description"/>-->
+                <div itemprop="description" t-field="product.website_description" class="oe_structure mt16"
+                     id="product_full_description"/>
             </div>
         </t>
     </template>

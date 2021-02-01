@@ -366,29 +366,3 @@
         }
     }
 }
-
-.mega_submenu {
-    @media (max-width: 990px) {
-        padding-top: 20px;
-        padding-left: 35px !important;
-    }
-}
-
-.o_extra_menu_items ul.dropdown-menu li.ks_landing_menu:hover ul.dropdown-menu {
-     display: block !important;
-}
-
-.o_extra_menu_items ul.dropdown-menu li.ks_landing_menu{
-    a.dropdown-toggle.dropdown-item::after  {
-        content: "";
-        display: inline-block !important;
-        width: 0;
-        height: 0;
-        margin-left: 0.255em;
-        vertical-align: 0.255em;
-        border-top: 0.3em solid;
-        border-right: 0.3em solid transparent;
-        border-bottom: 0;
-        border-left: 0.3em solid transparent;
-      }
-}

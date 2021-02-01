@@ -8,15 +8,9 @@ var _t = core._t;
 
 var timeout;
 sAnimations.registry.websiteSaleCartLink.include({
-    selector: '#top_menu a[href$="/shop/cart"]',
-    events: {
-        'click': '_onMouseEnter',
-
-    },
     _onMouseEnter: function (ev){
           var self = this;
 //        clearTimeout(timeout);
-          ev.preventDefault();
         $(this.selector).not(ev.currentTarget).popover('hide');
 //        timeout = setTimeout(function () {
             if (!self.$el.is(':hover') || $('.mycart-popover:visible').length) {
@@ -27,22 +21,22 @@ sAnimations.registry.websiteSaleCartLink.include({
             }).then(function (data) {
                 self.$el.data("bs.popover").config.content = data;
                 self.$el.popover("show");
-                $('.mycart-popover .arrow').addClass('ks_cart_back_button');
-                $('.ks_cart_back_button').attr('title','Close');
-                $('body').addClass('js-no-scroll backdrop-shadow');
-                $('.ks_cart_back_button').on('click', function () {
-                    self._onMouseLeave();
-                });
-                $('#wrapwrap').on('click', function () {
-                    self._onMouseLeave();
+                $('.popover').on('mouseleave', function () {
+                    self.$el.trigger('mouseleave');
                 });
             });
 //        }, 0);
     },
-      _onMouseLeave: function (ev) {
+     _onMouseLeave: function (ev) {
         var self = this;
-        self.$el.popover('hide');
-         $('body').removeClass('js-no-scroll backdrop-shadow');
+        setTimeout(function () {
+            if ($('.popover:hover').length) {
+                return;
+            }
+            if (!self.$el.is(':hover')) {
+               self.$el.popover('hide');
+            }
+        }, 50);
     },
 });
 });

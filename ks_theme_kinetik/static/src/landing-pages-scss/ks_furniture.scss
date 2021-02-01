@@ -37,6 +37,14 @@
         margin: auto;
     }
 
+    .fp__current_price {
+        font-weight: 600;
+
+        @media (max-width: 540px) {
+            font-size: 14px;
+        }
+    }
+
     @media (max-width: 540px) {
         padding: 20px 5px;
     }
@@ -147,11 +155,9 @@
 }
 
 .ks-furniture-deal {
-    height: auto;
-    padding-top: 3rem;
-    padding-bottom: 3rem;
-    border-radius: 0px;
-    margin: 0;
+    height: 50vh;
+    border-radius: 25px;
+    margin: 0 20px;
     background-size: cover !important;
     background-position: bottom left !important;
     background-repeat: no-repeat !important;
@@ -505,237 +511,4 @@
             }
         }
    }
-}
-
-//furniture slider new
-
-.ks-kinetik-blobs {
-    &-left {
-        bottom: 0;
-        left: 0;
-        height: 90%;
-
-        @media (max-width: 1024px) {
-            width: 100%;
-            display: flex;
-        }
-
-        img {
-            height: 100%;
-            margin-top: 10%;
-
-            @media (max-width: 1024px) {
-                height: auto;
-                margin-top: auto;
-                width: 100%;
-            }
-        }
-    }
-
-    &-right {
-        top: 0;
-        right: 0;
-        width: 30%;
-
-        img {
-            width: 100%;
-        }
-    }
-
-    @media (max-width: 575px) {
-        display: none;
-    }
-}
-
-.ks-banner-txt2 {
-    position: absolute;
-    bottom: 0;
-    padding: 20px 50px;
-    color: #141f1e !important;
-
-    @media (max-width: 575px) {
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
-        bottom: auto;
-        padding: 20px 30px;
-        min-width: 80%;
-        background: rgba(255, 255, 255, 0.82);
-    }
-
-    .ks-banner-txt-sub2 {
-        font-size: 24px;
-        position: relative;
-        display: inline-block;
-
-        @media (max-width: 575px) {
-            font-size: 20px;
-        }
-
-        &:after {
-            content: '';
-            position: absolute;
-            width: 50%;
-            height: 3px;
-            bottom: 0;
-            background: currentColor;
-            left: 0;
-        }
-    }
-
-    .ks-banner-txt-main2 {
-        font-size: 50px;
-        font-weight: bold;
-        padding-top: 20px;
-        line-height: 1.3;
-
-        @media (max-width: 575px) {
-            font-size: 28px;
-        }
-    }
-
-    .ks-banner-txt-sub2,
-    .ks-banner-txt-main2,
-    .ks-slider-btn-outer {
-        opacity: 0;
-    }
-}
-
-.ks-kinetik-slider {
-    .carousel-item.active {
-        .ks-banner-txt-sub2,
-        .ks-banner-txt-main2,
-        .ks-slider-btn-outer {
-            animation: moveleft 0.6s ease-in-out forwards;
-        }
-
-        .ks-banner-txt-main2 {
-            animation-delay: 0.3s;
-        }
-
-        .ks-slider-btn-outer {
-             animation-delay: 0.6s;
-        }
-    }
-
-    .carousel.slide .carousel-inner .carousel-item {
-        height: auto !important;
-
-        > img {
-            height: 90vh;
-            object-fit: cover;
-
-            @media (max-width: 1024px) {
-                height: 60vh;
-            }
-
-            @media (max-width: 575px) {
-                object-position: center;
-                 height: 80vh;
-            }
-        }
-    }
-
-    .carousel-indicators {
-        right: 0;
-        left: auto;
-        margin-right: 100px;
-
-        @media (max-width: 1024px) and (min-width: 576px) {
-            display: none;
-        }
-    }
-}
-
-.ks-deal-sales{
-    .limited-text{
-        color: $primary;
-        text-transform: uppercase;
-        font-size: 16px;
-        margin-bottom: 10px;
-        font-weight: 600;
-    }
-    .flip-clock-divider {
-        .flip-clock-label{
-            font-size: 1rem;
-            font-weight: 600;
-        }
-
-        @media (max-width: 575px) {
-            width: 11px;
-            left: -2px;
-        }
-    }
-    .flip-clock-wrapper ul li a div div.inn{
-        background: $primary;
-        color: #fff;
-        font-size: 60px;
-    }
-}
-
-@media(max-width: 767px){
-    .ks-deal-sales {
-        .flip-clock-wrapper {
-            margin-top: 20px;
-            margin-bottom: 10px;
-            margin-left: 0px;
-            height: 40px;
-        }
-
-        .flip-clock-wrapper ul li {
-          line-height: initial;
-
-          a div div.inn {
-                font-size: 16px;
-                padding: 2px;
-          }
-        }
-
-        .flip-clock-wrapper ul {
-            width: 20px;
-            height: 25px;
-            line-height: initial;
-            font-size: 16px;
-            padding: 0px;
-            margin: 3px;
-        }
-
-        .flip-clock-divider {
-            height: 45px;
-        }
-
-        .flip-clock-dot.top {
-            top: 7px;
-        }
-
-        .flip-clock-dot.bottom {
-            bottom: 20px;
-        }
-
-        .flip-clock-divider .flip-clock-label {
-            right: -45px !important ;
-            width: 50px;
-            text-align: center;
-        }
-        .flip-clock-divider .flip-clock-label{
-                font-size: inherit;
-        }
-
-        .flip-clock-dot {
-           width: 5px;
-           height: 5px;
-        }
-    }
-}
-
-.ks_timer_box {
-    @media (min-width: 769px) {
-        margin-left: auto;
-    }
-    .flip-clock-divider {
-        @media (max-width: 575px) {
-            width: 11px;
-            left: -2px;
-        }
-    }
 }

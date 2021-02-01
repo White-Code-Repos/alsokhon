@@ -17,7 +17,36 @@ class ProductTemplate(models.Model):
     gold = fields.Boolean(string='Gold')
     origin = fields.Many2one('res.country', string='Origin')
     is_making_charges = fields.Boolean('Gold Making Charges')
+    scrap = fields.Boolean(string="Scrap")
     making_charge_id = fields.Many2one('product.product', 'Making Charges product')
+    hide_gold_making = fields.Boolean(compute="_compute_hide_gold_making")
+    @api.onchange('is_making_charges','gold','assembly')
+    def _compute_hide_gold_making(self):
+        for this in self:
+            this.hide_gold_making = True
+            if this.assembly:
+                this.hide_gold_making = False
+            else:
+                if this.is_making_charges:
+                    this.hide_gold_making = True
+                if not this.gold:
+                    this.hide_gold_making = True
+                else:
+                    this.hide_gold_making = False
+    hide_diamond_making = fields.Boolean(compute="_compute_hide_diamond_making")
+    @api.onchange('is_making_charges','diamond','assembly')
+    def _compute_hide_diamond_making(self):
+        for this in self:
+            this.hide_diamond_making = True
+            if this.assembly:
+                this.hide_diamond_making = False
+            else:
+                if this.is_diamond_making_charges:
+                    this.hide_diamond_making = True
+                if not this.diamond:
+                    this.hide_diamond_making = True
+                else:
+                    this.hide_diamond_making = False
 
     # @api.onchange('type')
     # def onchange_type_gold(self):
@@ -87,11 +116,11 @@ class ProductCategory(models.Model):
         if asset_type:
             return [('user_type_id', '=', asset_type.id), ('gold', '=', True)]
         return []
-    
+
     @api.model
     def get_account_gold_type(self):
         return [('gold', '=', True)]
-        
+
 
     gold_journal = fields.Many2one(
         'account.journal', domain=[('gold', '=', True)],
@@ -108,4 +137,13 @@ class ProductCategory(models.Model):
     gold_expense_account = fields.Many2one('account.account',
                                            domain=get_account_gold_type,
                                            string='Expense Account - Gold')
-   
+
+    gold_fixing_account = fields.Many2one('account.account',
+                                            domain="get_account_fixing_type",
+                                            string="Fixing Account - Gold")
+    @api.model
+    def get_account_fixing_type(self):
+        asset_type = self.env.ref('account.data_account_type_current_assets')
+        if asset_type:
+            return [('user_type_id', '=', asset_type.id), ('gold', '=', True)]
+        return []

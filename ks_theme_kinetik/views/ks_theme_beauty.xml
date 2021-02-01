@@ -557,7 +557,7 @@
             <t t-call="website.layout">
                 <div class="oe_structure oe_empty">
                     <!--   Hero Section (This Also can be snippet )    -->
-                    <section class="ks-banner-left-text height-70v flex-on-mobile ks-corporate-banner-position mainTransparent"
+                    <section class="ks-banner-left-text height-70v flex-on-mobile ks-corporate-banner-position"
                              style="background-image: url('/ks_theme_kinetik/static/src/landing-pages-images/corporate/c-1.jpg');">
                         <div class="row h-100 no-gutters">
                             <div class="col-md-7 col-sm-12 col-12 h-100 d-flex align-items-center justify-content-center">
@@ -921,119 +921,54 @@
             <t t-call="website.layout">
                 <div class="oe_structure oe_empty">
                     <!--  Hero Section     -->
-                    <!--                    <section class="ks-furniture-hero" >-->
-                    <!--                        <div id="carouselExampleIndicators" class="carousel slide mainTransparent" data-ride="carousel">-->
-                    <!--                            <ol class="carousel-indicators">-->
-                    <!--                                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active" />-->
-                    <!--                                <li data-target="#carouselExampleIndicators" data-slide-to="1" />-->
-                    <!--                                <li data-target="#carouselExampleIndicators" data-slide-to="2" />-->
-                    <!--                            </ol>-->
-                    <!--                            <div class="carousel-inner">-->
-                    <!--                                <div class="carousel-item active">-->
-                    <!--                                    <div class="ks-banner-txt">-->
-                    <!--                                        <div class="ks-banner-txt-sub"   >New Arrivals</div>-->
-                    <!--                                        <div class="ks-banner-txt-main"  >Don't Miss this <br/> Great Offers </div>-->
-                    <!--                                        <button class="btn ks-btn-theme"  >+ Shop Now +</button>-->
-                    <!--                                    </div>-->
-                    <!--                                    <div class="ks-banner-offer"> <span>20%</span>OFF</div>-->
-                    <!--                                    <img class="d-block w-100" src="ks_theme_kinetik/static/src/landing-pages-images/furniture-img/banner-2.png" alt="First slide" />-->
-                    <!--                                </div>-->
-                    <!--                                <div class="carousel-item">-->
-                    <!--                                    <div class="ks-banner-txt">-->
-                    <!--                                        <div class="ks-banner-txt-sub"  >Best Sellers</div>-->
-                    <!--                                        <div class="ks-banner-txt-main"  >Everybody Loves <br/>These Chairs </div>-->
-                    <!--                                        <button class="btn ks-btn-theme"  >+ Shop Now +</button>-->
-                    <!--                                    </div>-->
-                    <!--                                    <div class="ks-banner-offer"> <span>25%</span>OFF</div>-->
-                    <!--                                    <img class="d-block w-100" src="ks_theme_kinetik/static/src/landing-pages-images/furniture-img/banner-3.png" alt="First slide" />-->
-                    <!--                                </div>-->
-                    <!--                                <div class="carousel-item">-->
-                    <!--                                    <div class="ks-banner-txt">-->
-                    <!--                                        <div class="ks-banner-txt-sub"   >Top Trending</div>-->
-                    <!--                                        <div class="ks-banner-txt-main"  >The Eye Catching  <br/> Style Suprior </div>-->
-                    <!--                                        <button class="btn ks-btn-theme"  >+ Shop Now +</button>-->
-                    <!--                                    </div>-->
-                    <!--                                    <div class="ks-banner-offer"> <span>20%</span>OFF</div>-->
-                    <!--                                    <img class="d-block w-100" src="ks_theme_kinetik/static/src/landing-pages-images/furniture-img/banner-4.png" alt="First slide" />-->
-                    <!--                                </div>-->
-                    <!--                            </div>-->
-                    <!--                        </div>-->
-                    <!--                    </section>-->
-                    <section class="ks-kinetik-slider" >
-                        <div id="carouselExampleIndicators" class="carousel slide mainTransparent" data-ride="carousel">
-                        <ol class="carousel-indicators">
-                            <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active" />
-                            <li data-target="#carouselExampleIndicators" data-slide-to="1" />
-                            <li data-target="#carouselExampleIndicators" data-slide-to="2" />
-                        </ol>
-                        <div class="carousel-inner">
-                            <div class="carousel-item active">
-                                <div class="ks-kinetik-blobs">
-                                    <div class="ks-kinetik-blobs-left position-absolute" >
-                                        <img src="/ks_theme_kinetik/static/src/landing-pages-images/furniture-img/left-blob.svg" alt="" />
+                    <section class="ks-furniture-hero" >
+                        <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+                            <ol class="carousel-indicators">
+                                <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active" />
+                                <li data-target="#carouselExampleIndicators" data-slide-to="1" />
+                                <li data-target="#carouselExampleIndicators" data-slide-to="2" />
+                            </ol>
+                            <div class="carousel-inner">
+                                <div class="carousel-item active">
+                                    <div class="ks-banner-txt">
+                                        <div class="ks-banner-txt-sub"   >New Arrivals</div>
+                                        <div class="ks-banner-txt-main"  >Don't Miss this <br/> Great Offers </div>
+                                        <button class="btn ks-btn-theme"  >+ Shop Now +</button>
                                     </div>
-                                    <div class="ks-kinetik-blobs-right position-absolute" >
-                                        <img src="/ks_theme_kinetik/static/src/landing-pages-images/furniture-img/right-blob.svg" alt="" />
-                                    </div>
+                                    <div class="ks-banner-offer"> <span>20%</span>OFF</div>
+                                    <img class="d-block w-100" src="ks_theme_kinetik/static/src/landing-pages-images/furniture-img/banner-2.png" alt="First slide" />
                                 </div>
-                                <img class="d-block w-100" src="/ks_theme_kinetik/static/src/landing-pages-images/furniture-img/kinetik-s-1.jpg" alt="First slide" />
-                                <div class="ks-banner-txt2">
-                                    <div class="ks-banner-txt-sub2">Best Sellers</div>
-                                    <div class="ks-banner-txt-main2 text-dark">Everybody Loves <br />These Chairs </div>
-                                    <div class="ks-slider-btn-outer my-4">
-                                         <button class="btn ks-btn-theme">Shop Now</button>
+                                <div class="carousel-item">
+                                    <div class="ks-banner-txt">
+                                        <div class="ks-banner-txt-sub"  >Best Sellers</div>
+                                        <div class="ks-banner-txt-main"  >Everybody Loves <br/>These Chairs </div>
+                                        <button class="btn ks-btn-theme"  >+ Shop Now +</button>
                                     </div>
+                                    <div class="ks-banner-offer"> <span>25%</span>OFF</div>
+                                    <img class="d-block w-100" src="ks_theme_kinetik/static/src/landing-pages-images/furniture-img/banner-3.png" alt="First slide" />
+                                </div>
+                                <div class="carousel-item">
+                                    <div class="ks-banner-txt">
+                                        <div class="ks-banner-txt-sub"   >Top Trending</div>
+                                        <div class="ks-banner-txt-main"  >The Eye Catching  <br/> Style Suprior </div>
+                                        <button class="btn ks-btn-theme"  >+ Shop Now +</button>
+                                    </div>
+                                    <div class="ks-banner-offer"> <span>20%</span>OFF</div>
+                                    <img class="d-block w-100" src="ks_theme_kinetik/static/src/landing-pages-images/furniture-img/banner-4.png" alt="First slide" />
                                 </div>
                             </div>
-                            <div class="carousel-item">
-                                <div class="ks-kinetik-blobs">
-                                    <div class="ks-kinetik-blobs-left position-absolute" >
-                                        <img src="/ks_theme_kinetik/static/src/landing-pages-images/furniture-img/left-blob.svg" alt="" />
-                                    </div>
-                                    <div class="ks-kinetik-blobs-right position-absolute" >
-                                        <img src="/ks_theme_kinetik/static/src/landing-pages-images/furniture-img/right-blob.svg" alt="" />
-                                    </div>
-                                </div>
-                                <img class="d-block w-100" src="/ks_theme_kinetik/static/src/landing-pages-images/furniture-img/kinetik-s-2.jpg" alt="First slide" />
-                                <div class="ks-banner-txt2">
-                                    <div class="ks-banner-txt-sub2">New Arrival</div>
-                                    <div class="ks-banner-txt-main2 text-dark">Don't Miss <br />This Great Offer </div>
-                                    <div class="ks-slider-btn-outer my-4">
-                                         <button class="btn ks-btn-theme">Shop Now</button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="carousel-item">
-                                <div class="ks-kinetik-blobs">
-                                    <div class="ks-kinetik-blobs-left position-absolute" >
-                                        <img src="/ks_theme_kinetik/static/src/landing-pages-images/furniture-img/left-blob.svg" alt="" />
-                                    </div>
-                                    <div class="ks-kinetik-blobs-right position-absolute" >
-                                        <img src="/ks_theme_kinetik/static/src/landing-pages-images/furniture-img/right-blob.svg" alt="" />
-                                    </div>
-                                </div>
-                                <img class="d-block w-100" src="/ks_theme_kinetik/static/src/landing-pages-images/furniture-img/kinetik-s-3.jpg" alt="First slide" />
-                                <div class="ks-banner-txt2">
-                                    <div class="ks-banner-txt-sub2">Top Trending</div>
-                                    <div class="ks-banner-txt-main2 text-dark">Eye Catching <br />Style Superior </div>
-                                    <div class="ks-slider-btn-outer my-4">
-                                         <button class="btn ks-btn-theme">Shop Now</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
                         </div>
                     </section>
                     <!--  Collections Section     -->
                     <section class="ks-product-collection container-lg m-auto" >
-                        <div class="ks-collection-view flex no-animation py-lg-5">
+                        <div class="ks-collection-view flex no-animation">
                             <section class="ks-collection-item justify-content-center flex-column p-3 mb-2  mr-2 text-right" style="background-image:url('/ks_theme_kinetik/static/src/landing-pages-images/furniture-img/Product-banner-1.jpg')">
                                 <section class="ks-collection-text my-4">
                                     <h4 class="ks-collection-main-text">All New Home Decorators</h4>
                                     <div class="ks-collection-secondary-text">Must have for rooms</div>
                                 </section>
                                 <section>
-                                    <button class="btn ks-btn-theme ml-auto"> Shop Now </button>
+                                    <button class="btn ks-btn-theme ml-auto">+ Shop Now +</button>
                                 </section>
                             </section>
                             <section class="ks-collection-item justify-content-center flex-column p-3 mb-2  ml-sm-2 mr-2 mr-sm-0" style="background-image:url('/ks_theme_kinetik/static/src/landing-pages-images/furniture-img/Product-banner-2.jpg')">
@@ -1042,7 +977,7 @@
                                     <div class="ks-collection-secondary-text">Keep things at one place easily</div>
                                 </section>
                                 <section>
-                                    <button class="btn ks-btn-theme"> Shop Now </button>
+                                    <button class="btn ks-btn-theme">+ Shop Now +</button>
                                 </section>
                             </section>
                             <section class="ks-collection-item justify-content-center flex-column p-3 mt-2  mr-2 text-right" style="background-image:url('/ks_theme_kinetik/static/src/landing-pages-images/furniture-img/Product-banner-3.jpg')">
@@ -1051,7 +986,7 @@
                                     <div class="ks-collection-secondary-text">Comfortable to Sit, Attractive to Look</div>
                                 </section>
                                 <section>
-                                    <button class="btn ks-btn-theme ml-auto"> Shop Now </button>
+                                    <button class="btn ks-btn-theme ml-auto">+ Shop Now +</button>
                                 </section>
                             </section>
                             <section class="ks-collection-item justify-content-center flex-column p-3 mt-2  ml-sm-2 mr-2 mr-sm-0 mb-sm-0 mb-2" style="background-image:url('/ks_theme_kinetik/static/src/landing-pages-images/furniture-img/Product-banner-4.jpg')">
@@ -1060,7 +995,7 @@
                                     <div class="ks-collection-secondary-text">Available at Unbelievable price</div>
                                 </section>
                                 <section>
-                                    <button class="btn ks-btn-theme"> Shop Now </button>
+                                    <button class="btn ks-btn-theme">+ Shop Now +</button>
                                 </section>
                             </section>
                         </div>
@@ -1110,7 +1045,7 @@
                                         </div>
                                         <section class="d-flex justify-content-center align-items-center w-100">
                                             <button class="btn ks-btn-theme">
-                                                <span> Shop Now </span>
+                                                <span>+ Shop Now + </span>
                                             </button>
                                         </section>
                                     </div>
@@ -1127,7 +1062,7 @@
                 <div class="oe_structure oe_empty">
                     <!--  Hero Section   -->
                     <section class="ks_food_hero" >
-                        <div class="ks_food_overlay text-center mainTransparent">
+                        <div class="ks_food_overlay text-center">
                             <h1>Good Food</h1>
                             <h2>Good Health</h2>
                             <h4>On your Doorsteps </h4>
@@ -1398,7 +1333,7 @@
                     <section>
                         <section class="ks-full-banner p-md-5 align-items-center d-flex justify-content-center ks-pet-position"
                                  style="background-image: url('/ks_theme_kinetik/static/src/landing-pages-images/pet-shop/banner.jpg');background-color: rgba(0, 0, 0, 0.18);background-blend-mode: color;">
-                            <div class="ks-banner-text-container text-center mainTransparent">
+                            <div class="ks-banner-text-container text-center">
                                 <h4 class="b-600 top-animation">Best beauties Waiting for a home</h4>
                                 <h1 class="ks-banner-heading">Dream about a <br/>Best friend?</h1>
                                 <section class="ks-banner-btn d-inline-block mt-4 mr-3">
@@ -1757,7 +1692,7 @@
                 <div class="oe_structure oe_empty">
                     <!--   Slider     -->
                     <section id="myCarousel1567089566964" class="s_carousel carousel slide s_carousel_default ks-jewellery-shop" data-interval="10000">
-                        <div class="carousel-inner mainTransparent">
+                        <div class="carousel-inner">
                             <div class="carousel-item oe_custom_bg oe_img_bg py-5 active" style="background-image: url(/ks_theme_kinetik/static/src/landing-pages-images/jewellery/j-2.jpg);" data-name="Slide">
                                 <div class="container h-100 align-items-center">
                                     <div class="row content w-100">
@@ -1811,7 +1746,7 @@
                             <div class="col-md-4 p-3">
                                 <div class="hovereffect2">
                                     <img class="image-fluid"
-                                         src="/ks_theme_kinetik/static/src/landing-pages-images/jewellery/j-03.jpg" alt=""/>
+                                         src="/ks_theme_kinetik/static/src/landing-pages-images/jewellery/j-3.jpg" alt=""/>
                                     <div class="overlay d-flex">
                                         <h4 class="mt-auto" >Diamond Rings <br/> <font style="font-size:0.8em" >15% Off</font> </h4>
                                     </div>
@@ -1936,7 +1871,7 @@
                                                 <img src="/ks_theme_kinetik/static/src/landing-pages-images/jewellery/j-9.jpg"
                                                      class="ks-image-fluid"/>
                                             </section>
-                                            <section class="text-position w-100 text-center color-white">Necklaces
+                                            <section class="text-position w-100 text-center color-white">Nacklaces
                                             </section>
                                         </section>
                                         <section class="bottom position-relative p-3">
@@ -1964,7 +1899,7 @@
                                                 <img src="/ks_theme_kinetik/static/src/landing-pages-images/jewellery/j-12.jpg"
                                                      class="ks-image-fluid"/>
                                             </section>
-                                            <section class="text-position w-100 text-center color-white">Pure Pearls
+                                            <section class="text-position w-100 text-center color-white">Pure Perls
                                             </section>
                                         </section>
                                     </div>
@@ -2164,7 +2099,7 @@
                     <!--    Banner    -->
                     <section class="ks-watch position-relative" >
                         <img class="img-fluid" src="/ks_theme_kinetik/static/src/landing-pages-images/watch/w-1.jpg" />
-                        <div class="position-absolute ks-watch-banner-text mainTransparent" >
+                        <div class="position-absolute ks-watch-banner-text" >
                             <h1 class="font-weight-bold display-4" >You can Watch This <br/>All Day</h1>
                             <button class="btn btn-primary mt-sm-5 mt-3">What's the Time <i class="ml-2 fa fa-clock-o" /></button>
                         </div>
@@ -2241,7 +2176,7 @@
                             </div>
                         </div>
                     </section>
-                    <section class="ks-container-gallery pb-5 ks-page-gallery container-lg py-3 py-lg-5">
+                    <section class="ks-container-gallery pb-5 ks-page-gallery container-lg">
                         <div class="row no-gutters">
                             <h2 class="theme__heading w-100 text-center mb-4">Modern Work</h2>
                         </div>
@@ -2249,8 +2184,7 @@
                         <div class="row no-gutters">
                             <div class="col-md-4 no-animation">
                                 <div class="hovereffect">
-                                    <img src="/ks_theme_kinetik/static/src/static-snippet-images/collections/img-g-2.png"
-                                         alt=""
+                                    <img src="/ks_theme_kinetik/static/src/static-snippet-images/collections/img-g-2.png" alt=""
                                          class="image-fluid"/>
                                     <div class="overlay">
                                         <h3>Living Room</h3>
@@ -2259,8 +2193,7 @@
                             </div>
                             <div class="col-md-4 no-animation">
                                 <div class="hovereffect">
-                                    <img src="/ks_theme_kinetik/static/src/static-snippet-images/collections/img-g-3.png"
-                                         alt=""
+                                    <img src="/ks_theme_kinetik/static/src/static-snippet-images/collections/img-g-3.png" alt=""
                                          class="image-fluid"/>
                                     <div class="overlay">
                                         <h3>Lobby Decoration</h3>
@@ -2269,8 +2202,7 @@
                             </div>
                             <div class="col-md-4 no-animation">
                                 <div class="hovereffect">
-                                    <img src="/ks_theme_kinetik/static/src/static-snippet-images/collections/img-g-6.png"
-                                         alt=""
+                                    <img src="/ks_theme_kinetik/static/src/static-snippet-images/collections/img-g-6.png" alt=""
                                          class="image-fluid"/>
                                     <div class="overlay">
                                         <h3>Stylish Sofas</h3>
@@ -2940,13 +2872,13 @@
                                         <div class="media-info">
                                             <section class="d-inline">
                                                 <a href="" class="media-item">
-                                                    <img src="/ks_theme_kinetik/static/src/static-snippet-images/team-v2/facebook-letter-logo.png"
+                                                    <img src="ks_theme_kinetik/static/src/static-snippet-images/team-v2/facebook-letter-logo.png"
                                                          alt="facebook"/>
                                                 </a>
                                             </section>
                                             <section class="d-inline">
                                                 <a href="" class="media-item">
-                                                    <img src="/ks_theme_kinetik/static/src/static-snippet-images/team-v2/linkedin-logo.png"
+                                                    <img src="ks_theme_kinetik/static/src/static-snippet-images/team-v2/linkedin-logo.png"
                                                          alt="linkedin-logo"/>
                                                 </a>
                                             </section>
@@ -2968,13 +2900,13 @@
                                         <div class="media-info">
                                             <section class="d-inline">
                                                 <a href="" class="media-item">
-                                                    <img src="/ks_theme_kinetik/static/src/static-snippet-images/team-v2/facebook-letter-logo.png"
+                                                    <img src="ks_theme_kinetik/static/src/static-snippet-images/team-v2/facebook-letter-logo.png"
                                                          alt="facebook"/>
                                                 </a>
                                             </section>
                                             <section class="d-inline">
                                                 <a href="" class="media-item">
-                                                    <img src="/ks_theme_kinetik/static/src/static-snippet-images/team-v2/linkedin-logo.png"
+                                                    <img src="ks_theme_kinetik/static/src/static-snippet-images/team-v2/linkedin-logo.png"
                                                          alt="linkedin-logo"/>
                                                 </a>
                                             </section>
@@ -2996,13 +2928,13 @@
                                         <div class="media-info">
                                             <section class="d-inline">
                                                 <a href="" class="media-item">
-                                                    <img src="/ks_theme_kinetik/static/src/static-snippet-images/team-v2/facebook-letter-logo.png"
+                                                    <img src="ks_theme_kinetik/static/src/static-snippet-images/team-v2/facebook-letter-logo.png"
                                                          alt="facebook"/>
                                                 </a>
                                             </section>
                                             <section class="d-inline">
                                                 <a href="" class="media-item">
-                                                    <img src="/ks_theme_kinetik/static/src/static-snippet-images/team-v2/linkedin-logo.png"
+                                                    <img src="ks_theme_kinetik/static/src/static-snippet-images/team-v2/linkedin-logo.png"
                                                          alt="linkedin-logo"/>
                                                 </a>
                                             </section>
@@ -3025,13 +2957,13 @@
                                         <div class="media-info">
                                             <section class="d-inline">
                                                 <a href="" class="media-item">
-                                                    <img src="/ks_theme_kinetik/static/src/static-snippet-images/team-v2/facebook-letter-logo.png"
+                                                    <img src="ks_theme_kinetik/static/src/static-snippet-images/team-v2/facebook-letter-logo.png"
                                                          alt="facebook"/>
                                                 </a>
                                             </section>
                                             <section class="d-inline">
                                                 <a href="" class="media-item">
-                                                    <img src="/ks_theme_kinetik/static/src/static-snippet-images/team-v2/linkedin-logo.png"
+                                                    <img src="ks_theme_kinetik/static/src/static-snippet-images/team-v2/linkedin-logo.png"
                                                          alt="linkedin-logo"/>
                                                 </a>
                                             </section>
@@ -4426,7 +4358,7 @@
                 <div class="oe_structure oe_empty">
                     <!--     Book Shop               -->
                     <section id="myCarousel1567089566964" class="s_carousel carousel slide s_carousel_default ks-jewellery-shop ks-books-shop" data-interval="10000">
-                        <div class="carousel-inner mainTransparent">
+                        <div class="carousel-inner">
                             <div class="carousel-item oe_custom_bg oe_img_bg py-5 active bp-right" style="background-image: url(/ks_theme_kinetik/static/src/landing-pages-images/books/Banner-0.jpg);" data-name="Slide">
                                 <div class="container-lg h-100 align-items-center">
                                     <div class="row content w-100">
@@ -4514,7 +4446,7 @@
 
 
                                             </div>
-                                            <a type="button" class="btn btn-secondary" href="/shop">Buy Now</a>
+                                            <a type="button" class="btn btn-secondary" href="/shop">+ Buy Now +</a>
                                         </div>
                                     </div>
                                     <div class="row col-6 ks-dual-product my-3 no-gutters align-items-center wow slideInUp" data-wow-duration="0.6s" data-wow-delay="1s" >
@@ -4549,7 +4481,7 @@
 
 
                                             </div>
-                                            <a type="button" class="btn btn-secondary" href="/shop">Buy Now</a>
+                                            <a type="button" class="btn btn-secondary" href="/shop">+ Buy Now +</a>
                                         </div>
                                     </div>
                                     <div class="row col-6 ks-dual-product my-3 no-gutters align-items-center wow slideInUp" data-wow-duration="0.6s" data-wow-delay="0.5s" >
@@ -4575,7 +4507,7 @@
                                                 Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer
                                                 took a galley of type and scrambled it to make a type specimen book.
                                             </div>
-                                            <a type="button" class="btn btn-secondary" href="/shop">Buy Now</a>
+                                            <a type="button" class="btn btn-secondary" href="/shop">+ Buy Now +</a>
                                         </div>
                                     </div>
                                     <div class="row col-6 ks-dual-product my-3 no-gutters align-items-center wow slideInUp" data-wow-duration="0.6s" data-wow-delay="1s" >
@@ -4601,7 +4533,7 @@
                                                 Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer
                                                 took a galley of type and scrambled it to make a type specimen book.
                                             </div>
-                                            <a type="button" class="btn btn-secondary" href="/shop">Buy Now</a>
+                                            <a type="button" class="btn btn-secondary" href="/shop">+ Buy Now +</a>
                                         </div>
                                     </div>
                                     <div class="row col-6 ks-dual-product my-3 no-gutters align-items-center wow slideInUp" data-wow-duration="0.6s" data-wow-delay="0.5s" >
@@ -4627,7 +4559,7 @@
                                                 Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer
                                                 took a galley of type and scrambled it to make a type specimen book.
                                             </div>
-                                            <a type="button" class="btn btn-secondary" href="/shop/">Buy Now</a>
+                                            <a type="button" class="btn btn-secondary" href="/shop/">+ Buy Now +</a>
                                         </div>
                                     </div>
                                     <div class="row col-6 ks-dual-product my-3 no-gutters align-items-center wow slideInUp" data-wow-duration="0.6s" data-wow-delay="1s" >
@@ -4653,7 +4585,7 @@
                                                 Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer
                                                 took a galley of type and scrambled it to make a type specimen book.
                                             </div>
-                                            <a type="button" class="btn btn-secondary" href="/shop">Buy Now</a>
+                                            <a type="button" class="btn btn-secondary" href="/shop">+ Buy Now +</a>
                                         </div>
                                     </div>
                                     <div class="row col-6 ks-dual-product my-3 no-gutters align-items-center wow slideInUp" data-wow-duration="0.6s" data-wow-delay="0.5s" >
@@ -4679,7 +4611,7 @@
                                                 Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer
                                                 took a galley of type and scrambled it to make a type specimen book.
                                             </div>
-                                            <a type="button" class="btn btn-secondary" href="/shop">Buy Now</a>
+                                            <a type="button" class="btn btn-secondary" href="/shop">+ Buy Now +</a>
                                         </div>
                                     </div>
                                     <div class="row col-6 ks-dual-product my-3 no-gutters align-items-center wow slideInUp" data-wow-duration="0.6s" data-wow-delay="1s" >
@@ -4705,7 +4637,7 @@
                                                 Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer
                                                 took a galley of type and scrambled it to make a type specimen book.
                                             </div>
-                                            <a type="button" class="btn btn-secondary" href="/shop">Buy Now</a>
+                                            <a type="button" class="btn btn-secondary" href="/shop">+ Buy Now +</a>
                                         </div>
                                     </div>
                                 </div>
@@ -4729,71 +4661,41 @@
 
                     <!--                        Genre                -->
                     <section class="container-lg py-4 ks-books-genre">
-                        <h4 class="theme__heading my-4">
+                         <h4 class="theme__heading my-4">
                             Book Genres
-                        </h4>
+                         </h4>
 
-                        <div class="row ks-collection-10 ">
-                            <div class="col-lg-3 pr-lg-0 pr-4 mb-3 mb-lg-0 ks-shine-effect wow slideInUp"
-                                 data-wow-duration="1s"
-                                 data-wow-delay="0.5s">
-                                <section class="img-container2 h-100"
-                                         style="background-image: url('/ks_theme_kinetik/static/src/landing-pages-images/books/book-b-1.jpg');">
-                                    <a href="#">
-                                        <div class="text-container">
-                                            Romance
-                                        </div>
-                                    </a>
-                                </section>
+                        <div class="row no-gutters px-3" >
+                            <div class="col-md-3  mb-3 mb-md-0 ks-shine-effect wow slideInUp" data-wow-duration="1s" data-wow-delay="0.5s">
+                                <a href="#">
+                                    <img src="/ks_theme_kinetik/static/src/landing-pages-images/books/book-1.jpg"  />
+                                </a>
                             </div>
-                            <div class="col-lg-9 row pl-0">
-                                <div class="col-md-6 pr-0 pl-md-3 mb-3 mb-md-0 ks-shine-effect wow rotateInDownLeft"
-                                     data-wow-duration="1s" data-wow-delay="0.5s">
-                                    <section class="img-container"
-                                             style="background-image: url('/ks_theme_kinetik/static/src/landing-pages-images/books/book-b-2.jpg');">
+                            <div class="col-md-9">
+                                <div class="row no-gutters">
+                                    <div class="col-md-6 pl-md-3 mb-3 mb-md-0 ks-shine-effect wow rotateInDownLeft" data-wow-duration="1s" data-wow-delay="0.5s">
                                         <a href="#">
-                                            <div class="text-container">
-                                                Science
-                                            </div>
+                                            <img src="/ks_theme_kinetik/static/src/landing-pages-images/books/book-2.jpg" />
                                         </a>
-                                    </section>
-                                </div>
-                                <div class="col-md-6 pl-md-3 mb-3 mb-md-0 ks-shine-effect wow rotateInDownRight"
-                                     data-wow-duration="1s" data-wow-delay="0.5s">
-                                    <section class="img-container"
-                                             style="background-image: url('/ks_theme_kinetik/static/src/landing-pages-images/books/book-b-3.jpg');">
+                                    </div>
+                                    <div class="col-md-6 pl-md-3 mb-3 mb-md-0 ks-shine-effect wow rotateInDownRight" data-wow-duration="1s" data-wow-delay="0.5s">
+                                         <a href="#">
+                                            <img src="/ks_theme_kinetik/static/src/landing-pages-images/books/book-3.jpg" />
+                                         </a>
+                                    </div>
+                                    <div class="col-md-6 pl-md-3 mt-3 ks-shine-effect wow rotateInUpLeft" data-wow-duration="1s" data-wow-delay="0.5s">
+                                         <a href="#">
+                                             <img src="/ks_theme_kinetik/static/src/landing-pages-images/books/book-4.jpg" />
+                                         </a>
+                                    </div>
+                                    <div class="col-md-6 pl-md-3 mt-3 ks-shine-effect wow rotateInUpRight" data-wow-duration="1s" data-wow-delay="0.5s">
                                         <a href="#">
-                                            <div class="text-container">
-                                                Cooking
-                                            </div>
+                                            <img src="/ks_theme_kinetik/static/src/landing-pages-images/books/book-5.jpg" />
                                         </a>
-                                    </section>
-                                </div>
-                                <div class="col-md-6 pl-md-3 mt-3 ks-shine-effect wow rotateInUpLeft"
-                                     data-wow-duration="1s" data-wow-delay="0.5s">
-                                    <section class="img-container"
-                                             style="background-image: url('/ks_theme_kinetik/static/src/landing-pages-images/books/book-b-4.jpg');">
-                                        <a href="#">
-                                            <div class="text-container">
-                                                Thriller
-                                            </div>
-                                        </a>
-                                    </section>
-                                </div>
-                                <div class="col-md-6 pl-md-3 mt-3 ks-shine-effect wow rotateInUpRight"
-                                     data-wow-duration="1s" data-wow-delay="0.5s">
-                                    <section class="img-container"
-                                             style="background-image: url('/ks_theme_kinetik/static/src/landing-pages-images/books/book-b-5.jpg');">
-                                        <a href="#">
-                                            <div class="text-container">
-                                                Kids
-                                            </div>
-                                        </a>
-                                    </section>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
 
                     </section>
 
@@ -5105,1668 +5007,5 @@
                 </div>
             </t>
         </template>
-
-        <template id="ks_theme_hotel" name="Kinetik Hotel" >
-            <t t-call="website.layout">
-                <div class="oe_structure oe_empty">
-                    <section class="ks_food_hero ks-hotel-hero overflow-hidden" >
-                        <div class="ks_food_overlay text-center py-3 mainTransparent">
-                            <h4 class="ks-hotel-hero-heading"> Book Your Stay at</h4>
-                            <h1>THE GRAND HOTEL</h1>
-                            <h4 class="d-flex justify-content-center ks-hotel-hero-multi-heading"><div >Relax</div><div class="mx-3">Travel</div><div>Enjoy</div> </h4>
-                          <div class="py-sm-4 py-2 bounce-effect">
-                              <button class="btn ks-btn-white" >Book Now  </button>
-                          </div>
-                        </div>
-                        <div class="ks-food-color-overlay" />
-                        <video poster="/ks_theme_kinetik/static/src/landing-pages-images/hotel/poster.jpg" autoplay="true" loop="infinite" muted="true" >
-                            <source src="/ks_theme_kinetik/static/src/landing-pages-images/hotel/hotel-shot.mp4" type="video/mp4" />
-                            <source src="view.webm" type="video/webm" />
-                        </video>
-                    </section>
-
-                    <!--      Stay and Enjoy              -->
-                    <section class="container-lg py-lg-5 py-sm-4 py-3 overflow-hidden" >
-                        <div class="row align-items-center py-lg-5 py-sm-4 py-3" >
-                            <div class="col-md-6 mb-4 mb-md-0  wow slideInUp"   data-wow-duration="0.5s"  >
-                                <div class="custom-theme-header text-center" >
-                                    <img src="/ks_theme_kinetik/static/src/landing-pages-images/hotel/decorator.png"  />
-                                    <h4 class="text-shadow mb-4 ks-heading-large" > Stay &amp; Enjoy </h4>
-                                </div>
-                                <p class="ks-hotel-about text-muted h5 font-weight-normal" >
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                </p>
-                            </div>
-                            <div class="col-md-6 wow slideInUp"  data-wow-duration="1s"  >
-                                <div id="ks_hotel_slider" class="carousel slide" data-ride="carousel">
-                                    <ol class="carousel-indicators ks-show-indicators">
-                                        <li data-target="#ks_hotel_slider" data-slide-to="0" class="active" />
-                                        <li data-target="#ks_hotel_slider" data-slide-to="1" />
-                                        <li data-target="#ks_hotel_slider" data-slide-to="2" />
-                                    </ol>
-                                    <div class="carousel-inner">
-                                        <div class="carousel-item active">
-                                            <img class="d-block w-100 ks-shine-effect" src="/ks_theme_kinetik/static/src/landing-pages-images/hotel/hotel-about-0.jpg" alt="First slide" />
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img class="d-block w-100 ks-shine-effect" src="/ks_theme_kinetik/static/src/landing-pages-images/hotel/hotel-about-1.jpg" alt="Second slide" />
-                                        </div>
-                                        <div class="carousel-item">
-                                            <img class="d-block w-100 ks-shine-effect" src="/ks_theme_kinetik/static/src/landing-pages-images/hotel/hotel-about-2.jpg" alt="Third slide" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!--  Rooms and suits                  -->=
-                    <section class="bg-light-gray py-lg-5 py-sm-4 py-3 overflow-hidden" >
-                        <div class="container-lg" >
-                            <div class="custom-theme-header text-center" >
-                                <img src="/ks_theme_kinetik/static/src/landing-pages-images/hotel/decorator.png"  />
-                                <h4 class="text-shadow mb-5 ks-heading-large" > Rooms &amp; Suits </h4>
-                            </div>
-                            <div class="row" >
-                                <div class="col-md-6 mb-4 mb-md-0" >
-                                    <div class="ks-hotel-room position-relative wow flipInX" data-wow-duration="1.5s" data-wow-delay="0.5s" >
-                                        <img src="/ks_theme_kinetik/static/src/landing-pages-images/hotel/pic-3.jpg" class="mw-100" />
-                                        <div class="ks-hotel-room-overlay wow flipInY" data-wow-duration="1s" data-wow-dealy="2s" >
-                                            <div class="d-flex h5 mt-auto" >
-                                                <span>FEATURED ROOM</span>
-                                                <span class="mx-3">
-                                                    <i class="fa fa-star" />
-                                                    <i class="fa fa-star" />
-                                                    <i class="fa fa-star" />
-                                                    <i class="fa fa-star" />
-                                                </span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="ks-room-info bg-white p-4 border  wow fadeInUp" data-wow-duration="1s" data-wow-delay="1s" >
-                                        <h4 class="text-primary font-24 font-weight-normal mb-2" > Presidential Room</h4>
-                                        <div class="ks-room-info-icons text-muted  d-flex h5 font-weight-normal mb-0" >
-                                            <div class="ks-room-info-icon-set mr-5" >
-                                                <i class="fa fa-users mr-3" />
-                                                <span>2 Guests</span>
-                                            </div>
-                                            <div class="ks-room-info-icon-set" >
-                                                <i class="fa fa-crop mr-3" />
-                                                <span>22 ft <sup>2</sup></span>
-                                            </div>
-                                        </div>
-                                        <p class="text-muted h5 font-weight-normal my-3">
-                                            Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-                                        </p>
-                                        <button class="btn btn-primary btn-lg" >BOOK NOW FROM $40</button>
-                                    </div>
-                                </div>
-                                <div class="col-md-6 pl-md-5" >
-                                    <div class="ks-hotel-room position-relative wow flipInX" data-wow-duration="1.5s" data-wow-delay="0.5s" >
-                                        <img src="/ks_theme_kinetik/static/src/landing-pages-images/hotel/pich-4.jpg" class="mw-100" />
-                                        <div class="ks-hotel-room-overlay">
-                                            <div class="d-flex align-items-center h5 mt-auto" >
-                                                <span>HOTEL ROOM</span>
-                                                <span class="mx-3">
-                                                    <i class="fa fa-star" />
-                                                    <i class="fa fa-star" />
-                                                    <i class="fa fa-star" />
-                                                </span>
-                                                <span class="tag-primary"  >FROM $22</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="ks-hotel-room position-relative mt-5 wow flipInX" data-wow-duration="1.5s" data-wow-delay="0.5s" >
-                                        <img src="/ks_theme_kinetik/static/src/landing-pages-images/hotel/pich-5.jpg" class="mw-100" />
-                                        <div class="ks-hotel-room-overlay">
-                                            <div class="d-flex h5 mt-auto align-items-center" >
-                                                <span>HOTEL ROOM</span>
-                                                <span class="mx-3">
-                                                    <i class="fa fa-star" />
-                                                    <i class="fa fa-star" />
-                                                    <i class="fa fa-star" />
-                                                    <i class="fa fa-star" />
-                                                </span>
-                                                <span class="tag-primary"  >FROM $34</span>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!--  parallax                  -->
-                    <section class="ks-banner-left-text img-attachment-fixed ks-hotel-parallax text-white overflow-hidden" style="background-image: url('/ks_theme_kinetik/static/src/landing-pages-images/hotel/parallax1.jpg');background-color: rgba(0, 0, 0, 0.5);background-blend-mode: color;">
-                        <div class="row h-100 no-gutters px-4 py-5">
-                            <div class="col-lg-9 col-sm-12 col-12 h-100 d-flex align-items-center justify-content-center mx-auto">
-                                <div class="ks-text-pannel-left d-block">
-                                    <h1 class="heading-text-info text-center mb-4 wow zoomInRight" data-wow-duration="2s" data-wow-delay="0.5s">Relax and Enjoy your Holiday
-                                    </h1>
-                                    <p class="font-weight-normal h3 text-center my-sm-4 wow zoomInLeft" data-wow-duration="2s" data-wow-delay="0.5s">
-                                        It to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining
-                                    </p>
-                                    <div class="btn-container justify-content-center wow zoomInUp" data-wow-duration="1s" data-wow-delay="0.5s">
-                                        <button class="btn ks-btn-white my-3 btn-lg">Contact Now</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!--  Dining and Bar                  -->
-                    <section class="container-lg py-lg-5 py-sm-4 py-3 overflow-hidden" >
-                        <div class="custom-theme-header text-center" >
-                            <img src="/ks_theme_kinetik/static/src/landing-pages-images/hotel/decorator.png"  />
-                            <h4 class="text-shadow mb-5 ks-heading-large" >  Dining &amp; Bar </h4>
-                        </div>
-                        <div class="row" >
-                            <div class="col-lg-6 p-xl-5 p-2 ks-hotel-menu  wow slideInLeft" data-wow-duration="1s" data-wow-delay="0.5s" >
-                                <nav >
-                                    <div class="nav nav-tabs" id="nav-tab" role="tablist">
-                                        <a class="nav-item nav-link mt-3 active" id="nav-home-tab" data-toggle="tab" href="#nav-home" role="tab" aria-controls="nav-home" aria-selected="true">
-                                            <span data-target="#carouselExampleIndicators" data-slide-to="0" class="active" >Mains</span></a>
-                                        <a class="nav-item nav-link mt-3" id="nav-profile-tab" data-toggle="tab" href="#nav-profile" role="tab" aria-controls="nav-profile" aria-selected="false"> <span data-target="#carouselExampleIndicators" data-slide-to="1" >Deserts</span> </a>
-                                        <a class="nav-item nav-link mt-3" id="nav-contact-tab" data-toggle="tab" href="#nav-contact" role="tab" aria-controls="nav-contact" aria-selected="false"> <span data-target="#carouselExampleIndicators" data-slide-to="2" >Drinks</span> </a>
-                                    </div>
-                                </nav>
-                                <div class="tab-content" id="nav-tabContent">
-                                    <div class="tab-pane fade show active" id="nav-home" role="tabpanel" aria-labelledby="nav-home-tab">
-                                        <div class="py-4" >
-                                            <div class="ks-food-dining-set d-flex align-items-center py-3" >
-                                                <div class="ks-food-dining-img">
-                                                    <img src="/ks_theme_kinetik/static/src/landing-pages-images/hotel/f-3.png" />
-                                                </div>
-                                                <div class="ks-food-dining-info ml-3" >
-                                                    <div class="ks-food-dining-name h2 font-weight-normal" >
-                                                        Grilled Chicken
-                                                    </div>
-                                                    <div class="ks-food-bredcrumb" >
-                                                        Meat / Potatoes / Rice
-                                                    </div>
-                                                </div>
-                                                <div class="ks-food-dining-price ml-auto h1 font-weight-normal" >
-                                                    $25.99
-                                                </div>
-                                            </div>
-                                            <div class="ks-food-dining-set d-flex align-items-center py-3" >
-                                                <div class="ks-food-dining-img">
-                                                    <img src="/ks_theme_kinetik/static/src/landing-pages-images/hotel/f-4.png" />
-                                                </div>
-                                                <div class="ks-food-dining-info ml-3" >
-                                                    <div class="ks-food-dining-name h2 font-weight-normal" >
-                                                        Tuna Roast Source
-                                                    </div>
-                                                    <div class="ks-food-bredcrumb" >
-                                                        Tuna / Potatoes / Rice
-                                                    </div>
-                                                </div>
-                                                <div class="ks-food-dining-price ml-auto h1 font-weight-normal" >
-                                                    $30.99
-                                                </div>
-                                            </div>
-                                            <div class="ks-food-dining-set d-flex align-items-center py-3" >
-                                                <div class="ks-food-dining-img">
-                                                    <img src="/ks_theme_kinetik/static/src/landing-pages-images/hotel/f-5.png" />
-                                                </div>
-                                                <div class="ks-food-dining-info ml-3" >
-                                                    <div class="ks-food-dining-name h2 font-weight-normal" >
-                                                        Roast Beef (4 Sticks)
-                                                    </div>
-                                                    <div class="ks-food-bredcrumb" >
-                                                        Crab / Potatoes / Rice
-                                                    </div>
-                                                </div>
-                                                <div class="ks-food-dining-price ml-auto h1 font-weight-normal" >
-                                                    $39.99
-                                                </div>
-                                            </div>
-                                            <div class="ks-food-dining-set d-flex align-items-center py-3" >
-                                                <div class="ks-food-dining-img">
-                                                    <img src="/ks_theme_kinetik/static/src/landing-pages-images/hotel/f-6.png" />
-                                                </div>
-                                                <div class="ks-food-dining-info ml-3" >
-                                                    <div class="ks-food-dining-name h2 font-weight-normal" >
-                                                        Ice Creams
-                                                    </div>
-                                                    <div class="ks-food-bredcrumb" >
-                                                        Tuna / Potatoes / Sweet
-                                                    </div>
-                                                </div>
-                                                <div class="ks-food-dining-price ml-auto h1 font-weight-normal" >
-                                                    $19.99
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="nav-profile" role="tabpanel" aria-labelledby="nav-profile-tab">
-                                        <div class="py-4" >
-                                            <div class="ks-food-dining-set d-flex align-items-center py-3" >
-                                                <div class="ks-food-dining-img">
-                                                    <img src="/ks_theme_kinetik/static/src/landing-pages-images/hotel/f-5.png" />
-                                                </div>
-                                                <div class="ks-food-dining-info ml-3" >
-                                                    <div class="ks-food-dining-name h2 font-weight-normal" >
-                                                        Roast Beef (4 Sticks)
-                                                    </div>
-                                                    <div class="ks-food-bredcrumb" >
-                                                        Crab / Potatoes / Rice
-                                                    </div>
-                                                </div>
-                                                <div class="ks-food-dining-price ml-auto h1 font-weight-normal" >
-                                                    $39.99
-                                                </div>
-                                            </div>
-                                            <div class="ks-food-dining-set d-flex align-items-center py-3" >
-                                                <div class="ks-food-dining-img">
-                                                    <img src="/ks_theme_kinetik/static/src/landing-pages-images/hotel/f-6.png" />
-                                                </div>
-                                                <div class="ks-food-dining-info ml-3" >
-                                                    <div class="ks-food-dining-name h2 font-weight-normal" >
-                                                        Ice Creams
-                                                    </div>
-                                                    <div class="ks-food-bredcrumb" >
-                                                        Tuna / Potatoes / Sweet
-                                                    </div>
-                                                </div>
-                                                <div class="ks-food-dining-price ml-auto h1 font-weight-normal" >
-                                                    $19.99
-                                                </div>
-                                            </div>
-                                            <div class="ks-food-dining-set d-flex align-items-center py-3" >
-                                                <div class="ks-food-dining-img">
-                                                    <img src="/ks_theme_kinetik/static/src/landing-pages-images/hotel/f-4.png" />
-                                                </div>
-                                                <div class="ks-food-dining-info ml-3" >
-                                                    <div class="ks-food-dining-name h2 font-weight-normal" >
-                                                        Tuna Roast Source
-                                                    </div>
-                                                    <div class="ks-food-bredcrumb" >
-                                                        Tuna / Potatoes / Rice
-                                                    </div>
-                                                </div>
-                                                <div class="ks-food-dining-price ml-auto h1 font-weight-normal" >
-                                                    $30.99
-                                                </div>
-                                            </div>
-                                            <div class="ks-food-dining-set d-flex align-items-center py-3" >
-                                                <div class="ks-food-dining-img">
-                                                    <img src="/ks_theme_kinetik/static/src/landing-pages-images/hotel/f-3.png" />
-                                                </div>
-                                                <div class="ks-food-dining-info ml-3" >
-                                                    <div class="ks-food-dining-name h2 font-weight-normal" >
-                                                        Grilled Chicken
-                                                    </div>
-                                                    <div class="ks-food-bredcrumb" >
-                                                        Meat / Potatoes / Rice
-                                                    </div>
-                                                </div>
-                                                <div class="ks-food-dining-price ml-auto h1 font-weight-normal" >
-                                                    $25.99
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="tab-pane fade" id="nav-contact" role="tabpanel" aria-labelledby="nav-contact-tab">
-                                        <div class="py-4" >
-                                            <div class="ks-food-dining-set d-flex align-items-center py-3" >
-                                                <div class="ks-food-dining-img">
-                                                    <img src="/ks_theme_kinetik/static/src/landing-pages-images/hotel/f-6.png" />
-                                                </div>
-                                                <div class="ks-food-dining-info ml-3" >
-                                                    <div class="ks-food-dining-name h2 font-weight-normal" >
-                                                        Ice Creams
-                                                    </div>
-                                                    <div class="ks-food-bredcrumb" >
-                                                        Tuna / Potatoes / Sweet
-                                                    </div>
-                                                </div>
-                                                <div class="ks-food-dining-price ml-auto h1 font-weight-normal" >
-                                                    $19.99
-                                                </div>
-                                            </div>
-                                            <div class="ks-food-dining-set d-flex align-items-center py-3" >
-                                                <div class="ks-food-dining-img">
-                                                    <img src="/ks_theme_kinetik/static/src/landing-pages-images/hotel/f-5.png" />
-                                                </div>
-                                                <div class="ks-food-dining-info ml-3" >
-                                                    <div class="ks-food-dining-name h2 font-weight-normal" >
-                                                        Roast Beef (4 Sticks)
-                                                    </div>
-                                                    <div class="ks-food-bredcrumb" >
-                                                        Crab / Potatoes / Rice
-                                                    </div>
-                                                </div>
-                                                <div class="ks-food-dining-price ml-auto h1 font-weight-normal" >
-                                                    $39.99
-                                                </div>
-                                            </div>
-                                            <div class="ks-food-dining-set d-flex align-items-center py-3" >
-                                                <div class="ks-food-dining-img">
-                                                    <img src="/ks_theme_kinetik/static/src/landing-pages-images/hotel/f-3.png" />
-                                                </div>
-                                                <div class="ks-food-dining-info ml-3" >
-                                                    <div class="ks-food-dining-name h2 font-weight-normal" >
-                                                        Grilled Chicken
-                                                    </div>
-                                                    <div class="ks-food-bredcrumb" >
-                                                        Meat / Potatoes / Rice
-                                                    </div>
-                                                </div>
-                                                <div class="ks-food-dining-price ml-auto h1 font-weight-normal" >
-                                                    $25.99
-                                                </div>
-                                            </div>
-                                            <div class="ks-food-dining-set d-flex align-items-center py-3" >
-                                                <div class="ks-food-dining-img">
-                                                    <img src="/ks_theme_kinetik/static/src/landing-pages-images/hotel/f-4.png" />
-                                                </div>
-                                                <div class="ks-food-dining-info ml-3" >
-                                                    <div class="ks-food-dining-name h2 font-weight-normal" >
-                                                        Tuna Roast Source
-                                                    </div>
-                                                    <div class="ks-food-bredcrumb" >
-                                                        Tuna / Potatoes / Rice
-                                                    </div>
-                                                </div>
-                                                <div class="ks-food-dining-price ml-auto h1 font-weight-normal" >
-                                                    $30.99
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6  px-0 d-none d-lg-block ks-hotel-dining-slides wow slideInRight" data-wow-duration="1s" data-wow-delay="0.5s"  >
-                                <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel" data-interval="false" >
-                                    <div class="carousel-inner">
-                                        <div class="carousel-item active">
-                                            <div style="background-image: url(/ks_theme_kinetik/static/src/landing-pages-images/hotel/food-slide-1.jpg)" />
-                                        </div>
-                                        <div class="carousel-item">
-                                            <div style="background-image: url(/ks_theme_kinetik/static/src/landing-pages-images/hotel/food-slide-2.jpg)" />
-                                        </div>
-                                        <div class="carousel-item">
-                                            <div style="background-image: url(/ks_theme_kinetik/static/src/landing-pages-images/hotel/food-slide-3.jpg)" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!--    Our Satisfied Guests               -->
-                    <section class="bg-light-gray py-lg-5 py-sm-4 py-3 overflow-hidden" >
-                        <div class="container-lg" >
-                            <div class="custom-theme-header text-center" >
-                                <img src="/ks_theme_kinetik/static/src/landing-pages-images/hotel/decorator.png"  />
-                                <h4 class="text-shadow mb-5 ks-heading-large" >  Our Satisfied Guests </h4>
-                            </div>
-                            <div class="row"  >
-                                <div class="col-lg-4  mb-4 mb-lg-0 px-lg-4 wow rotateInDownLeft" data-wow-duration="1s" data-wow-delay="0.5s" >
-                                    <div class="bg-white p-lg-5 p-4 text-center ks-hotel-card-effect" >
-                                        <img src="/ks_theme_kinetik/static/src/static-snippet-images/testinomial_images/face-1.jpg" class="rounded-circle" />
-                                        <div class="font-24 my-2" >Brian Doe</div>
-                                        <div class="h4 text-muted font-weight-normal" >New York</div>
-                                        <div class="h5 font-weight-normal ks-hotel-about">
-                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text.
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 mb-4 mb-lg-0 px-4 wow slideInUp" data-wow-duration="1s" data-wow-delay="0.5s" >
-                                    <div class="bg-white p-lg-5 p-4 text-center ks-hotel-card-effect" >
-                                        <img src="/ks_theme_kinetik/static/src/static-snippet-images/testinomial_images/face-3.jpg" class="rounded-circle" />
-                                        <div class="font-24 my-2" >Nathalie Miller</div>
-                                        <div class="h4 text-muted font-weight-normal" >Hong Kong</div>
-                                        <div class="h5 font-weight-normal ks-hotel-about">
-                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text.
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 mb-4 mb-lg-0 px-4 wow rotateInDownRight" data-wow-duration="1s" data-wow-delay="0.5s" >
-                                    <div class="bg-white p-lg-5 p-4 text-center ks-hotel-card-effect" >
-                                        <img src="/ks_theme_kinetik/static/src/static-snippet-images/testinomial_images/face-2.jpg" class="rounded-circle" />
-                                        <div class="font-24 my-2" >Paul Diesel</div>
-                                        <div class="h4 text-muted font-weight-normal" >Brooklyn</div>
-                                        <div class="h5 font-weight-normal ks-hotel-about">
-                                            Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text.
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-
-                    <!--     Our Recent Blogs               -->
-                    <section class="container-lg py-lg-5 py-sm-4 py-3 overflow-hidden" >
-                        <div class="custom-theme-header text-center" >
-                            <img src="/ks_theme_kinetik/static/src/landing-pages-images/hotel/decorator.png"  />
-                            <h4 class="text-shadow mb-5 ks-heading-large" >  Our Recent Blog </h4>
-                        </div>
-                        <div class="row mt-3" >
-                            <div class="col-lg-6 px-0 ks-hotel-blog-img wow fadeInLeft" data-wow-duration="1s" data-wow-delay="0.2s"  >
-                                <div  class="flex-center h-100" style="background-image: url(/ks_theme_kinetik/static/src/landing-pages-images/hotel/blog-img.jpg)">
-                                    <a  data-toggle="modal" data-target="#youtubeModal" class="text-primary cursor-pointer"><i class="fa fa-play-circle display-1"  /></a>
-                                </div>
-                            </div>
-                            <div class="col-lg-6" >
-                                <div class="row py-4 wow fadeInRight" data-wow-duration="0.5s" data-wow-delay="0.5s" >
-                                    <div class="col-md-4 text-md-right text-center">
-                                        <img src="/ks_theme_kinetik/static/src/landing-pages-images/hotel/blog-1.jpg" class="ks-hotel-img"/>
-                                    </div>
-                                    <div class="col-md-8 pl-lg-4 text-md-left text-center" >
-                                        <div class="text-muted h4">December 10, 2019</div>
-                                        <div class="h2" >A Definitive Guide to the best Dining</div>
-                                        <div class="text-muted font-20" >Activities</div>
-                                    </div>
-                                </div>
-                                <div class="row py-4 my-3 wow fadeInRight" data-wow-duration="0.8s" data-wow-delay="0.5s" >
-                                    <div class="col-md-4 text-md-right text-center">
-                                        <img src="/ks_theme_kinetik/static/src/landing-pages-images/hotel/blog-2.jpg" class="ks-hotel-img"/>
-                                    </div>
-                                    <div class="col-md-8 pl-lg-4 text-md-left text-center" >
-                                        <div class="text-muted h4">December 14, 2019</div>
-                                        <div class="h2" >How These 5 People found the path to their Dream Trip</div>
-                                        <div class="text-muted font-20" >Activities</div>
-                                    </div>
-                                </div>
-                                <div class="row py-4 wow fadeInRight" data-wow-duration="1.1s" data-wow-delay="0.5s" >
-                                    <div class="col-md-4 text-md-right text-center">
-                                        <img src="/ks_theme_kinetik/static/src/landing-pages-images/hotel/blog-3.jpg" class="ks-hotel-img"/>
-                                    </div>
-                                    <div class="col-md-8 pl-lg-4 text-md-left text-center" >
-                                        <div class="text-muted h4">December 18, 2019</div>
-                                        <div class="h2" >Our Secret Island Boat tour is just for you.</div>
-                                        <div class="text-muted font-20" >Activities</div>
-                                    </div>
-                                </div>
-                                <div class="text-center mt-4 wow fadeInDown" data-wow-duration="0.5s" data-wow-delay="0.5s" ><a class="text-primary h2 font-weight-normal" href="#" >View all blog post</a> </div>
-                            </div>
-
-                        </div>
-                    </section>
-
-                    <!--    Our Gallery               -->
-                    <section class="bg-light-gray py-lg-5 py-sm-4 py-3 overflow-hidden" >
-                        <div class="container-lg" >
-                            <div class="custom-theme-header text-center" >
-                                <img src="/ks_theme_kinetik/static/src/landing-pages-images/hotel/decorator.png"  />
-                                <h4 class="text-shadow mb-5 ks-heading-large" >  Our Gallery </h4>
-                            </div>
-                            <div class="owl-carousel owl-theme ks-hotel-gallery wow bounceInUp" data-wow-duration="1s" data-wow-delay="0.5s">
-                                <div class="item">
-                                    <img src="/ks_theme_kinetik/static/src/landing-pages-images/hotel/s-1.jpg"  />
-                                </div>
-                                <div class="item">
-                                    <img src="/ks_theme_kinetik/static/src/landing-pages-images/hotel/s-2.jpg"  />
-                                </div>
-                                <div class="item">
-                                    <img src="/ks_theme_kinetik/static/src/landing-pages-images/hotel/s-3.jpg"  />
-                                </div>
-                                <div class="item">
-                                    <img src="/ks_theme_kinetik/static/src/landing-pages-images/hotel/s-4.jpg"  />
-                                </div>
-                                <div class="item">
-                                    <img src="/ks_theme_kinetik/static/src/landing-pages-images/hotel/s-5.jpg"  />
-                                </div>
-                                <div class="item">
-                                    <img src="/ks_theme_kinetik/static/src/landing-pages-images/hotel/s-6.jpg"  />
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <div class="modal fade" id="youtubeModal" tabindex="-1" role="dialog" aria-labelledby="youtubeModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content ks-youtube-content">
-                                <div class="modal-header border-bottom-0">
-                                    <button type="button" class="close text-white font-28 font-weight-normal" data-dismiss="modal" aria-label="Close">
-                                        <i class="fa fa-times" />
-                                    </button>
-                                </div>
-                                <div class="modal-body text-center youtube-modal-video">
-                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/j56YlCXuPFU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="true" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </t>
-        </template>
-
-        <template id="ks_theme_christmas" name="Kinetik Christmas" >
-            <t t-call="website.layout">
-                <div class="oe_structure oe_empty">
-                    <section class="ks-hero-bg position-relative overflow-hidden ks-xmasBgColor overflow-hidden">
-                        <canvas id="snow-fall">snow-fall-effect</canvas>
-                        <div class="p-sm-5 pt-5 mt-5 container-lg text-center text-white d-flex flex-column align-items-center view-height mainTransparent">
-                            <div class="h2 position-relative z-index-10"> <span>HO!</span><span class="mx-3">HO!</span><span>HO!</span>  </div>
-                            <div class="display-2 font-600 position-relative z-index-10">CHRISTMAS EVENT</div>
-                            <img src="/ks_theme_kinetik/static/src/landing-pages-images/christmas/moon.svg" alt="" class="ks-xmas-moon position-absolute" />
-                            <img src="/ks_theme_kinetik/static/src/landing-pages-images/christmas/santa-flying.gif" alt="" class="santa-flying position-relative z-index-10 mb-4" />
-                            <div class="parallax-trees position-absolute w-100">
-                                <div class="ks-red-trees position-absolute w-100"
-                                     style="background-image:url(/ks_theme_kinetik/static/src/landing-pages-images/christmas/trees-red.svg );" />
-                                <div class="ks-white-trees position-relative"
-                                     style="background-image:url(/ks_theme_kinetik/static/src/landing-pages-images/christmas/trees-white.svg );" /></div>
-                        </div>
-                    </section>
-                    <section class="container-lg position-relative z-index-10 mt-lg-5 pt-5 px-3 overflow-hidden">
-                        <div class="row align-items-center">
-                            <div class="col-lg-4 align-self-end order-2 order-lg-1 col-sm-6 md-m-auto">
-                                <img src="/ks_theme_kinetik/static/src/landing-pages-images/christmas/Girl.jpg" class="w-100" alt="" />
-                            </div>
-                            <div class="col-lg-8 pb-5 order-1 order-lg-2">
-                                <h1 class="display-3 font-weight-normal mb-0 text-center text-lg-left">About the Event</h1>
-                                <p class="text-muted text-center text-lg-left">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                                <div class="d-flex mt-5 wow fadeInRight" data-wow-duration="1s" data-wow-delay="0.5s">
-                                    <div class="ks-bell-image rounded-circle p-2 mr-4 ks-xmas-bg">
-                                        <img src="/ks_theme_kinetik/static/src/landing-pages-images/christmas/Bell.png" alt="" />
-                                    </div>
-                                    <div>
-                                        <h2>Save Big Now</h2>
-                                        <p>
-                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod minus, tempora obcaecati natus
-                                            itaque iste unde dolore impedit repudiandae, eveniet, quidem odit molestias fugiat
-                                            reprehenderit. Quasi soluta earum inventore hic.
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="d-flex mt-5 wow fadeInRight" data-wow-duration="1.5s" data-wow-delay="0.5s">
-                                    <div class="ks-bell-image rounded-circle p-2 mr-4 ks-xmas-bg">
-                                        <img src="/ks_theme_kinetik/static/src/landing-pages-images/christmas/Bell.png" alt="" />
-                                    </div>
-                                    <div>
-                                        <h2>Your Best Xmas</h2>
-                                        <p>
-                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod minus, tempora obcaecati natus
-                                            itaque iste unde dolore impedit repudiandae, eveniet, quidem odit molestias fugiat
-                                            reprehenderit. Quasi soluta earum inventore hic.
-                                        </p>
-                                    </div>
-                                </div>
-                                <div class="d-flex mt-5 wow fadeInRight" data-wow-duration="2s" data-wow-delay="0.5s">
-                                    <div class="ks-bell-image rounded-circle p-2 mr-4 ks-xmas-bg">
-                                        <img src="/ks_theme_kinetik/static/src/landing-pages-images/christmas/Bell.png" alt="" />
-                                    </div>
-                                    <div>
-                                        <h2>Happy Holidays</h2>
-                                        <p>
-                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Quod minus, tempora obcaecati natus
-                                            itaque iste unde dolore impedit repudiandae, eveniet, quidem odit molestias fugiat
-                                            reprehenderit. Quasi soluta earum inventore hic.
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <section class="ks-xmas-bg position-relative overflow-hidden px-3">
-                        <ul class="list-unstyled mb-0">
-                            <li class="cube" />
-                            <li class="cube" />
-                            <li class="cube" />
-                            <li class="cube" />
-                            <li class="cube" />
-                            <li class="cube" />
-                        </ul>
-                        <div class="container-lg text-center text-white px-5 pb-5 position-relative z-index-10">
-                            <div class="wow slideInDown" data-wow-duration="1s" data-wow-delay="0.5s" >
-                                <img src="/ks_theme_kinetik/static/src/landing-pages-images/christmas/latto-white.svg" alt="" class="ks-latto-images" />
-                            </div>
-                            <div class="display-3 mt-4">Order Your Event Ticket Today</div>
-                            <p class="mb-4 font-weight-normal h5 mt-3">Never  Miss This Chance</p>
-                            <button class="btn btn-lg btn-red-white">Order Now</button>
-                        </div>
-                    </section>
-                    <section class="bg-light-gray px-3 overflow-hidden">
-                        <div class="container-lg pb-5">
-                            <div class="text-center">
-                                <img src="/ks_theme_kinetik/static/src/landing-pages-images/christmas/latto-red.svg" alt="" class="ks-latto-images wow slideInDown" data-wow-duration="1s" data-wow-delay="0.5s" />
-                                <h1 class="display-3 font-weight-normal mb-0 mt-5">Event Schedule </h1>
-                                <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                            </div>
-                            <div class="row mt-5">
-                                <div class="col-lg-4 wow slideInLeft" data-wow-duration="1s" data-wow-delay="0.5s">
-                                    <div class="ks-xmas-card m-sm-4 bg-white mb-4">
-                                        <div class="position-relative">
-                                            <img src="/ks_theme_kinetik/static/src/landing-pages-images/christmas/ev-1.jpg" class="w-100" alt="" />
-                                            <img src="/ks_theme_kinetik/static/src/landing-pages-images/christmas/Shape.png" class="position-absolute ks-ev-decorator" alt="" />
-                                        </div>
-                                        <div
-                                                class="ks-ev-date ks-xmas-bg rounded-circle text-white ml-3 position-relative d-flex flex-column justify-content-center align-items-center">
-                                            <span class="h2 mb-0 font-weight-bold">20</span>
-                                            <span class="h5 mb-0">Dec</span>
-                                        </div>
-                                        <div class="text-center">
-                                            <h3 class="font-weight-bold my-3">Opening Day</h3>
-                                            <p>Come get Your free gifts <br /> and say hello to santa</p>
-                                            <button class="btn text-white ks-xmas-bg mb-4 font-600">BOOK NOW</button>
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 wow slideInUp" data-wow-duration="1s" data-wow-delay="0.5s">
-                                    <div class="ks-xmas-card m-sm-4 bg-white mb-4">
-                                        <div class="position-relative">
-                                            <img src="/ks_theme_kinetik/static/src/landing-pages-images/christmas/ev-2.jpg" class="w-100" alt="" />
-                                            <img src="/ks_theme_kinetik/static/src/landing-pages-images/christmas/Shape.png" class="position-absolute ks-ev-decorator" alt="" />
-                                        </div>
-                                        <div
-                                                class="ks-ev-date ks-xmas-bg rounded-circle text-white ml-3 position-relative d-flex flex-column justify-content-center align-items-center">
-                                            <span class="h2 mb-0 font-weight-bold">22</span>
-                                            <span class="h5 mb-0">Dec</span>
-                                        </div>
-                                        <div class="text-center">
-                                            <h3 class="font-weight-bold my-3">Visit Santa</h3>
-                                            <p>Come get Your free gifts <br /> and say hello to santa</p>
-                                            <button class="btn text-white ks-xmas-bg mb-4 font-600">BOOK NOW</button>
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 wow slideInRight" data-wow-duration="1s" data-wow-delay="0.5s">
-                                    <div class="ks-xmas-card m-sm-4 bg-white mb-4">
-                                        <div class="position-relative">
-                                            <img src="/ks_theme_kinetik/static/src/landing-pages-images/christmas/ev-3.jpg" class="w-100" alt="" />
-                                            <img src="/ks_theme_kinetik/static/src/landing-pages-images/christmas/Shape.png" class="position-absolute ks-ev-decorator" alt="" />
-                                        </div>
-                                        <div
-                                                class="ks-ev-date ks-xmas-bg rounded-circle text-white ml-3 position-relative d-flex flex-column justify-content-center align-items-center">
-                                            <span class="h2 mb-0 font-weight-bold">24</span>
-                                            <span class="h5 mb-0">Dec</span>
-                                        </div>
-                                        <div class="text-center">
-                                            <h3 class="font-weight-bold my-3">Free Giveaway</h3>
-                                            <p>Come get Your free gifts <br /> and say hello to santa</p>
-                                            <button class="btn text-white ks-xmas-bg mb-4 font-600">BOOK NOW</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <section class="container-lg pb-sm-5 pb-3 px-3 overflow-hidden">
-                        <div class="text-center">
-                            <img src="/ks_theme_kinetik/static/src/landing-pages-images/christmas/latto-red.svg" alt="" class="ks-latto-images wow slideInDown" data-wow-duration="1s" data-wow-delay="0.5s" />
-                            <h1 class="display-3 font-weight-normal mb-0 mt-5">Client Experiences </h1>
-                            <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                        </div>
-                        <div class="row mt-5">
-                            <div class="col-lg-4 mb-5">
-                                <div class="ks-xmas-client position-relative text-center p-4">
-                                    <div class="ks-xmas-bg position-absolute ks-xmas-client-quotes">
-                                        <img src="/ks_theme_kinetik/static/src/landing-pages-images/christmas/quotes.svg" alt="" />
-                                    </div>
-                                    <img src="/ks_theme_kinetik/static/src/landing-pages-images/christmas/xmas-p-1.jpg" class="rounded-circle ks-xmas-client-img" alt="" />
-                                    <p class="text-muted mt-3">
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe adipisci tempora aliquid earum
-                                        voluptates perferendis ducimus reiciendis nihil ab praesentium a amet, velit fuga iusto itaque,
-                                        rem porro nam aspernatur!
-                                    </p>
-                                    <div class="d-flex justify-content-center text-warning h4">
-                                        <i class="fa fa-star mr-1" />
-                                        <i class="fa fa-star mr-1" />
-                                        <i class="fa fa-star mr-1" />
-                                        <i class="fa fa-star mr-1" />
-                                        <i class="fa fa-star" />
-                                    </div>
-                                    <div class="h4 my-3">Mabella Rodreges</div>
-                                    <div class="text-muted">New York</div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 mb-5">
-                                <div class="ks-xmas-client position-relative text-center p-4">
-                                    <div class="ks-xmas-bg position-absolute ks-xmas-client-quotes">
-                                        <img src="/ks_theme_kinetik/static/src/landing-pages-images/christmas/quotes.svg" alt="" />
-                                    </div>
-                                    <img src="/ks_theme_kinetik/static/src/landing-pages-images/christmas/xmas-p-2.jpg" class="rounded-circle ks-xmas-client-img" alt="" />
-                                    <p class="text-muted mt-3">
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe adipisci tempora aliquid earum
-                                        voluptates perferendis ducimus reiciendis nihil ab praesentium a amet, velit fuga iusto itaque,
-                                        rem porro nam aspernatur!
-                                    </p>
-                                    <div class="d-flex justify-content-center text-warning h4">
-                                        <i class="fa fa-star mr-1" />
-                                        <i class="fa fa-star mr-1" />
-                                        <i class="fa fa-star mr-1" />
-                                        <i class="fa fa-star mr-1" />
-                                        <i class="fa fa-star" />
-                                    </div>
-                                    <div class="h4 my-3">Peggy Carter</div>
-                                    <div class="text-muted">Brooklyn</div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 mb-5">
-                                <div class="ks-xmas-client position-relative text-center p-4">
-                                    <div class="ks-xmas-bg position-absolute ks-xmas-client-quotes">
-                                        <img src="/ks_theme_kinetik/static/src/landing-pages-images/christmas/quotes.svg" alt="" />
-                                    </div>
-                                    <img src="/ks_theme_kinetik/static/src/landing-pages-images/christmas/xmas-p-3.jpg" class="rounded-circle ks-xmas-client-img" alt="" />
-                                    <p class="text-muted mt-3">
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe adipisci tempora aliquid earum
-                                        voluptates perferendis ducimus reiciendis nihil ab praesentium a amet, velit fuga iusto itaque,
-                                        rem porro nam aspernatur!
-                                    </p>
-                                    <div class="d-flex justify-content-center text-warning h4">
-                                        <i class="fa fa-star mr-1" />
-                                        <i class="fa fa-star mr-1" />
-                                        <i class="fa fa-star mr-1" />
-                                        <i class="fa fa-star mr-1" />
-                                        <i class="fa fa-star" />
-                                    </div>
-                                    <div class="h4 my-3">Scarlet Johnson</div>
-                                    <div class="text-muted">Sydeny</div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 mb-5">
-                                <div class="ks-xmas-client position-relative text-center p-4">
-                                    <div class="ks-xmas-bg position-absolute ks-xmas-client-quotes">
-                                        <img src="/ks_theme_kinetik/static/src/landing-pages-images/christmas/quotes.svg" alt="" />
-                                    </div>
-                                    <img src="/ks_theme_kinetik/static/src/landing-pages-images/christmas/xmas-p-4.jpg" class="rounded-circle ks-xmas-client-img" alt="" />
-                                    <p class="text-muted mt-3">
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe adipisci tempora aliquid earum
-                                        voluptates perferendis ducimus reiciendis nihil ab praesentium a amet, velit fuga iusto itaque,
-                                        rem porro nam aspernatur!
-                                    </p>
-                                    <div class="d-flex justify-content-center text-warning h4">
-                                        <i class="fa fa-star mr-1" />
-                                        <i class="fa fa-star mr-1" />
-                                        <i class="fa fa-star mr-1" />
-                                        <i class="fa fa-star mr-1" />
-                                        <i class="fa fa-star" />
-                                    </div>
-                                    <div class="h4 my-3">Diana Meera</div>
-                                    <div class="text-muted">Atanltic</div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 mb-5">
-                                <div class="ks-xmas-client position-relative text-center p-4">
-                                    <div class="ks-xmas-bg position-absolute ks-xmas-client-quotes">
-                                        <img src="/ks_theme_kinetik/static/src/landing-pages-images/christmas/quotes.svg" alt="" />
-                                    </div>
-                                    <img src="/ks_theme_kinetik/static/src/landing-pages-images/christmas/xmas-p-1.jpg" class="rounded-circle ks-xmas-client-img" alt="" />
-                                    <p class="text-muted mt-3">
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe adipisci tempora aliquid earum
-                                        voluptates perferendis ducimus reiciendis nihil ab praesentium a amet, velit fuga iusto itaque,
-                                        rem porro nam aspernatur!
-                                    </p>
-                                    <div class="d-flex justify-content-center text-warning h4">
-                                        <i class="fa fa-star mr-1" />
-                                        <i class="fa fa-star mr-1" />
-                                        <i class="fa fa-star mr-1" />
-                                        <i class="fa fa-star mr-1" />
-                                        <i class="fa fa-star" />
-                                    </div>
-                                    <div class="h4 my-3">Syinde</div>
-                                    <div class="text-muted">Maxico</div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 mb-5">
-                                <div class="ks-xmas-client position-relative text-center p-4">
-                                    <div class="ks-xmas-bg position-absolute ks-xmas-client-quotes">
-                                        <img src="/ks_theme_kinetik/static/src/landing-pages-images/christmas/quotes.svg" alt="" />
-                                    </div>
-                                    <img src="/ks_theme_kinetik/static/src/landing-pages-images/christmas/xmas-p-2.jpg" class="rounded-circle ks-xmas-client-img" alt="" />
-                                    <p class="text-muted mt-3">
-                                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe adipisci tempora aliquid earum
-                                        voluptates perferendis ducimus reiciendis nihil ab praesentium a amet, velit fuga iusto itaque,
-                                        rem porro nam aspernatur!
-                                    </p>
-                                    <div class="d-flex justify-content-center text-warning h4">
-                                        <i class="fa fa-star mr-1" />
-                                        <i class="fa fa-star mr-1" />
-                                        <i class="fa fa-star mr-1" />
-                                        <i class="fa fa-star mr-1" />
-                                        <i class="fa fa-star" />
-                                    </div>
-                                    <div class="h4 my-3">Tara Seth</div>
-                                    <div class="text-muted">Delhi</div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <section class="bg-light-gray px-3 overflow-hidden">
-                        <div class="container-lg">
-                            <div class="text-center">
-                                <img src="/ks_theme_kinetik/static/src/landing-pages-images/christmas/latto-red.svg" alt="" class="ks-latto-images wow slideInDown" data-wow-duration="1s" data-wow-delay="0.5s" />
-                                <h1 class="display-3 font-weight-normal mb-0 mt-5">Event Pricing </h1>
-                                <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                            </div>
-                            <div class="row mt-5">
-                                <div class="col-lg-4 mb-5 wow slideInRight" data-wow-duration="1s" data-wow-delay="0.5s">
-                                    <div class="ks-xmas-pricing bg-white position-relative">
-                                        <div class="ks-xmas-pricing-head head-black text-white p-5 text-center">
-                                            <div>
-                                                <span class="h2">$</span>
-                                                <span class="display-3 font-600">100</span>
-                                            </div>
-                                            <div class="h4">
-                                                Friends Pack
-                                            </div>
-                                        </div>
-                                        <div class="ks-wave-img-conatiner position-relative">
-                                            <svg class="ks-card-wave" enable-background="new 0 0 300 100" height="100px" id="Layer_1"
-                                                 preserveAspectRatio="none" version="1.1" viewBox="0 0 300 100" width="300px" x="0px"
-                                                  y="0px">
-                                            <path class="ks-card-wave-layer layer-1" d="M30.913,43.944c0,0,42.911-34.464,87.51-14.191c77.31,35.14,113.304-1.952,146.638-4.729
-                                                c48.654-4.056,69.94,16.218,69.94,16.218v54.396H30.913V43.944z" fill="#FFFFFF"
-                                                  opacity="0.6" />
-                                                <path class="ks-card-wave-layer layer-2" d="M-35.667,44.628c0,0,42.91-34.463,87.51-14.191c77.31,35.141,113.304-1.952,146.639-4.729
-                                                c48.653-4.055,69.939,16.218,69.939,16.218v54.396H-35.667V44.628z" fill="#FFFFFF"
-                                                                  opacity="0.6" >
-                                            </path>
-                                                <path class="ks-card-wave-layer layer-3" d="M43.415,98.342c0,0,48.283-68.927,109.133-68.927c65.886,0,97.983,67.914,97.983,67.914v3.716
-                                                H42.401L43.415,98.342z" fill="#FFFFFF" opacity="0.7" />
-                                                <path class="ks-card-wave-layer layer-4"
-                                                      d="M-34.667,62.998c0,0,56-45.667,120.316-27.839C167.484,57.842,197,41.332,232.286,30.428
-                                                    c53.07-16.399,104.047,36.903,104.047,36.903l1.333,36.667l-372-2.954L-34.667,62.998z" fill="#FFFFFF">
-                                                </path>
-                                            </svg>
-                                        </div>
-                                        <ul class="list-unstyled text-center position-relative z-index-10 mt-4 ks-xmas-pass-info">
-                                            <li>2 Persons</li>
-                                            <li>Econmical Pass</li>
-                                            <li>Day Food</li>
-                                            <li>Night Show</li>
-                                        </ul>
-                                        <div class="text-center">
-                                            <button class="btn text-white ks-xmas-bg mb-4 font-600">Get Now</button>
-                                        </div>
-                                    </div>
-
-
-                                </div>
-                                <div class="col-lg-4 mb-5 wow slideInRight" data-wow-duration="1.5s" data-wow-delay="0.5s">
-                                    <div class="ks-xmas-pricing bg-white position-relative">
-                                        <div class="ks-xmas-pricing-head ks-xmas-bg text-white p-5 text-center">
-                                            <div>
-                                                <span class="h2">$</span>
-                                                <span class="display-3 font-600">200</span>
-                                            </div>
-                                            <div class="h4">
-                                                Couple Pack
-                                            </div>
-                                        </div>
-                                        <div class="ks-wave-img-conatiner position-relative">
-                                            <svg class="ks-card-wave" enable-background="new 0 0 300 100" height="100px" id="Layer_1"
-                                                 preserveAspectRatio="none" version="1.1" viewBox="0 0 300 100" width="300px" x="0px"
-                                                 y="0px">
-                                                <path class="ks-card-wave-layer layer-1" d="M30.913,43.944c0,0,42.911-34.464,87.51-14.191c77.31,35.14,113.304-1.952,146.638-4.729
-                                                    c48.654-4.056,69.94,16.218,69.94,16.218v54.396H30.913V43.944z" fill="#FFFFFF"
-                                                      opacity="0.6" />
-                                                                <path class="ks-card-wave-layer layer-2" d="M-35.667,44.628c0,0,42.91-34.463,87.51-14.191c77.31,35.141,113.304-1.952,146.639-4.729
-                                                    c48.653-4.055,69.939,16.218,69.939,16.218v54.396H-35.667V44.628z" fill="#FFFFFF"
-                                                                      opacity="0.6">
-                                                </path>
-                                                                <path class="ks-card-wave-layer layer-3" d="M43.415,98.342c0,0,48.283-68.927,109.133-68.927c65.886,0,97.983,67.914,97.983,67.914v3.716
-                                                    H42.401L43.415,98.342z" fill="#FFFFFF" opacity="0.7" />
-                                                                <path class="ks-card-wave-layer layer-4"
-                                                                      d="M-34.667,62.998c0,0,56-45.667,120.316-27.839C167.484,57.842,197,41.332,232.286,30.428
-                                                    c53.07-16.399,104.047,36.903,104.047,36.903l1.333,36.667l-372-2.954L-34.667,62.998z" fill="#FFFFFF">
-                                                </path>
-                                            </svg>
-                                        </div>
-                                        <ul class="list-unstyled text-center position-relative z-index-10 mt-4 ks-xmas-pass-info">
-                                            <li>2 Persons</li>
-                                            <li>Premimum Pass</li>
-                                            <li>Day Food</li>
-                                            <li>Day-Night Shows</li>
-                                        </ul>
-                                        <div class="text-center">
-                                            <button class="btn text-white ks-xmas-bg-black mb-4 font-600">Get Now</button>
-                                        </div>
-                                    </div>
-
-
-                                </div>
-                                <div class="col-lg-4 mb-5 wow slideInRight" data-wow-duration="2s" data-wow-delay="0.5s">
-                                    <div class="ks-xmas-pricing bg-white position-relative">
-                                        <div class="ks-xmas-pricing-head head-black text-white p-5 text-center">
-                                            <div>
-                                                <span class="h2">$</span>
-                                                <span class="display-3 font-600">500</span>
-                                            </div>
-                                            <div class="h4">
-                                                Family Pack
-                                            </div>
-                                        </div>
-                                        <div class="ks-wave-img-conatiner position-relative">
-                                            <svg class="ks-card-wave" enable-background="new 0 0 300 100" height="100px" id="Layer_1"
-                                                 preserveAspectRatio="none" version="1.1" viewBox="0 0 300 100" width="300px" x="0px"
-                                                  y="0px">
-                                                <path class="ks-card-wave-layer layer-1" d="M30.913,43.944c0,0,42.911-34.464,87.51-14.191c77.31,35.14,113.304-1.952,146.638-4.729
-                                                    c48.654-4.056,69.94,16.218,69.94,16.218v54.396H30.913V43.944z" fill="#FFFFFF"
-                                                      opacity="0.6" />
-                                                                <path class="ks-card-wave-layer layer-2" d="M-35.667,44.628c0,0,42.91-34.463,87.51-14.191c77.31,35.141,113.304-1.952,146.639-4.729
-                                                    c48.653-4.055,69.939,16.218,69.939,16.218v54.396H-35.667V44.628z" fill="#FFFFFF"
-                                                                      opacity="0.6">
-                                                </path>
-                                                                <path class="ks-card-wave-layer layer-3" d="M43.415,98.342c0,0,48.283-68.927,109.133-68.927c65.886,0,97.983,67.914,97.983,67.914v3.716
-                                                    H42.401L43.415,98.342z" fill="#FFFFFF" opacity="0.7" />
-                                                                <path class="ks-card-wave-layer layer-4"
-                                                                      d="M-34.667,62.998c0,0,56-45.667,120.316-27.839C167.484,57.842,197,41.332,232.286,30.428
-                                                    c53.07-16.399,104.047,36.903,104.047,36.903l1.333,36.667l-372-2.954L-34.667,62.998z" fill="#FFFFFF">
-                                                </path>
-                                            </svg>
-                                        </div>
-                                        <ul class="list-unstyled text-center position-relative z-index-10 mt-4 ks-xmas-pass-info">
-                                            <li>5 Persons</li>
-                                            <li>Premium Pass</li>
-                                            <li>Day Food</li>
-                                            <li>Day-Night Show</li>
-                                        </ul>
-                                        <div class="text-center">
-                                            <button class="btn text-white ks-xmas-bg mb-4 font-600">Get Now</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <section class="ks-banner-left-text img-attachment-fixed ks-hotel-parallax text-white overflow-hidden" style="background-image: url('/ks_theme_kinetik/static/src/landing-pages-images/christmas/parallax.jpg');background-color: rgba(0, 0, 0, 0.5);background-blend-mode: color;">
-                        <div class="row h-100 no-gutters px-4 py-5">
-                            <div class="col-lg-9 col-sm-12 col-12 h-100 d-flex align-items-center justify-content-center mx-auto">
-                                <div class="ks-text-pannel-left d-block text-center">
-                                    <h1 class="font-weight-normal heading-text-info text-center mb-4 wow zoomInRight" data-wow-duration="1s" data-wow-delay="0.5s">Our Video Promo
-                                    </h1>
-                                    <p class="font-weight-normal h3 text-center my-sm-4 wow zoomInLeft" data-wow-duration="1s" data-wow-delay="0.5s">
-                                        Lorem Ipsum dolor sit amet
-                                    </p>
-                                    <div class="btn-container justify-content-center wow zoomInUp" data-wow-duration="1s" data-wow-delay="0.5s">
-                                         <a  data-toggle="modal" data-target="#youtubeModal" class="ks-xmas-play-btn cursor-pointer"> <img src="/ks_theme_kinetik/static/src/landing-pages-images/christmas/play-icon.svg" /></a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <section class="bg-light-gray px-sm-3 overflow-hidden">
-                        <div class="container-lg">
-                            <div class="text-center">
-                                <img src="/ks_theme_kinetik/static/src/landing-pages-images/christmas/latto-red.svg" alt="" class="ks-latto-images wow slideInDown" data-wow-duration="1s" data-wow-delay="0.5s" />
-                                <h1 class="display-3 font-weight-normal mb-0 mt-5">Know About the Event </h1>
-                                <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                            </div>
-                            <div class="row mt-5">
-                                <div class="col-lg-7 ks-xmas-accordian pb-5">
-                                    <div id="accordion">
-                                        <div class="card border-0 mb-4">
-                                            <div class="card-header" id="headingOne">
-                                                <h5 class="mb-0">
-                                                    <button class="btn btn-link position-relative pl-5" data-toggle="collapse"
-                                                            data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                                        When does the event start?
-                                                        <span
-                                                                class="ks-accordian-toggler d-flex justify-content-center align-items-center text-white ks-xmas-bg position-absolute rounded-circle ">
-                                                            <i class="fa fa-plus" /> </span>
-                                                    </button>
-                                                </h5>
-                                            </div>
-
-                                            <div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
-                                                 data-parent="#accordion">
-                                                <div class="card-body">
-                                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
-                                                    richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor
-                                                    brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt
-                                                    aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
-                                                    Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente
-                                                    ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
-                                                    farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them
-                                                    accusamus labore sustainable VHS.
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card border-0 mb-4">
-                                            <div class="card-header" id="headingTwo">
-                                                <h5 class="mb-0">
-                                                    <button class="btn btn-link collapsed position-relative pl-5" data-toggle="collapse"
-                                                            data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
-                                                        Where will the event take place?
-                                                        <span
-                                                                class="ks-accordian-toggler d-flex justify-content-center align-items-center text-white ks-xmas-bg position-absolute rounded-circle ">
-                                                            <i class="fa fa-plus" /> </span>
-                                                    </button>
-                                                </h5>
-                                            </div>
-                                            <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
-                                                 data-parent="#accordion">
-                                                <div class="card-body">
-                                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
-                                                    richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor
-                                                    brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt
-                                                    aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
-                                                    Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente
-                                                    ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
-                                                    farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them
-                                                    accusamus labore sustainable VHS.
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card border-0 mb-4">
-                                            <div class="card-header" id="headingThree">
-                                                <h5 class="mb-0">
-                                                    <button class="btn btn-link collapsed position-relative pl-5" data-toggle="collapse"
-                                                            data-target="#collapseThree" aria-expanded="false"
-                                                            aria-controls="collapseThree">
-                                                        How much money does one entrance cost?
-                                                        <span
-                                                                class="ks-accordian-toggler d-flex justify-content-center align-items-center text-white ks-xmas-bg position-absolute rounded-circle ">
-                                                            <i class="fa fa-plus" /> </span>
-                                                    </button>
-                                                </h5>
-                                            </div>
-                                            <div id="collapseThree" class="collapse" aria-labelledby="headingThree"
-                                                 data-parent="#accordion">
-                                                <div class="card-body">
-                                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
-                                                    richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor
-                                                    brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt
-                                                    aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
-                                                    Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente
-                                                    ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
-                                                    farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them
-                                                    accusamus labore sustainable VHS.
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="card border-0 mb-4">
-                                            <div class="card-header" id="headingFour">
-                                                <h5 class="mb-0">
-                                                    <button class="btn btn-link collapsed position-relative pl-5" data-toggle="collapse"
-                                                            data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                                                        Are there any discounts available?
-                                                        <span
-                                                                class="ks-accordian-toggler d-flex justify-content-center align-items-center text-white ks-xmas-bg position-absolute rounded-circle ">
-                                                            <i class="fa fa-plus" /> </span>
-                                                    </button>
-                                                </h5>
-                                            </div>
-                                            <div id="collapseFour" class="collapse" aria-labelledby="headingFour"
-                                                 data-parent="#accordion">
-                                                <div class="card-body">
-                                                    Anim pariatur cliche reprehenderit, enim eiusmod high life accusamus terry
-                                                    richardson ad squid. 3 wolf moon officia aute, non cupidatat skateboard dolor
-                                                    brunch. Food truck quinoa nesciunt laborum eiusmod. Brunch 3 wolf moon tempor, sunt
-                                                    aliqua put a bird on it squid single-origin coffee nulla assumenda shoreditch et.
-                                                    Nihil anim keffiyeh helvetica, craft beer labore wes anderson cred nesciunt sapiente
-                                                    ea proident. Ad vegan excepteur butcher vice lomo. Leggings occaecat craft beer
-                                                    farm-to-table, raw denim aesthetic synth nesciunt you probably haven't heard of them
-                                                    accusamus labore sustainable VHS.
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-5 d-flex align-items-end">
-                                    <img src="/ks_theme_kinetik/static/src/landing-pages-images/christmas/Girl1.png" class="w-100" alt="" />
-                                </div>
-                            </div>
-                        </div>
-
-                    </section>
-                    <section class="container-lg pt-5 px-3 overflow-hidden">
-                        <div class="text-center">
-                            <h1 class="display-3 font-weight-normal mb-0 mt-5">Stay In Touch </h1>
-                            <p class="text-muted">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                        </div>
-                        <div class="row mt-5">
-                            <div class="col-lg-4 mb-5 wow slideInUp" data-wow-duration="1s" data-wow-delay="0.5s">
-                                <div class="ks-footer-card p-4 text-center" >
-                                    <img src="/ks_theme_kinetik/static/src/landing-pages-images/christmas/location.svg" class="ks-footer-card-img mb-4" alt="" />
-                                    <div class="h2">Location</div>
-                                    <div>
-                                        B-4, Sector 63, Noida (UP), India
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 mb-5 wow slideInUp" data-wow-duration="1.5s" data-wow-delay="0.5s">
-                                <div class="ks-footer-card p-4 text-center" >
-                                    <img src="/ks_theme_kinetik/static/src/landing-pages-images/christmas/ecommerce.svg" class="ks-footer-card-img mb-4" alt="" />
-                                    <div class="h2">Conatct Number</div>
-                                    <div>
-                                        +91 123-456-7890
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-4 mb-5 wow slideInUp" data-wow-duration="2s" data-wow-delay="0.5s">
-                                <div class="ks-footer-card p-4 text-center" >
-                                    <img src="/ks_theme_kinetik/static/src/landing-pages-images/christmas/message.svg" class="ks-footer-card-img mb-4" alt="" />
-                                    <div class="h2">E-mail</div>
-                                    <div>
-                                        sales@ksolves.com
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <div class="modal fade" id="youtubeModal" tabindex="-1" role="dialog" aria-labelledby="youtubeModalLabel" aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content ks-youtube-content">
-                                <div class="modal-header border-bottom-0">
-                                    <button type="button" class="close text-white font-28 font-weight-normal" data-dismiss="modal" aria-label="Close">
-                                        <i class="fa fa-times" />
-                                    </button>
-                                </div>
-                                <div class="modal-body text-center youtube-modal-video">
-                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/CGcnqwb1veU" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="true" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </t>
-        </template>
-
-        <template id="ks_theme_new_year" name="Kinetik New Year" >
-            <t t-call="website.layout">
-                <div class="oe_structure oe_empty ks-ny-page">
-                    <section class="ks-ny-hero overflow-hidden">
-                        <div class="ks-ny-parallax parallax-3 mainTransparent" >
-                            <img src="/ks_theme_kinetik/static/src/landing-pages-images/ny/p-3.jpg" alt="" />
-                        </div>
-                        <div class="ks-ny-parallax parallax-2" >
-                            <img src="/ks_theme_kinetik/static/src/landing-pages-images/ny/p-2-min.png" alt="" />
-                        </div>
-                        <img src="/ks_theme_kinetik/static/src/landing-pages-images/ny/p-1-min.png" class="parallax-1" alt="" />
-                        <div class="position-absolute ks-ny-hero-text">
-                            <div>
-                                <div class="ks-ny-hero-text-sub">Happy New Year</div>
-                                <div class="font-weight-bold ks-ny-hero-text-main d-flex">
-                                    <div>2</div>
-                                    <div class="mx-3 mt-5">0</div>
-                                    <div>2</div>
-                                    <div class="ml-3 mt-5">0</div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </section>
-                    <section class="ks-ny-dark parallax-after pt-sm-5">
-                        <div class="container-lg py-5">
-                            <div class="ks-ny-heading text-center mb-5">
-                                <div class="/ks-ny-heading-txt heading-anim">
-                                    About The Event
-                                </div>
-                                <img src="/ks_theme_kinetik/static/src/landing-pages-images/ny/heading.svg" alt="" />
-                            </div>
-                            <div class="text-center col-sm-9 col-11 mx-auto">
-                                <img src="/ks_theme_kinetik/static/src/landing-pages-images/ny/about.jpg" class="mw-100 ks-ny-about-pic"
-                                     alt="" />
-                            </div>
-                            <p class="ks-ny-about-txt text-center mt-5 col-sm-9 col-11 mx-auto">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi esse sapiente voluptates ut modi eveniet
-                                magnam accusantium, dolore unde quibusdam soluta, nesciunt pariatur, quisquam officiis? Odio ipsa
-                                laudantium vitae cumque?
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Sequi esse sapiente voluptates ut modi eveniet
-                                magnam accusantium, dolore unde quibusdam soluta, nesciunt pariatur, quisquam officiis? Odio ipsa
-                                laudantium vitae cumque?
-                            </p>
-                        </div>
-                    </section>
-                    <section class="ks-ny-arrangements" >
-                        <div class="container-lg py-5 px-4 w-100-on-md">
-                            <div class="ks-ny-heading text-center mb-5">
-                                <div class="ks-ny-heading-txt">
-                                    Our Arrangements
-                                </div>
-                                <img src="/ks_theme_kinetik/static/src/landing-pages-images/ny/heading2.svg" alt="" />
-                            </div>
-
-                            <div class="row">
-                                <div class="col-lg-3 col-sm-6 mb-5">
-                                    <div class="card-container">
-                                        <div class="ks-card text-center">
-                                            <div class="side">
-                                                <img src="/ks_theme_kinetik/static/src/landing-pages-images/ny/c-1.jpg" class="ks-ny-img-size" alt="" />
-                                                <h2 class="my-3">Drinks</h2>
-                                                <p>Sapiente quia culpa tempora, necessitatibus facere enim? Explicabo reiciendis ut .</p>
-                                            </div>
-                                            <div class="side back" style="background-image:url(ks_theme_kinetik/static/src/landing-pages-images/ny/c-11.jpg);">
-                                                <div class="z-view"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque, excepturi facilis. Perspiciatis animi cupiditate tempore et aliquid blanditiis laborum delectus dolorum vitae quis perferendis nam aut, laboriosam illum mollitia at!</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6 mb-5">
-                                    <div class="card-container">
-                                        <div class="ks-card text-center">
-                                            <div class="side">
-                                                <img src="/ks_theme_kinetik/static/src/landing-pages-images/ny/c-3.jpg" class="ks-ny-img-size" alt="" />
-                                                <h2 class="my-3">DJ Music</h2>
-                                                <p>Sapiente quia culpa tempora, necessitatibus facere enim? Explicabo reiciendis ut .</p>
-                                            </div>
-                                            <div class="side back" style="background-image:url(ks_theme_kinetik/static/src/landing-pages-images/ny/c-33.jpg);">
-                                                <div class="z-view"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque, excepturi facilis. Perspiciatis animi cupiditate tempore et aliquid blanditiis laborum delectus dolorum vitae quis perferendis nam aut, laboriosam illum mollitia at!
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6 mb-5">
-                                    <div class="card-container">
-                                        <div class="ks-card text-center">
-                                            <div class="side">
-                                                <img src="/ks_theme_kinetik/static/src/landing-pages-images/ny/c-4.jpg" class="ks-ny-img-size" alt="" />
-                                                <h2 class="my-3">Carnival</h2>
-                                                <p>Sapiente quia culpa tempora, necessitatibus facere enim? Explicabo reiciendis ut .</p>
-                                            </div>
-                                            <div class="side back" style="background-image:url(ks_theme_kinetik/static/src/landing-pages-images/ny/c-44.jpg);">
-                                                <div class="z-view"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque, excepturi facilis. Perspiciatis animi cupiditate tempore et aliquid blanditiis laborum delectus dolorum vitae quis perferendis nam aut, laboriosam illum mollitia at!
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6 mb-5">
-                                    <div class="card-container">
-                                        <div class="ks-card text-center">
-                                            <div class="side">
-                                                <img src="/ks_theme_kinetik/static/src/landing-pages-images/ny/c-2.jpg" class="ks-ny-img-size" alt="" />
-                                                <h2 class="my-3">Lights</h2>
-                                                <p>Sapiente quia culpa tempora, necessitatibus facere enim? Explicabo reiciendis ut .</p>
-                                            </div>
-                                            <div class="side back" style="background-image:url(ks_theme_kinetik/static/src/landing-pages-images/ny/c-22.jpg);">
-                                                <div class="z-view"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque, excepturi facilis. Perspiciatis animi cupiditate tempore et aliquid blanditiis laborum delectus dolorum vitae quis perferendis nam aut, laboriosam illum mollitia at!
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6 mb-5">
-                                    <div class="card-container">
-                                        <div class="ks-card text-center">
-                                            <div class="side">
-                                                <img src="/ks_theme_kinetik/static/src/landing-pages-images/ny/c-7.jpg" class="ks-ny-img-size" alt="" />
-                                                <h2 class="my-3">Drinks</h2>
-                                                <p>Sapiente quia culpa tempora, necessitatibus facere enim? Explicabo reiciendis ut .</p>
-                                            </div>
-                                            <div class="side back" style="background-image:url(ks_theme_kinetik/static/src/landing-pages-images/ny/c-77.jpg);">
-                                                <div class="z-view"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque, excepturi facilis. Perspiciatis animi cupiditate tempore et aliquid blanditiis laborum delectus dolorum vitae quis perferendis nam aut, laboriosam illum mollitia at!
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6 mb-5">
-                                    <div class="card-container">
-                                        <div class="ks-card text-center">
-                                            <div class="side">
-                                                <img src="/ks_theme_kinetik/static/src/landing-pages-images/ny/c-5.jpg" class="ks-ny-img-size" alt="" />
-                                                <h2 class="my-3">Gifts</h2>
-                                                <p>Sapiente quia culpa tempora, necessitatibus facere enim? Explicabo reiciendis ut .</p>
-                                            </div>
-                                            <div class="side back" style="background-image:url(ks_theme_kinetik/static/src/landing-pages-images/ny/c-55.jpg);">
-                                                <div class="z-view"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque, excepturi facilis. Perspiciatis animi cupiditate tempore et aliquid blanditiis laborum delectus dolorum vitae quis perferendis nam aut, laboriosam illum mollitia at!
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6 mb-5">
-                                    <div class="card-container">
-                                        <div class="ks-card text-center">
-                                            <div class="side">
-                                                <img src="/ks_theme_kinetik/static/src/landing-pages-images/ny/c-6.jpg" class="ks-ny-img-size" alt="" />
-                                                <h2 class="my-3">Decoration</h2>
-                                                <p>Sapiente quia culpa tempora, necessitatibus facere enim? Explicabo reiciendis ut .</p>
-                                            </div>
-                                            <div class="side back" style="background-image:url(ks_theme_kinetik/static/src/landing-pages-images/ny/c-66.jpg);">
-                                                <div class="z-view"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque, excepturi facilis. Perspiciatis animi cupiditate tempore et aliquid blanditiis laborum delectus dolorum vitae quis perferendis nam aut, laboriosam illum mollitia at!
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-3 col-sm-6 mb-5">
-                                    <div class="card-container">
-                                        <div class="ks-card text-center">
-                                            <div class="side">
-                                                <img src="/ks_theme_kinetik/static/src/landing-pages-images/ny/c-8.jpg" class="ks-ny-img-size" alt="" />
-                                                <h2 class="my-3">Dancing</h2>
-                                                <p>Sapiente quia culpa tempora, necessitatibus facere enim? Explicabo reiciendis ut .</p>
-                                            </div>
-                                            <div class="side back" style="background-image:url(ks_theme_kinetik/static/src/landing-pages-images/ny/c-88.jpg);">
-                                                <div class="z-view"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Cumque, excepturi facilis. Perspiciatis animi cupiditate tempore et aliquid blanditiis laborum delectus dolorum vitae quis perferendis nam aut, laboriosam illum mollitia at!
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <section
-                            class="ks-adjust-font ks-banner-left-text img-attachment-fixed ks-hotel-parallax text-white overflow-hidden"
-                            style="background-image: url('/ks_theme_kinetik/static/src/landing-pages-images/ny/parallax.jpg');background-color: rgba(0, 0, 0, 0.5);background-blend-mode: color;">
-                        <div class="row h-100 no-gutters px-4 py-5">
-                            <div class="col-lg-9 h-100 d-flex align-items-center justify-content-center mx-auto">
-                                <div class="ks-text-pannel-left d-block text-center">
-                                    <h1 class="font-weight-normal heading-text-info text-center mb-4">Our Video Promo
-                                    </h1>
-                                    <p class="font-weight-normal h3 text-center my-sm-4">
-                                        Lorem Ipsum dolor sit amet
-                                    </p>
-                                    <div class="btn-container justify-content-center">
-                                        <a data-toggle="modal" data-target="#youtubeModal" class="ks-xmas-play-btn cursor-pointer">
-                                            <img src="/ks_theme_kinetik/static/src/landing-pages-images/ny/play-icon.svg" />
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <section>
-                        <div class="container-lg py-5 px-4">
-                            <div class="ks-ny-heading text-center mb-sm-5">
-                                <div class="ks-ny-heading-txt">
-                                    Event Schedule
-                                </div>
-                                <img src="/ks_theme_kinetik/static/src/landing-pages-images/ny/heading2.svg" alt="" />
-                            </div>
-
-                            <div class="row pt-4">
-                                <div class="col-lg-4 px-4 mb-lg-4 mb-sm-5 mb-4  pt-lg-0 pt-sm-5 pt-4">
-                                    <div class="event-time">
-                                        <h1 class="mb-0">29</h1>
-                                        <h3 class="mb-0">Dec</h3>
-                                    </div>
-                                    <div class="ks-ny-event p-4 ks-event-1">
-                                        <div class="divDecorator" />
-                                        <h3 class="event-heading border-bottom pb-3">
-                                            Opening Day
-                                        </h3>
-                                        <h5 class="font-weight-normal py-4" >
-                                            Come get your free gifts
-                                        </h5>
-                                        <div class="text-right" >
-                                            <button  class="btn ks-btn-theme" >Book Ticket</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 px-4 mb-lg-4 mb-sm-5 mb-4 pt-lg-0 pt-sm-5 pt-4">
-                                    <div class="event-time">
-                                        <h1 class="mb-0">30</h1>
-                                        <h3 class="mb-0">Dec</h3>
-                                    </div>
-                                    <div class="ks-ny-event ks-event-2 p-4">
-                                        <div class="divDecorator" />
-                                        <h3 class="event-heading border-bottom pb-3">
-                                            Function Day
-                                        </h3>
-                                        <h5 class="font-weight-normal py-4" >
-                                            Come get your free gifts
-                                        </h5>
-                                        <div class="text-right" >
-                                            <button  class="btn ks-btn-theme" >Book Ticket</button>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 px-4 mb-lg-4 mb-sm-5 mb-4 pt-lg-0 pt-sm-5 pt-4">
-                                    <div class="event-time">
-                                        <h1 class="mb-0">31</h1>
-                                        <h3 class="mb-0">Dec</h3>
-                                    </div>
-                                    <div class="ks-ny-event ks-event-3 p-4">
-                                        <div class="divDecorator" />
-                                        <h3 class="event-heading border-bottom pb-3">
-                                            Celebrations
-                                        </h3>
-                                        <h5 class="font-weight-normal py-4" >
-                                            Come get your free gifts
-                                        </h5>
-                                        <div class="text-right" >
-                                            <button  class="btn ks-btn-theme" >Book Ticket</button>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-
-                    </section>
-                    <section class="ks-ny-dark">
-                        <div class="back-anim py-5" style="background-image: url(ks_theme_kinetik/static/src/landing-pages-images/ny/Confetti-left.png);">
-                            <div class="container-lg text-center text-white py-sm-5">
-                                <div class="display-3 w-600 col-sm-12 col-10 font-sm-40 mx-auto">
-                                    Have a Question about the Event ?
-                                </div>
-                                <button class="btn btn-lg-xl ks-btn-white mt-4 mx-auto radius-0" > <i class="fa fa-phone" /> Contact Now</button>
-                            </div>
-                        </div>
-                    </section>
-                    <section class="position-relative overflow-hidden px-sm-4 ks-ny-event-highlight-effects">
-                        <div class="container-lg py-lg-5 pt-5">
-                            <div class="ks-ny-heading text-center mb-sm-5 mb-4">
-                                <div class="ks-ny-heading-txt">
-                                    Highlights Of Event
-                                </div>
-                                <img src="/ks_theme_kinetik/static/src/landing-pages-images/ny/heading2.svg" alt="" />
-                            </div>
-                            <div class="row align-items-center py-sm-5 py-3 mb-4 " >
-                                <div class="col-lg-2 col-sm-4 col-9 mx-auto" >
-                                    <div class="rounded-circle overflow-hidden ">
-                                        <img class="w-100" src="/ks_theme_kinetik/static/src/landing-pages-images/ny/prayer.jpg" alt="" />
-                                    </div>
-                                </div>
-                                <div class="col-sm-8 border-right border-right-md-0 pr-lg-5 mt-sm-0 mt-4" >
-                                    <h3 class="text-center text-sm-left" >Morning Prayer and Breakfast.</h3>
-                                    <p class="text-muted my-3" > Incidunt neque dolores quod error laborum, officia officiis rem amet. Lorem ipsum dolor sit amet consectetur adipisicing elit. Et enim provident rerum! Quam velit assumenda dolores amet molestiae, expedita quae nulla blanditiis dolorem perspiciatis tenetur debitis eum iste! Libero, eveniet? </p>
-                                    <div class="d-flex justify-content-between align-items-lg-end">
-                                        <div class="ks-ny-highlight">
-                                            <img src="/ks_theme_kinetik/static/src/landing-pages-images/ny/singer.svg" class="singer-svg" alt="" />
-                                            <span class="font-weight-bold ml-2" >Steve Rogers</span>
-                                        </div>
-                                        <div class="ks-ny-highlight">
-                                            <img src="ks_theme_kinetik/static/src/landing-pages-images/ny/time.svg" alt="" />
-                                            <span class="font-weight-bold ml-2" >9:00am - 11:00am</span>
-                                        </div>
-                                        <div class="ks-ny-highlight">
-                                            <img src="/ks_theme_kinetik/static/src/landing-pages-images/ny/route.svg" alt="" />
-                                            <span class="font-weight-bold ml-2" >Stage - 1 </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-2 text-center mt-lg-0 mt-sm-5 mt-4" >
-                                    <button class="btn ks-btn-theme" > Know More </button>
-                                </div>
-                            </div>
-
-                            <div class="row align-items-center py-sm-5 py-3 mb-4" >
-                                <div class="col-lg-2 col-sm-4 col-9 mx-auto" >
-                                    <div class="rounded-circle overflow-hidden">
-                                        <img class="w-100" src="/ks_theme_kinetik/static/src/landing-pages-images/ny/meetup.jpg" alt="" />
-                                    </div>
-                                </div>
-                                <div class="col-sm-8 border-right border-right-md-0 pr-lg-5 mt-sm-0 mt-4" >
-                                    <h3 class="text-center text-sm-left" >Meetup and Games</h3>
-                                    <p class="text-muted my-3" > Incidunt neque dolores quod error laborum, officia officiis rem amet. Lorem ipsum dolor sit amet consectetur adipisicing elit. Et enim provident rerum! Quam velit assumenda dolores amet molestiae, expedita quae nulla blanditiis dolorem perspiciatis tenetur debitis eum iste! Libero, eveniet? </p>
-                                    <div class="d-flex justify-content-between align-items-lg-end">
-                                        <div class="ks-ny-highlight">
-                                            <img src="/ks_theme_kinetik/static/src/landing-pages-images/ny/singer.svg" class="singer-svg" alt="" />
-                                            <span class="font-weight-bold ml-2" >Hosts - Bucky Barnes and Param Sandu</span>
-                                        </div>
-                                        <div class="ks-ny-highlight">
-                                            <img src="/ks_theme_kinetik/static/src/landing-pages-images/ny/time.svg" alt="" />
-                                            <span class="font-weight-bold ml-2" >11:00am - 3:00pm</span>
-                                        </div>
-                                        <div class="ks-ny-highlight">
-                                            <img src="/ks_theme_kinetik/static/src/landing-pages-images/ny/route.svg" alt="" />
-                                            <span class="font-weight-bold ml-2" >Stage - 2,3 </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-2 text-center mt-lg-0 mt-sm-5 mt-4" >
-                                    <button class="btn ks-btn-theme" > Know More </button>
-                                </div>
-                            </div>
-
-                            <div class="row align-items-center py-sm-5 py-3 mb-4" >
-                                <div class="col-lg-2 col-sm-4 col-9 mx-auto" >
-                                    <div class="rounded-circle overflow-hidden">
-                                        <img class="w-100" src="/ks_theme_kinetik/static/src/landing-pages-images/ny/singing.jpg" alt="" />
-                                    </div>
-                                </div>
-                                <div class="col-sm-8 border-right border-right-md-0 pr-lg-5 mt-sm-0 mt-4" >
-                                    <h3 class="text-center text-sm-left" >Performance and Dance</h3>
-                                    <p class="text-muted my-3" > Incidunt neque dolores quod error laborum, officia officiis rem amet. Lorem ipsum dolor sit amet consectetur adipisicing elit. Et enim provident rerum! Quam velit assumenda dolores amet molestiae, expedita quae nulla blanditiis dolorem perspiciatis tenetur debitis eum iste! Libero, eveniet? </p>
-                                    <div class="d-flex justify-content-between align-items-lg-end">
-                                        <div class="ks-ny-highlight">
-                                            <img src="/ks_theme_kinetik/static/src/landing-pages-images/ny/singer.svg" class="singer-svg" alt="" />
-                                            <span class="font-weight-bold ml-2" >The Spoilers Band</span>
-                                        </div>
-                                        <div class="ks-ny-highlight">
-                                            <img src="/ks_theme_kinetik/static/src/landing-pages-images/ny/time.svg" alt="" />
-                                            <span class="font-weight-bold ml-2" >5:00pm - 9:00pm</span>
-                                        </div>
-                                        <div class="ks-ny-highlight">
-                                            <img src="/ks_theme_kinetik/static/src/landing-pages-images/ny/route.svg" alt="" />
-                                            <span class="font-weight-bold ml-2" >Stage - 4 </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-2 text-center mt-lg-0 mt-sm-5 mt-4" >
-                                    <button class="btn ks-btn-theme" > Know More </button>
-                                </div>
-                            </div>
-
-                            <div class="row align-items-center py-sm-5 py-3 mb-4" >
-                                <div class="col-lg-2 col-sm-4 col-9 mx-auto" >
-                                    <div class="rounded-circle overflow-hidden">
-                                        <img class="w-100" src="/ks_theme_kinetik/static/src/landing-pages-images/ny/fireworks.jpg" alt="" />
-                                    </div>
-                                </div>
-                                <div class="col-sm-8 border-right border-right-md-0 pr-lg-5 mt-sm-0 mt-4" >
-                                    <h3 class="text-center text-sm-left" >Firework and New Year Wishes</h3>
-                                    <p class="text-muted my-3" > Incidunt neque dolores quod error laborum, officia officiis rem amet. Lorem ipsum dolor sit amet consectetur adipisicing elit. Et enim provident rerum! Quam velit assumenda dolores amet molestiae, expedita quae nulla blanditiis dolorem perspiciatis tenetur debitis eum iste! Libero, eveniet? </p>
-                                    <div class="d-flex justify-content-between align-items-lg-end">
-                                        <div class="ks-ny-highlight">
-                                            <img src="/ks_theme_kinetik/static/src/landing-pages-images/ny/singer.svg" class="singer-svg" alt="" />
-                                            <span class="font-weight-bold ml-2" >The Spoilers Band</span>
-                                        </div>
-                                        <div class="ks-ny-highlight">
-                                            <img src="/ks_theme_kinetik/static/src/landing-pages-images/ny/time.svg" alt="" />
-                                            <span class="font-weight-bold ml-2" >10:00pm - 1:00am</span>
-                                        </div>
-                                        <div class="ks-ny-highlight">
-                                            <img src="/ks_theme_kinetik/static/src/landing-pages-images/ny/route.svg" alt="" />
-                                            <span class="font-weight-bold ml-2" >Stage - Main </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-2 text-center mt-lg-0 mt-sm-5 mt-4" >
-                                    <button class="btn ks-btn-theme" > Know More </button>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <section class="ks-adjust-font pb-sm-5 pb-3 px-3 overflow-hidden ks-ny-client" style="background-image: url('/ks_theme_kinetik/static/src/landing-pages-images/ny/client-bg.jpg');" >
-                        <div class="container-lg " >
-                            <div class="ks-ny-heading text-center mb-5">
-                                <div class="ks-ny-heading-txt text-white pt-5">
-                                    What People Says
-                                </div>
-                                <img src="/ks_theme_kinetik/static/src/landing-pages-images/ny/heading.svg" alt="" />
-                            </div>
-                            <div class="row mt-5">
-                                <div class="col-lg-4 mb-5">
-                                    <div class="ks-xmas-client position-relative text-center p-4">
-                                        <div class="ks-xmas-bg position-absolute ks-xmas-client-quotes">
-                                            <img src="/ks_theme_kinetik/static/src/landing-pages-images/ny/quotes.svg" alt="" />
-                                        </div>
-                                        <img src="/ks_theme_kinetik/static/src/landing-pages-images/ny/xmas-p-1.jpg" class="rounded-circle ks-xmas-client-img" alt="" />
-                                        <p class="text-muted mt-3 o_default_snippet_text">
-                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe adipisci tempora aliquid earum
-                                            voluptates perferendis ducimus reiciendis nihil ab praesentium a amet, velit fuga iusto itaque,
-                                            rem porro nam aspernatur!
-                                        </p>
-                                        <div class="d-flex justify-content-center text-warning h4">
-                                            <i class="fa fa-star mr-1" />
-                                            <i class="fa fa-star mr-1" />
-                                            <i class="fa fa-star mr-1" />
-                                            <i class="fa fa-star mr-1" />
-                                            <i class="fa fa-star" />
-                                        </div>
-                                        <div class="h4 my-3 o_default_snippet_text">Mabella Rodreges</div>
-                                        <div class="text-muted o_default_snippet_text">New York</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 mb-5">
-                                    <div class="ks-xmas-client position-relative text-center p-4">
-                                        <div class="ks-xmas-bg position-absolute ks-xmas-client-quotes">
-                                            <img src="/ks_theme_kinetik/static/src/landing-pages-images/ny/quotes.svg" alt="" />
-                                        </div>
-                                        <img src="/ks_theme_kinetik/static/src/landing-pages-images/christmas/xmas-p-3.jpg" class="rounded-circle ks-xmas-client-img" alt="" />
-                                        <p class="text-muted mt-3 o_default_snippet_text">
-                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe adipisci tempora aliquid earum
-                                            voluptates perferendis ducimus reiciendis nihil ab praesentium a amet, velit fuga iusto itaque,
-                                            rem porro nam aspernatur!
-                                        </p>
-                                        <div class="d-flex justify-content-center text-warning h4">
-                                            <i class="fa fa-star mr-1" />
-                                            <i class="fa fa-star mr-1" />
-                                            <i class="fa fa-star mr-1" />
-                                            <i class="fa fa-star mr-1" />
-                                            <i class="fa fa-star" />
-                                        </div>
-                                        <div class="h4 my-3 o_default_snippet_text">Peggy Carter</div>
-                                        <div class="text-muted o_default_snippet_text">Brooklyn</div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4 mb-5">
-                                    <div class="ks-xmas-client position-relative text-center p-4">
-                                        <div class="ks-xmas-bg position-absolute ks-xmas-client-quotes">
-                                            <img src="/ks_theme_kinetik/static/src/landing-pages-images/ny/quotes.svg" alt="" />
-                                        </div>
-                                        <img src="/ks_theme_kinetik/static/src/landing-pages-images/christmas/xmas-p-4.jpg" class="rounded-circle ks-xmas-client-img" alt="" />
-                                        <p class="text-muted mt-3 o_default_snippet_text">
-                                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Saepe adipisci tempora aliquid earum
-                                            voluptates perferendis ducimus reiciendis nihil ab praesentium a amet, velit fuga iusto itaque,
-                                            rem porro nam aspernatur!
-                                        </p>
-                                        <div class="d-flex justify-content-center text-warning h4">
-                                            <i class="fa fa-star mr-1" />
-                                            <i class="fa fa-star mr-1" />
-                                            <i class="fa fa-star mr-1" />
-                                            <i class="fa fa-star mr-1" />
-                                            <i class="fa fa-star" />
-                                        </div>
-                                        <div class="h4 my-3 o_default_snippet_text">Scarlet Johnson</div>
-                                        <div class="text-muted o_default_snippet_text">Sydeny</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </section>
-                    <section>
-                        <div class="text-center mt-sm-5 mt-3" >
-                            <h1 class="display-2 font-sm-40 font-weight-bold font-xs-40 adjust-text-position">Let The <br /> Fun Begin </h1>
-                        </div>
-                        <img src="/ks_theme_kinetik/static/src/landing-pages-images/ny/enjoy.jpg" class="w-100" alt="" />
-                    </section>
-                    <div class="modal fade" id="youtubeModal" tabindex="-1" role="dialog" aria-labelledby="youtubeModalLabel"
-                         aria-hidden="true">
-                        <div class="modal-dialog modal-dialog-centered" role="document">
-                            <div class="modal-content ks-youtube-content">
-                                <div class="modal-header border-bottom-0">
-                                    <button type="button" class="close text-white font-28 font-weight-normal" data-dismiss="modal"
-                                            aria-label="Close">
-                                        <i class="fa fa-times" />
-                                    </button>
-                                </div>
-                                <div class="modal-body text-center youtube-modal-video">
-                                    <iframe width="560" height="315" src="https://www.youtube.com/embed/MUcwm720oM0" frameborder="0"
-                                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                                            allowfullscreen="true" />
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </t>
-        </template>
-
     </data>
 </odoo>

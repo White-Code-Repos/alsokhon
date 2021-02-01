@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+      <record model="ir.ui.view" id="gold_entry_inherit_action">
+        <field name="name">gold_entry_inherit_action</field>
+        <field name="model">account.move</field>
+        <field name="inherit_id" ref="account.view_move_form"/>
+        <field name="arch" type="xml">
+          <field name="ref" position="after">
+            <field name="is_gold_entry" invisible="1"/>
+            <field name="type_of_action" attrs="{'invisible':[('is_gold_entry','!=',True)]}"/>
+          </field>
+        </field>
+      </record>
+      <record id="gold_sales_view_view_payment_form_inheriteddddd" model="ir.ui.view">
+          <field name="name">gold.sales.account.payment.form.view.inheritdddd</field>
+          <field name="model">account.payment</field>
+          <field name="inherit_id" ref="account.view_account_payment_form"/>
+          <field name="arch" type="xml">
+              <xpath expr="//form/sheet/group/group[@name='right_column']/div/field[@name='amount']" position="replace">
+                <field name="unfixed_option" invisible="1"/>
+                <field name="amount" force_save="1" attrs="{'readonly':[('unfixed_option','!=',False)]}"/>
+              </xpath>
+          </field>
+      </record>
+        <record id="gold_sales_view_view_move_form_inheriteddddd" model="ir.ui.view">
+            <field name="name">gold.sales.account.move.form.view.inheritdddd</field>
+            <field name="model">account.move</field>
+            <field name="inherit_id" ref="account.view_move_form"/>
+            <field name="arch" type="xml">
+                <field name="purchase_type" position="after">
+                    <field name="sale_type" attrs="{'invisible': [('sale_type', '=', False)],'readonly': True}"/>
+                    <!-- <field name="make_value_move" invisible="1" />
+                    <field name="pure_wt_value"  invisible="1" />
+                    <field name="gold_rate_value"  invisible="1" /> -->
+                </field>
+                <xpath expr="//notebook/page[@id='invoice_tab']/field[@name='invoice_line_ids']/tree/field[@name='price_unit']" position="attributes">
+                    <attribute name="attrs">{'readonly': ['|','|','|',('parent.purchase_type', '=', 'unfixed'),('parent.purchase_type', '=', 'fixed'),('parent.sale_type', '=', 'unfixed'),('parent.sale_type', '=', 'fixed')]}</attribute>
+                    <attribute name="force_save">1</attribute>
+                </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>

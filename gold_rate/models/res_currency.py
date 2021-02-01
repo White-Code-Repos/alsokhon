@@ -14,6 +14,7 @@ class ResCurrency(models.Model):
         compute='_compute_current_gold_rate', string='Current Rate',
         digits=(12, 12), help='The rate of the currency to the currency of '
                               'rate 1.')
+    premium = fields.Float(string="Gold Premium Per Kg")
     @api.onchange('is_gold')
     def onchange_is_gold(self):
         if self.is_gold:

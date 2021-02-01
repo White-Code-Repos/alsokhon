@@ -8,9 +8,16 @@
             <field name="arch" type="xml">
                 <field name="type" position="after">
                     <field name="gold" attrs="{'invisible': [('type', '!=', 'product')]}" force_save="1"/>
+                    <field name="scrap" attrs="{'invisible': [('type', '!=', 'product')]}" force_save="1"/>
+                    <field name="diamond" string="Stone" attrs="{'invisible': [('type', '!=', 'product')]}" force_save="1"/>
+                    <field name="assembly" string="Assembly" attrs="{'invisible': [('type', '!=', 'product')]}" force_save="1"/>
                     <field name="is_making_charges" attrs="{'invisible': [('type', '!=', 'service')]}" force_save="1"/>
-                    <field name="making_charge_id"  domain="[('is_making_charges', '=', True)]" attrs="{'invisible': ['|', ('gold', '!=', True), ('is_making_charges', '=', True)], 'required': [('gold', '=', True)]}"/>
-                    <field name="origin"/> 
+                    <field name="is_diamond_making_charges" attrs="{'invisible': [('type', '!=', 'service')]}" force_save="1" string="Diomand Making Charges"/>
+                    <field name="hide_gold_making" invisible="1"/>
+                    <field name="hide_diamond_making" invisible="1"/>
+                    <field name="making_charge_id"  domain="[('is_making_charges', '=', True)]" attrs="{'invisible': [('hide_gold_making','=',True)], 'required': [('hide_gold_making', '=', False),('scrap', '=', False),('type', '==', 'product')]}"/>
+                    <field name="making_charge_diamond_id"  domain="[('is_diamond_making_charges', '=', True)]" attrs="{'invisible': [('hide_diamond_making','=',True)], 'required': [('hide_diamond_making', '=', False),('scrap', '=', False),('type', '=', 'product')]}"/>
+                    <field name="origin"/>
                 </field>
                 <field name="uom_id" position="attributes">
                     <attribute name="attrs">{'required': [('gold', '=', True)]}</attribute>
@@ -33,6 +40,7 @@
                         <field name="gold_expense_account" attrs="{'required': [('is_gold', '=', True)]}"/>
                         <field name="gold_journal" domain="[('gold', '=', True)]" attrs="{'required': [('is_gold', '=', True)]}"/>
                         <field name="gold_purchase_journal" domain="[('gold', '=', True)]" attrs="{'required': [('is_gold', '=', True)]}"/>
+                        <field name="gold_fixing_account" domain="[('gold', '=', True)]" attrs="{'required': [('is_gold', '=', True)]}"/>
                     </group>
                 </xpath>
             </field>

@@ -1188,10 +1188,6 @@ var EasyAutocomplete = (function(scope) {
 
 			function highlightPhrase(string, phrase) {
 				var escapedPhrase = escapeRegExp(phrase);
-				if(['d','i','v'].includes(phrase.toLowerCase()) && string.match(/<div.*/)){
-				    var str = (string.split("</div>")[0].slice(5) + "").replace(new RegExp("(" + escapedPhrase + ")", "gi") , "<b>$1</b>");
-				    return "<div>" + str + "</div><div>" + string.split("</div>")[1].slice(5) + "</div>"
-				}
 				return (string + "").replace(new RegExp("(" + escapedPhrase + ")", "gi") , "<b>$1</b>");
 			}
 
@@ -1271,9 +1267,7 @@ var EasyAutocomplete = (function(scope) {
 
 								selectedElement -= 1;
 
-								var s2 = config.get("getValue")(elementsList[selectedElement]).split("</div>");
-
-								$field.val(s2[0].slice(5) + "  " + s2[1].slice(5));
+								$field.val(config.get("getValue")(elementsList[selectedElement]));
 
 								selectElement(selectedElement);
 
@@ -1288,9 +1282,7 @@ var EasyAutocomplete = (function(scope) {
 
 								selectedElement += 1;
 
-								var s1 = config.get("getValue")(elementsList[selectedElement]).split("</div>");
-
-								$field.val(s1[0].slice(5) + "  " + s1[1].slice(5));
+								$field.val(config.get("getValue")(elementsList[selectedElement]));
 
 								selectElement(selectedElement);
 

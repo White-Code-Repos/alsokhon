@@ -2,7 +2,7 @@
     <t t-name="snippet_featured">
         <section class="py-lg-5 py-3 ks-featured-product-grid">
             <h4 class="theme__heading" >Featured</h4>
-            <div id="product_btn_group" class="text-center" contenteditable="false">
+            <div id="product_btn_group" class="text-center">
                 <ul class="nav nav-tabs d-flex justify-content-center" role="tablist">
                     <t t-if="new_arr_id_count">
                         <li class="tabs-li nav-item">
@@ -44,7 +44,7 @@
             </div>
             <div class="tab-content">
                 <div id="featured_row_new_arrivals"
-                     class=" tab-pane active row no-gutters  new_arriavals" contenteditable="false">
+                     class=" tab-pane active row no-gutters  new_arriavals">
                     <div class="d-flex flex-wrap products-carousel">
                         <t t-foreach="products" t-as="prods">
                             <t t-if="prods.is_new_arrvd">
@@ -54,12 +54,12 @@
                                             <t t-if="prods.is_ks_wishlist">
                                                 <button type="button" role="button"
                                                         class="btn btn-secondary btn-sm o_add_wishlist"
-                                                        t-att-disabled='in_wish or None' title="Add To Wishlist"
+                                                        t-att-disabled='in_wish or None' title="Add to Wishlist"
                                                         t-att-data-product-template-id="prods.prod_id"
                                                         t-att-data-product-product-id="prods.ks_product_var_id"
                                                         data-action="o_wishlist">
-                                                    <span class="fa fa-heart-o show-wishlist" aria-label="Add To wishlist" />
-                                                    <span class="fa fa-heart show-hover" aria-label="Add To wishlist" />
+                                                    <span class="fa fa-heart-o show-wishlist" aria-label="Add to wishlist" />
+                                                    <span class="fa fa-heart show-hover" aria-label="Add to wishlist" />
                                                 </button>
                                             </t>
                                         </a>
@@ -72,43 +72,16 @@
                                         <a t-att-href="prods.prod_url" id="fp-1" class="featured__product">
                                             <div class="row no-gutters">
                                                 <div class="col-12 text-left">
-                                                    <t t-if='prods.brand_name'>
-                                                        <div class="fp__brand">
-                                                            <t t-esc="prods.brand_name"/>
-                                                        </div>
-                                                    </t>
                                                     <div class="fp__name text-truncate">
                                                         <t t-esc="prods.product_name"/>
                                                     </div>
-                                                    <t t-if="prods.is_rating">
-                                                        <div class="o_rating_star_card">
-                                                            <t t-set="val_integer"
-                                                               t-value="Math.floor(prods.rating_avg)"/>
-                                                            <t t-set="val_decimal"
-                                                               t-value="prods.rating_avg - val_integer"/>
-                                                            <t t-set="empty_star"
-                                                               t-value="5 - (val_integer+Math.ceil(val_decimal))"/>
-
-                                                            <div class="o_website_rating_static"
-                                                                 t-att-style="inline_mode and 'display:inline'">
-                                                                <t t-foreach="_.range(0, val_integer)" t-as="num">
-                                                                    <i class="fa fa-star" role="img"
-                                                                       aria-label="One star" title="One star"></i>
-                                                                </t>
-                                                                <t t-if="val_decimal">
-                                                                    <i class="fa fa-star-half-o" role="img"
-                                                                       aria-label="Half a star" title="Half a star"></i>
-                                                                </t>
-                                                                <t t-foreach="_.range(0, empty_star)" t-as="num"
-                                                                   role="img">
-                                                                    <i class="fa fa-star-o text-black-25"></i>
-                                                                </t>
-                                                                (<t t-esc="rating_count"/>)
-                                                            </div>
-                                                        </div>
-                                                    </t>
+                                                    <div class="fp__brand">
+                                                        <t t-if='prods.brand_name'>
+                                                            <t t-esc="prods.brand_name"/>
+                                                        </t>
+                                                    </div>
                                                 </div>
-                                                <div class="fp__price ks_price_info d-flex justify-content-center align-items-center">
+                                                <div class="fp__price">
                                                     <div class="fp__current_price d-flex">
                                                         <t t-if="website_currency_position == 'before'">
                                                             <t t-esc="prods.website_currency_id"/>
@@ -118,30 +91,6 @@
                                                             <t t-esc="prods.website_currency_id"/>
                                                         </t>
                                                     </div>
-                                                    <t t-if="prods.percentage_discount>0">
-                                                        <del class="ks_public_price"
-                                                             style="white-space: nowrap;">
-                                                            <t t-if="website_currency_position == 'before'">
-                                                                <t t-esc="prods.website_currency_id"/>
-                                                            </t>
-                                                            <span t-esc="prods.prod_price"/>
-                                                            <t t-if="website_currency_position == 'after'">
-                                                                <t t-esc="prods.website_currency_id"/>
-                                                            </t>
-                                                        </del>
-                                                    </t>
-                                                    <t t-if="prods.percen_show">
-                                                        <t class="text-danger"
-                                                           t-if="prods.percentage_discount>0">
-                                                            <div class="ks_snippet_percentage_discount_2">
-                                                                <div class="Percentage-offer">
-                                                                    <span>(</span>
-                                                                    <t t-esc="prods.percentage_discount"/>%
-                                                                    <span class="ks_percentage_info">oFF)</span>
-                                                                </div>
-                                                            </div>
-                                                        </t>
-                                                    </t>
                                                 </div>
                                             </div>
                                         </a>
@@ -153,10 +102,10 @@
                                                           class="text-center">
                                                         <input name="product_id" t-att-value="prods.ks_product_var_id"
                                                                type="hidden"/>
-                                                         <a href="#" role="button" class="btn btn-secondary btn-sm a-submit ks_custom_cart_link" aria-label="Add To Cart" title="Add To Cart">
+                                                         <a href="#" role="button" class="btn btn-secondary btn-sm a-submit ks_custom_cart_link" aria-label="Shopping cart" title="Shopping cart">
                                                             Add To Cart
                                                           </a>
-                                                        <a class="ks_add_to_cart btn btn-secondary btn-sm a-submit" title="Add To Cart">
+                                                        <a class="ks_add_to_cart btn btn-secondary btn-sm a-submit ">
                                                             <span class="fa fa-shopping-cart"/>
                                                         </a>
                                                     </form>
@@ -165,7 +114,7 @@
                                             <t t-if="prods.is_ks_product_det">
                                                 <div class="col ks_custom_d_none_info">
                                                     <a class="btn btn-secondary btn-sm o_quick_view" data-toggle="modal"
-                                                       data-target="#product_quick_preview_Modal" title="Quick Preview"
+                                                       data-target="#product_quick_preview_Modal" title="quick_preview"
                                                        t-att-data-product-product-id="prods.ks_product_var_id"
                                                        t-att-data-product-template-id="prods.prod_id">
                                                         <span class="fa fa-info-circle" role="img" aria-label="Product Information"/>
@@ -191,7 +140,7 @@
                     </div>
                 </div>
                 <div id="featured_row_trendy"
-                     class=" tab-pane row no-gutters trendy_styles" contenteditable="false">
+                     class=" tab-pane row no-gutters trendy_styles">
                     <div class="d-flex  flex-wrap ks_custom_featured">
                         <t t-foreach="products" t-as="prods">
                             <t t-if="prods.is_trendy">
@@ -201,12 +150,12 @@
                                             <t t-if="prods.is_ks_wishlist">
                                                 <button type="button" role="button"
                                                         class="btn btn-secondary btn-sm o_add_wishlist"
-                                                        t-att-disabled='in_wish or None' title="Add To Wishlist"
+                                                        t-att-disabled='in_wish or None' title="Add to Wishlist"
                                                         t-att-data-product-template-id="prods.prod_id"
                                                         t-att-data-product-product-id="prods.ks_product_var_id"
                                                         data-action="o_wishlist">
-                                                    <span class="fa fa-heart-o show-wishlist" aria-label="Add To wishlist" />
-                                                    <span class="fa fa-heart show-hover" aria-label="Add To wishlist" />
+                                                    <span class="fa fa-heart-o show-wishlist" aria-label="Add to wishlist" />
+                                                    <span class="fa fa-heart show-hover" aria-label="Add to wishlist" />
                                                 </button>
                                             </t>
                                         </a>
@@ -219,43 +168,16 @@
                                         <a t-att-href="prods.prod_url" id="fp-1" class="featured__product">
                                             <div class="row no-gutters">
                                                 <div class="col-12 text-left">
-                                                    <t t-if='prods.brand_name'>
-                                                        <div class="fp__brand">
-                                                            <t t-esc="prods.brand_name"/>
-                                                        </div>
-                                                    </t>
                                                     <div class="fp__name text-truncate">
                                                         <t t-esc="prods.product_name"/>
                                                     </div>
-                                                    <t t-if="prods.is_rating">
-                                                        <div class="o_rating_star_card">
-                                                            <t t-set="val_integer"
-                                                               t-value="Math.floor(prods.rating_avg)"/>
-                                                            <t t-set="val_decimal"
-                                                               t-value="prods.rating_avg - val_integer"/>
-                                                            <t t-set="empty_star"
-                                                               t-value="5 - (val_integer+Math.ceil(val_decimal))"/>
-
-                                                            <div class="o_website_rating_static"
-                                                                 t-att-style="inline_mode and 'display:inline'">
-                                                                <t t-foreach="_.range(0, val_integer)" t-as="num">
-                                                                    <i class="fa fa-star" role="img"
-                                                                       aria-label="One star" title="One star"></i>
-                                                                </t>
-                                                                <t t-if="val_decimal">
-                                                                    <i class="fa fa-star-half-o" role="img"
-                                                                       aria-label="Half a star" title="Half a star"></i>
-                                                                </t>
-                                                                <t t-foreach="_.range(0, empty_star)" t-as="num"
-                                                                   role="img">
-                                                                    <i class="fa fa-star-o text-black-25"></i>
-                                                                </t>
-                                                                (<t t-esc="rating_count"/>)
-                                                            </div>
-                                                        </div>
-                                                    </t>
+                                                    <div class="fp__brand">
+                                                        <t t-if='prods.brand_name'>
+                                                            <t t-esc="prods.brand_name"/>
+                                                        </t>
+                                                    </div>
                                                 </div>
-                                                <div class="fp__price ks_price_info d-flex justify-content-center align-items-center">
+                                                <div class="fp__price">
                                                     <div class="fp__current_price d-flex">
                                                         <t t-if="website_currency_position == 'before'">
                                                             <t t-esc="prods.website_currency_id"/>
@@ -265,30 +187,6 @@
                                                             <t t-esc="prods.website_currency_id"/>
                                                         </t>
                                                     </div>
-                                                    <t t-if="prods.percentage_discount>0">
-                                                        <del class="ks_public_price"
-                                                             style="white-space: nowrap;">
-                                                            <t t-if="website_currency_position == 'before'">
-                                                                <t t-esc="prods.website_currency_id"/>
-                                                            </t>
-                                                            <span t-esc="prods.prod_price"/>
-                                                            <t t-if="website_currency_position == 'after'">
-                                                                <t t-esc="prods.website_currency_id"/>
-                                                            </t>
-                                                        </del>
-                                                    </t>
-                                                    <t t-if="prods.percen_show">
-                                                        <t class="text-danger"
-                                                           t-if="prods.percentage_discount>0">
-                                                            <div class="ks_snippet_percentage_discount_2">
-                                                                <div class="Percentage-offer">
-                                                                    <span>(</span>
-                                                                    <t t-esc="prods.percentage_discount"/>%
-                                                                    <span class="ks_percentage_info">oFF)</span>
-                                                                </div>
-                                                            </div>
-                                                        </t>
-                                                    </t>
                                                 </div>
                                             </div>
                                         </a>
@@ -300,10 +198,10 @@
                                                           class="text-center">
                                                         <input name="product_id" t-att-value="prods.ks_product_var_id"
                                                                type="hidden"/>
-                                                         <a href="#" role="button" class="btn btn-secondary btn-sm a-submit ks_custom_cart_link" aria-label="Add To Cart" title="Add To Cart">
+                                                         <a href="#" role="button" class="btn btn-secondary btn-sm a-submit ks_custom_cart_link" aria-label="Shopping cart" title="Shopping cart">
                                                             Add To Cart
                                                           </a>
-                                                        <a class="ks_add_to_cart btn btn-secondary btn-sm a-submit" title="Add To Cart">
+                                                        <a class="ks_add_to_cart btn btn-secondary btn-sm a-submit ">
                                                             <span class="fa fa-shopping-cart"/>
                                                         </a>
                                                     </form>
@@ -312,7 +210,7 @@
                                             <t t-if="prods.is_ks_product_det">
                                                 <div class="col ks_custom_d_none_info">
                                                     <a class="btn btn-secondary btn-sm o_quick_view"   data-toggle="modal"
-                                                       data-target="#product_quick_preview_Modal" title="Quick Preview"
+                                                       data-target="#product_quick_preview_Modal" title="quick_preview"
                                                        t-att-data-product-template-id="prods.prod_id"
                                                        t-att-data-product-product-id="prods.ks_product_var_id">
                                                         <span class="fa fa-info-circle" role="img" aria-label="Product Information"/>
@@ -338,7 +236,7 @@
                     </div>
                 </div>
                 <div id="featured_row_Most_popular"
-                     class=" tab-pane row no-gutters  popular" contenteditable="false">
+                     class=" tab-pane row no-gutters  popular">
                     <div class="d-flex  flex-wrap ks_custom_featured">
                         <t t-foreach="products" t-as="prods">
                             <t t-if="prods.is_ks_popular">
@@ -348,12 +246,12 @@
                                             <t t-if="prods.is_ks_wishlist">
                                                 <button type="button" role="button"
                                                         class="btn btn-secondary btn-sm o_add_wishlist"
-                                                        t-att-disabled='in_wish or None' title="Add To Wishlist"
+                                                        t-att-disabled='in_wish or None' title="Add to Wishlist"
                                                         t-att-data-product-template-id="prods.prod_id"
                                                         t-att-data-product-product-id="prods.ks_product_var_id"
                                                         data-action="o_wishlist">
-                                                    <span class="fa fa-heart-o show-wishlist" aria-label="Add To wishlist" />
-                                                    <span class="fa fa-heart show-hover" aria-label="Add To wishlist" />
+                                                    <span class="fa fa-heart-o show-wishlist" aria-label="Add to wishlist" />
+                                                    <span class="fa fa-heart show-hover" aria-label="Add to wishlist" />
                                                 </button>
                                             </t>
                                         </a>
@@ -366,43 +264,16 @@
                                         <a t-att-href="prods.prod_url" id="fp-1" class="featured__product">
                                             <div class="row no-gutters">
                                                 <div class="col-12 text-left">
-                                                    <t t-if='prods.brand_name'>
-                                                        <div class="fp__brand">
-                                                            <t t-esc="prods.brand_name"/>
-                                                        </div>
-                                                    </t>
                                                     <div class="fp__name text-truncate">
                                                         <t t-esc="prods.product_name"/>
                                                     </div>
-                                                    <t t-if="prods.is_rating">
-                                                        <div class="o_rating_star_card">
-                                                            <t t-set="val_integer"
-                                                               t-value="Math.floor(prods.rating_avg)"/>
-                                                            <t t-set="val_decimal"
-                                                               t-value="prods.rating_avg - val_integer"/>
-                                                            <t t-set="empty_star"
-                                                               t-value="5 - (val_integer+Math.ceil(val_decimal))"/>
-
-                                                            <div class="o_website_rating_static"
-                                                                 t-att-style="inline_mode and 'display:inline'">
-                                                                <t t-foreach="_.range(0, val_integer)" t-as="num">
-                                                                    <i class="fa fa-star" role="img"
-                                                                       aria-label="One star" title="One star"></i>
-                                                                </t>
-                                                                <t t-if="val_decimal">
-                                                                    <i class="fa fa-star-half-o" role="img"
-                                                                       aria-label="Half a star" title="Half a star"></i>
-                                                                </t>
-                                                                <t t-foreach="_.range(0, empty_star)" t-as="num"
-                                                                   role="img">
-                                                                    <i class="fa fa-star-o text-black-25"></i>
-                                                                </t>
-                                                                (<t t-esc="rating_count"/>)
-                                                            </div>
-                                                        </div>
-                                                    </t>
+                                                    <div class="fp__brand">
+                                                        <t t-if='prods.brand_name'>
+                                                            <t t-esc="prods.brand_name"/>
+                                                        </t>
+                                                    </div>
                                                 </div>
-                                                <div class="fp__price ks_price_info d-flex justify-content-center align-items-center">
+                                                <div class="fp__price">
                                                     <div class="fp__current_price d-flex">
                                                         <t t-if="website_currency_position == 'before'">
                                                             <t t-esc="prods.website_currency_id"/>
@@ -412,30 +283,6 @@
                                                             <t t-esc="prods.website_currency_id"/>
                                                         </t>
                                                     </div>
-                                                    <t t-if="prods.percentage_discount>0">
-                                                        <del class="ks_public_price"
-                                                             style="white-space: nowrap;">
-                                                            <t t-if="website_currency_position == 'before'">
-                                                                <t t-esc="prods.website_currency_id"/>
-                                                            </t>
-                                                            <span t-esc="prods.prod_price"/>
-                                                            <t t-if="website_currency_position == 'after'">
-                                                                <t t-esc="prods.website_currency_id"/>
-                                                            </t>
-                                                        </del>
-                                                    </t>
-                                                    <t t-if="prods.percen_show">
-                                                        <t class="text-danger"
-                                                           t-if="prods.percentage_discount>0">
-                                                            <div class="ks_snippet_percentage_discount_2">
-                                                                <div class="Percentage-offer">
-                                                                    <span>(</span>
-                                                                    <t t-esc="prods.percentage_discount"/>%
-                                                                    <span class="ks_percentage_info">oFF)</span>
-                                                                </div>
-                                                            </div>
-                                                        </t>
-                                                    </t>
                                                 </div>
                                             </div>
                                         </a>
@@ -447,10 +294,10 @@
                                                           class="text-center">
                                                         <input name="product_id" t-att-value="prods.ks_product_var_id"
                                                                type="hidden"/>
-                                                         <a href="#" role="button" class="btn btn-secondary btn-sm a-submit ks_custom_cart_link" aria-label="Add To Cart" title="Add To Cart">
+                                                         <a href="#" role="button" class="btn btn-secondary btn-sm a-submit ks_custom_cart_link" aria-label="Shopping cart" title="Shopping cart">
                                                             Add To Cart
                                                           </a>
-                                                        <a class="ks_add_to_cart btn btn-secondary btn-sm a-submit" title="Add To Cart">
+                                                        <a class="ks_add_to_cart btn btn-secondary btn-sm a-submit ">
                                                             <span class="fa fa-shopping-cart"/>
                                                         </a>
                                                     </form>
@@ -459,7 +306,7 @@
                                             <t t-if="prods.is_ks_product_det">
                                                 <div class="col ks_custom_d_none_info">
                                                     <a class="btn btn-secondary btn-sm o_quick_view" data-toggle="modal"
-                                                       data-target="#product_quick_preview_Modal" title="Quick Preview"
+                                                       data-target="#product_quick_preview_Modal" title="quick_preview"
                                                        t-att-data-product-template-id="prods.prod_id"
                                                        t-att-data-product-product-id="prods.ks_product_var_id">
                                                         <span class="fa fa-info-circle" role="img" aria-label="Product Information"/>
@@ -485,7 +332,7 @@
                     </div>
                 </div>
                 <div id="featured_row_classics"
-                     class=" tab-pane row no-gutters  classics" contenteditable="false">
+                     class=" tab-pane row no-gutters  classics">
                     <div class="d-flex  flex-wrap ks_custom_featured">
                         <t t-foreach="products" t-as="prods">
                             <t t-if="prods.is_ks_classics">
@@ -495,12 +342,12 @@
                                             <t t-if="prods.is_ks_wishlist">
                                                 <button type="button" role="button"
                                                         class="btn btn-secondary btn-sm o_add_wishlist"
-                                                        t-att-disabled='in_wish or None' title="Add To Wishlist"
+                                                        t-att-disabled='in_wish or None' title="Add to Wishlist"
                                                         t-att-data-product-template-id="prods.prod_id"
                                                         t-att-data-product-product-id="prods.ks_product_var_id"
                                                         data-action="o_wishlist">
-                                                    <span class="fa fa-heart-o show-wishlist" aria-label="Add To wishlist" />
-                                                    <span class="fa fa-heart show-hover" aria-label="Add To wishlist" />
+                                                    <span class="fa fa-heart-o show-wishlist" aria-label="Add to wishlist" />
+                                                    <span class="fa fa-heart show-hover" aria-label="Add to wishlist" />
                                                 </button>
                                             </t>
                                         </a>
@@ -513,43 +360,16 @@
                                         <a t-att-href="prods.prod_url" id="fp-1" class="featured__product">
                                             <div class="row no-gutters">
                                                 <div class="col-12 text-left">
-                                                    <t t-if='prods.brand_name'>
-                                                        <div class="fp__brand">
-                                                            <t t-esc="prods.brand_name"/>
-                                                        </div>
-                                                    </t>
                                                     <div class="fp__name text-truncate">
                                                         <t t-esc="prods.product_name"/>
                                                     </div>
-                                                    <t t-if="prods.is_rating">
-                                                        <div class="o_rating_star_card">
-                                                            <t t-set="val_integer"
-                                                               t-value="Math.floor(prods.rating_avg)"/>
-                                                            <t t-set="val_decimal"
-                                                               t-value="prods.rating_avg - val_integer"/>
-                                                            <t t-set="empty_star"
-                                                               t-value="5 - (val_integer+Math.ceil(val_decimal))"/>
-
-                                                            <div class="o_website_rating_static"
-                                                                 t-att-style="inline_mode and 'display:inline'">
-                                                                <t t-foreach="_.range(0, val_integer)" t-as="num">
-                                                                    <i class="fa fa-star" role="img"
-                                                                       aria-label="One star" title="One star"></i>
-                                                                </t>
-                                                                <t t-if="val_decimal">
-                                                                    <i class="fa fa-star-half-o" role="img"
-                                                                       aria-label="Half a star" title="Half a star"></i>
-                                                                </t>
-                                                                <t t-foreach="_.range(0, empty_star)" t-as="num"
-                                                                   role="img">
-                                                                    <i class="fa fa-star-o text-black-25"></i>
-                                                                </t>
-                                                                (<t t-esc="rating_count"/>)
-                                                            </div>
-                                                        </div>
-                                                    </t>
+                                                    <div class="fp__brand">
+                                                        <t t-if='prods.brand_name'>
+                                                            <t t-esc="prods.brand_name"/>
+                                                        </t>
+                                                    </div>
                                                 </div>
-                                                <div class="fp__price ks_price_info d-flex justify-content-center align-items-center">
+                                                <div class="fp__price">
                                                     <div class="fp__current_price d-flex">
                                                         <t t-if="website_currency_position == 'before'">
                                                             <t t-esc="prods.website_currency_id"/>
@@ -559,30 +379,6 @@
                                                             <t t-esc="prods.website_currency_id"/>
                                                         </t>
                                                     </div>
-                                                    <t t-if="prods.percentage_discount>0">
-                                                        <del class="ks_public_price"
-                                                             style="white-space: nowrap;">
-                                                            <t t-if="website_currency_position == 'before'">
-                                                                <t t-esc="prods.website_currency_id"/>
-                                                            </t>
-                                                            <span t-esc="prods.prod_price"/>
-                                                            <t t-if="website_currency_position == 'after'">
-                                                                <t t-esc="prods.website_currency_id"/>
-                                                            </t>
-                                                        </del>
-                                                    </t>
-                                                    <t t-if="prods.percen_show">
-                                                        <t class="text-danger"
-                                                           t-if="prods.percentage_discount>0">
-                                                            <div class="ks_snippet_percentage_discount_2">
-                                                                <div class="Percentage-offer">
-                                                                    <span>(</span>
-                                                                    <t t-esc="prods.percentage_discount"/>%
-                                                                    <span class="ks_percentage_info">oFF)</span>
-                                                                </div>
-                                                            </div>
-                                                        </t>
-                                                    </t>
                                                 </div>
                                             </div>
                                         </a>
@@ -594,10 +390,10 @@
                                                           class="text-center">
                                                         <input name="product_id" t-att-value="prods.ks_product_var_id"
                                                                type="hidden"/>
-                                                         <a href="#" role="button" class="btn btn-secondary btn-sm a-submit ks_custom_cart_link" aria-label="Add To Cart" title="Add To Cart">
+                                                         <a href="#" role="button" class="btn btn-secondary btn-sm a-submit ks_custom_cart_link" aria-label="Shopping cart" title="Shopping cart">
                                                             Add To Cart
                                                           </a>
-                                                        <a class="ks_add_to_cart btn btn-secondary btn-sm a-submit" title="Add To Cart">
+                                                        <a class="ks_add_to_cart btn btn-secondary btn-sm a-submit ">
                                                             <span class="fa fa-shopping-cart"/>
                                                         </a>
                                                     </form>
@@ -606,7 +402,7 @@
                                             <t t-if="prods.is_ks_product_det">
                                                 <div class="col ks_custom_d_none_info">
                                                     <a class="btn btn-secondary btn-sm o_quick_view" data-toggle="modal"
-                                                       data-target="#product_quick_preview_Modal" title="Quick Preview"
+                                                       data-target="#product_quick_preview_Modal" title="quick_preview"
                                                        t-att-data-product-product-id="prods.ks_product_var_id"
                                                        t-att-data-product-template-id="prods.prod_id">
                                                         <span class="fa fa-info-circle" role="img" aria-label="Product Information"/>

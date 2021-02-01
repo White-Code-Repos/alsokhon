@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <template id="assets" inherit_id="point_of_sale.assets">
+          <xpath expr="." position="inside">
+              <script type="text/javascript" src="/pos_lot_select/static/src/js/pos.js"></script>
+          </xpath>
+        </template>
+        <record id="pos_config_view_form_pos_sale" model="ir.ui.view">
+            <field name="name">pos.config.form.pos.sale</field>
+            <field name="model">pos.config</field>
+            <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+            <field name="arch" type="xml">
+                <div id="category_reference" position="after">
+                    <div class="col-xs-12 col-md-6 o_setting_box">
+                        <div class="o_setting_left_pane">
+                            <field name="allow_pos_lot"/>
+                        </div>
+                        <div class="o_setting_right_pane">
+                            <div class="content-group" attrs="{'invisible' : [('allow_pos_lot', '=', False)]}">
+                                <div class="row mt16">
+                                    <label  for="lot_expire_days" class="col-md-3 o_light_label"/>
+                                    <field name="lot_expire_days"/>
+                                </div>
+                                <div class="row">
+                                    <label for="pos_lot_receipt" class="col-md-3 o_light_label"/>
+                                    <field name="pos_lot_receipt"/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </field>
+        </record>
+        <template id="report_invoice_document" inherit_id="account.report_invoice_document">
+            <xpath expr="//table[@name='invoice_line_table']" position="replace">
+                     <table class="table table-condensed" name="invoice_line_table">
+                        <thead>
+                            <tr>
+                                <th>Description</th>
+                                <th class="hidden">Source Document</th>
+                                <th class="text-right">Quantity</th>
+                                <th class="text-right">Unit Price</th>
+                                <th t-if="display_discount" class="text-right">Disc.(%)</th>
+                                <th class="text-right">Taxes</th>
+                                <th class="text-right">Amount</th>
+                            </tr>
+                        </thead>
+                        <tbody class="invoice_tbody">
+                            <tr t-foreach="o.invoice_line_ids" t-as="l">
+                                <td>
+                                    <span t-field="l.name"/>
+                                    <br/>
+                                    <t t-foreach="l.pack_lot_ids" t-as="lot_id">
+                                        <t t-esc="lot_id.lot_name"/>,
+                                    </t>
+                                </td>
+                                <td class="hidden"><span t-field="l.origin"/></td>
+                                <td class="text-right">
+                                    <span t-field="l.quantity"/>
+                                    <span t-field="l.uom_id"  groups="product.group_uom"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-field="l.price_unit"/>
+                                </td>
+                                <td t-if="display_discount" class="text-right">
+                                    <span t-field="l.discount"/>
+                                </td>
+                                <td class="text-right">
+                                    <span t-esc="', '.join(map(lambda x: (x.description or x.name), l.invoice_line_tax_ids))"/>
+                                </td>
+                                <td class="text-right" id="subtotal">
+                                    <span t-field="l.price_subtotal"
+                                        t-options='{"widget": "monetary", "display_currency": o.currency_id}'/>
+                                </td>
+                            </tr>
+                            <tr t-foreach="range(max(5-len(o.invoice_line_ids),0))" t-as="l">
+                                <td t-translation="off">&amp;nbsp;</td>
+                                <td class="hidden"></td>
+                                <td></td>
+                                <td></td>
+                                <td t-if="display_discount"></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                    </table>
+            </xpath>
+        </template>
+        <record id="pos_order_view_form_pos_lot" model="ir.ui.view">
+            <field name="name">pos_order_view_form_pos_lot</field>
+            <field name="model">pos.order</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_pos_form"/>
+            <field name="arch" type="xml">
+              <xpath expr="//form/sheet/notebook/page/field[@name='lines']/tree/field[@name='qty']" position="after">
+                <field name="gross_weight"/>
+                <field name="purity_id"/>
+                <field name="pure_weight"/>
+                <field name="gold_rate"/>
+                <field name="make_value"/>
+              </xpath>
+            </field>
+        </record>
+    </data>
+</odoo>
