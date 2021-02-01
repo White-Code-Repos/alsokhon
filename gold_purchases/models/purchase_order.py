@@ -1739,6 +1739,25 @@ class PurchaseOrderLine(models.Model):
                     'price_subtotal': self.price_unit * self.product_qty,
                     'discount': self.discount,
                     })
+                elif self.product_id.categ_id.is_assembly:
+                    res.update({
+                    'quantity':self.product_qty,
+                    'carat':self.carat,
+                    'gross_wt': self.gross_wt,
+                    'total_gross_weight': self.total_gross_wt,
+                    'pure_wt': self.pure_wt,
+                    'purity_id': self.purity_id and self.purity_id.id or False,
+                    'purity_diff': self.purity_diff,
+                    'gold_rate': self.gold_rate,
+                    'make_rate': self.make_rate,
+                    'make_value': self.make_value,
+                    'd_make_value': self.d_make_value,
+                    'gold_value': self.gold_value,
+                    'polish_rhodium': self.polish_rhodium,
+                    'price_unit': self.price_unit,
+                    # 'price_subtotal': self.price_unit * self.product_qty,
+                    'discount': self.discount,
+                    })
             else:
                 if self.product_id.categ_id.is_scrap:
                     res.update({
@@ -1792,6 +1811,25 @@ class PurchaseOrderLine(models.Model):
                     'gold_value': self.gold_value,
                     'price_unit': self.price_unit,
                     'price_subtotal': self.price_unit * self.product_qty,
+                    'discount': self.discount,
+                    })
+                elif self.product_id.categ_id.is_assembly:
+                    res.update({
+                    'quantity':self.product_qty,
+                    'carat':self.carat,
+                    'gross_wt': self.gross_wt,
+                    'total_gross_weight': self.total_gross_wt,
+                    'pure_wt': self.pure_wt,
+                    'purity_id': self.purity_id and self.purity_id.id or False,
+                    'purity_diff': self.purity_diff,
+                    'gold_rate': self.gold_rate,
+                    'make_rate': self.make_rate,
+                    'make_value': self.make_value,
+                    'd_make_value': self.d_make_value,
+                    'gold_value': self.gold_value,
+                    'polish_rhodium': self.polish_rhodium,
+                    'price_unit': self.price_unit,
+                    # 'price_subtotal': self.price_unit * self.product_qty,
                     'discount': self.discount,
                     })
         return res
