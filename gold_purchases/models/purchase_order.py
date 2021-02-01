@@ -22,10 +22,10 @@ class assemblyDescriptionGold(models.Model):
     def get_values_gold(self):
         if self.purity_id:
             if self.product_id.scrap:
-                self.purity = self.scrap_purity
+                self.purity = self.purity_id.scrap_purity
                 self.pure_weight = self.gross_weight * (self.purity / 1000)
             elif self.product_id.gold and not self.product_id.scrap:
-                self.purity = self.purity
+                self.purity = self.purity_id.purity
                 self.pure_weight = self.gross_weight * (self.purity / 1000)
 
     our_stock = fields.Boolean(default=False)
@@ -597,40 +597,67 @@ class PurchaseOrder(models.Model):
     def review_assembly(self):
         stone_description_lines = []
         for line in self.assembly_diamond_ids:
-            stone_description_lines.append((0,0,{
-            'product_id':line.product_id.id,
-            'stones_quantity':line.final_net_stones_quantity,
-            'carat':line.final_net_carat,
-            'carat_price':line.product_id.standard_price,
-            'stones_value':line.product_id.standard_price * line.final_net_carat,
-            'our_stock':True
-            }))
-            _logger.info(line.product_id.id)
-            _logger.info(line.product_id.name)
+            old_line = self.env['assembly.description.diamond'].search([('purchase_id_diamond','=',self.id),('product_id','=',line.product_id.id)])
+            if len(old_line)>0:
+                stone_description_lines.append((1,old_line.id,{
+                'product_id':line.product_id.id,
+                'stones_quantity':line.final_net_stones_quantity,
+                'carat':line.final_net_carat,
+                'carat_price':line.product_id.standard_price,
+                'stones_value':line.product_id.standard_price * line.final_net_carat,
+                'our_stock':True,
+                'stone_setting_rate':old_line.stone_setting_rate,
+                'stone_setting_value':old_line.stone_setting_value,
+                }))
+            else:
+                stone_description_lines.append((0,0,{
+                'product_id':line.product_id.id,
+                'stones_quantity':line.final_net_stones_quantity,
+                'carat':line.final_net_carat,
+                'carat_price':line.product_id.standard_price,
+                'stones_value':line.product_id.standard_price * line.final_net_carat,
+                'our_stock':True
+                }))
+            # _logger.info(line.product_id.id)
+            # _logger.info(line.product_id.name)
         gold_description_lines = []
         for line in self.assembly_gold_ids:
-            gold_description_lines.append((0,0,{
-            'product_id':line.product_id.id,
-            'our_stock':True
-            }))
-            _logger.info(line.product_id.id)
-            _logger.info(line.product_id.name)
-        self.write({'assembly_description_gold':[(5)]})
+            old_line = self.env['assembly.description.gold'].search([('purchase_id_gold','=',self.id),('product_id','=',line.product_id.id)])
+            if len(old_line)>0:
+                gold_description_lines.append((1,old_line.id,{
+                'product_id':line.product_id.id,
+                'quantity':old_line.quantity,
+                'gross_weight':old_line.gross_weight,
+                'purity_id':old_line.purity_id.id or False,
+                'purity':old_line.purity,
+                'pure_weight':old_line.pure_weight,
+                'polish_rhodium':old_line.polish_rhodium,
+                'our_stock':True
+                }))
+            else:
+                gold_description_lines.append((0,0,{
+                'product_id':line.product_id.id,
+                'our_stock':True
+                }))
+            # _logger.info(line.product_id.id)
+            # _logger.info(line.product_id.name)
+        # self.write({'assembly_description_gold':[(5)]})
         self.write({'assembly_description_gold':gold_description_lines})
-        self.write({'assembly_description_diamond':[(5)]})
+        # self.write({'assembly_description_diamond':[(5)]})
         self.write({'assembly_description_diamond':stone_description_lines})
         self.state = 'review'
+        self.update_po_line()
 
-    def finish_processing(self):
-        self.state = 'draft'
-        self.ready = True
+    def update_po_line(self):
         total_stones_price = 0.0
         total_stones_labor = 0.0
+        total_stones_carat = 0.0
         total_r_p = 0.0
         # total_make = 0.0
         total_gross = 0.0
         for line in self.assembly_description_diamond:
             total_stones_labor += line.stone_setting_value
+            total_stones_carat += line.carat
             if not line.our_stock:
                 total_stones_price += line.stones_value
         for line in self.assembly_description_gold:
@@ -638,12 +665,39 @@ class PurchaseOrder(models.Model):
             # total_make += line.make_rate
             total_r_p += line.polish_rhodium
         pol = self.env['purchase.order.line'].search([('order_id','=',self.id)])
-        if pol:
-            pol[0].write({'d_make_value':total_stones_labor})
-            pol[0].write({'polish_rhodium':total_r_p})
-            pol[0].write({'price_unit':total_stones_price})
-            pol[0].write({'gross_wt':total_gross})
-            pol[0].write({'purity_id':self.assembly_description_gold[0].purity_id.id})
+        if pol and pol[0]:
+            print(total_stones_carat)
+            print(total_stones_labor)
+            print(total_gross)
+            print(self.assembly_description_gold[0].purity_id.id)
+            print(total_r_p)
+            print(total_stones_price)
+            pol[0].write({
+            'carat':total_stones_carat,
+            'd_make_value':total_stones_labor,
+            'gross_wt':total_gross,
+            'purity_id':self.assembly_description_gold[0].purity_id.id,
+            'polish_rhodium':total_r_p,
+            })
+            if self.assembly_no_giving:
+                pol[0].write({
+                'price_unit':pol[0].price_unit+total_stones_price+pol[0].gold_value,
+                })
+            if self.assembly_give_both:
+                pol[0].write({
+                'price_unit':pol[0].price_unit,
+                })
+            if self.assembly_give_gold:
+                pol[0].write({
+                'price_unit':pol[0].price_unit+total_stones_price,
+                })
+            if self.assembly_give_diamond:
+                pol[0].write({
+                'price_unit':pol[0].price_unit+pol[0].gold_value,
+                })
+    def finish_processing(self):
+        self.state = 'draft'
+        self.ready = True
         return self.button_confirm()
 
     ready = fields.Boolean(default=False)

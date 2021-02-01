@@ -110,8 +110,8 @@ class StockMove(models.Model):
                                 pol.product_qty, pol.price_unit + pol.d_make_value + pol.polish_rhodium)
                         elif purchase_order.assembly_give_both:
                             diamond_price = 0.0
-                            for line in purchase_order.assembly_diamond_ids:
-                                diamond_price += line.product_id.standard_price * (line.carat - line.carat_ret)
+                            for line in purchase_order.assembly_description_diamond:
+                                diamond_price += line.stones_value
                             svl_vals = move.product_id._prepare_in_svl_vals(
                                 pol.product_qty, pol.price_unit + pol.d_make_value  + pol.gold_value + pol.polish_rhodium + diamond_price)
                         elif purchase_order.assembly_give_gold:
@@ -128,8 +128,8 @@ class StockMove(models.Model):
                             # print(pol.product_id.standard_price)
                             # print("GD")
                             diamond_price = 0.0
-                            for line in purchase_order.assembly_diamond_ids:
-                                diamond_price += line.product_id.standard_price * (line.carat - line.carat_ret)
+                            for line in purchase_order.assembly_description_diamond:
+                                diamond_price += line.stones_value
                             svl_vals = move.product_id._prepare_in_svl_vals(
                                 pol.product_qty, pol.price_unit + pol.d_make_value  + diamond_price + pol.polish_rhodium)
             elif move.product_id.gold:
