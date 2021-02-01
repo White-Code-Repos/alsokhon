@@ -696,6 +696,10 @@ class PurchaseOrder(models.Model):
                 'price_unit':pol[0].price_unit+pol[0].gold_value,
                 })
     def finish_processing(self):
+        if len(self.assembly_description_gold) > 0:
+            for line in self.assembly_description_gold:
+                if line.quantity <= 0.0 or line.gross_weight <= 0.0 or not line.purity_id or line.purity <= 0.0 or line.pure_weight <= 0.0:
+                    raise ValidationError(_('You Should Add Gold Description'))
         self.write({'state':'draft'})
         self.write({'ready':True})
         self.update_po_line()
