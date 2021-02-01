@@ -1686,41 +1686,79 @@ class PurchaseOrderLine(models.Model):
         else:
             if self.product_id.purchase_method == 'receive':
                 if self.product_id.categ_id.is_scrap:
-                    res.update({
-                    'quantity':self.qty_received,
-                    'carat':self.carat,
-                    'gross_wt': self.qty_received,
-                    'total_gross_weight': self.qty_received,
-                    'pure_wt': (self.qty_received ) * (self.purity_id.scrap_purity/ 1000.000000000000),
-                    'purity_id': self.purity_id and self.purity_id.id or False,
-                    'purity_diff': self.purity_diff,
-                    'gold_rate': self.gold_rate,
-                    'make_rate': self.make_rate,
-                    'make_value': self.make_value,
-                    'd_make_value': self.d_make_value,
-                    'gold_value': (self.gold_rate * self.qty_received  * (self.purity_id.scrap_purity/ 1000.000000000000)),
-                    'price_unit': (self.gold_rate * (self.purity_id.scrap_purity/ 1000.000000000000)),
-                    'price_subtotal': (self.gold_rate * self.qty_received  * (self.purity_id.scrap_purity/ 1000.000000000000)),
-                    'discount': self.discount,
-                    })
+                    if self.purity_diff != 0.0:
+                        res.update({
+                        'quantity':self.qty_received,
+                        'carat':self.carat,
+                        'gross_wt': self.qty_received,
+                        'total_gross_weight': self.qty_received,
+                        'pure_wt': (self.qty_received ) * (self.purity_hall/ 1000.000000000000),
+                        'purity_id': self.purity_id and self.purity_id.id or False,
+                        'purity_diff': self.purity_diff,
+                        'gold_rate': self.gold_rate,
+                        'make_rate': self.make_rate,
+                        'make_value': self.make_value,
+                        'd_make_value': self.d_make_value,
+                        'gold_value': (self.gold_rate * self.qty_received  * (self.purity_hall/ 1000.000000000000)),
+                        'price_unit': (self.gold_rate * (self.purity_hall/ 1000.000000000000)),
+                        'price_subtotal': (self.gold_rate * self.qty_received  * (self.purity_hall/ 1000.000000000000)),
+                        'discount': self.discount,
+                        })
+                    else:
+                        res.update({
+                        'quantity':self.qty_received,
+                        'carat':self.carat,
+                        'gross_wt': self.qty_received,
+                        'total_gross_weight': self.qty_received,
+                        'pure_wt': (self.qty_received ) * (self.purity_id.scrap_purity/ 1000.000000000000),
+                        'purity_id': self.purity_id and self.purity_id.id or False,
+                        'purity_diff': self.purity_diff,
+                        'gold_rate': self.gold_rate,
+                        'make_rate': self.make_rate,
+                        'make_value': self.make_value,
+                        'd_make_value': self.d_make_value,
+                        'gold_value': (self.gold_rate * self.qty_received  * (self.purity_id.scrap_purity/ 1000.000000000000)),
+                        'price_unit': (self.gold_rate * (self.purity_id.scrap_purity/ 1000.000000000000)),
+                        'price_subtotal': (self.gold_rate * self.qty_received  * (self.purity_id.scrap_purity/ 1000.000000000000)),
+                        'discount': self.discount,
+                        })
                 elif self.product_id.categ_id.is_gold:
-                    res.update({
-                    'quantity':self.qty_received,
-                    'carat':self.carat,
-                    'gross_wt': self.gross_wt,
-                    'total_gross_weight':self.qty_received * self.gross_wt,
-                    'pure_wt': (self.qty_received * self.gross_wt) * (self.purity_id.purity/ 1000.000000000000),
-                    'purity_id': self.purity_id and self.purity_id.id or False,
-                    'purity_diff': self.purity_diff,
-                    'gold_rate': self.gold_rate,
-                    'make_rate': self.make_rate,
-                    'make_value': self.make_value,
-                    'd_make_value': self.d_make_value,
-                    'gold_value': (self.gold_rate * (self.qty_received * self.gross_wt) * (self.purity_id.purity/ 1000.000000000000)),
-                    'price_unit': (self.gold_rate * (self.qty_received * self.gross_wt) * (self.purity_id.purity/ 1000.000000000000)) / self.qty_received,
-                    'price_subtotal': (self.gold_rate * (self.qty_received * self.gross_wt) * (self.purity_id.purity/ 1000.000000000000)),
-                    'discount': self.discount,
-                    })
+                    if self.purity_diff != 0.0:
+                        res.update({
+                        'quantity':self.qty_received,
+                        'carat':self.carat,
+                        'gross_wt': self.gross_wt,
+                        'total_gross_weight':self.qty_received * self.gross_wt,
+                        'pure_wt': (self.qty_received * self.gross_wt) * (self.purity_hall/ 1000.000000000000),
+                        'purity_id': self.purity_id and self.purity_id.id or False,
+                        'purity_diff': self.purity_diff,
+                        'gold_rate': self.gold_rate,
+                        'make_rate': self.make_rate,
+                        'make_value': self.make_value,
+                        'd_make_value': self.d_make_value,
+                        'gold_value': (self.gold_rate * (self.qty_received * self.gross_wt) * (self.purity_hall/ 1000.000000000000)),
+                        'price_unit': (self.gold_rate * (self.qty_received * self.gross_wt) * (self.purity_hall/ 1000.000000000000)) / self.qty_received,
+                        'price_subtotal': (self.gold_rate * (self.qty_received * self.gross_wt) * (self.purity_hall/ 1000.000000000000)),
+                        'discount': self.discount,
+                        })
+                    else:
+                        res.update({
+                        'quantity':self.qty_received,
+                        'carat':self.carat,
+                        'gross_wt': self.gross_wt,
+                        'total_gross_weight':self.qty_received * self.gross_wt,
+                        'pure_wt': (self.qty_received * self.gross_wt) * (self.purity_id.purity/ 1000.000000000000),
+                        'purity_id': self.purity_id and self.purity_id.id or False,
+                        'purity_diff': self.purity_diff,
+                        'gold_rate': self.gold_rate,
+                        'make_rate': self.make_rate,
+                        'make_value': self.make_value,
+                        'd_make_value': self.d_make_value,
+                        'gold_value': (self.gold_rate * (self.qty_received * self.gross_wt) * (self.purity_id.purity/ 1000.000000000000)),
+                        'price_unit': (self.gold_rate * (self.qty_received * self.gross_wt) * (self.purity_id.purity/ 1000.000000000000)) / self.qty_received,
+                        'price_subtotal': (self.gold_rate * (self.qty_received * self.gross_wt) * (self.purity_id.purity/ 1000.000000000000)),
+                        'discount': self.discount,
+                        })
                 elif self.product_id.categ_id.is_diamond:
                     res.update({
                     'quantity':self.product_qty,
@@ -1760,41 +1798,79 @@ class PurchaseOrderLine(models.Model):
                     })
             else:
                 if self.product_id.categ_id.is_scrap:
-                    res.update({
-                    'quantity':self.quantity,
-                    'carat':self.carat,
-                    'gross_wt': self.quantity,
-                    'total_gross_weight': self.quantity,
-                    'pure_wt': (self.quantity ) * (self.purity_id.scrap_purity/ 1000.000000000000),
-                    'purity_id': self.purity_id and self.purity_id.id or False,
-                    'purity_diff': self.purity_diff,
-                    'gold_rate': self.gold_rate,
-                    'make_rate': self.make_rate,
-                    'make_value': self.make_value,
-                    'd_make_value': self.d_make_value,
-                    'gold_value': (self.gold_rate * self.quantity  * (self.purity_id.scrap_purity/ 1000.000000000000)),
-                    'price_unit': (self.gold_rate * (self.purity_id.scrap_purity/ 1000.000000000000)),
-                    'price_subtotal': (self.gold_rate * self.quantity  * (self.purity_id.scrap_purity/ 1000.000000000000)),
-                    'discount': self.discount,
-                    })
+                    if self.purity_diff != 0.0:
+                        res.update({
+                        'quantity':self.quantity,
+                        'carat':self.carat,
+                        'gross_wt': self.quantity,
+                        'total_gross_weight': self.quantity,
+                        'pure_wt': (self.quantity ) * (self.purity_hall/ 1000.000000000000),
+                        'purity_id': self.purity_id and self.purity_id.id or False,
+                        'purity_diff': self.purity_diff,
+                        'gold_rate': self.gold_rate,
+                        'make_rate': self.make_rate,
+                        'make_value': self.make_value,
+                        'd_make_value': self.d_make_value,
+                        'gold_value': (self.gold_rate * self.quantity  * (self.purity_hall/ 1000.000000000000)),
+                        'price_unit': (self.gold_rate * (self.purity_hall/ 1000.000000000000)),
+                        'price_subtotal': (self.gold_rate * self.quantity  * (self.purity_hall/ 1000.000000000000)),
+                        'discount': self.discount,
+                        })
+                    else:
+                        res.update({
+                        'quantity':self.quantity,
+                        'carat':self.carat,
+                        'gross_wt': self.quantity,
+                        'total_gross_weight': self.quantity,
+                        'pure_wt': (self.quantity ) * (self.purity_id.scrap_purity/ 1000.000000000000),
+                        'purity_id': self.purity_id and self.purity_id.id or False,
+                        'purity_diff': self.purity_diff,
+                        'gold_rate': self.gold_rate,
+                        'make_rate': self.make_rate,
+                        'make_value': self.make_value,
+                        'd_make_value': self.d_make_value,
+                        'gold_value': (self.gold_rate * self.quantity  * (self.purity_id.scrap_purity/ 1000.000000000000)),
+                        'price_unit': (self.gold_rate * (self.purity_id.scrap_purity/ 1000.000000000000)),
+                        'price_subtotal': (self.gold_rate * self.quantity  * (self.purity_id.scrap_purity/ 1000.000000000000)),
+                        'discount': self.discount,
+                        })
                 elif self.product_id.categ_id.is_gold:
-                    res.update({
-                    'quantity':self.quantity,
-                    'carat':self.carat,
-                    'gross_wt': self.gross_wt,
-                    'total_gross_weight':self.quantity * self.gross_wt,
-                    'pure_wt': (self.quantity * self.gross_wt) * (self.purity_id.purity/ 1000.000000000000),
-                    'purity_id': self.purity_id and self.purity_id.id or False,
-                    'purity_diff': self.purity_diff,
-                    'gold_rate': self.gold_rate,
-                    'make_rate': self.make_rate,
-                    'make_value': self.make_value,
-                    'd_make_value': self.d_make_value,
-                    'gold_value': (self.gold_rate * (self.quantity * self.gross_wt) * (self.purity_id.purity/ 1000.000000000000)),
-                    'price_unit': (self.gold_rate * (self.quantity * self.gross_wt) * (self.purity_id.purity/ 1000.000000000000)) / self.quantity,
-                    'price_subtotal': (self.gold_rate * (self.quantity * self.gross_wt) * (self.purity_id.purity/ 1000.000000000000)),
-                    'discount': self.discount,
-                    })
+                    if self.purity_diff != 0.0:
+                        res.update({
+                        'quantity':self.quantity,
+                        'carat':self.carat,
+                        'gross_wt': self.gross_wt,
+                        'total_gross_weight':self.quantity * self.gross_wt,
+                        'pure_wt': (self.quantity * self.gross_wt) * (self.purity_hall/ 1000.000000000000),
+                        'purity_id': self.purity_id and self.purity_id.id or False,
+                        'purity_diff': self.purity_diff,
+                        'gold_rate': self.gold_rate,
+                        'make_rate': self.make_rate,
+                        'make_value': self.make_value,
+                        'd_make_value': self.d_make_value,
+                        'gold_value': (self.gold_rate * (self.quantity * self.gross_wt) * (self.purity_hall/ 1000.000000000000)),
+                        'price_unit': (self.gold_rate * (self.quantity * self.gross_wt) * (self.purity_hall/ 1000.000000000000)) / self.quantity,
+                        'price_subtotal': (self.gold_rate * (self.quantity * self.gross_wt) * (self.purity_hall/ 1000.000000000000)),
+                        'discount': self.discount,
+                        })
+                    else:
+                        res.update({
+                        'quantity':self.quantity,
+                        'carat':self.carat,
+                        'gross_wt': self.gross_wt,
+                        'total_gross_weight':self.quantity * self.gross_wt,
+                        'pure_wt': (self.quantity * self.gross_wt) * (self.purity_id.purity/ 1000.000000000000),
+                        'purity_id': self.purity_id and self.purity_id.id or False,
+                        'purity_diff': self.purity_diff,
+                        'gold_rate': self.gold_rate,
+                        'make_rate': self.make_rate,
+                        'make_value': self.make_value,
+                        'd_make_value': self.d_make_value,
+                        'gold_value': (self.gold_rate * (self.quantity * self.gross_wt) * (self.purity_id.purity/ 1000.000000000000)),
+                        'price_unit': (self.gold_rate * (self.quantity * self.gross_wt) * (self.purity_id.purity/ 1000.000000000000)) / self.quantity,
+                        'price_subtotal': (self.gold_rate * (self.quantity * self.gross_wt) * (self.purity_id.purity/ 1000.000000000000)),
+                        'discount': self.discount,
+                        })
                 elif self.product_id.categ_id.is_diamond:
                     res.update({
                     'quantity':self.product_qty,
