@@ -346,12 +346,12 @@
                                           <td>Lot</td>
                                           <!-- <td><t t-esc="widget.options.order_line.product.categ.is_diamond" /></td> -->
                                           <t t-if="widget.options.order_line.product.categ.is_gold">
-                                            <td>Quantity</td>
+                                            <!-- <td>Quantity</td>
                                             <td>Gross Weight</td>
                                             <td>Purity</td>
-                                            <td>Pure Weight</td>
+                                            <td>Pure Weight</td> -->
                                             <td>Making Charge</td>
-                                            <td>Gold Rate</td>
+                                            <!-- <td>Gold Rate</td> -->
                                           </t>
 
                                           <t t-if="widget.options.order_line.product.categ.is_assembly">
@@ -397,7 +397,7 @@
                                                 </td>
 
                                                 <t t-if="widget.options.order_line.product.categ.is_gold">
-                                                  <td id="total_qty">
+                                                  <!-- <td id="total_qty">
                                                       <t t-esc="product_lot.total_qty" />
                                                   </td>
                                                   <td id="gross_weight">
@@ -408,16 +408,16 @@
                                                   </td>
                                                   <td id="pure_weight">
                                                       <t t-esc="product_lot.pure_weight"/>
-                                                  </td>
+                                                  </td> -->
                                                   <td id="selling_making_charge">
                                                       <t t-esc="making_charge" />
                                                   </td>
                                                   <!-- <td id="selling_making">
                                                       <t t-esc="product_lot.selling_making_charge" />
                                                   </td> -->
-                                                  <td id="gold_rate">
+                                                  <!-- <td id="gold_rate">
                                                       <t t-esc="widget.pos.config.gold_rate" />
-                                                  </td>
+                                                  </td> -->
                                                 </t>
 
                                                 <t t-if="widget.options.order_line.product.categ.is_assembly">
