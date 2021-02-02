@@ -27,7 +27,10 @@ class assemblyDescriptionGold(models.Model):
             elif self.product_id.gold and not self.product_id.scrap:
                 self.purity = self.purity_id.purity
                 self.pure_weight = self.gross_weight * (self.purity / 1000)
-
+    @api.onchange('purity')
+    def change_hall(self):
+        if self.purity:
+            self.pure_weight = self.gross_weight * (self.purity / 1000)
     our_stock = fields.Boolean(default=False)
     purity = fields.Float(digits=(16,3))
     # polish_rhodium = fields.Float('Polish & Rhodium',digits=(16,3))
