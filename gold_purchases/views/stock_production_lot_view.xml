@@ -15,7 +15,7 @@
                       <field name="gross_weight" sum="gross_weight"/>
                       <field name="purity_id"/>
                       <field name="purity"/>
-                      <field name="polish_rhodium"/>
+                      <!-- <field name="polish_rhodium"/> -->
                       <field name="pure_weight" sum="pure_weight"/>
                     </tree>
                   </field>

@@ -107,19 +107,19 @@ class StockMove(models.Model):
                             # print(pol.price_unit + pol.d_make_value + pol.make_value)
                             # print("J")
                             svl_vals = move.product_id._prepare_in_svl_vals(
-                                pol.product_qty, pol.price_unit + pol.d_make_value + pol.polish_rhodium)
+                                pol.product_qty, pol.price_unit + pol.d_make_value)
                         elif purchase_order.assembly_give_both:
                             diamond_price = 0.0
                             for line in purchase_order.assembly_description_diamond:
                                 diamond_price += line.stones_value
                             svl_vals = move.product_id._prepare_in_svl_vals(
-                                pol.product_qty, pol.price_unit + pol.d_make_value  + pol.gold_value + pol.polish_rhodium + diamond_price)
+                                pol.product_qty, pol.price_unit + pol.d_make_value  + pol.gold_value + diamond_price)
                         elif purchase_order.assembly_give_gold:
                             # print("GG")
                             # print(pol.price_unit + pol.d_make_value + pol.make_value + pol.gold_value)
                             # print("GG")
                             svl_vals = move.product_id._prepare_in_svl_vals(
-                                pol.product_qty, pol.price_unit + pol.d_make_value  + pol.gold_value + pol.polish_rhodium)
+                                pol.product_qty, pol.price_unit + pol.d_make_value  + pol.gold_value)
                         elif purchase_order.assembly_give_diamond:
                             # print("GD")
                             # print(pol.price_unit)
@@ -131,7 +131,7 @@ class StockMove(models.Model):
                             for line in purchase_order.assembly_description_diamond:
                                 diamond_price += line.stones_value
                             svl_vals = move.product_id._prepare_in_svl_vals(
-                                pol.product_qty, pol.price_unit + pol.d_make_value  + diamond_price + pol.polish_rhodium)
+                                pol.product_qty, pol.price_unit + pol.d_make_value  + diamond_price)
             elif move.product_id.gold:
                 if move.origin:
                     if 'P0' in move.origin:
@@ -419,7 +419,7 @@ class StockMoveLine(models.Model):
                         'pure_weight':line.pure_weight,
                         'purity_id':line.purity_id.id,
                         'purity':line.purity,
-                        'polish_rhodium':line.polish_rhodium
+                        # 'polish_rhodium':line.polish_rhodium
                         }))
                     for line in purchase_obj.assembly_description_diamond:
                         assembly_description_diamond.append((0,0,{

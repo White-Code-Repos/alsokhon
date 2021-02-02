@@ -106,7 +106,7 @@
                     <field name="purity_diff" readonly="1"  />
                     <field name="make_rate" readonly="1"  />
                     <field name="make_value" readonly="1"  />
-                    <field name="polish_rhodium" readonly="1"  />
+                    <!-- <field name="polish_rhodium" readonly="1"  /> -->
                     <field name="gold_rate" readonly="1"  />
                     <field name="gold_value" readonly="1"  />
                 </xpath>
@@ -118,7 +118,7 @@
                     <field name="purity_diff" readonly="1"  />
                     <field name="make_rate" readonly="1"  />
                     <field name="make_value" readonly="1"  />
-                    <field name="polish_rhodium" readonly="1"  />
+                    <!-- <field name="polish_rhodium" readonly="1"  /> -->
                     <field name="gold_rate" readonly="1"  />
                     <field name="gold_value" readonly="1"  />
                 </xpath>
@@ -130,7 +130,7 @@
                     <field name="purity_diff" invisible="1"  />
                     <field name="make_rate" invisible="1"  />
                     <field name="make_value" invisible="1"  />
-                    <field name="polish_rhodium" readonly="1"  />
+                    <!-- <field name="polish_rhodium" readonly="1"  /> -->
                     <field name="gold_rate" invisible="1"  />
                     <field name="gold_value" invisible="1"  />
                 </xpath>
