@@ -30,7 +30,7 @@ class assemblyDescriptionGold(models.Model):
 
     our_stock = fields.Boolean(default=False)
     purity = fields.Float(digits=(16,3))
-    polish_rhodium = fields.Float('Polish & Rhodium',digits=(16,3))
+    # polish_rhodium = fields.Float('Polish & Rhodium',digits=(16,3))
     purchase_id_gold = fields.Many2one('purchase.order')
 
 class assemblyDescriptionDiamond(models.Model):

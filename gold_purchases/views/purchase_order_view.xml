@@ -51,9 +51,9 @@
                     <tree editable="top">
                       <field name="product_id" domain="[('diamond','=',True)]"/>
                       <field name="our_stock" invisible="1"/>
-                      <field name="carat" attrs="{'readonly':[('our_stock','=',True)]}"/>
+                      <field name="carat" attrs="{'readonly':[('our_stock','=',True)]}" sum="carat"/>
                       <field name="carat_price" attrs="{'column_invisible':[('parent.state','in',['draft','processing'])],'readonly':[('our_stock','=',True)]}"/>
-                      <field name="stones_value" attrs="{'column_invisible':[('parent.state','in',['draft','processing'])],'readonly':[('our_stock','=',True)]}"/>
+                      <field name="stones_value" sum="stones_value" attrs="{'column_invisible':[('parent.state','in',['draft','processing'])],'readonly':[('our_stock','=',True)]}"/>
                       <field name="stones_quantity" sum="stones_quantity" attrs="{'readonly':[('our_stock','=',True)]}"/>
                       <field name="stone_setting_rate" attrs="{'column_invisible':[('parent.state','in',['draft'])]}"/>
                       <field name="stone_setting_value" sum="stone_setting_value" readonly="1" force_save="1" attrs="{'column_invisible':[('parent.state','in',['draft'])]}"/>
@@ -66,9 +66,9 @@
                       <field name="product_id" attrs="{'readonly':[('parent.state','!=','draft')]}" domain="['|',('gold','=',True),('scrap','=',True)]"/>
                       <field name="location_id" attrs="{'readonly':[('parent.state','!=','draft')]}" domain="[('usage','=','internal')]"/>
                       <field name="lot_id" attrs="{'readonly':[('parent.state','!=','draft')]}" domain="[('product_id','=',product_id),('product_qty','>',0)]"/>
-                      <field name="product_uom_qty" attrs="{'readonly':[('parent.state','!=','draft')]}"/>
-                      <field name="gross_weight" attrs="{'readonly':[('parent.state','!=','draft')]}"/>
-                      <field name="pure_weight" readonly="1" force_save="1"/>
+                      <field name="product_uom_qty" sum="product_uom_qty" attrs="{'readonly':[('parent.state','!=','draft')]}"/>
+                      <field name="gross_weight" sum="gross_weight" attrs="{'readonly':[('parent.state','!=','draft')]}"/>
+                      <field name="pure_weight" sum="pure_weight" readonly="1" force_save="1"/>
                       <field name="purity" readonly="1" force_save="1"/>
                     </tree>
                   </field>
@@ -104,10 +104,10 @@
                       <field name="lot_id" domain="[('product_id','=',product_id),('product_qty','>',0)]" attrs="{'invisible':[('lot_state','!=','exist')] , 'required':[('lot_state','=','exist')]}"/>
                       <field name="lot_name" attrs="{'invisible':[('lot_state','!=','new')] , 'required':[('lot_state','=','new')]}"/> -->
                       <!-- <field name="gold_rate"/> -->
-                      <field name="gross_weight"/>
+                      <field name="gross_weight" sum="gross_weight"/>
                       <field name="purity_id"/>
                       <field name="purity" readonly="1" force_save="1"/>
-                      <field name="pure_weight"/>
+                      <field name="pure_weight" sum="pure_weight"/>
                       <!-- <field name="total_value"/> -->
                     </tree>
                   </field>
