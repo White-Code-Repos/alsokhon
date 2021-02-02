@@ -1792,7 +1792,7 @@ class PurchaseOrderLine(models.Model):
                     'd_make_value': self.d_make_value,
                     'gold_value': self.gold_value,
                     'polish_rhodium': self.polish_rhodium,
-                    'price_unit': self.price_unit,
+                    'price_unit': self.price_unit + self.polish_rhodium,
                     # 'price_subtotal': self.price_unit * self.product_qty,
                     'discount': self.discount,
                     })
@@ -1904,7 +1904,7 @@ class PurchaseOrderLine(models.Model):
                     'd_make_value': self.d_make_value,
                     'gold_value': self.gold_value,
                     'polish_rhodium': self.polish_rhodium,
-                    'price_unit': self.price_unit,
+                    'price_unit': self.price_unit + self.polish_rhodium,
                     # 'price_subtotal': self.price_unit * self.product_qty,
                     'discount': self.discount,
                     })
