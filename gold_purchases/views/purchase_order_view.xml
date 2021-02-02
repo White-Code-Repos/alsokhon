@@ -17,7 +17,6 @@
               <button name="process" type="object" string="Process Assembly" class="oe_highlight" attrs="{'invisible':['|',('state','!=','draft'),('assembly','!=',True)]}"/>
               <button name="return_component" type="object" string="Receive Charge Components" class="oe_highlight" attrs="{'invisible':[('state','!=','processing')]}"/>
               <button name="review_assembly" type="object" string="Review Assembly" class="oe_highlight" attrs="{'invisible':[('state','not in',['processing','receive'])]}"/>
-              <button name="draft_review_assembly" type="object" string="Review Assembly" class="oe_highlight" attrs="{'invisible':[('state','not in',['draft'])]}"/>
               <button name="finish_processing" type="object" string="Finish Assembly" class="oe_highlight" attrs="{'invisible':[('state','not in',['review'])]}"/>
             </xpath>
             <field name="state" position="replace">
@@ -38,25 +37,21 @@
                       <field name="purity_id"/>
                       <field name="purity"/>
                       <field name="pure_weight" sum="pure_weight"/>
-                      <!-- <field name="polish_rhodium"/> -->
+                      <field name="polish_rhodium"/>
                     </tree>
                   </field>
-                  <group>
-                    <field name="assembly_gold_main_make"/>
-                    <field name="assembly_gold_main_par"/>
-                  </group>
                 </page>
                 <page string="Assembly Stone Description" name="assembly_mrp_details_diamond" attrs="{'invisible':[('assembly','!=', True),('state','in',['draft','processing'])]}">
                   <field name="assembly_description_diamond">
                     <tree editable="top">
                       <field name="product_id" domain="[('diamond','=',True)]"/>
                       <field name="our_stock" invisible="1"/>
-                      <field name="carat" attrs="{'readonly':[('our_stock','=',True)]}" sum="carat"/>
-                      <field name="carat_price" attrs="{'readonly':[('our_stock','=',True)]}"/>
-                      <field name="stones_value" sum="stones_value" attrs="{'readonly':[('our_stock','=',True)]}"/>
+                      <field name="carat" attrs="{'readonly':[('our_stock','=',True)]}"/>
+                      <field name="carat_price" attrs="{'column_invisible':[('parent.state','in',['draft','processing'])],'readonly':[('our_stock','=',True)]}"/>
+                      <field name="stones_value" attrs="{'column_invisible':[('parent.state','in',['draft','processing'])],'readonly':[('our_stock','=',True)]}"/>
                       <field name="stones_quantity" sum="stones_quantity" attrs="{'readonly':[('our_stock','=',True)]}"/>
-                      <field name="stone_setting_rate"/>
-                      <field name="stone_setting_value" sum="stone_setting_value" readonly="1" force_save="1"/>
+                      <field name="stone_setting_rate" attrs="{'column_invisible':[('parent.state','in',['draft'])]}"/>
+                      <field name="stone_setting_value" sum="stone_setting_value" readonly="1" force_save="1" attrs="{'column_invisible':[('parent.state','in',['draft'])]}"/>
                     </tree>
                   </field>
                 </page>
@@ -66,9 +61,9 @@
                       <field name="product_id" attrs="{'readonly':[('parent.state','!=','draft')]}" domain="['|',('gold','=',True),('scrap','=',True)]"/>
                       <field name="location_id" attrs="{'readonly':[('parent.state','!=','draft')]}" domain="[('usage','=','internal')]"/>
                       <field name="lot_id" attrs="{'readonly':[('parent.state','!=','draft')]}" domain="[('product_id','=',product_id),('product_qty','>',0)]"/>
-                      <field name="product_uom_qty" sum="product_uom_qty" attrs="{'readonly':[('parent.state','!=','draft')]}"/>
-                      <field name="gross_weight" sum="gross_weight" attrs="{'readonly':[('parent.state','!=','draft')]}"/>
-                      <field name="pure_weight" sum="pure_weight" readonly="1" force_save="1"/>
+                      <field name="product_uom_qty" attrs="{'readonly':[('parent.state','!=','draft')]}"/>
+                      <field name="gross_weight" attrs="{'readonly':[('parent.state','!=','draft')]}"/>
+                      <field name="pure_weight" readonly="1" force_save="1"/>
                       <field name="purity" readonly="1" force_save="1"/>
                     </tree>
                   </field>
@@ -104,10 +99,10 @@
                       <field name="lot_id" domain="[('product_id','=',product_id),('product_qty','>',0)]" attrs="{'invisible':[('lot_state','!=','exist')] , 'required':[('lot_state','=','exist')]}"/>
                       <field name="lot_name" attrs="{'invisible':[('lot_state','!=','new')] , 'required':[('lot_state','=','new')]}"/> -->
                       <!-- <field name="gold_rate"/> -->
-                      <field name="gross_weight" sum="gross_weight"/>
+                      <field name="gross_weight"/>
                       <field name="purity_id"/>
                       <field name="purity" readonly="1" force_save="1"/>
-                      <field name="pure_weight" sum="pure_weight"/>
+                      <field name="pure_weight"/>
                       <!-- <field name="total_value"/> -->
                     </tree>
                   </field>
@@ -201,7 +196,7 @@
                     <field name="stock" width="10%"/>
                     <field name="make_rate" attrs="{'readonly': ['|',('is_make_value', '=', True),('state', 'in', ['purchase','done','cancel'])],'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
                     <field name="make_value" width="12%" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
-                    <!-- <field name="polish_rhodium" attrs="{'column_invisible':[('parent.assembly','!=',True)]}"/> -->
+                    <field name="polish_rhodium" attrs="{'column_invisible':[('parent.assembly','!=',True)]}"/>
                     <!-- 'invisible': [('is_make_value', '=', True)], -->
                     <field name="gold_rate" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}" force_save="1"/>
                     <field name="gold_value"  attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}" width="12%"/>
@@ -226,7 +221,7 @@
                     <field name="stock" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
                     <field name="make_rate" attrs="{'readonly': ['|',('is_make_value', '=', True),('state', 'in', ['purchase','done','cancel'])]}"/>
                     <field name="make_value" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
-                    <!-- <field name="polish_rhodium" attrs="{'invisible':[('parent.assembly','!=',True)]}"/> -->
+                    <field name="polish_rhodium" attrs="{'invisible':[('parent.assembly','!=',True)]}"/>
                     <field name="gold_rate" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}" force_save="1"/>
                     <field name="gold_value"  attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}" width="12%"/>
                     <field name="is_make_value" invisible="1"/>
