@@ -30,7 +30,7 @@ class assemblyDescriptionGold(models.Model):
 
     our_stock = fields.Boolean(default=False)
     purity = fields.Float(digits=(16,3))
-    # polish_rhodium = fields.Float('Polish & Rhodium',digits=(16,3))
+    polish_rhodium = fields.Float('Polish & Rhodium',digits=(16,3))
     purchase_id_gold = fields.Many2one('purchase.order')
 
 class assemblyDescriptionDiamond(models.Model):
@@ -1276,7 +1276,7 @@ class PurchaseOrderLine(models.Model):
     make_rate = fields.Monetary('Make Rate/G', digits=(16, 3))
     make_value = fields.Monetary('Make Value', compute='_get_gold_rate',
                                  digits=(16, 3), default=0.00)
-    # polish_rhodium = fields.Float('Polish & Rhodium',digits=(16,3))
+    polish_rhodium = fields.Float('Polish & Rhodium',digits=(16,3))
 
     gold_rate = fields.Float('Gold Rate/G', compute='_get_gold_rate',
                              digits=(16, 3))
