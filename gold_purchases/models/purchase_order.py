@@ -34,7 +34,7 @@ class assemblyDescriptionGold(models.Model):
             _logger.info(self.gross_weight)
             _logger.info(self.pure_weight)
             self.pure_weight = self.gross_weight * (self.purity / 1000)
-            _logger.info(self.pure_weightss)
+            _logger.info(self.pure_weight)
     our_stock = fields.Boolean(default=False)
     purity = fields.Float(digits=(16,3))
     # polish_rhodium = fields.Float('Polish & Rhodium',digits=(16,3))
