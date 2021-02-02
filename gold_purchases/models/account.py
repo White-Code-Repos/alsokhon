@@ -94,7 +94,7 @@ class AccountMoveLine(models.Model):
     gold_rate = fields.Float('Gold Rate/G', digits=(16, 3))
     gold_value = fields.Monetary('Gold Value', digits=(16, 3))
     gold = fields.Boolean(related="account_id.gold", store=True)
-
+    polish_rhodium = fields.Float('Polish & Rhodium', digits=(16,3))
 
 
 class GoldPayment(models.Model):
