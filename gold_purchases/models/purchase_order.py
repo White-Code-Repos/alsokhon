@@ -684,7 +684,7 @@ class PurchaseOrder(models.Model):
             print(self.assembly_description_gold[0].purity_id.id)
             print(total_r_p)
             print(total_stones_price)
-            if self.assembly_description_gold[0].purity != self.assembly_description_gold[0].self.assembly_description_gold[0].purity_id.purity:
+            if self.assembly_description_gold[0].purity != self.assembly_description_gold[0].purity_id.purity:
                 pol[0].write({
                 'carat':total_stones_carat,
                 'd_make_value':total_stones_labor,
@@ -701,6 +701,7 @@ class PurchaseOrder(models.Model):
                 'gross_wt':total_gross,
                 'purity_id':self.assembly_description_gold[0].purity_id.id,
                 # 'polish_rhodium':total_r_p,
+                })
             if self.assembly_no_giving:
                 pol[0].write({
                 'price_unit':pol[0].price_unit+total_stones_price+pol[0].gold_value,
