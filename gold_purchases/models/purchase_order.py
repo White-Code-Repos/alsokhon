@@ -336,10 +336,9 @@ class PurchaseOrder(models.Model):
                     for this_lot_line in this.move_line_ids_without_package:
                         this_lot_line.lot_id = this_lot_line.move_id.lot_id.id
                 picking.assembly_purchase_id = self.id
-            _logger.info(location_mix_components)
+
             if len(location_mix_components) > 0:
                 for line in location_mix_components:
-                    _logger.info(location_mix_components)
                     mix_move_lines.append((0, 0, {
                             'name': "assembly move",
                             'location_id': location.id,
@@ -351,7 +350,6 @@ class PurchaseOrder(models.Model):
                             'lot_id':line.lot_id.id,
                             'origin': location.name + ' - Assembly Mix Transfer',
                             }))
-                _logger.info(mix_move_lines)
                 picking = self.env['stock.picking'].create({
                             'partner_id': self.partner_id.id,
                             'location_id': location.id,
@@ -369,36 +367,32 @@ class PurchaseOrder(models.Model):
                 picking.assembly_purchase_id = self.id
                 pur_gold_desc = []
                 pur_diamond_desc = []
-                _logger.info(location_mix_components)
                 for mix in location_mix_components:
                     lot = mix.lot_id
-                    _logger.info(lot)
                     lot_gold_desc = lot.assembly_description_gold
-                    _logger.info(lot_gold_desc)
                     lot_diamond_desc = lot.assembly_description_diamond
-                    _logger.info(lot_diamond_desc)
                     for gold_desc in lot_gold_desc:
                         pur_gold_desc.append((0,0,{
                         'product_id':gold_desc.product_id.id,
+                        'location_id':mix.location_id.id,
+                        'lot_id':mix.lot_id.id,
                         'quantity':gold_desc.quantity,
                         'gross_weight':gold_desc.gross_weight,
                         'pure_weight':gold_desc.pure_weight,
-                        'purity_id':gold_desc.purity_id.id,
+                        # 'purity_id':gold_desc.purity_id.id,
                         'purity':gold_desc.purity,
-                        'polish_rhodium':gold_desc.polish_rhodium,
+                        # 'polish_rhodium':gold_desc.polish_rhodium,
                         }))
                     for diamond_desc in lot_diamond_desc:
                         pur_diamond_desc.append((0,0,{
                         'product_id':diamond_desc.product_id.id,
-                        'carat':diamond_desc.carat,
-                        'carat_price':diamond_desc.carat_price,
-                        'stones_value':diamond_desc.stones_value,
+                        'location_id':mix.location_id.id,
+                        'lot_id':mix.lot_id.id,
                         'stones_quantity':diamond_desc.stones_quantity,
-                        'stone_setting_rate':diamond_desc.stone_setting_rate,
-                        'stone_setting_value':diamond_desc.stone_setting_value,
+                        'carat':diamond_desc.carat,
                         }))
-                self.write({'assembly_description_gold':pur_gold_desc})
-                self.write({'assembly_description_diamond':pur_diamond_desc})
+                self.write({'assembly_gold_ids':pur_gold_desc})
+                self.write({'assembly_diamond_ids':pur_diamond_desc})
         stone_description_lines = []
         for line in self.assembly_diamond_ids:
             stone_description_lines.append((0,0,{
