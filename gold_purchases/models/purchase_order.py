@@ -652,6 +652,7 @@ class PurchaseOrder(models.Model):
         total_stones_price = 0.0
         total_stones_labor = 0.0
         total_stones_carat = 0.0
+        total_stone_not_ours = 0.0
         total_r_p = 0.0
         # total_make = 0.0
         total_gross = 0.0
@@ -660,6 +661,8 @@ class PurchaseOrder(models.Model):
             total_stones_carat += line.carat
             if not line.our_stock:
                 total_stones_price += line.stones_value
+            else:
+                total_stone_not_ours += line.stones_value
         for line in self.assembly_description_gold:
             total_gross += line.gross_weight
             # total_make += line.make_rate
@@ -694,6 +697,10 @@ class PurchaseOrder(models.Model):
             if self.assembly_give_diamond:
                 pol[0].write({
                 'price_unit':pol[0].price_unit+pol[0].gold_value,
+                })
+            else:
+                pol[0].write({
+                'price_unit':pol[0].price_unit+total_stone_not_ours
                 })
     def finish_processing(self):
         if len(self.assembly_description_gold) > 0:

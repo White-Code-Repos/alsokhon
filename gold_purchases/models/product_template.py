@@ -20,6 +20,7 @@ class ProductTemplate(models.Model):
     scrap = fields.Boolean(string="Scrap")
     making_charge_id = fields.Many2one('product.product', 'Making Charges product')
     hide_gold_making = fields.Boolean(compute="_compute_hide_gold_making")
+    unfixed_prodcut = fields.Boolean()
     @api.onchange('is_making_charges','gold','assembly')
     def _compute_hide_gold_making(self):
         for this in self:
