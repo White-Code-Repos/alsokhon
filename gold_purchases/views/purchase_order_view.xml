@@ -52,11 +52,11 @@
                       <field name="product_id" domain="[('diamond','=',True)]"/>
                       <field name="our_stock" invisible="1"/>
                       <field name="carat" attrs="{'readonly':[('our_stock','=',True)]}" sum="carat"/>
-                      <field name="carat_price" attrs="{'column_invisible':[('parent.state','in',['draft','processing'])],'readonly':[('our_stock','=',True)]}"/>
-                      <field name="stones_value" sum="stones_value" attrs="{'column_invisible':[('parent.state','in',['draft','processing'])],'readonly':[('our_stock','=',True)]}"/>
+                      <field name="carat_price" attrs="{'readonly':[('our_stock','=',True)]}"/>
+                      <field name="stones_value" sum="stones_value" attrs="{'readonly':[('our_stock','=',True)]}"/>
                       <field name="stones_quantity" sum="stones_quantity" attrs="{'readonly':[('our_stock','=',True)]}"/>
-                      <field name="stone_setting_rate" attrs="{'column_invisible':[('parent.state','in',['draft'])]}"/>
-                      <field name="stone_setting_value" sum="stone_setting_value" readonly="1" force_save="1" attrs="{'column_invisible':[('parent.state','in',['draft'])]}"/>
+                      <field name="stone_setting_rate"/>
+                      <field name="stone_setting_value" sum="stone_setting_value" readonly="1" force_save="1"/>
                     </tree>
                   </field>
                 </page>
