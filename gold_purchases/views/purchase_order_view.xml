@@ -41,8 +41,10 @@
                       <!-- <field name="polish_rhodium"/> -->
                     </tree>
                   </field>
-                  <field name="assembly_gold_main_make"/>
-                  <field name="assembly_gold_main_par"/>
+                  <group>
+                    <field name="assembly_gold_main_make"/>
+                    <field name="assembly_gold_main_par"/>
+                  </group>
                 </page>
                 <page string="Assembly Stone Description" name="assembly_mrp_details_diamond" attrs="{'invisible':[('assembly','!=', True),('state','in',['draft','processing'])]}">
                   <field name="assembly_description_diamond">
