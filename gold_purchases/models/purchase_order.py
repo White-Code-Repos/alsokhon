@@ -193,7 +193,7 @@ class assemblyComponentsDiamond(models.Model):
 class PurchaseOrder(models.Model):
     _inherit = 'purchase.order'
 
-    assembly_type = fields.Selection([('ready_from_vendor','Ready From Vendor'),('our_stock_a_vendor','Our Stock & Vendor')])
+    assembly_type = fields.Selection([('ready_from_vendor','Ready From Vendor'),('our_stock_a_vendor','Our Stock & Vendor')],default="ready_from_vendor")
     total_par_value = fields.Float(compute="_compute_total_par_mc_value")
     total_mc_value = fields.Float(compute="_compute_total_par_mc_value")
     def _compute_total_par_mc_value(self):
@@ -757,6 +757,7 @@ class PurchaseOrder(models.Model):
                 pol[0].write({
                 'price_unit':pol[0].gold_value,
                 })
+            p[0].onchange_purity_hall()
     def finish_processing(self):
         if len(self.assembly_description_gold) > 0:
             for line in self.assembly_description_gold:
@@ -1467,7 +1468,7 @@ class PurchaseOrderLine(models.Model):
                 else:
                     rec.gold_rate = 0.00
                     rec.gold_value = 0.00
-            if rec.product_id.categ_id.is_scrap:
+            if rec.product_id.categ_id.is_scrap or rec.product_id.gold_with_lots:
                 rec.total_gross_wt = rec.gross_wt
             else:
                 rec.total_gross_wt = rec.gross_wt * rec.product_qty
