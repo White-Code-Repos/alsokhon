@@ -32,6 +32,14 @@ class assemblyDescriptionLotDiamond(models.Model):
 class StockProductionLot(models.Model):
     _inherit = 'stock.production.lot'
 
+    is_empty_lot = fields.Boolean(default=False, compute="compute_is_empty_lot")
+    def compute_is_empty_lot(self):
+        for this in self:
+            if this.product_qty <= 0:
+                this.is_empty_lot = True
+            else:
+                this.is_empty_lot = False
+
     def read(self, fields=None, load='_classic_read'):
         res = super(StockProductionLot, self).read(fields, load)
         for this in self:
