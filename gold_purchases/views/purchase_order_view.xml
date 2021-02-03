@@ -208,7 +208,7 @@
 
                 <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom']" position="after">
                     <field name="scrap_state_read" invisible="1"/>
-                    <field name="gross_wt" width="12%" attrs="{'readonly': ['|','|','|',('is_make_value', '=', True),('scrap_state_read','=',True),('state', 'in', ['purchase','done','cancel']),('​is_unfixed', '=', True),],'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}" force_save="1"/>
+                    <field name="gross_wt" width="12%" attrs="{'readonly': ['|','|','|',('is_make_value', '=', True),('scrap_state_read','=',True),('state', 'in', ['purchase','done','cancel']),('parent.​is_unfixed', '=', True),],'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}" force_save="1"/>
                     <field name="total_gross_wt" width="10%"  force_save="1" readonly="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
                     <field name="received_gross_wt" width="10%" readonly="1" />
                     <field name="purity_id" width="10%" force_save="1" attrs="{'readonly': ['|',('is_make_value', '=', True),('state', 'in', ['purchase','done','cancel'])],'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
@@ -234,7 +234,7 @@
                 <xpath expr="//field[@name='order_line']/form/group/group/field[@name='qty_received']"
                        position="before">
                     <field name="scrap_state_read" invisible="1" attrs="{'invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
-                    <field name="gross_wt" width="12%" attrs="{'readonly': ['|','|','|',('is_make_value', '=', True),('scrap_state_read','=',True),('state', 'in', ['purchase','done','cancel']),('​is_unfixed', '=', True),],'invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}" force_save="1"/>
+                    <field name="gross_wt" width="12%" attrs="{'readonly': ['|','|','|',('is_make_value', '=', True),('scrap_state_read','=',True),('state', 'in', ['purchase','done','cancel']),('parent.​is_unfixed', '=', True),],'invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}" force_save="1"/>
                     <field name="total_gross_wt" force_save="1"  readonly="1"/>
                     <field name="received_gross_wt" readonly="1"/>
                     <field name="purity_id" width="10%" force_save="1" attrs="{'readonly': ['|',('is_make_value', '=', True),('state', 'in', ['purchase','done','cancel'])]}"/>
