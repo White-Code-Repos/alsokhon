@@ -33,7 +33,7 @@
               </button>
             </div>
               <page name="purchase_delivery_invoice" position="after">
-                <page string="Assembly Gold Description" name="assembly_mrp_details_gold" attrs="{'invisible':[('assembly','!=', True),'|',('assembly','=', True),('assembly_type','=', our_stock_a_vendor),(state,'in',['draft'])]}">
+                <page string="Assembly Gold Description" name="assembly_mrp_details_gold" attrs="{'invisible':[('assembly','!=', True),'|',('assembly','=', True),('assembly_type','=', 'our_stock_a_vendor'),(state,'in',['draft'])]}">
                   <field name="assembly_description_gold">
                     <tree editable="top">
                       <field name="product_id" domain="['|',('gold','=',True),('scrap','=',True)]"/>
@@ -51,7 +51,7 @@
                     <field name="total_mc_value" invisible="1"/>
                   </group>
                 </page>
-                <page string="Assembly Stone Description" name="assembly_mrp_details_diamond" attrs="{'invisible':[('assembly','!=', True),'|',('assembly','=', True),('assembly_type','=', our_stock_a_vendor),(state,'in',['draft'])]}">
+                <page string="Assembly Stone Description" name="assembly_mrp_details_diamond" attrs="{'invisible':[('assembly','!=', True),'|',('assembly','=', True),('assembly_type','=', 'our_stock_a_vendor'),(state,'in',['draft'])]}">
                   <field name="assembly_description_diamond">
                     <tree editable="top">
                       <field name="product_id" domain="[('diamond','=',True)]"/>
@@ -68,7 +68,7 @@
                     <field name="total_ds_value" invisible="1"/>
                   </group>
                 </page>
-                <page string="Assembly Gold Components" name="assembly_mrp_gold" attrs="{'invisible':['|',('assembly','!=', True),('assembly_type','!=', our_stock_a_vendor)]}">
+                <page string="Assembly Gold Components" name="assembly_mrp_gold" attrs="{'invisible':['|',('assembly','!=', True),('assembly_type','!=', 'our_stock_a_vendor')]}">
                   <field name="assembly_gold_ids">
                     <tree editable="top">
                       <field name="product_id" attrs="{'readonly':[('parent.state','!=','draft')]}" domain="['|',('gold','=',True),('scrap','=',True)]"/>
@@ -81,7 +81,7 @@
                     </tree>
                   </field>
                 </page>
-                <page string="Assembly Stone Components" name="assembly_mrp_diamond" attrs="{'invisible':['|',('assembly','!=', True),('assembly_type','!=', our_stock_a_vendor)]}">
+                <page string="Assembly Stone Components" name="assembly_mrp_diamond" attrs="{'invisible':['|',('assembly','!=', True),('assembly_type','!=', 'our_stock_a_vendor')]}">
                   <field name="assembly_diamond_ids">
                     <tree editable="top">
                       <field name="product_id" attrs="{'readonly':[('parent.state','!=','draft')]}" domain="[('diamond','=',True)]"/>
@@ -94,7 +94,7 @@
                     </tree>
                   </field>
                 </page>
-                <page string="Assembly Mix Components" name="assembly_mrp_mix" attrs="{'invisible':['|',('assembly','!=', True),('assembly_type','!=', our_stock_a_vendor)]}">
+                <page string="Assembly Mix Components" name="assembly_mrp_mix" attrs="{'invisible':['|',('assembly','!=', True),('assembly_type','!=', 'our_stock_a_vendor')]}">
                   <field name="assembly_mix_ids">
                     <tree editable="top">
                       <field name="product_id" domain="[('assembly','=',True)]"/>
@@ -104,7 +104,7 @@
                     </tree>
                   </field>
                 </page>
-                <page string="Assembly Gold Returned Components" name="assembly_mrp_gold_back" attrs="{'invisible':['|','|',('assembly','!=', True),('state','in', 'draft'),('assembly_type','!=', our_stock_a_vendor)]}">
+                <page string="Assembly Gold Returned Components" name="assembly_mrp_gold_back" attrs="{'invisible':['|','|',('assembly','!=', True),('state','in', 'draft'),('assembly_type','!=', 'our_stock_a_vendor')]}">
                   <field name="assembly_back_gold_ids">
                     <tree editable="top">
                       <field name="product_id" domain="['|',('gold','=',True),('scrap','=',True)]"/>
