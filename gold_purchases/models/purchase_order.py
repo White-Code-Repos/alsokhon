@@ -193,7 +193,7 @@ class assemblyComponentsDiamond(models.Model):
 class PurchaseOrder(models.Model):
     _inherit = 'purchase.order'
 
-    assembly_type = fields.Selection([('ready_from_vendor':'Ready From Vendor'),('our_stock_a_vendor':'Our Stock & Vendor')])
+    assembly_type = fields.Selection([('ready_from_vendor','Ready From Vendor'),('our_stock_a_vendor','Our Stock & Vendor')])
     total_par_value = fields.Float(compute="_compute_total_par_mc_value")
     total_mc_value = fields.Float(compute="_compute_total_par_mc_value")
     def _compute_total_par_mc_value(self):
