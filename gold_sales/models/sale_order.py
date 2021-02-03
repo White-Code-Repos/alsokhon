@@ -404,17 +404,21 @@ class SaleOrderLine(models.Model):
             # print(self.lot_id.pure_weight)
             self.gross_wt = self.lot_id.gross_weight
             self.pure_wt = self.lot_id.pure_weight
-            stock_move_line = self.env['stock.move.line'].search([('lot_id','=',self.lot_id.id),('product_id','=',self.product_id.id)])
-            if stock_move_line and len(stock_move_line) == 1:
-                if stock_move_line.picking_id:
-                    if stock_move_line.picking_id.group_id:
-                        if stock_move_line.picking_id.group_id.name:
-                            if 'P0' in stock_move_line.picking_id.group_id.name:
-                                purchase_order = self.env['purchase.order'].search([('name','=',stock_move_line.picking_id.group_id.name)])
-                                if purchase_order and len(purchase_order) == 1:
-                                    for line in purchase_order.order_line:
-                                        if line.product_id == self.product_id:
-                                            self.purity_id = line.purity_id.id
+            if self.lot_id.purity_id.purity != self.lot_id.purity:
+                self.purity_hall = self.lot_id.purity
+                self.onchange_purity_hall()
+            # self.purity = self.lot_id.purity
+            # stock_move_line = self.env['stock.move.line'].search([('lot_id','=',self.lot_id.id),('product_id','=',self.product_id.id)])
+            # if stock_move_line and len(stock_move_line) == 1:
+            #     if stock_move_line.picking_id:
+            #         if stock_move_line.picking_id.group_id:
+            #             if stock_move_line.picking_id.group_id.name:
+            #                 if 'P0' in stock_move_line.picking_id.group_id.name:
+            #                     purchase_order = self.env['purchase.order'].search([('name','=',stock_move_line.picking_id.group_id.name)])
+            #                     if purchase_order and len(purchase_order) == 1:
+            #                         for line in purchase_order.order_line:
+            #                             if line.product_id == self.product_id:
+            #                                 self.purity_id = line.purity_id.id
                                             # self.make_rate = line.make_rate
                                             # self.make_value = line.make_value
     def _get_gold_stock(self):
@@ -550,12 +554,21 @@ class SaleOrderLine(models.Model):
             #     make_value_product = self.env['product.product'].browse([rec.product_id.making_charge_id.id])
             #     product_make_object = self.env['sale.order.line'].search([('order_id','=',rec.order_id.id),('product_id','=',make_value_product.id)])
             if rec.product_id.categ_id.is_scrap:
-                rec.pure_wt = rec.gross_wt * (rec.purity_id and (
-                        rec.purity_id.scrap_purity / 1000.000) or 0)
+                if rec.purity_diff != 0:
+                    rec.pure_wt = rec.gross_wt * rec.purity_hall / 1000.000
+                else:
+                    rec.pure_wt = rec.gross_wt * (rec.purity_id and (
+                            rec.purity_id.scrap_purity / 1000.000) or 0)
+
             else:
-                rec.pure_wt = rec.product_uom_qty * rec.gross_wt * (rec.purity_id and (
-                        rec.purity_id.purity / 1000.000) or 0)
-            rec.total_pure_weight = rec.pure_wt + rec.purity_diff
+                if rec.purity_diff != 0:
+                    rec.pure_wt = rec.product_qty * rec.gross_wt * rec.purity_hall / 1000.000
+                    # (rec.purity_id and (
+                    #         rec.purity_id.purity / 1000.000) or 0)
+                else:
+                    rec.pure_wt = rec.product_qty * rec.gross_wt * (rec.purity_id and (
+                            rec.purity_id.purity / 1000.000) or 0)
+            rec.total_pure_weight = rec.pure_wt
             # NEED TO ADD PURITY DIFF + rec.purity_diff
             # new_pure_wt = rec.pure_wt + rec.purity_diff
             # rec.stock = (rec.product_id and rec.product_id.available_gold or
