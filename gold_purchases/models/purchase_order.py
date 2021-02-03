@@ -757,7 +757,7 @@ class PurchaseOrder(models.Model):
                 pol[0].write({
                 'price_unit':pol[0].gold_value,
                 })
-            p[0].onchange_purity_hall()
+            pol[0].onchange_purity_hall()
     def finish_processing(self):
         if len(self.assembly_description_gold) > 0:
             for line in self.assembly_description_gold:
