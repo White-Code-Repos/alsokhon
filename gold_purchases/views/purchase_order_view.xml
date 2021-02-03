@@ -196,13 +196,13 @@
                   <field name="total_gold_vale_order" attrs="{'invisible':[('is_unfixed','=',True)]}"/>
                   <field name="total_make_vale_order"/>
                 </field>
-                <fields name="amount_untaxed" position="attributes">
+                <field name="amount_untaxed" position="attributes">
                     <attribute name="attrs">{'invisible':[('is_unfixed','=',True)]}</attribute>
                 </field>
-                <fields name="amount_tax" position="attributes">
+                <field name="amount_tax" position="attributes">
                     <attribute name="attrs">{'invisible':[('is_unfixed','=',True)]}</attribute>
                 </field>
-                <fields name="amount_total" position="attributes">
+                <field name="amount_total" position="attributes">
                     <attribute name="attrs">{'invisible':[('is_unfixed','=',True)]}</attribute>
                 </field>
 
