@@ -747,7 +747,7 @@ class PurchaseOrder(models.Model):
                 })
             if self.assembly_give_both:
                 pol[0].write({
-                'price_unit':pol[0].price_unit,
+                'price_unit':0.0,
                 })
             if self.assembly_give_gold:
                 pol[0].write({
