@@ -743,7 +743,7 @@ class PurchaseOrder(models.Model):
                 })
             if self.assembly_no_giving:
                 pol[0].write({
-                'price_unit':pol[0].price_unit+total_stones_price+pol[0].gold_value,
+                'price_unit':total_stones_price+pol[0].gold_value,
                 })
             if self.assembly_give_both:
                 pol[0].write({
@@ -751,11 +751,11 @@ class PurchaseOrder(models.Model):
                 })
             if self.assembly_give_gold:
                 pol[0].write({
-                'price_unit':pol[0].price_unit+total_stones_price,
+                'price_unit':total_stones_price,
                 })
             if self.assembly_give_diamond:
                 pol[0].write({
-                'price_unit':pol[0].price_unit+pol[0].gold_value,
+                'price_unit':pol[0].gold_value,
                 })
     def finish_processing(self):
         if len(self.assembly_description_gold) > 0:
@@ -1383,6 +1383,8 @@ class PurchaseOrderLine(models.Model):
             self.gross_wt = self.product_qty
         elif  self.product_id and self.product_id.categ_id.is_diamond and self.product_qty:
             self.carat = self.product_qty
+        elif self.product_id and self.product_id.gold_with_lots and self.product_qty:
+            self.gross_wt = self.product_qty
     # @api.model
     # def create(self, vals):
     #     res = super(PurchaseOrderLine, self).create(vals)

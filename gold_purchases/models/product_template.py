@@ -15,6 +15,7 @@ class ProductTemplate(models.Model):
     _inherit = "product.template"
 
     gold = fields.Boolean(string='Gold')
+    gold_with_lots = fields.Boolean(string="Gold With Lot")
     origin = fields.Many2one('res.country', string='Origin')
     is_making_charges = fields.Boolean('Gold Making Charges')
     scrap = fields.Boolean(string="Scrap")

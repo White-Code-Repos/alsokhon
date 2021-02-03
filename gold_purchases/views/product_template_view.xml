@@ -8,6 +8,7 @@
             <field name="arch" type="xml">
                 <field name="type" position="after">
                     <field name="gold" attrs="{'invisible': [('type', '!=', 'product')]}" force_save="1"/>
+                    <field name="gold_with_lots" attrs="{'invisible': [('type', '!=', 'product'),('gold','!=',True)]}" force_save="1"/>
                     <field name="scrap" attrs="{'invisible': [('type', '!=', 'product')]}" force_save="1"/>
                     <field name="diamond" string="Stone" attrs="{'invisible': [('type', '!=', 'product')]}" force_save="1"/>
                     <field name="assembly" string="Assembly" attrs="{'invisible': [('type', '!=', 'product')]}" force_save="1"/>
