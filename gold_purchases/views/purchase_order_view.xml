@@ -17,6 +17,7 @@
             </button>
             <field name="order_type" position="after">
               <field name="assembly_type" attrs="{'invisible':[('assembly','!=',True)]}" required="1" widget="radio"/>
+              <field name="dont_view_description_poages" invisible="1"/>
             </field>
             <xpath expr="//header" position="inside">
               <field name="ready" invisible="1"/>
