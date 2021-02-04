@@ -222,7 +222,7 @@
                     <field name="stock" width="10%"/>
                     <field name="make_rate" attrs="{'readonly': ['|',('is_make_value', '=', True),('state', 'in', ['purchase','done','cancel'])],'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
                     <field name="make_value" width="12%" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
-                    <field name="total_ds_value" attrs="{'column_invisible':[('parent.assembly','!=',True)]}"/>
+                    <field name="total_ds_value" string="Stones Value" attrs="{'column_invisible':[('parent.assembly','!=',True)]}"/>
                     <!-- 'invisible': [('is_make_value', '=', True)], -->
                     <field name="assembly_service" attrs="{'invisible':[('parent.assembly','!=',True)]}"/>
                     <field name="gold_rate" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True),'|',('parent.is_unfixed','=',True)]}" force_save="1"/>
@@ -249,7 +249,7 @@
                     <field name="make_rate" attrs="{'readonly': ['|',('is_make_value', '=', True),('state', 'in', ['purchase','done','cancel'])]}"/>
                     <field name="make_value" attrs="{'invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
                     <field name="assembly_service" attrs="{'invisible':[('parent.assembly','!=',True)]}"/>
-                    <field name="total_ds_value" attrs="{'invisible':[('parent.assembly','!=',True)]}"/>
+                    <field name="total_ds_value" string="Stones Value" attrs="{'invisible':[('parent.assembly','!=',True)]}"/>
                     <field name="gold_rate" attrs="{'invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}" force_save="1"/>
                     <field name="gold_value"  attrs="{'invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}" width="12%"/>
                     <field name="is_make_value" invisible="1"/>
