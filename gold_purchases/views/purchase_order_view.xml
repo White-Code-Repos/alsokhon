@@ -36,7 +36,7 @@
               </button>
             </div>
               <page name="purchase_delivery_invoice" position="after">
-                <page string="Assembly Gold Description" name="assembly_mrp_details_gold" attrs="{'invisible':[('assembly','!=', True),'|',('assembly','=', True),('assembly_type','=', 'our_stock_a_vendor'),('state','in',['draft'])]}">
+                <page string="Assembly Gold Description" name="assembly_mrp_details_gold" attrs="{'invisible':[('dont_view_description_poages','=', True)]}">
                   <field name="assembly_description_gold">
                     <tree editable="top">
                       <field name="product_id" domain="['|',('gold','=',True),('scrap','=',True)]"/>
@@ -54,7 +54,7 @@
                     <field name="total_mc_value" invisible="1"/>
                   </group>
                 </page>
-                <page string="Assembly Stone Description" name="assembly_mrp_details_diamond" attrs="{'invisible':[('assembly','!=', True),'|',('assembly','=', True),('assembly_type','=', 'our_stock_a_vendor'),('state','in',['draft'])]}">
+                <page string="Assembly Stone Description" name="assembly_mrp_details_diamond" attrs="{'invisible':[('dont_view_description_poages','=', True)]}">
                   <field name="assembly_description_diamond">
                     <tree editable="top">
                       <field name="product_id" domain="[('diamond','=',True)]"/>
@@ -76,7 +76,7 @@
                     <tree editable="top">
                       <field name="product_id" attrs="{'readonly':[('parent.state','!=','draft')]}" domain="['|',('gold','=',True),('scrap','=',True)]"/>
                       <field name="location_id" attrs="{'readonly':[('parent.state','!=','draft')]}" domain="[('usage','=','internal')]"/>
-                      <field name="lot_id" attrs="{'readonly':[('parent.state','!=','draft')]}" domain="[('product_id','=',product_id),('is_empty_lot','=',False)]"/>
+                      <field name="lot_id" attrs="{'readonly':[('parent.state','!=','draft')]}" domain="[('product_id','=',product_id),('is_empty_lot','=',True)]"/>
                       <field name="product_uom_qty" attrs="{'readonly':[('parent.state','!=','draft')]}"/>
                       <field name="gross_weight" attrs="{'readonly':[('parent.state','!=','draft')]}"/>
                       <field name="pure_weight" readonly="1" force_save="1"/>
@@ -89,7 +89,7 @@
                     <tree editable="top">
                       <field name="product_id" attrs="{'readonly':[('parent.state','!=','draft')]}" domain="[('diamond','=',True)]"/>
                       <field name="location_id" attrs="{'readonly':[('parent.state','!=','draft')]}" domain="[('usage','=','internal')]"/>
-                      <field name="lot_id" attrs="{'readonly':[('parent.state','!=','draft')]}" domain="[('product_id','=',product_id),('is_empty_lot','=',False)]"/>
+                      <field name="lot_id" attrs="{'readonly':[('parent.state','!=','draft')]}" domain="[('product_id','=',product_id),('is_empty_lot','=',True)]"/>
                       <field name="stones_quantity" attrs="{'readonly':[('parent.state','!=','draft')]}" sum="stones_quantity"/>
                       <field name="carat" attrs="{'readonly':[('parent.state','!=','draft')]}" sum="carat"/>
                       <field name="stones_quantity_ret" sum="stones_quantity_ret" attrs="{'column_invisible':[('parent.state','in',['draft'])],'readonly':[('parent.state','in',['draft','receive','sent','to approve','purchase','done','cancel'])]}" force_save="1"/>
@@ -102,7 +102,7 @@
                     <tree editable="top">
                       <field name="product_id" domain="[('assembly','=',True)]"/>
                       <field name="location_id" domain="[('usage','=','internal')]"/>
-                      <field name="lot_id" domain="[('product_id','=',product_id),('is_empty_lot','=',False)]"/>
+                      <field name="lot_id" domain="[('product_id','=',product_id),('is_empty_lot','=',True)]"/>
                       <field name="quantity"/>
                     </tree>
                   </field>
