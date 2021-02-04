@@ -494,6 +494,16 @@ class SaleOrderLine(models.Model):
             else:
                 this.scrap_state_read = False
 
+
+    @api.onchange('product_uom_qtyeview')
+    def update_gross(self):
+        if self.product_id and self.product_id.categ_id.is_scrap and self.product_uom_qtyeview:
+            self.gross_wt = self.product_uom_qtyeview
+        elif  self.product_id and self.product_id.categ_id.is_diamond and self.product_uom_qtyeview:
+            self.carat = self.product_uom_qtyeview
+        elif self.product_id and self.product_id.gold_with_lots and self.product_uom_qtyeview:
+            self.gross_wt = self.product_uom_qtyeview
+
     # def write(self, vals):
     #     res = super(SaleOrderLine, self).write(vals)
     #     if vals.get('make_rate'):
