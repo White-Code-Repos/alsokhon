@@ -34,7 +34,7 @@ class assemblyDescriptionGold(models.Model):
     @api.onchange('purity')
     def purity_fnc_cng(self):
         if self.product_id and self.quantity and self.gross_weight and self.purity_id and self.purity:
-            # self.pure_weight = self.gross_weight * (self.purity / 1000)
+            self.pure_weight = self.gross_weight * (self.purity / 1000)
     polish_rhodium = fields.Float('Polish & Rhodium',digits=(16,3))
     making_charge = fields.Float('Making Charge',digits=(16,3))
     purchase_id_gold = fields.Many2one('purchase.order')
