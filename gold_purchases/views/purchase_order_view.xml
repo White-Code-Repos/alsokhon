@@ -20,7 +20,7 @@
               <button name="warning_user_process" type="object" string="Process Assembly" class="oe_highlight" attrs="{'invisible':['|','|',('state','!=','draft'),('assembly','!=',True),('assembly_type','=','ready_from_vendor')]}"/>
               <button name="return_component" type="object" string="Receive Charge Components" class="oe_highlight" attrs="{'invisible':['|',('state','!=','processing'),('assembly_type','=','ready_from_vendor')]}"/>
               <button name="review_assembly" type="object" string="Review Assembly" class="oe_highlight" attrs="{'invisible':[('state','not in',['processing','receive'])]}"/>
-              <button name="draft_review_assembly" type="object" string="Review Assembly" class="oe_highlight" attrs="{'invisible':[('assembly','!=',True),('state','not in',['draft'])]}"/>
+              <button name="draft_review_assembly" type="object" string="Review Assembly" class="oe_highlight" attrs="{'invisible':['|',('assembly','!=',True),('state','not in',['draft'])]}"/>
               <button name="finish_processing" type="object" string="Finish Assembly" class="oe_highlight" attrs="{'invisible':[('state','not in',['review'])]}"/>
               <button name="update_po_line" type="object" string="Review Assembly" class="oe_highlight" attrs="{'invisible':[('state','not in',['review'])]}"/>
             </xpath>
