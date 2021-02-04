@@ -201,7 +201,7 @@ class PurchaseOrder(models.Model):
     dont_view_description_poages = fields.Boolean(default=False, compute="_compute_view_desc")
     def _compute_view_desc(self):
         for this in self:
-            if this.assembly !=  True or this.assembly == True and this.assembly_type == "our_stock_a_vendor" and this.state == draft:
+            if this.assembly !=  True or this.assembly == True and this.assembly_type == "our_stock_a_vendor" and this.state == 'draft':
                 this.dont_view_description_poages = True
     assembly_type = fields.Selection([('ready_from_vendor','Ready From Vendor'),('our_stock_a_vendor','Our Stock & Vendor')],default="ready_from_vendor")
     total_par_value = fields.Float(compute="_compute_total_par_mc_value")
