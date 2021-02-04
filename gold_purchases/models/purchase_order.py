@@ -413,7 +413,7 @@ class PurchaseOrder(models.Model):
                         'product_id':gold_desc.product_id.id,
                         'location_id':mix.location_id.id,
                         'lot_id':mix.lot_id.id,
-                        'quantity':gold_desc.quantity,
+                        'product_uom_qty':gold_desc.quantity,
                         'gross_weight':gold_desc.gross_weight,
                         'pure_weight':gold_desc.pure_weight,
                         # 'purity_id':gold_desc.purity_id.id,
