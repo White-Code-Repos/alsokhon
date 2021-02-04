@@ -8,7 +8,9 @@
           <form>
               <header>
                 <group>
-                    <span colspan="4" nolabel="1">You are about to process the assembly order</span>
+                  <h1>
+                    You are about to process the assembly order
+                  </ht>
                 </group>
               </header>
               <footer>
@@ -27,6 +29,36 @@
          <!-- <field name="context">{'default_value': context.get('pure_wt_value', False),'default_gold_rate': context.get('gold_rate', False),}</field> -->
          <field name="target">new</field>
      </record>
+
+     <record model="ir.ui.view" id="gold_purchases.warning_return_wiz_form">
+         <field name="name">warning_return_wiz_form</field>
+         <field name="model">return.warning.wizard</field>
+         <field name="type">form</field>
+         <field name="arch" type="xml">
+           <form>
+               <header>
+                 <group>
+                   <h1>
+                     You are about to receive the assembly order
+                   </ht>
+                 </group>
+               </header>
+               <footer>
+                  <button name="return_order" type="object" string="Receive"/>
+                   or
+                  <button name="cancel" string="Cancel" special="cancel" class="oe_link"/>
+               </footer>
+          </form>
+         </field>
+      </record>
+      <record id="gold_purchases.action_warning_return_wiz" model="ir.actions.act_window">
+          <field name="name">action_warning_return_wiz</field>
+          <field name="res_model">return.warning.wizard</field>
+          <field name="view_mode">form</field>
+          <field name="view_id" ref="gold_purchases.warning_return_wiz_form"/>
+          <!-- <field name="context">{'default_value': context.get('pure_wt_value', False),'default_gold_rate': context.get('gold_rate', False),}</field> -->
+          <field name="target">new</field>
+      </record>
 
    </data>
 </odoo>

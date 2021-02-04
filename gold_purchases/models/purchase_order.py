@@ -651,6 +651,24 @@ class PurchaseOrder(models.Model):
         }
         # action = self.env.ref('gold_purchases.action_warning_process_wiz')
         # return action
+    def warning_user_return(self):
+        # ctx = dict(self._context)
+        # ctx.update({
+        #     'production_id': self.production_id.id,
+        #     'work_order_id': self.id,
+        #     'workcenter_id': self.workcenter_id.id,
+        # })
+
+        return {
+            'name': _('Attention'),
+            'view_mode': 'form',
+            'res_model': 'return.warning.wizard',
+            'type': 'ir.actions.act_window',
+            # 'context': ctx,
+            'target': 'new'
+        }
+        # action = self.env.ref('gold_purchases.action_warning_process_wiz')
+        # return action
     def draft_review_assembly(self):
         self.update_po_line()
         self.write({'state':'review'})
