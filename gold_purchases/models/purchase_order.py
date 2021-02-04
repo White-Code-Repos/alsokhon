@@ -203,6 +203,8 @@ class PurchaseOrder(models.Model):
         for this in self:
             if this.assembly !=  True or this.assembly == True and this.assembly_type == "our_stock_a_vendor" and this.state == 'draft':
                 this.dont_view_description_poages = True
+            else:
+                this.dont_view_description_poages = False
     assembly_type = fields.Selection([('ready_from_vendor','Ready From Vendor'),('our_stock_a_vendor','Our Stock & Vendor')],default="ready_from_vendor")
     total_par_value = fields.Float(compute="_compute_total_par_mc_value")
     total_mc_value = fields.Float(compute="_compute_total_par_mc_value")
