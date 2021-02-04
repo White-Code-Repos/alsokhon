@@ -765,6 +765,7 @@ class PurchaseOrder(models.Model):
                 pol[0].write({
                 'price_unit':pol[0].gold_value,
                 })
+            self.write({'report_grids':True})
     def finish_processing(self):
         if len(self.assembly_description_gold) > 0:
             for line in self.assembly_description_gold:
