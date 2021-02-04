@@ -553,7 +553,7 @@ class SaleOrderLine(models.Model):
             # if rec.product_id.making_charge_id.id:
             #     make_value_product = self.env['product.product'].browse([rec.product_id.making_charge_id.id])
             #     product_make_object = self.env['sale.order.line'].search([('order_id','=',rec.order_id.id),('product_id','=',make_value_product.id)])
-            if rec.product_id.categ_id.is_scrap:
+            if rec.product_id.categ_id.is_scrap or rec.product_id.gold_with_lots:
                 if rec.purity_diff != 0:
                     rec.pure_wt = rec.gross_wt * rec.purity_hall / 1000.000
                 else:
@@ -576,7 +576,7 @@ class SaleOrderLine(models.Model):
             if rec.order_id.diamond:
                 rec.make_value = 0.00
             else:
-                if rec.product_id.categ_id.is_scrap:
+                if rec.product_id.categ_id.is_scrap or rec.product_id.gold_with_lots:
                     rec.make_value = rec.gross_wt * rec.make_rate
                 else:
                     rec.make_value = rec.product_uom_qty * rec.gross_wt * rec.make_rate

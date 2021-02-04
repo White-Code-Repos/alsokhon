@@ -1460,7 +1460,7 @@ class PurchaseOrderLine(models.Model):
             # if rec.product_id.making_charge_id.id:
             #     make_value_product = self.env['product.product'].browse([rec.product_id.making_charge_id.id])
             #     product_make_object = self.env['purchase.order.line'].search([('order_id','=',rec.order_id.id),('product_id','=',make_value_product.id)])
-            if rec.product_id.categ_id.is_scrap:
+            if rec.product_id.categ_id.is_scrap or rec.product_id.gold_with_lots:
                 if rec.purity_diff != 0:
                     rec.pure_wt = rec.gross_wt * rec.purity_hall / 1000.000
                     # (rec.purity_id and (
@@ -1487,7 +1487,7 @@ class PurchaseOrderLine(models.Model):
             elif rec.order_id.assembly:
                 rec.make_value = rec.product_qty * rec.gross_wt * rec.make_rate + rec.order_id.total_par_value + rec.order_id.total_mc_value + rec.assembly_service
             else:
-                if rec.product_id.categ_id.is_scrap:
+                if rec.product_id.categ_id.is_scrap or rec.product_id.gold_with_lots:
                     rec.make_value = rec.gross_wt * rec.make_rate
                 else:
                     rec.make_value = rec.product_qty * rec.gross_wt * rec.make_rate
