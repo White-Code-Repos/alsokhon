@@ -651,7 +651,7 @@ class PurchaseOrder(models.Model):
         }
         # action = self.env.ref('gold_purchases.action_warning_process_wiz')
         # return action
-    def warning_user_return(self):
+    def warning_user_review(self):
         # ctx = dict(self._context)
         # ctx.update({
         #     'production_id': self.production_id.id,
@@ -662,7 +662,7 @@ class PurchaseOrder(models.Model):
         return {
             'name': _('Attention'),
             'view_mode': 'form',
-            'res_model': 'return.warning.wizard',
+            'res_model': 'review.warning.wizard',
             'type': 'ir.actions.act_window',
             # 'context': ctx,
             'target': 'new'

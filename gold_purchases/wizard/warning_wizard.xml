@@ -6,13 +6,9 @@
         <field name="type">form</field>
         <field name="arch" type="xml">
           <form>
-              <header>
-                <group>
                   <h1>
                     You are about to process the assembly order
                   </h1>
-                </group>
-              </header>
               <footer>
                  <button name="process_order" type="object" string="Process"/>
                   or
@@ -30,32 +26,28 @@
          <field name="target">new</field>
      </record>
 
-     <record model="ir.ui.view" id="gold_purchases.warning_return_wiz_form">
-         <field name="name">warning_return_wiz_form</field>
-         <field name="model">return.warning.wizard</field>
+     <record model="ir.ui.view" id="gold_purchases.warning_review_wiz_form">
+         <field name="name">warning_review_wiz_form</field>
+         <field name="model">review.warning.wizard</field>
          <field name="type">form</field>
          <field name="arch" type="xml">
            <form>
-               <header>
-                 <group>
                    <h1>
-                     You are about to receive the assembly order
+                     You are about to review the assembly order
                    </h1>
-                 </group>
-               </header>
                <footer>
-                  <button name="return_order" type="object" string="Receive"/>
+                  <button name="review_assembly" type="object" string="Review"/>
                    or
                   <button name="cancel" string="Cancel" special="cancel" class="oe_link"/>
                </footer>
           </form>
          </field>
       </record>
-      <record id="gold_purchases.action_warning_return_wiz" model="ir.actions.act_window">
-          <field name="name">action_warning_return_wiz</field>
-          <field name="res_model">return.warning.wizard</field>
+      <record id="gold_purchases.action_warning_review_wiz" model="ir.actions.act_window">
+          <field name="name">action_warning_review_wiz</field>
+          <field name="res_model">review.warning.wizard</field>
           <field name="view_mode">form</field>
-          <field name="view_id" ref="gold_purchases.warning_return_wiz_form"/>
+          <field name="view_id" ref="gold_purchases.warning_review_wiz_form"/>
           <!-- <field name="context">{'default_value': context.get('pure_wt_value', False),'default_gold_rate': context.get('gold_rate', False),}</field> -->
           <field name="target">new</field>
       </record>

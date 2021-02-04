@@ -16,11 +16,11 @@ class process_warning_wizard(models.Model):
         return po.process()
 
 
-class return_warning_wizard(models.Model):
-    _name = 'return.warning.wizard'
-    _description = 'Receive !?'
+class review_warning_wizard(models.Model):
+    _name = 'review.warning.wizard'
+    _description = 'Review !?'
 
-    def return_order(self):
+    def review_order(self):
         active_ids = self._context.get('active_ids') or self._context.get('active_id')
         po = self.env['purchase.order'].browse(active_ids)
-        return po.return_component()
+        return po.review_assembly()
