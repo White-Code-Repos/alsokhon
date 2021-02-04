@@ -16,24 +16,25 @@ class assemblyDescriptionGold(models.Model):
     product_id = fields.Many2one('product.product')
     quantity = fields.Float(digits=(16,3))
     gross_weight = fields.Float(digits=(16,3))
-    pure_weight = fields.Float(digits=(16,3))
+    pure_weight = fields.Float(digits=(16,3), compute="get_values_gold")
     purity_id = fields.Many2one('gold.purity')
     @api.onchange('purity_id')
-    def get_values_gold(self):
+    def get_hall_purity(self):
         if self.purity_id:
-            if self.product_id.scrap:
-                self.purity = self.purity_id.scrap_purity
-                self.pure_weight = self.gross_weight * (self.purity / 1000)
-            elif self.product_id.gold and not self.product_id.scrap:
-                self.purity = self.purity_id.purity
-                self.pure_weight = self.gross_weight * (self.purity / 1000)
+            self.purity = self.purity_id.purity
+    @api.onchange('purity')
+    def get_values_gold(self):
+        for this in self:
+            if this.purity_id:
+                if this.purity:
+                    this.pure_weight = this.gross_weight * (this.purity / 1000)
 
     our_stock = fields.Boolean(default=False)
     purity = fields.Float(digits=(16,3), string="Purity/H")
     @api.onchange('purity')
     def purity_fnc_cng(self):
         if self.product_id and self.quantity and self.gross_weight and self.purity_id and self.purity:
-            self.pure_weight = self.gross_weight * (self.purity / 1000)
+            # self.pure_weight = self.gross_weight * (self.purity / 1000)
     polish_rhodium = fields.Float('Polish & Rhodium',digits=(16,3))
     making_charge = fields.Float('Making Charge',digits=(16,3))
     purchase_id_gold = fields.Many2one('purchase.order')
