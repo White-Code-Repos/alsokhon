@@ -16,7 +16,7 @@ class assemblyDescriptionGold(models.Model):
     product_id = fields.Many2one('product.product')
     quantity = fields.Float(digits=(16,3))
     gross_weight = fields.Float(digits=(16,3))
-    pure_weight = fields.Float(digits=(16,3), compute="get_values_gold")
+    pure_weight = fields.Float(digits=(16,3), compute="get_values_gold", default=0.0)
     purity_id = fields.Many2one('gold.purity')
     @api.onchange('purity_id')
     def get_hall_purity(self):
@@ -28,6 +28,11 @@ class assemblyDescriptionGold(models.Model):
             if this.purity_id:
                 if this.purity:
                     this.pure_weight = this.gross_weight * (this.purity / 1000)
+                else:
+                    this.pure_weight = 0.0
+            else:
+                this.pure_weight = 0.0
+
 
     our_stock = fields.Boolean(default=False)
     purity = fields.Float(digits=(16,3), string="Purity/H")
