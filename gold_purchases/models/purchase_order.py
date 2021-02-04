@@ -1340,7 +1340,10 @@ class PurchaseOrderLine(models.Model):
             total_ds = 0.0
             for line in order.assembly_description_diamond:
                 total_ds += line.stones_value
-            this.total_ds_value = total_ds
+            if this.is_make_value:
+                this.total_ds_value = 0.0
+            else:
+                this.total_ds_value = total_ds
 
     gold_rate = fields.Float('Gold Rate/G', compute='_get_gold_rate',
                              digits=(16, 3))

@@ -95,6 +95,11 @@ class StockMove(models.Model):
                     if len(purchase_order) > 0:
                         # print(purchase_order)
                         pol = self.env['purchase.order.line'].search([('order_id','=',purchase_order.id),('product_id','=',move.product_id.id)])
+                        diamond_price = 0.0
+                        for line in purchase_order.assembly_description_diamond:
+                            diamond_price += line.stones_value
+                        svl_vals = move.product_id._prepare_in_svl_vals(
+                            pol.product_qty, pol.price_unit + pol.d_make_value  + pol.gold_value + diamond_price)
                         # print(pol)
                         # print(pol.price_unit)
                         # print(pol.make_value)
@@ -102,6 +107,8 @@ class StockMove(models.Model):
                         # print(pol.gold_value)
                         # print(pol.product_id.standard_price)
                         # print(purchase_order.assembly_type)
+                        svl_vals = move.product_id._prepare_in_svl_vals(
+                            pol.product_qty, pol.price_unit + pol.d_make_value)
                         if purchase_order.assembly_no_giving:
                             # print("J")
                             # print(pol.price_unit + pol.d_make_value + pol.make_value)
