@@ -1466,8 +1466,12 @@ class PurchaseOrderLine(models.Model):
                     # (rec.purity_id and (
                     #         rec.purity_id.scrap_purity / 1000.000) or 0)
                 else:
-                    rec.pure_wt = rec.gross_wt * (rec.purity_id and (
-                            rec.purity_id.scrap_purity / 1000.000) or 0)
+                    if rec.product_id.gold_with_lots:
+                        rec.pure_wt = rec.gross_wt * (rec.purity_id and (
+                                rec.purity_id.purity / 1000.000) or 0)
+                    else:
+                        rec.pure_wt = rec.gross_wt * (rec.purity_id and (
+                                rec.purity_id.scrap_purity / 1000.000) or 0)
             else:
                 if rec.purity_diff != 0:
                     rec.pure_wt = rec.product_qty * rec.gross_wt * rec.purity_hall / 1000.000
