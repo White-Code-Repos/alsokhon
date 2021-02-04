@@ -59,7 +59,7 @@ class assemblyDescriptionDiamond(models.Model):
     stones_quantity = fields.Float(digits=(16,3))
     stone_setting_rate = fields.Float(digits=(16,3))
     stone_setting_value = fields.Float(digits=(16,3))
-    @api.onchange('stone_setting_rate')
+    @api.onchange('stone_setting_rate','stones_quantity')
     def cacl__stone_setting_value(self):
         self.stone_setting_value = self.stone_setting_rate * self.stones_quantity
     our_stock = fields.Boolean(default=False)

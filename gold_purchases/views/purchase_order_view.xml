@@ -12,6 +12,9 @@
             <xpath expr="//form/header/button[@id='draft_confirm']" position="replace">
               <button name="button_confirm" type="object" states="ready" string="Confirm Order" id="draft_confirm"/>
             </xpath> -->
+            <button id="draft_confirm" position="replace">
+              <button name="button_confirm" type="object" string="Confirm Order" id="draft_confirm" attrs="{'invisible':['|',('state','!=','draft'),('assembly','=',True)]}"/>
+            </button>
             <field name="order_type" position="after">
               <field name="assembly_type" attrs="{'invisible':[('assembly','!=',True)]}" required="1" widget="radio"/>
             </field>
