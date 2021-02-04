@@ -742,6 +742,8 @@ class PurchaseOrder(models.Model):
                 # 'purity':self.purity_id.purity,
                 # 'polish_rhodium':total_r_p,
                 })
+            pol[0].onchange_purity_hall()
+            pol[0]._get_gold_rate()
             if self.assembly_no_giving:
                 pol[0].write({
                 'price_unit':total_stones_price+pol[0].gold_value,
@@ -758,7 +760,6 @@ class PurchaseOrder(models.Model):
                 pol[0].write({
                 'price_unit':pol[0].gold_value,
                 })
-            pol[0].onchange_purity_hall()
     def finish_processing(self):
         if len(self.assembly_description_gold) > 0:
             for line in self.assembly_description_gold:
