@@ -10,7 +10,7 @@
                 <group>
                   <h1>
                     You are about to process the assembly order
-                  </ht>
+                  </h1>
                 </group>
               </header>
               <footer>
@@ -40,7 +40,7 @@
                  <group>
                    <h1>
                      You are about to receive the assembly order
-                   </ht>
+                   </h1>
                  </group>
                </header>
                <footer>
