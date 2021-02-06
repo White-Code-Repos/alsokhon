@@ -198,6 +198,16 @@ class assemblyComponentsDiamond(models.Model):
 
 class PurchaseOrder(models.Model):
     _inherit = 'purchase.order'
+
+    dont_view_tree_value_fields = fields.Boolean(default=False, compute="_compute_view_tree_gold_value")
+    @api.onchange('order_type')
+    def _compute_view_tree_gold_value(self):
+        for this in self:
+            if (this.gold !=  True and this.assembly != True) or this.is_unfixed == True:
+                this.dont_view_tree_value_fields = True
+            else:
+                this.dont_view_tree_value_fields = False
+
     dont_view_description_poages = fields.Boolean(default=False, compute="_compute_view_desc")
     @api.onchange('assembly_type')
     def _compute_view_desc(self):

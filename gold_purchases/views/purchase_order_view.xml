@@ -18,7 +18,9 @@
             <field name="order_type" position="after">
               <field name="assembly_type" attrs="{'invisible':[('assembly','!=',True)]}" required="1" widget="radio"/>
               <field name="dont_view_description_poages" invisible="1"/>
+              <field name="dont_view_tree_value_fields" invisible="1"/>
             </field>
+
             <xpath expr="//header" position="inside">
               <field name="ready" invisible="1"/>
               <button name="warning_user_process" type="object" string="Process Assembly" class="oe_highlight" attrs="{'invisible':['|','|',('state','!=','draft'),('assembly','!=',True),('assembly_type','=','ready_from_vendor')]}"/>
@@ -225,8 +227,8 @@
                     <field name="total_ds_value" string="Stones Value" attrs="{'column_invisible':[('parent.assembly','!=',True)]}"/>
                     <!-- 'invisible': [('is_make_value', '=', True)], -->
                     <field name="assembly_service" attrs="{'column_invisible':[('parent.assembly','!=',True)]}"/>
-                    <field name="gold_rate" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True),'|',('parent.is_unfixed','=',True)]}" force_save="1"/>
-                    <field name="gold_value"  attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True),'|',('parent.is_unfixed','=',True)]}" width="12%"/>
+                    <field name="gold_rate" attrs="{'column_invisible':[('parent.dont_view_tree_value_fields','=',True)]}" force_save="1"/>
+                    <field name="gold_value"  attrs="{'column_invisible':[('parent.dont_view_tree_value_fields','=',True)]}" width="12%"/>
                     <field name="is_make_value"  width="10%"  invisible="1"/>
                     <!-- <field name="diamond_price" attrs="{'column_invisible':[('parent.assembly_type','!=','give_diamond')]}"/> -->
                 </xpath>
@@ -250,8 +252,8 @@
                     <field name="make_value" attrs="{'invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
                     <field name="assembly_service" attrs="{'invisible':[('parent.assembly','!=',True)]}"/>
                     <field name="total_ds_value" string="Stones Value" attrs="{'invisible':[('parent.assembly','!=',True)]}"/>
-                    <field name="gold_rate" attrs="{'invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}" force_save="1"/>
-                    <field name="gold_value"  attrs="{'invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}" width="12%"/>
+                    <field name="gold_rate" attrs="{'invisible':[('parent.dont_view_tree_value_fields','=',True)]}" force_save="1"/>
+                    <field name="gold_value"  attrs="{'invisible':[('parent.dont_view_tree_value_fields','=',True)]}" width="12%"/>
                     <field name="is_make_value" invisible="1"/>
                 </xpath>
                 <field name="price_unit" position="before">
