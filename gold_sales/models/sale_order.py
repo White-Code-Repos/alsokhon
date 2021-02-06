@@ -56,6 +56,16 @@ class assemblyDescriptionSaleDiamond(models.Model):
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
 
+    dont_view_tree_value_fields = fields.Boolean(default=False, compute="_compute_view_tree_gold_value")
+    @api.onchange('order_type')
+    def _compute_view_tree_gold_value(self):
+        for this in self:
+            if (this.gold !=  True and this.assembly != True) or this.is_unfixed == True:
+                this.dont_view_tree_value_fields = True
+            else:
+                this.dont_view_tree_value_fields = False
+
+
     order_category = fields.Selection([('whole_sale','Whole-sale'),('retail','Retail')],required=True)
     # details_assembly = fields.One2many('details.assembly','sale_id')
     details_assembly_gold = fields.One2many('assembly.description.sale.gold','sale_order_gold')
