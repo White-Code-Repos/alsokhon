@@ -201,7 +201,7 @@ class PurchaseOrder(models.Model):
     dont_view_description_poages = fields.Boolean(default=False, compute="_compute_view_desc")
     def _compute_view_desc(self):
         for this in self:
-            if this.assembly !=  True or this.assembly == True and this.assembly_type == "our_stock_a_vendor" and this.state == 'draft':
+            if this.assembly !=  True or (this.assembly == True and this.assembly_type == "our_stock_a_vendor" and this.state == 'draft'):
                 this.dont_view_description_poages = True
             else:
                 this.dont_view_description_poages = False
