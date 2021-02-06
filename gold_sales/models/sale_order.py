@@ -43,8 +43,12 @@ class assemblyDescriptionSaleDiamond(models.Model):
     _name = 'assembly.description.sale.diamond'
 
     product_id = fields.Many2one('product.product')
-    carat = fields.Float()
-    stones_quantity = fields.Float()
+    carat = fields.Float(digits=(16,3))
+    carat_price = fields.Float(digits=(16,3))
+    stones_value = fields.Float(digits=(16,3))
+    stones_quantity = fields.Float(digits=(16,3))
+    stone_setting_rate = fields.Float(digits=(16,3))
+    stone_setting_value = fields.Float(digits=(16,3))
     sale_order_diamond = fields.Many2one('sale.order')
     sol_product = fields.Many2one('product.product')
 
@@ -404,7 +408,10 @@ class SaleOrderLine(models.Model):
             # print(self.lot_id.pure_weight)
             self.gross_wt = self.lot_id.gross_weight
             self.pure_wt = self.lot_id.pure_weight
-            if self.lot_id.purity_id.purity != self.lot_id.purity:
+            if self.lot_id.purity_id.purity != self.lot_id.purity and not self.product_id.scrap :
+                self.purity_hall = self.lot_id.purity
+                self.onchange_purity_hall()
+            elif self.lot_id.purity_id.scrap_purity != self.lot_id.purity and self.product_id.scrap :
                 self.purity_hall = self.lot_id.purity
                 self.onchange_purity_hall()
             # self.purity = self.lot_id.purity
@@ -495,14 +502,14 @@ class SaleOrderLine(models.Model):
                 this.scrap_state_read = False
 
 
-    @api.onchange('product_uom_qtyeview')
+    @api.onchange('product_uom_qty')
     def update_gross(self):
-        if self.product_id and self.product_id.categ_id.is_scrap and self.product_uom_qtyeview:
-            self.gross_wt = self.product_uom_qtyeview
-        elif  self.product_id and self.product_id.categ_id.is_diamond and self.product_uom_qtyeview:
-            self.carat = self.product_uom_qtyeview
-        elif self.product_id and self.product_id.gold_with_lots and self.product_uom_qtyeview:
-            self.gross_wt = self.product_uom_qtyeview
+        if self.product_id and self.product_id.categ_id.is_scrap and self.product_uom_qty:
+            self.gross_wt = self.product_uom_qty
+        elif  self.product_id and self.product_id.categ_id.is_diamond and self.product_uom_qty:
+            self.carat = self.product_uom_qty
+        elif self.product_id and self.product_id.gold_with_lots and self.product_uom_qty:
+            self.gross_wt = self.product_uom_qty
 
     # def write(self, vals):
     #     res = super(SaleOrderLine, self).write(vals)
@@ -1092,28 +1099,98 @@ class StockRule(models.Model):
                         for move in moves:
                             if sol.product_id.id == move.product_id.id:
                                 if move.product_id.categ_id.is_scrap:
-                                    move.update({
-                                        'gross_weight': sol.gross_wt,
-                                        'pure_weight': sol.pure_wt,
-                                        'purity': sol.purity_id.scrap_purity or 1,
-                                        'gold_rate': sol.gold_rate,
-                                        'selling_karat_id':
-                                            sol.product_id.product_template_attribute_value_ids and
-                                            sol.product_id.product_template_attribute_value_ids.mapped(
-                                                'product_attribute_value_id')[0].id or
-                                            False
-                                    })
+                                    if sol.purity_diff != 0.0:
+                                        move.update({
+                                            'carat': sol.carat,
+                                            'gross_weight': sol.gross_wt,
+                                            'pure_weight': sol.pure_wt,
+                                            'purity': sol.purity_hall,
+                                            'purity_id': sol.purity_id.id,
+                                            'gold_rate': sol.gold_rate,
+                                            'selling_karat_id':
+                                                sol.product_id.product_template_attribute_value_ids and
+                                                sol.product_id.product_template_attribute_value_ids.mapped(
+                                                    'product_attribute_value_id')[0].id or
+                                                False
+                                            ,'buying_making_charge':sol.make_rate
+                                        })
+                                    else:
+                                        move.update({
+                                            'carat': sol.carat,
+                                            'gross_weight': sol.gross_wt,
+                                            'pure_weight': sol.pure_wt,
+                                            'purity': sol.purity_id.scrap_purity,
+                                            'purity_id': sol.purity_id.id,
+                                            'gold_rate': sol.gold_rate,
+                                            'selling_karat_id':
+                                                sol.product_id.product_template_attribute_value_ids and
+                                                sol.product_id.product_template_attribute_value_ids.mapped(
+                                                    'product_attribute_value_id')[0].id or
+                                                False
+                                            ,'buying_making_charge':sol.make_rate
+                                        })
+                                elif move.product_id.gold_with_lots:
+                                    if sol.purity_diff != 0.0:
+                                        move.update({
+                                            'carat': sol.carat,
+                                            'gross_weight': sol.gross_wt,
+                                            'pure_weight': sol.pure_wt,
+                                            'purity': sol.purity_hall,
+                                            'purity_id': sol.purity_id.id,
+                                            'gold_rate': sol.gold_rate,
+                                            'selling_karat_id':
+                                                sol.product_id.product_template_attribute_value_ids and
+                                                sol.product_id.product_template_attribute_value_ids.mapped(
+                                                    'product_attribute_value_id')[0].id or
+                                                False
+                                            ,'buying_making_charge':sol.make_rate
+                                        })
+                                    else:
+                                        move.update({
+                                            'carat': sol.carat,
+                                            'gross_weight': sol.gross_wt,
+                                            'pure_weight': sol.pure_wt,
+                                            'purity': sol.purity_id.purity,
+                                            'purity_id': sol.purity_id.id,
+                                            'gold_rate': sol.gold_rate,
+                                            'selling_karat_id':
+                                                sol.product_id.product_template_attribute_value_ids and
+                                                sol.product_id.product_template_attribute_value_ids.mapped(
+                                                    'product_attribute_value_id')[0].id or
+                                                False
+                                            ,'buying_making_charge':sol.make_rate
+                                        })
                                 else:
-                                    move.update({
-                                        'carat': sol.carat,
-                                        'gross_weight': sol.gross_wt * sol.product_uom_qty,
-                                        'pure_weight': sol.pure_wt,
-                                        'purity': sol.purity_id.purity or 1,
-                                        'gold_rate': sol.gold_rate,
-                                        'selling_karat_id':
-                                            sol.product_id.product_template_attribute_value_ids and
-                                            sol.product_id.product_template_attribute_value_ids.mapped(
-                                                'product_attribute_value_id')[0].id or
-                                            False
-                                    })
+                                    if sol.purity_diff != 0.0:
+                                        move.update({
+                                            'carat': sol.carat,
+                                            'carat': sol.carat,
+                                            'gross_weight': sol.gross_wt * sol.product_uom_qty,
+                                            'pure_weight': sol.pure_wt,
+                                            'purity': sol.purity_hall,
+                                            'purity_id': sol.purity_id.id,
+                                            'gold_rate': sol.gold_rate,
+                                            'selling_karat_id':
+                                                sol.product_id.product_template_attribute_value_ids and
+                                                sol.product_id.product_template_attribute_value_ids.mapped(
+                                                    'product_attribute_value_id')[0].id or
+                                                False
+                                            ,'buying_making_charge':sol.make_rate
+                                        })
+                                    else:
+                                        move.update({
+                                            'carat': sol.carat,
+                                            'carat': sol.carat,
+                                            'gross_weight': sol.gross_wt * sol.product_uom_qty,
+                                            'pure_weight': sol.pure_wt,
+                                            'purity': sol.purity_id.purity,
+                                            'purity_id': sol.purity_id.id,
+                                            'gold_rate': sol.gold_rate,
+                                            'selling_karat_id':
+                                                sol.product_id.product_template_attribute_value_ids and
+                                                sol.product_id.product_template_attribute_value_ids.mapped(
+                                                    'product_attribute_value_id')[0].id or
+                                                False
+                                            ,'buying_making_charge':sol.make_rate
+                                        })
         return True

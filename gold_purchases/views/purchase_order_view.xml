@@ -194,7 +194,7 @@
                     <attribute name="width">10%</attribute>
                 </xpath>
                 <xpath expr="//field[@name='order_line']/tree/field[@name='price_subtotal']" position="after">
-                    <field name="total_with_make" attrs="{'invisible':[('parent.is_unfixed','=',True)]}"/>
+                    <field name="total_with_make" attrs="{'column_invisible':[('parent.is_unfixed','=',True)]}"/>
                 </xpath>
                 <field name="amount_untaxed" position="before">
                   <field name="total_gold_vale_order" attrs="{'invisible':[('is_unfixed','=',True)]}"/>
@@ -255,14 +255,14 @@
                     <field name="is_make_value" invisible="1"/>
                 </xpath>
                 <field name="price_unit" position="before">
-                  <field name="discount" attrs="{'invisible':[('parent.is_unfixed','=',True)]}"/>
+                  <field name="discount" attrs="{'column_invisible':[('parent.is_unfixed','=',True)]}"/>
                 </field>
                 <xpath expr="//field[@name='order_line']/tree/field[@name='price_unit']" position="attributes">
-                    <attribute name="attrs">{'readonly': ['|','|',('parent.gold','=',True),('is_make_value', '=', True)],'invisible':[('parent.is_unfixed','=',True)]}</attribute>
+                    <attribute name="attrs">{'readonly': ['|','|',('parent.gold','=',True),('is_make_value', '=', True)],'column_invisible':[('parent.is_unfixed','=',True)]}</attribute>
                     <attribute name="force_save">1</attribute>
                 </xpath>
                 <xpath expr="//field[@name='order_line']/tree/field[@name='price_subtotal']" position="attributes">
-                    <attribute name="attrs">{'invisible':[('parent.is_unfixed','=',True)]}</attribute>
+                    <attribute name="attrs">{'column_invisible':[('parent.is_unfixed','=',True)]}</attribute>
                 </xpath>
                 <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="attributes">
                     <attribute name="attrs">{'readonly': ['|',('is_make_value', '=', True),('state', 'in', ['purchase','done','cancel'])]}</attribute>

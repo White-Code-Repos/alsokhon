@@ -386,10 +386,20 @@ class PurchaseOrder(models.Model):
                             'product_id': line.product_id.id,
                             'product_uom': line.product_id.uom_id.id,
                             'picking_type_id':  self.order_type.assembly_picking_type_id.id,
+                            'carat': line.lot_id.carat,
+                            'gross_weight': line.lot_id.gross_weight,
+                            'pure_weight': line.lot_id.pure_weight,
+                            'purity': line.lot_id.purity,
+                            'purity_id': line.lot_id.purity_id.id or False,
+                            'item_category_id': line.lot_id.item_category_id.id or False,
+                            'sub_category_id': line.lot_id.sub_category_id.id or False,
+                            'selling_making_charge': line.lot_id.selling_making_charge,
+                            'buying_making_charge': line.lot_id.buying_making_charge,
                             'product_uom_qty': line.quantity,
                             'lot_id':line.lot_id.id,
                             'origin': location.name + ' - Assembly Mix Transfer',
                             }))
+                print(mix_move_lines)
                 picking = self.env['stock.picking'].create({
                             'partner_id': self.partner_id.id,
                             'location_id': location.id,
@@ -404,16 +414,6 @@ class PurchaseOrder(models.Model):
                 for this in picking:
                     for this_lot_line in this.move_line_ids_without_package:
                         this_lot_line.lot_id = this_lot_line.move_id.lot_id.id
-                    for this_operations in this.move_ids_without_package:
-                        this.carat = this_lot_line.move_id.lot_id.carat
-                        this.gross_weight = this_lot_line.move_id.lot_id.gross_weight
-                        this.pure_weight = this_lot_line.move_id.lot_id.pure_weight
-                        this.purity = this_lot_line.move_id.lot_id.purity
-                        this.purity_id = this_lot_line.move_id.lot_id.purity_id.id
-                        this.item_category_id = this_lot_line.move_id.lot_id.item_category_id.id or False
-                        this.sub_category_id = this_lot_line.move_id.lot_id.sub_category_id.id or False
-                        this.selling_making_charge = this_lot_line.move_id.lot_id.selling_making_charge
-                        this.buying_making_charge = this_lot_line.move_id.lot_id.buying_making_charge
                 picking.assembly_purchase_id = self.id
                 pur_gold_desc = []
                 pur_diamond_desc = []
@@ -1617,6 +1617,37 @@ class PurchaseOrderLine(models.Model):
                     'gross_weight': self.gross_wt,
                     'pure_weight': self.pure_wt,
                     'purity': self.purity_id.scrap_purity or 1,
+                    'purity_id': self.purity_id.id,
+                    'gold_rate': self.gold_rate,
+                    'selling_karat_id':
+                        self.product_id.product_template_attribute_value_ids and
+                        self.product_id.product_template_attribute_value_ids.mapped(
+                            'product_attribute_value_id')[0].id or
+                        False
+                    ,'buying_making_charge':self.make_rate
+                })
+        elif self.product_id.gold_with_lots:
+            if self.purity_diff != 0.0:
+                res and res[0].update({
+                    'carat': self.carat,
+                    'gross_weight': self.gross_wt,
+                    'pure_weight': self.pure_wt,
+                    'purity': self.purity_hall,
+                    'purity_id': self.purity_id.id,
+                    'gold_rate': self.gold_rate,
+                    'selling_karat_id':
+                        self.product_id.product_template_attribute_value_ids and
+                        self.product_id.product_template_attribute_value_ids.mapped(
+                            'product_attribute_value_id')[0].id or
+                        False
+                    ,'buying_making_charge':self.make_rate
+                })
+            else:
+                res and res[0].update({
+                    'carat': self.carat,
+                    'gross_weight': self.gross_wt,
+                    'pure_weight': self.pure_wt,
+                    'purity': self.purity_id.purity or 1,
                     'purity_id': self.purity_id.id,
                     'gold_rate': self.gold_rate,
                     'selling_karat_id':
