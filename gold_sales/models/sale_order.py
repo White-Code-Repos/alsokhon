@@ -20,7 +20,7 @@ class DetailsAssembly(models.Model):
     _name = 'details.assembly'
 
     product_id = fields.Many2one('product.product')
-    quantity = fields.Float()
+    quantity = fields.Float(digits=(16,3))
     sale_id = fields.Many2one('sale.order')
     sol_product = fields.Many2one('product.product')
 
@@ -30,11 +30,11 @@ class assemblyDescriptionSaleGold(models.Model):
     _name = 'assembly.description.sale.gold'
 
     product_id = fields.Many2one('product.product')
-    quantity = fields.Float()
-    gross_weight = fields.Float()
-    pure_weight = fields.Float()
+    quantity = fields.Float(digits=(16,3))
+    gross_weight = fields.Float(digits=(16,3))
+    pure_weight = fields.Float(digits=(16,3))
     purity_id = fields.Many2one('gold.purity')
-    purity = fields.Float()
+    purity = fields.Float(digits=(16,3))
     sale_order_gold = fields.Many2one('sale.order')
     sol_product = fields.Many2one('product.product')
 
@@ -314,7 +314,7 @@ class SaleOrder(models.Model):
                                         })
             return res
 
-    total_gold_vale_order = fields.Float('Total Value', compute="_compute_total_gold_value_order")
+    total_gold_vale_order = fields.Float('Total Value', digits=(16,3),compute="_compute_total_gold_value_order")
     def _compute_total_gold_value_order(self):
         for this in self:
             total = 0.0
@@ -324,7 +324,7 @@ class SaleOrder(models.Model):
                 else:
                     total = total+line.price_subtotal
             this.total_gold_vale_order = total
-    total_make_vale_order = fields.Float('Total Labor/Make Value', compute="_compute_total_make_value_order")
+    total_make_vale_order = fields.Float('Total Labor/Make Value', digits=(16,3),compute="_compute_total_make_value_order")
     def _compute_total_make_value_order(self):
         for this in self:
             total = 0.0
@@ -334,8 +334,8 @@ class SaleOrder(models.Model):
                 else:
                     total = total
             this.total_make_vale_order = total
-    period_from = fields.Float('Period From')
-    period_to = fields.Float('Period To')
+    period_from = fields.Float('Period From', digits=(16,3))
+    period_to = fields.Float('Period To', digits=(16,3))
     period_uom_id = fields.Many2one('uom.uom', 'Period UOM')
     is_gold_fixed = fields.Boolean(string='Is Gold Fixed',
                                    compute='check_gold_fixed')
@@ -452,6 +452,7 @@ class SaleOrderLine(models.Model):
 
     price_unit = fields.Float(string='Unit Price', required=True,
                               digits='Product Price', copy=False, default=lambda self: self.default_price_unit_get())
+
     @api.depends('product_id')
     def default_price_unit_get(self):
         for this in self:
@@ -481,7 +482,7 @@ class SaleOrderLine(models.Model):
     gold_value = fields.Monetary('Gold Value', compute='_get_gold_rate',
                                  digits=(16, 3))
     is_make_value = fields.Boolean(string='is_make_value')
-    total_with_make = fields.Float('Total Value + Make Value', compute="_compute_total_with_make")
+    total_with_make = fields.Float('Total Value + Make Value', compute="_compute_total_with_make", digits=(16, 3))
 
     def _compute_total_with_make(self):
         for this in self:

@@ -116,7 +116,7 @@ class assemblyBackDiamond(models.Model):
     # lot_name = fields.Char()
     carat = fields.Float(digits=(16,3))
     carat_cost = fields.Float(digits=(16,3))
-    total_cost = fields.Float(compute="_compute_total_vale")
+    total_cost = fields.Float(compute="_compute_total_vale", digits=(16, 3))
 
     # @api.onchange('lot_id')
     # def getvalues(self):
@@ -216,9 +216,9 @@ class PurchaseOrder(models.Model):
                 this.dont_view_description_poages = True
             else:
                 this.dont_view_description_poages = False
-    assembly_type = fields.Selection([('ready_from_vendor','Ready From Vendor'),('our_stock_a_vendor','Our Stock & Vendor')],default="ready_from_vendor")
-    total_par_value = fields.Float(compute="_compute_total_par_mc_value")
-    total_mc_value = fields.Float(compute="_compute_total_par_mc_value")
+    assembly_type = fields.Selection([('ready_from_vendor','Ready From Vendor'),('our_stock_a_vendor','Our Stock & Vendor')])
+    total_par_value = fields.Float(compute="_compute_total_par_mc_value", digits=(16, 3))
+    total_mc_value = fields.Float(compute="_compute_total_par_mc_value", digits=(16, 3))
     def _compute_total_par_mc_value(self):
         for this in self:
             total_par = 0.0
@@ -229,7 +229,7 @@ class PurchaseOrder(models.Model):
             this.total_par_value = total_par
             this.total_mc_value = total_mc
 
-    total_ds_value = fields.Float(compute="_compute_total_ds")
+    total_ds_value = fields.Float(compute="_compute_total_ds", digits=(16, 3))
     def _compute_total_ds(self):
         for this in self:
             total_ds = 0.0
@@ -267,7 +267,8 @@ class PurchaseOrder(models.Model):
         gold_components = self.assembly_gold_ids.filtered(lambda x: x.product_id and
                                                        x.product_id.gold and
                                                        x.product_id.categ_id and
-                                                       x.product_id.categ_id.is_gold)
+                                                       x.product_id.categ_id.is_gold and not
+                                                       x.product_id.categ_id.is_scrap)
         scrap_components = self.assembly_gold_ids.filtered(lambda x: x.product_id and
                                                        x.product_id.gold and
                                                        x.product_id.categ_id and
@@ -299,6 +300,7 @@ class PurchaseOrder(models.Model):
                             'gross_weight' : line.gross_weight ,
                             'pure_weight': line.pure_weight,
                             'purity': line.purity,
+                            'purity_id': line.purity_id.id,
                             'lot_id':line.lot_id.id,
                             'gold_rate':line.purchase_gold_id.gold_rate / 1000,
                             'origin': location.name + ' - Assembly Gold Transfer'
@@ -337,6 +339,7 @@ class PurchaseOrder(models.Model):
                             'gross_weight' : line.gross_weight ,
                             'pure_weight': line.pure_weight,
                             'purity': line.purity,
+                            'purity_id': line.purity_id.id,
                             'lot_id':line.lot_id.id,
                             'gold_rate':line.purchase_gold_id.gold_rate / 1000,
                             'origin': location.name + ' - Assembly Scrap Transfer'
@@ -482,12 +485,16 @@ class PurchaseOrder(models.Model):
         gold_components = self.assembly_back_gold_ids.filtered(lambda x: x.product_id and
                                                        x.product_id.gold and
                                                        x.product_id.categ_id and
-                                                       x.product_id.categ_id.is_gold)
+                                                       x.product_id.categ_id.is_gold and not
+                                                       x.product_id.categ_id.is_scrap)
         scrap_components = self.assembly_back_gold_ids.filtered(lambda x: x.product_id and
                                                        x.product_id.gold and
                                                        x.product_id.categ_id and
                                                        x.product_id.categ_id.is_scrap)
         diamond_components = self.assembly_diamond_ids
+        print(gold_components)
+        print(scrap_components)
+        print(diamond_components)
         if len(gold_components) > 0:
             sale_type = ""
             if self.order_type.is_fixed:
@@ -520,6 +527,7 @@ class PurchaseOrder(models.Model):
                         'gross_weight' : line.gross_weight ,
                         'pure_weight': line.pure_weight,
                         'purity': line.purity,
+                        'purity_id': line.purity_id.id,
                         # 'lot_id':lot.id,
                         'gold_rate':line.purchase_back_gold_id.gold_rate / 1000,
                         'origin': self.order_type.assembly_picking_type_id_back.default_location_dest_id.name + ' - Receive - Assembly Gold Transfer'
@@ -572,6 +580,7 @@ class PurchaseOrder(models.Model):
                         'gross_weight' : line.gross_weight ,
                         'pure_weight': line.pure_weight,
                         'purity': line.purity,
+                        'purity_id': line.purity_id.id,
                         # 'lot_id':lot.id,
                         'gold_rate':line.purchase_back_gold_id.gold_rate / 1000,
                         'origin': self.order_type.assembly_picking_type_id_back.default_location_dest_id.name + ' - Receive - Assembly Scrap Transfer'
@@ -1222,7 +1231,7 @@ class PurchaseOrder(models.Model):
                                         })
                     print(make)
             return res
-    total_gold_vale_order = fields.Float('Total Value', compute="_compute_total_gold_vale_order")
+    total_gold_vale_order = fields.Float('Total Value', compute="_compute_total_gold_vale_order", digits=(16, 3))
     def _compute_total_gold_vale_order(self):
         for this in self:
             total = 0.0
@@ -1232,7 +1241,7 @@ class PurchaseOrder(models.Model):
                 else:
                     total = total+line.price_subtotal
             this.total_gold_vale_order = total
-    total_make_vale_order = fields.Float('Total labor/Make Value', compute="_compute_total_make_vale_order")
+    total_make_vale_order = fields.Float('Total labor/Make Value', compute="_compute_total_make_vale_order", digits=(16, 3))
     def _compute_total_make_vale_order(self):
         for this in self:
             total = 0.0
@@ -1243,8 +1252,8 @@ class PurchaseOrder(models.Model):
                     total = total
             this.total_make_vale_order = total
 
-    period_from = fields.Float('Period From')
-    period_to = fields.Float('Period To')
+    period_from = fields.Float('Period From', digits=(16, 3))
+    period_to = fields.Float('Period To', digits=(16, 3))
     period_uom_id = fields.Many2one('uom.uom', 'Period UOM')
     is_gold_fixed = fields.Boolean(string='Is Gold Fixed',
                                    compute='check_gold_fixed')
@@ -1330,9 +1339,10 @@ class PurchaseOrderLine(models.Model):
     _inherit = 'purchase.order.line'
 
     # diamond_price =fields.Float()
-    assembly_service = fields.Float(string="Service Fees", default=0.0)
+    assembly_service = fields.Float(string="Service Fees", default=0.0, digits=(16, 3))
     price_unit = fields.Float(string='Unit Price', required=True,
                               digits='Product Price', copy=False, default=lambda self: self.default_price_unit_get())
+
     @api.depends('product_id')
     def default_price_unit_get(self):
         for this in self:
@@ -1373,7 +1383,7 @@ class PurchaseOrderLine(models.Model):
                                  digits=(16, 3), default=0.00)
     # polish_rhodium = fields.Float('Polish & Rhodium',digits=(16,3))
 
-    total_ds_value = fields.Float(compute="_compute_total_ds")
+    total_ds_value = fields.Float(compute="_compute_total_ds", digits=(16, 3))
     def _compute_total_ds(self):
         for this in self:
             order = this.order_id
@@ -1390,8 +1400,8 @@ class PurchaseOrderLine(models.Model):
     gold_value = fields.Monetary('Gold Value', compute='_get_gold_rate',
                                  digits=(16, 3))
     is_make_value = fields.Boolean(string='is_make_value')
-    discount = fields.Float()
-    total_with_make = fields.Float('Total Value + Make Value', compute="_compute_total_with_make")
+    discount = fields.Float(digits=(16, 3))
+    total_with_make = fields.Float('Total Value + Make Value', compute="_compute_total_with_make", digits=(16, 3))
     scrap_state_read = fields.Boolean(compute="_compute_scrap_state_read")
     @api.onchange('product_id')
     def _compute_scrap_state_read(self):

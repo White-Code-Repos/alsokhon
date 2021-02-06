@@ -585,6 +585,9 @@ class AccountMove(models.Model):
                 pure = 0.00
                 rate = 0.00
                 for line in rec.invoice_line_ids:
+                    print(line)
+                    print(line.pure_wt)
+                    print(line.make_value)
                     if line.pure_wt == 0.00 and line.make_value == 0.00:
                         make_value = line.price_unit
                     else:
@@ -596,7 +599,7 @@ class AccountMove(models.Model):
                     rec.make_value_move = make_value + rec.amount_by_group[0][1]
                 else:
                     rec.make_value_move = make_value
-                if rec.pure_wt_value > 0 and rec.make_value_move > 0:
+                if rec.pure_wt_value > 0 or rec.make_value_move > 0:
                     if rec.pure_wt_value_perm_flag == False:
                         rec.pure_wt_value_perm = rec.pure_wt_value
                         rec.pure_wt_value_perm_flag = True
