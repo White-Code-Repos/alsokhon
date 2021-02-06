@@ -99,7 +99,7 @@
                 <field name="diamond" invisible="1"/>
               </field>
               <field name="amount_residual" position="attributes">
-                <attribute name="attrs">{'invisible':[('is_unfixed', '=', True)}</attribute>
+                <attribute name="attrs">{'invisible':[('is_unfixed', '=', True)]}</attribute>
               </field>
               <field name="amount_untaxed" position="attributes">
                 <attribute name="attrs">{'invisible':[('is_unfixed', '=', True)]}</attribute>
