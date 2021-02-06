@@ -16,7 +16,8 @@
               <button name="button_confirm" type="object" string="Confirm Order" id="draft_confirm" attrs="{'invisible':['|',('state','!=','draft'),('assembly','=',True)]}"/>
             </button>
             <field name="order_type" position="after">
-              <field name="assembly_type" attrs="{'invisible':[('assembly','!=',True)]}" required="1" widget="radio"/>
+               <!-- widget="radio" -->
+              <field name="assembly_type" attrs="{'invisible':[('assembly','!=',True)]}" required="1"/>
               <field name="dont_view_description_poages" invisible="1"/>
               <field name="dont_view_tree_value_fields" invisible="1"/>
             </field>
