@@ -383,6 +383,7 @@ class StockMoveLine(models.Model):
             res.lot_id.write({
             'gross_weight': res.lot_id.gross_weight + res.gross_weight,
             'purity': res.purity,
+            'purity_id': res.purity_id.id,
             'selling_making_charge':res.selling_making_charge,
             'buying_making_charge':res.buying_making_charge,
             'pure_weight':res.pure_weight,
@@ -395,6 +396,7 @@ class StockMoveLine(models.Model):
             'carat': res.lot_id.carat + res.carat,
             'gross_weight': res.lot_id.gross_weight + res.gross_weight,
             'purity': res.purity,
+            'purity_id': res.purity_id.id,
             'selling_making_charge':res.selling_making_charge,
             'buying_making_charge':res.buying_making_charge,
             'pure_weight':res.pure_weight,
@@ -406,6 +408,7 @@ class StockMoveLine(models.Model):
             res.lot_id.write({
             'gross_weight': res.gross_weight,
             'purity': res.purity,
+            'purity_id': res.purity_id.id,
             'selling_making_charge':res.selling_making_charge,
             'buying_making_charge':res.buying_making_charge,
             'pure_weight':res.pure_weight,
@@ -444,6 +447,7 @@ class StockMoveLine(models.Model):
             'carat': res.carat,
             'gross_weight': res.gross_weight,
             'purity': res.purity,
+            'purity_id': res.purity_id.id,
             'selling_making_charge':res.selling_making_charge,
             'buying_making_charge':res.buying_making_charge,
             'pure_weight':res.pure_weight,
