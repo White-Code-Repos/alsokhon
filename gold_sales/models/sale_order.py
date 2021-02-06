@@ -99,7 +99,7 @@ class SaleOrder(models.Model):
                     'sol_product':line.product_id.id,
                     }))
                 for detdim in line.lot_id.assembly_description_diamond:
-                    list_assemply_gold.append((0,0,{
+                    list_assemply_diamond.append((0,0,{
                     'product_id':detdim.product_id.id,
                     'carat':detdim.carat,
                     'stones_quantity':detdim.stones_quantity,
@@ -213,7 +213,7 @@ class SaleOrder(models.Model):
                     'sol_product':line.product_id.id,
                     }))
                 for detdim in line.lot_id.assembly_description_diamond:
-                    list_assemply_gold.append((0,0,{
+                    list_assemply_diamond.append((0,0,{
                     'product_id':detdim.product_id.id,
                     'carat':detdim.carat,
                     'stones_quantity':detdim.stones_quantity,
