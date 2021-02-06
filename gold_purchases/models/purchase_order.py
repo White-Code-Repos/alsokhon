@@ -1590,6 +1590,7 @@ class PurchaseOrderLine(models.Model):
                     'gross_weight': self.gross_wt,
                     'pure_weight': self.pure_wt,
                     'purity': self.purity_hall,
+                    'purity_id': self.purity_id.id,
                     'gold_rate': self.gold_rate,
                     'selling_karat_id':
                         self.product_id.product_template_attribute_value_ids and
@@ -1604,6 +1605,7 @@ class PurchaseOrderLine(models.Model):
                     'gross_weight': self.gross_wt,
                     'pure_weight': self.pure_wt,
                     'purity': self.purity_id.scrap_purity or 1,
+                    'purity_id': self.purity_id.id,
                     'gold_rate': self.gold_rate,
                     'selling_karat_id':
                         self.product_id.product_template_attribute_value_ids and
@@ -1619,6 +1621,7 @@ class PurchaseOrderLine(models.Model):
                     'gross_weight': self.gross_wt * self.product_qty,
                     'pure_weight': self.pure_wt,
                     'purity': self.purity_hall,
+                    'purity_id': self.purity_id.id,
                     'gold_rate': self.gold_rate,
                     'selling_karat_id':
                         self.product_id.product_template_attribute_value_ids and
@@ -1633,6 +1636,7 @@ class PurchaseOrderLine(models.Model):
                     'gross_weight': self.gross_wt * self.product_qty,
                     'pure_weight': self.pure_wt,
                     'purity': self.purity_id.purity or 1,
+                    'purity_id': self.purity_id.id,
                     'gold_rate': self.gold_rate,
                     'selling_karat_id':
                         self.product_id.product_template_attribute_value_ids and

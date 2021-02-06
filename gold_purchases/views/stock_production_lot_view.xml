@@ -67,6 +67,7 @@
                     <field name="assembly" invisible="1"/>
                     <field name="gross_weight" invisible="1" attrs="{'column_invisible':[('gold','!=',True),('assembly','!=',True)]}"/>
                     <field name="purity" invisible ="1" attrs="{'column_invisible':[('gold','!=',True),('assembly','!=',True)]}"/>
+                    <field name="purity_id" invisible ="1" attrs="{'column_invisible':[('gold','!=',True),('assembly','!=',True)]}"/>
                     <field name="is_scrap" invisible ="1" attrs="{'column_invisible':[('gold','!=',True),('assembly','!=',True)]}"/>
                     <field name="pure_weight" attrs="{'column_invisible':[('gold','!=',True),('assembly','!=',True)]}"/>
                     <field name="item_category_id" invisible ="1"/>

@@ -49,6 +49,7 @@ class StockMove(models.Model):
     gross_weight = fields.Float(string='Gross Weight', digits=(16, 3))
     pure_weight = fields.Float('Pure Weight', digits=(16, 3))
     purity = fields.Float(string="Purity", digits=(16, 3))
+    purity_id = fields.Many2one('gold.purity')
     gold_rate = fields.Float(string='Gold Rate', digits=(16, 3))
     item_category_id = fields.Many2one('item.category', string="Item Category")
     sub_category_id = fields.Many2one('item.category.line',
@@ -295,19 +296,20 @@ class StockMoveLine(models.Model):
                                 # related='move_id.gross_weight',
 
     actual_gross_weight = fields.Float(string='Gross Weight', store=True)
-    purity_id = fields.Many2one('gold.purity', string="Purity Karat", compute="_compute_purity_id")
-    def _compute_purity_id(self):
-        for this in self:
-            this.purity_id = False
-            if this.product_id and this.product_id.categ_id.is_scrap:
-                purity_id = self.env['gold.purity'].search([('scrap_purity','=',this.purity)])
-                if purity_id:
-                    this.purity_id = purity_id.id
-            elif this.product_id and not this.product_id.categ_id.is_scrap:
-                purity_id = self.env['gold.purity'].search([('purity','=',this.purity)])
-                if purity_id:
-                    this.purity_id = purity_id.id
+    # purity_id = fields.Many2one('gold.purity', string="Purity Karat", compute="_compute_purity_id")
+    # def _compute_purity_id(self):
+    #     for this in self:
+    #         this.purity_id = False
+    #         if this.product_id and this.product_id.categ_id.is_scrap:
+    #             purity_id = self.env['gold.purity'].search([('scrap_purity','=',this.purity)])
+    #             if purity_id:
+    #                 this.purity_id = purity_id.id
+    #         elif this.product_id and not this.product_id.categ_id.is_scrap:
+    #             purity_id = self.env['gold.purity'].search([('purity','=',this.purity)])
+    #             if purity_id:
+    #                 this.purity_id = purity_id.id
     purity = fields.Float(related="move_id.purity", string="Purity", store=True)
+    purity_id = fields.Many2one('gold.purity', related="move_id.purity_id")
     pure_weight = fields.Float(compute='get_pure_weight', string="Pure Weight",
                                store=True, digits=(16, 3))
     item_category_id = fields.Many2one('item.category', string="Item Category")
@@ -475,6 +477,7 @@ class StockValuationLayer(models.Model):
     gold_rate = fields.Float(string='Gold Rate', digits=(16, 3))
     gross_weight = fields.Float('Gross Weight',related="stock_move_id.gross_weight" ,  store=True,digits=(16, 3))
     purity = fields.Float(related="stock_move_id.purity" , string="purity", store=True,digits=(16, 3))
+    purity_id = fields.Many2one('gold.purity', related="stock_move_id.purity_id")
     is_scrap = fields.Boolean(related="product_id.categ_id.is_scrap" , string="scrap", store=True)
     qty_done = fields.Float(related="stock_move_id.product_qty" , string="product_qty", store=True)
     picking_id = fields.Many2one('stock.picking',related="stock_move_id.picking_id" , string="picking_id", store=True)
