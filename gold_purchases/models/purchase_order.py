@@ -199,6 +199,7 @@ class assemblyComponentsDiamond(models.Model):
 class PurchaseOrder(models.Model):
     _inherit = 'purchase.order'
     dont_view_description_poages = fields.Boolean(default=False, compute="_compute_view_desc")
+    @api.onchange('assembly_type')
     def _compute_view_desc(self):
         for this in self:
             if this.assembly !=  True or (this.assembly == True and this.assembly_type == "our_stock_a_vendor" and this.state == 'draft'):
