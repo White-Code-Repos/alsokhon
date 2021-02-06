@@ -300,7 +300,7 @@ class PurchaseOrder(models.Model):
                             'gross_weight' : line.gross_weight ,
                             'pure_weight': line.pure_weight,
                             'purity': line.purity,
-                            'purity_id': line.purity_id.id,
+                            'purity_id': line.lot_id.purity_id.id,
                             'lot_id':line.lot_id.id,
                             'gold_rate':line.purchase_gold_id.gold_rate / 1000,
                             'origin': location.name + ' - Assembly Gold Transfer'
@@ -339,7 +339,7 @@ class PurchaseOrder(models.Model):
                             'gross_weight' : line.gross_weight ,
                             'pure_weight': line.pure_weight,
                             'purity': line.purity,
-                            'purity_id': line.purity_id.id,
+                            'purity_id': line.lot_id.purity_id.id,
                             'lot_id':line.lot_id.id,
                             'gold_rate':line.purchase_gold_id.gold_rate / 1000,
                             'origin': location.name + ' - Assembly Scrap Transfer'
