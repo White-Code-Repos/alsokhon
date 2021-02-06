@@ -110,6 +110,15 @@
               <field name="invoice_outstanding_credits_debits_widget" position="attributes">
                 <attribute name="attrs">{'invisible':[('is_unfixed', '=', True)]}</attribute>
               </field>
+              <xpath expr="//notebook/page[@id='invoice_tab']/field[@name='invoice_line_ids']/tree/field[@name='price_unit']" position="attributes">
+                <attribute name="attrs">{'column_invisible':[('parent.is_unfixed', '=', True)]}</attribute>
+              </xpath>
+              <xpath expr="//notebook/page[@id='invoice_tab']/field[@name='invoice_line_ids']/tree/field[@name='discount']" position="attributes">
+                <attribute name="attrs">{'column_invisible':[('parent.is_unfixed', '=', True)]}</attribute>
+              </xpath>
+              <xpath expr="//notebook/page[@id='invoice_tab']/field[@name='invoice_line_ids']/tree/field[@name='price_subtotal']" position="attributes">
+                <attribute name="attrs">{'column_invisible':[('parent.is_unfixed', '=', True)]}</attribute>
+              </xpath>
                 <xpath expr="//notebook/page[@id='invoice_tab']/field[@name='invoice_line_ids']/tree/field[@name='product_uom_id']" position="after">
                     <field name="carat" readonly="1"  />
                     <field name="gross_wt" readonly="1"  />
