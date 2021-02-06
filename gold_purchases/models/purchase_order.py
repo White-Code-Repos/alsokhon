@@ -404,6 +404,16 @@ class PurchaseOrder(models.Model):
                 for this in picking:
                     for this_lot_line in this.move_line_ids_without_package:
                         this_lot_line.lot_id = this_lot_line.move_id.lot_id.id
+                    for this_operations in this.move_ids_without_package:
+                        this.carat = this_lot_line.move_id.lot_id.carat
+                        this.gross_weight = this_lot_line.move_id.lot_id.gross_weight
+                        this.pure_weight = this_lot_line.move_id.lot_id.pure_weight
+                        this.purity = this_lot_line.move_id.lot_id.purity
+                        this.purity_id = this_lot_line.move_id.lot_id.purity_id.id
+                        this.item_category_id = this_lot_line.move_id.lot_id.item_category_id.id or False
+                        this.sub_category_id = this_lot_line.move_id.lot_id.sub_category_id.id or False
+                        this.selling_making_charge = this_lot_line.move_id.lot_id.selling_making_charge
+                        this.buying_making_charge = this_lot_line.move_id.lot_id.buying_making_charge
                 picking.assembly_purchase_id = self.id
                 pur_gold_desc = []
                 pur_diamond_desc = []
