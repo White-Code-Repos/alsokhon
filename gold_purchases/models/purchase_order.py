@@ -806,6 +806,7 @@ class PurchaseOrder(models.Model):
             for line in self.assembly_description_gold:
                 if line.quantity <= 0.0 or line.gross_weight <= 0.0 or not line.purity_id or line.purity <= 0.0 or line.pure_weight <= 0.0:
                     raise ValidationError(_('You Should Add Gold Description Details'))
+        self.update_po_line()
         self.write({'state':'draft'})
         self.write({'ready':True})
         # self.update_po_line()
