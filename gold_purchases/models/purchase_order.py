@@ -216,7 +216,7 @@ class PurchaseOrder(models.Model):
                 this.dont_view_description_poages = True
             else:
                 this.dont_view_description_poages = False
-    assembly_type = fields.Selection([('ready_from_vendor','Ready From Vendor'),('our_stock_a_vendor','Our Stock & Vendor')])
+    assembly_type = fields.Selection([('ready_from_vendor','Ready From Vendor'),('our_stock_a_vendor','Our Stock & Vendor')], required=True)
     total_par_value = fields.Float(compute="_compute_total_par_mc_value", digits=(16, 3))
     total_mc_value = fields.Float(compute="_compute_total_par_mc_value", digits=(16, 3))
     def _compute_total_par_mc_value(self):
