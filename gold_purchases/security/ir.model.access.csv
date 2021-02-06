@@ -16,4 +16,4 @@ access_assembly_descd,accessassembly_ss_descd,model_assembly_description_diamond
 access_assembly_lotg,accessassembly_sss_lotg,model_assembly_description_lot_gold,,1,1,1,1
 access_assembly_lotd,accessassembly_sss_lotd,model_assembly_description_lot_diamond,,1,1,1,1
 warning_message_pn,warning_message_p,model_process_warning_wizard,,1,1,1,1
-warning_message_rr,warning_message_r,model_return_warning_wizard,,1,1,1,1
+warning_message_rr,warning_message_r,model_review_warning_wizard,,1,1,1,1
