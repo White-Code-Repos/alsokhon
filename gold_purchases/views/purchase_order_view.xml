@@ -17,7 +17,7 @@
             </button>
             <field name="order_type" position="after">
                <!-- widget="radio" -->
-              <field name="assembly_type" attrs="{'invisible':[('assembly','!=',True)]}" required="1"/>
+              <field name="assembly_type" attrs="{'invisible':[('assembly','!=',True)],'required':[('assembly','=',True)]}"/>
               <field name="dont_view_description_poages" invisible="1"/>
               <field name="dont_view_tree_value_fields" invisible="1"/>
             </field>
