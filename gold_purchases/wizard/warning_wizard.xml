@@ -36,7 +36,7 @@
                      You are about to review the assembly order
                    </h1>
                <footer>
-                  <button name="review_assembly" type="object" string="Review"/>
+                  <button name="review_order" type="object" string="Review"/>
                    or
                   <button name="cancel" string="Cancel" special="cancel" class="oe_link"/>
                </footer>
