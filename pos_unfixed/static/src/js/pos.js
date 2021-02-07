@@ -4,77 +4,150 @@ odoo.define('pos_unfixed.pos', function(require){
     var gui = require('point_of_sale.gui');
     var models = require('point_of_sale.models');
     var PopupWidget = require('point_of_sale.popups');
+    var utils = require('web.utils');
     var QWeb = core.qweb;
     var _t = core._t;
+    var round_di = utils.round_decimals;
+  	var round_pr = utils.round_precision;
 
-    // var PacklotlineCollection2 = Backbone.Collection.extend({
-    //     model: models.Packlotline,
-    //     initialize: function(models, options) {
-    //         this.order_line = options.order_line;
-    //     },
-    //
-    //     get_empty_model: function(){
-    //         return this.findWhere({'lot_name': null});
-    //     },
-    //
-    //     remove_empty_model: function(){
-    //         this.remove(this.where({'lot_name': null}));
-    //     },
-    //
-    //     get_valid_lots: function(){
-    //         return this.filter(function(model){
-    //             return model.get('lot_name');
-    //         });
-    //     },
-    //
-    //     set_quantity_by_lot: function() {
-    //         if (this.order_line.product.tracking == 'serial' || this.order_line.product.tracking == 'lot') {
-    //             var valid_lots = this.get_valid_lots();
-    //             this.order_line.set_quantity(valid_lots.length);
-    //         }
-    //     }
-    // });
-    // models.load_fields('product.product',['making_charge_id']);
-    // models.load_models({
-    //     model: 'stock.production.lot',
-    //     fields: [],
-    //     domain: function(self){
-    //         var from = moment(new Date()).subtract(self.config.lot_expire_days,'d').format('YYYY-MM-DD')+" 00:00:00";
-    //         if(self.config.allow_pos_lot){
-    //             return [['create_date','>=',from]];
-    //         }
-    //         else{
-    //             return [['id','=',0]];
-    //         }
-    //     },
-    //     loaded: function(self,list_lot_num){
-    //         self.list_lot_num = list_lot_num;
-    //     },
-    // });
+    screens.OrderWidget.include({
+
+			// update_summary: function(){
+			// 	var self = this;
+		  //   var order = this.pos.get_order();
+			// 	if(!order && !order.get_orderlines().length){
+    	// 		return;
+    	// 	}
+      //
+		  //   var total     = order && order.get_total_with_tax()? order.get_total_with_tax() : 0;
+			// 	var dis_promo = order && order.get_discount_promo_total()?order.get_discount_promo_total():0;
+		  //   var taxes     = order && order.get_total_with_tax()? total +dis_promo- order.get_total_without_tax() : 0;
+		  //   var total_items    = order && order.get_total_items()? order.get_total_items() : 0;
+      //
+    	// 	var discount = 0;
+    	// 	order.set_discount_product_id(false);
+    	// 	order.set_order_total_discount(discount);
+    	// 	// discount = order ? order.calculate_discount_amt() : 0;
+			// 	order.set_order_total_discount(Number(discount));
+			// 	if (self.el.querySelector('.summary .total > .value')) {
+			// 		self.el.querySelector('.summary .total > .value').textContent = this.format_currency(total);
+			// 	}
+			// 	if (self.el.querySelector('.summary .total .subentry .value')) {
+			// 		self.el.querySelector('.summary .total .subentry .value').textContent = this.format_currency(taxes);
+			// 	}
+			// 	if (self.el.querySelector('.items .value')) {
+			// 		self.el.querySelector('.items .value').textContent = total_items;
+			// 	}
+				// // console.log("dis_promo",dis_promo);
+				// if(self.el.querySelector('.discount .value')){
+				//    self.el.querySelector('.discount .value').textContent = this.format_currency(dis_promo);
+    		// }
+      //
+			// },
+      update_summary: function(){
+          var order = this.pos.get_order();
+          if (!order.get_orderlines().length) {
+              return;
+          }
+
+          var total     = order ? order.get_total_with_tax() : 0;
+          var taxes     = order ? total - order.get_total_without_tax() : 0;
+          var qty_gm = order && order.get_qty_gm_total()?order.get_qty_gm_total():0;
+          var make_charge_value = order && order.get_make_charge_value_total()?order.get_make_charge_value_total():0;
+          // console.log("order.get_total_purity_qty_gm");
+          // console.log(order.get_total_purity_qty_gm());
+          // console.log(order.get_total_purity_pure_qty_gm());
+          if (this.el.querySelector('.summary .total > .value')) {
+            this.el.querySelector('.summary .total > .value').textContent = this.format_currency(total);
+          }
+          if (this.el.querySelector('.summary .total .subentry .value')) {
+            this.el.querySelector('.summary .total .subentry .value').textContent = this.format_currency(taxes);
+          }
+
+  				if(this.el.querySelector('.total_qty_gm .value')){
+  				   this.el.querySelector('.total_qty_gm .value').textContent = qty_gm;
+      		}
+          if(this.el.querySelector('.total_charge .value')){
+  				   this.el.querySelector('.total_charge .value').textContent = this.format_currency(make_charge_value);
+      		}
+      },
+
+    });
+
+
     var OrderlineSuper = models.Orderline.prototype;
     models.Orderline = models.Orderline.extend({
         initialize: function(attr,options) {
     			var self = this;
           this.is_unfixed = false;
-    			this.purity = false;
+          this.purity = "";
+          this.qty_gm = 0;
+          this.qty_gm_pure = 0;
+          this.make_charge_value = 0;
+    			this.product_lot = {};
     			OrderlineSuper.initialize.call(this,attr,options);
     		},
+        set_purity: function(purity){
+					this.purity = purity;
+          this.trigger('change',this);
+				},
+        set_qty_gm: function(qty_gm){
+					this.qty_gm = qty_gm;
+					this.trigger('change',this);
+				},
+        set_qty_gm_pure: function(qty_gm_pure){
+					this.qty_gm_pure = qty_gm_pure;
+					this.trigger('change',this);
+				},
+        set_make_charge_value: function(make_charge_value){
+					this.make_charge_value = make_charge_value;
+					this.trigger('change',this);
+				},
+        get_qty_gm_str: function(){
+					return this.qty_gm+"";
+				},
+
 
         export_for_printing: function(){
             var data = OrderlineSuper.export_for_printing.apply(this, arguments);
             data.is_unfixed = this.is_unfixed|| false;
+            data.qty_gm = this.qty_gm|| 0;
+            data.qty_gm_pure = this.qty_gm_pure|| 0;
+            data.make_charge_value = this.make_charge_value|| 0;
+            data.purity = this.purity|| "";
             return data;
         },
         init_from_JSON: function(json) {
             OrderlineSuper.init_from_JSON.apply(this,arguments);
             this.is_unfixed = json.is_unfixed;
+            this.qty_gm = json.qty_gm;
+            this.qty_gm_pure = json.qty_gm_pure;
+            this.make_charge_value = json.make_charge_value;
+            this.purity = json.purity;
+            this.product_lot = json.product_lot;
         },
         export_as_JSON: function() {
           var loaded = OrderlineSuper.export_as_JSON.apply(this, arguments);
           loaded.is_unfixed = this.is_unfixed || false;
+          loaded.qty_gm = this.qty_gm || 0;
+          loaded.qty_gm_pure = this.qty_gm_pure || 0;
+          loaded.make_charge_value = this.make_charge_value || 0;
+          loaded.purity = this.purity || "";
+          loaded.product_lot = this.product_lot || "";
           // this.order_type = 'retail';
           return loaded;
         },
+        get_all_gm_purity: function(){
+            var self = this;
+            if (self.purity == "") {
+              self.set_purity("0")
+            }
+            return {
+                "purity": self.purity,
+                "qty_gm": self.qty_gm,
+            };
+        },
+
     });
     screens.PaymentScreenWidget.include({
       init: function(parent, options) {
@@ -257,6 +330,150 @@ odoo.define('pos_unfixed.pos', function(require){
   			this.order_fixed = true;
   			posorder_super.initialize.call(this,attr,options);
   		},
+      get_make_charge_value_total: function() {
+					var make_charge_value = round_pr(this.orderlines.reduce((function(sum, orderLine) {
+															return sum + orderLine.make_charge_value;
+														}), 0), this.pos.currency.rounding)
+					return make_charge_value ;
+	    },
+      get_qty_gm_total: function() {
+					var qty_gm = round_pr(this.orderlines.reduce((function(sum, orderLine) {
+															return sum + orderLine.qty_gm;
+														}), 0), this.pos.currency.rounding)
+
+					return qty_gm ;
+	    },
+      get_qty_gm_pure_total: function() {
+					var qty_gm = round_pr(this.orderlines.reduce((function(sum, orderLine) {
+															return sum + orderLine.qty_gm_pure;
+														}), 0), this.pos.currency.rounding)
+					return qty_gm ;
+	    },
+      get_qty_gm_unfixed_total: function() {
+					var qty_gm = round_pr(this.orderlines.reduce((function(sum, orderLine) {
+            if (orderLine.is_unfixed) {
+              sum += orderLine.qty_gm_pure
+            }
+						return sum ;
+					}), 0), this.pos.currency.rounding)
+          console.log('get_qty_gm_unfixed_total',qty_gm);
+
+
+					return qty_gm ;
+	    },
+      get_amount_unfixed_total: function() {
+					var price = round_pr(this.orderlines.reduce((function(sum, orderLine) {
+						// console.log(orderLine);
+            if (orderLine.is_unfixed) {
+              sum += orderLine.price;
+            }
+						return sum ;
+					}), 0), this.pos.currency.rounding)
+
+					return price ;
+	    },
+      get_qty_gm_fixed_total: function() {
+					var qty_gm = round_pr(this.orderlines.reduce((function(sum, orderLine) {
+						// console.log(orderLine);
+            if (!orderLine.is_unfixed) {
+              sum += orderLine.qty_gm_pure
+            }
+						return sum ;
+					}), 0), this.pos.currency.rounding)
+          console.log('get_qty_gm_fixed_total',qty_gm);
+
+					return qty_gm ;
+	    },
+      get_amount_fixed_total: function() {
+					var price = round_pr(this.orderlines.reduce((function(sum, orderLine) {
+						// console.log(orderLine);
+            if (!orderLine.is_unfixed) {
+              sum += orderLine.price;
+            }
+						return sum ;
+					}), 0), this.pos.currency.rounding)
+
+					return price ;
+	    },
+      get_total_purity_qty_gm: function() {
+        var list_total = {};
+        this.orderlines.forEach(function(line) {
+          if (line.purity=="") {
+             line.set_purity("0");
+           }
+           if (!list_total[line.purity]) {
+             list_total[line.purity]=0;
+           }
+            list_total[line.purity]+=line.qty_gm_pure;
+        });
+				return list_total ;
+	    },
+      get_total_purity_pure_qty_gm: function() {
+        var list_total = [];
+        var pos = this.pos;
+        if (this.orderlines.models) {
+          var order = this.orderlines.models[0].order;
+          for (var total_qty in order.get_total_purity_qty_gm()) {
+              var i = Object.keys(order.get_total_purity_qty_gm()).indexOf(total_qty);
+              _.each(pos.list_gold_purity, function(purity) {
+                if (purity.name==(total_qty).toString()) {
+                  var scrap_purity = purity.scrap_purity/1000;
+                  var list = {'pure':total_qty,'qty_gross':order.get_total_purity_qty_gm()[total_qty]/scrap_purity,'qty_pure':order.get_total_purity_qty_gm()[total_qty],'scrap_purity':scrap_purity}
+                  list_total.push(list);
+                  return true;
+                  // break;
+                }
+              });
+          }
+        }
+        // console.log("JKAHKJ",list_total);
+        return list_total ;
+      },
+      get_total_purity_convert_qty_gm: function(orderline) {
+        var list_total = [];
+        var pos = this.pos;
+        console.log(orderline);
+        console.log(orderline.product_lot);
+        var lot_purity=[];
+        _.each(orderline.product_lot, function(lot) {
+          // console.log(lot);
+          if (lot.purity_id&&lot.purity_id[1]) {
+            lot_purity.push(lot.purity_id[1]);
+          }
+        });
+        var set = new Set(lot_purity);
+
+        lot_purity=[];
+        for (let lot of set) {
+            lot_purity.push(lot);
+        }
+
+        //
+        if (this.orderlines.models) {
+          var order = this.orderlines.models[0].order;
+          var get_total_purity_pure_qty_gm = order.get_total_purity_pure_qty_gm();
+          var total_pure = 0;
+          _.each(get_total_purity_pure_qty_gm, function(total_qty) {
+            total_pure+=total_qty['qty_pure'];
+          });
+
+          console.log("total_pure",total_pure);
+          _.each(lot_purity, function(purity) {
+            var scrap = 0;
+            _.each(pos.list_gold_purity, function(puri) {
+              if (puri.name==(purity).toString()) {
+                scrap = puri.scrap_purity/1000;
+                return true;
+              }
+            });
+            console.log("((scrap))",scrap);
+            var list = {'pure':purity,'qty_gross':(total_pure/scrap).toFixed(4),'qty_pure':total_pure}
+            list_total.push(list);
+          });
+        }
+        console.log("JKAHKsdadsfafJ",list_total);
+        return list_total ;
+      },
       add_product: function(product, options){
           if(this._printed){
               this.destroy();
@@ -287,6 +504,9 @@ odoo.define('pos_unfixed.pos', function(require){
 
           if(options.lst_price !== undefined){
               line.set_lst_price(options.lst_price);
+          }
+          if(options.charge !== undefined){
+              line.set_make_charge_value(options.charge);
           }
 
           if(options.discount !== undefined){
@@ -319,26 +539,7 @@ odoo.define('pos_unfixed.pos', function(require){
               this.pos.send_current_order_to_customer_facing_display();
           }
       },
-      // add_product: function(product, options){
-      //     posorder_super.add_product.call(this,product,options);
-      //
-      //
-      //
-          // if(options.is_unfixed){
-          //   line.is_unfixed=true;
-          // }else {
-          //   line.is_unfixed=false;
-          // }
-      //
-      //
-      //
-      //     if(line.has_product_lot){
-      //         this.display_lot_popup();
-      //     }
-      //     if (this.pos.config.iface_customer_facing_display) {
-      //         this.pos.send_current_order_to_customer_facing_display();
-      //     }
-      // },
+
   		export_as_JSON: function(){
   			var loaded = posorder_super.export_as_JSON.apply(this, arguments);
         loaded.order_type = this.order_type || false;
@@ -352,7 +553,83 @@ odoo.define('pos_unfixed.pos', function(require){
   			posorder_super.init_from_JSON.apply(this,arguments);
   			// this.order_type = json.order_type;
   		},
+      add_paymentline: function(payment_method,unfixed=0,purity="") {
+          this.assert_editable();
+          var newPaymentline = new models.Paymentline({},{order: this, payment_method:payment_method, pos: this.pos});
+          if(!payment_method.is_cash_count || this.pos.config.iface_precompute_cash){
+              newPaymentline.set_amount( this.get_due() );
+          };
+          if (unfixed) {
+            console.log("unfixed",unfixed);
+            newPaymentline.set_amount_gm(unfixed);
+          }
+          this.paymentlines.add(newPaymentline);
+          this.select_paymentline(newPaymentline);
+      },
+
+      get_due_gm: function(paymentline) {
+          if (!paymentline) {
+              var due_gm = this.get_qty_gm_fixed_total() + this.get_qty_gm_unfixed_total();
+          } else {
+              var due_gm = this.get_qty_gm_fixed_total();
+              var lines = this.paymentlines.models;
+
+              for (var i = 0; i < lines.length; i++) {
+                  if (lines[i] === paymentline) {
+                      break;
+                  } else {
+                      due_gm+= lines[i].get_amount_gm();
+                  }
+              }
+          }
+          console.log("due_gm",due_gm);
+          return round_pr(due_gm, this.pos.currency.rounding);
+      },
   	});
+
+    var pospayment_super = models.Paymentline.prototype;
+  	models.Paymentline = models.Paymentline.extend({
+  		initialize: function(attr,options) {
+  			var self = this;
+  			this.gm_unfixed = 0;
+        this.purity = "";
+
+  			pospayment_super.initialize.call(this,attr,options);
+  		},
+      export_as_JSON: function(){
+        var loaded = pospayment_super.export_as_JSON.apply(this, arguments);
+        loaded.gm_unfixed = this.gm_unfixed || 0;
+        loaded.purity = this.purity;
+
+        return loaded;
+      },
+
+      init_from_JSON: function(json){
+        pospayment_super.init_from_JSON.apply(this,arguments);
+        this.gm_unfixed = json.gm_unfixed;
+        this.purity = json.purity;
+
+      },
+
+      get_amount_gm: function(){
+          return this.gm_unfixed;
+      },
+      set_amount_gm: function(value){
+          this.order.assert_editable();
+          this.gm_unfixed = round_di(parseFloat(value) || 0, this.pos.currency.decimals);
+          this.pos.send_current_order_to_customer_facing_display();
+          this.trigger('change',this);
+      },
+      get_make_charge_value_total: function() {
+					var make_charge_value = round_pr(this.orderlines.reduce((function(sum, orderLine) {
+															return sum + orderLine.make_charge_value;
+														}), 0), this.pos.currency.rounding)
+					return make_charge_value ;
+	    },
+
+  	});
+
+
 
 
     // var TypeButton = screens.ActionButtonWidget.extend({
@@ -421,6 +698,7 @@ odoo.define('pos_unfixed.pos', function(require){
         var self = this;
         var order = this.pos.get_order();
         order.order_type = 'sale';
+        order.order_fixed = true;
         $(".wSale_bt").css({'background': '#6EC89B'});
         $(".retail_bt").css({'background':'fixed'});
         $(".fixed_bt").css({'display':'inline-block'});
@@ -437,6 +715,7 @@ odoo.define('pos_unfixed.pos', function(require){
         var self = this;
         var order = this.pos.get_order();
         order.order_type = 'retail';
+        order.order_fixed = true;
         $(".retail_bt").css({'background': '#6EC89B'});
         $(".wSale_bt").css({'background':'fixed'});
         $(".fixed_bt").css({'display':'none'});
@@ -540,200 +819,5 @@ odoo.define('pos_unfixed.pos', function(require){
     gui.define_popup({name:'AddLotWidget', widget: AddLotWidget});
 
 
-    //
-    // var PackLotLinePopupWidget = PopupWidget.extend({
-    //     template: 'PackLotLinePopupWidget',
-    //     events: _.extend({}, PopupWidget.prototype.events, {
-    //         'click .remove-lot': 'remove_lot',
-    //         'keydown': 'add_lot',
-    //         'blur .packlot-line-input': 'lose_input_focus'
-    //     }),
-    //
-    //         show: function(options){
-    //             var self = this;
-    //             var product_lot = [];
-    //             var lot_list = self.pos.list_lot_num;
-    //             for(var i=0;i<lot_list.length;i++){
-    //                 if(lot_list[i].product_id[0] == options.pack_lot_lines.order_line.product.id){
-    //                     product_lot.push(lot_list[i]);
-    //                 }
-    //             }
-    //             options.qstr = "";
-    //             options.product_lot = product_lot;
-    //             this._super(options);
-    //             this.focus();
-    //         },
-    //
-    //         renderElement:function(){
-    //             this._super();
-    //             var self = this;
-    //             $.fn.setCursorToTextEnd = function() {
-    //                 $initialVal = this.val();
-    //                 this.val($initialVal + ' ');
-    //                 this.val($initialVal);
-    //                 };
-    //             $(".search_lot").focus();
-    //             $(".search_lot").setCursorToTextEnd();
-    //
-    //             $(".add_lot_number").click(function(){
-    //                 var lot_count = $(this).closest("tr").find("input").val();
-    //                 var selling_making_charge= $(this).closest("tr").find("#selling_making_charge")[0].innerText;
-    //                 var pure_weight= $(this).closest("tr").find("#pure_weight")[0].innerText;
-    //                 var gross_weight= $(this).closest("tr").find("#gross_weight")[0].innerText;
-    //                 var purity_id= $(this).closest("tr").find("#purity_id")[0].innerText;
-    //                 var gold_rate= $(this).closest("tr").find("#gold_rate")[0].innerText;
-    //
-    //                 for(var i=0;i<lot_count;i++){
-    //                     var lot = $(this).data("lot");
-    //
-    //                     var input_box;
-    //
-    //                     $('.packlot-line-input').each(function(index, el){
-    //                             input_box = $(el)
-    //
-    //                     });
-    //                     if(input_box != undefined){
-    //                         input_box.val(lot);
-    //                         var pack_lot_lines = self.options.pack_lot_lines,
-    //                             $input = input_box,
-    //                             cid = $input.attr('cid'),
-    //                             lot_name = $input.val();
-    //
-    //                         var lot_model = pack_lot_lines.get({cid: cid});
-    //
-    //                         lot_model.set_lot_name(lot_name);
-    //                         if(!pack_lot_lines.get_empty_model()){
-    //                             var new_lot_model = lot_model.add();
-    //                             self.focus_model = new_lot_model;
-    //                         }
-    //                         pack_lot_lines.set_quantity_by_lot();
-    //                         self.change_price(gold_rate,pure_weight);
-    //                         self.renderElement();
-    //                         self.focus();
-    //                     }
-    //                 }
-    //             });
-    //
-    //             $(".search_lot").keyup(function(){
-    //                 self.options.qstr = $(this).val();
-    //                 var lot_list = self.pos.list_lot_num;
-    //                 var product_lot = [];
-    //                 for(var i=0;i<lot_list.length;i++){
-    //                     if(lot_list[i].product_id[0] == self.options.pack_lot_lines.order_line.product.id && lot_list[i].name.toLowerCase().search($(this).val().toLowerCase()) > -1){
-    //                         product_lot.push(lot_list[i]);
-    //                     }
-    //                 }
-    //                 self.options.product_lot = product_lot;
-    //                 self.renderElement();
-    //
-    //             });
-    //         },
-    //
-    //     change_price: function(gold_rate,pure_weight){
-    //         var pack_lot_lines = this.options.pack_lot_lines;
-    //         this.options.order_line.price=gold_rate*pure_weight;
-    //
-    //     },
-    //
-    //
-    //     click_confirm: function(){
-    //         self = this
-    //         var pack_lot_lines = this.options.pack_lot_lines;
-    //         this.$('.packlot-line-input').each(function(index, el){
-    //             var cid = $(el).attr('cid'),
-    //                 lot_name = $(el).val();
-    //             var pack_line = pack_lot_lines.get({cid: cid});
-    //             pack_line.set_lot_name(lot_name);
-    //
-    //         });
-    //         // selected_lot = this.options.order_line.pack_lot_lines.models[0].attributes.lot_name;
-    //         // this.options.product_lot.forEach(function(lot) {
-    //         //   if (lot.name == selected_lot)
-    //         //   {
-    //         //     self.change_price(lot.gold_rate,lot.pure_weight)
-    //         //   }
-    // 				// 	// order_ids.push(order.id)
-    // 				// 	// self.pos.db.get_orders_by_id[order.id] = order;
-    // 				// });
-    //         pack_lot_lines.remove_empty_model();
-    //         pack_lot_lines.set_quantity_by_lot();
-    //         var selected_lot = this.options.order_line.pack_lot_lines.models[0].attributes.lot_name;
-    //         this.options.product_lot.forEach(function(lot) {
-    //           if (lot.name == selected_lot)
-    //           {
-    //             var order_line = self.options.order_line
-    //             var product = self.pos.db.get_product_by_id(self.options.order_line.product.making_charge_id[0]);
-    //
-    //             self.change_price(lot.gold_rate,lot.pure_weight)
-    //             // console.log("hjfghf");
-    //             // console.log(product);
-    //             // console.log(order_line.quantity * lot.gross_weight * lot.selling_making_charge);
-    //             self.options.order.add_product(product, {
-    //               quantity: 1,
-    //               price: order_line.quantity * lot.gross_weight * lot.selling_making_charge,
-    //             });
-    //           }
-    //           // order_ids.push(order.id)
-    //           // self.pos.db.get_orders_by_id[order.id] = order;
-    //         });
-    //
-    //
-    //         // var selling_making_charge= $(this).closest("tr").find("#selling_making_charge")[0].innerText;
-    //         // var pure_weight= $(this).closest("tr").find("#pure_weight")[0].innerText;
-    //         // var gross_weight= $(this).closest("tr").find("#gross_weight")[0].innerText;
-    //         // var purity_id= $(this).closest("tr").find("#purity_id")[0].innerText;
-    //         // var gold_rate= $(this).closest("tr").find("#gold_rate")[0].innerText;
-    //         //
-    //         // self.change_price(gold_rate,pure_weight);
-    //
-    //
-    //         // this.options.order_line.price=0;
-    //
-    //         this.options.order.save_to_db();
-    //         this.options.order_line.trigger('change', this.options.order_line);
-    //         this.gui.close_popup();
-    //     },
-    //
-    //     add_lot: function(ev) {
-    //         if (ev.keyCode === $.ui.keyCode.ENTER && this.options.order_line.product.tracking == 'serial'){
-    //             var pack_lot_lines = this.options.pack_lot_lines,
-    //                 $input = $(ev.target),
-    //                 cid = $input.attr('cid'),
-    //                 lot_name = $input.val();
-    //
-    //             var lot_model = pack_lot_lines.get({cid: cid});
-    //             lot_model.set_lot_name(lot_name);  // First set current model then add new one
-    //             if(!pack_lot_lines.get_empty_model()){
-    //                 var new_lot_model = lot_model.add();
-    //                 this.focus_model = new_lot_model;
-    //             }
-    //             pack_lot_lines.set_quantity_by_lot();
-    //             this.renderElement();
-    //             this.focus();
-    //         }
-    //     },
-    //
-    //     remove_lot: function(ev){
-    //         var pack_lot_lines = this.options.pack_lot_lines,
-    //             $input = $(ev.target).prev(),
-    //             cid = $input.attr('cid');
-    //         var lot_model = pack_lot_lines.get({cid: cid});
-    //         lot_model.remove();
-    //         pack_lot_lines.set_quantity_by_lot();
-    //         this.renderElement();
-    //     },
-    //
-    //     lose_input_focus: function(ev){
-    //         var $input = $(ev.target),
-    //             cid = $input.attr('cid');
-    //         var lot_model = this.options.pack_lot_lines.get({cid: cid});
-    //         lot_model.set_lot_name($input.val());
-    //     },
-    //
-    //     focus: function(){
-    //         this.$("input[autofocus]").focus();
-    //         this.focus_model = false;   // after focus clear focus_model on widget
-    //     }
-    // });
-    // gui.define_popup({name:'packlotline', widget:PackLotLinePopupWidget});
+
 });
