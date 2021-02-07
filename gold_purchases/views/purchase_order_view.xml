@@ -65,15 +65,12 @@
                       <field name="our_stock" invisible="1"/>
                       <field name="carat" sum="carat" attrs="{'readonly':[('our_stock','=',True)]}"/>
                       <field name="carat_price" attrs="{'readonly':[('our_stock','=',True)]}"/>
-                      <field name="stones_value" sum="stones_value" readonly="1" force_save="1"/>
+                      <field name="stones_value" sum="stones_value" readonly="0" force_save="1"/>
                       <field name="stones_quantity" sum="stones_quantity" attrs="{'readonly':[('our_stock','=',True)]}"/>
                       <field name="stone_setting_rate"/>
                       <field name="stone_setting_value" sum="stone_setting_value" readonly="1" force_save="1"/>
                     </tree>
                   </field>
-                  <group>
-                    <field name="total_ds_value" invisible="1"/>
-                  </group>
                 </page>
                 <page string="Assembly Gold Components" name="assembly_mrp_gold" attrs="{'invisible':['|',('assembly','!=', True),('assembly_type','!=', 'our_stock_a_vendor')]}">
                   <field name="assembly_gold_ids">
@@ -209,6 +206,7 @@
                     <field name="total_with_make" attrs="{'column_invisible':[('parent.is_unfixed','=',True)]}"/>
                 </xpath>
                 <field name="amount_untaxed" position="before">
+                  <field name="total_ds_value" attrs="{'invisible':[('assembly','!=',True)]}"/>
                   <field name="total_gold_vale_order" attrs="{'invisible':[('is_unfixed','=',True)]}"/>
                   <field name="total_make_vale_order"/>
                 </field>

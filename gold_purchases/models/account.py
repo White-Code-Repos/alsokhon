@@ -591,7 +591,7 @@ class AccountMove(models.Model):
                     if line.pure_wt == 0.00 and line.make_value == 0.00:
                         make_value = line.price_unit
                     else:
-                        pure = line.pure_wt + line.purity_diff
+                        pure = line.pure_wt
                         rate = line.gold_rate
                 rec.pure_wt_value = pure
                 rec.gold_rate_value = rate
