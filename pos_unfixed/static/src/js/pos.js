@@ -453,6 +453,8 @@ odoo.define('pos_unfixed.pos', function(require){
           var order = this.orderlines.models[0].order;
           var get_total_purity_pure_qty_gm = order.get_total_purity_pure_qty_gm();
           var total_pure = 0;
+          console.log("get_total_purity_pure_qty_gm");
+          console.log(get_total_purity_pure_qty_gm);
           _.each(get_total_purity_pure_qty_gm, function(total_qty) {
             total_pure+=total_qty['qty_pure'];
           });
