@@ -404,8 +404,10 @@ odoo.define('pos_unfixed.pos', function(require){
            if (!list_total[line.purity]) {
              list_total[line.purity]=0;
            }
+           console.log("line.purity",line.purity);
             list_total[line.purity]+=line.qty_gm_pure;
         });
+        console.log("SADDL:QW:LD",list_total);
 				return list_total ;
 	    },
       get_total_purity_pure_qty_gm: function() {
@@ -413,10 +415,13 @@ odoo.define('pos_unfixed.pos', function(require){
         var pos = this.pos;
         if (this.orderlines.models) {
           var order = this.orderlines.models[0].order;
+          console.log("(((order.get_total_purity_qty_gm())))");
+          console.log(order.get_total_purity_qty_gm());
           for (var total_qty in order.get_total_purity_qty_gm()) {
-              var i = Object.keys(order.get_total_purity_qty_gm()).indexOf(total_qty);
+              // var i = Object.keys(order.get_total_purity_qty_gm()).indexOf(total_qty);
               _.each(pos.list_gold_purity, function(purity) {
                 if (purity.name==(total_qty).toString()) {
+                  console.log();
                   var scrap_purity = purity.scrap_purity/1000;
                   var list = {'pure':total_qty,'qty_gross':order.get_total_purity_qty_gm()[total_qty]/scrap_purity,'qty_pure':order.get_total_purity_qty_gm()[total_qty],'scrap_purity':scrap_purity}
                   list_total.push(list);
@@ -426,7 +431,7 @@ odoo.define('pos_unfixed.pos', function(require){
               });
           }
         }
-        // console.log("JKAHKJ",list_total);
+        console.log("JKAHKJ",list_total);
         return list_total ;
       },
       get_total_purity_convert_qty_gm: function(orderline) {
