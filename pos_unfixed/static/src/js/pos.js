@@ -728,6 +728,11 @@ odoo.define('pos_unfixed.pos', function(require){
         $(".fixed_bt").css({'display':'none'});
         $(".unfixed_bt").css({'display':'none'});
         $(".unfixed_product").css({'display':'none'});
+        var order = self.pos.get_order();
+        var all = $('.product');
+        $.each(all, function(index, value) {
+          $(value).find('#availqty').css({'display':'block'});
+        });
 
     	},
       // check_type: function () {
@@ -760,6 +765,15 @@ odoo.define('pos_unfixed.pos', function(require){
         $(".unfixed_bt").css({'background':'fixed'});
         $(".unfixed_product").css({'display':'none'});
         $(".add_product").css({'display':'none'});
+
+        var order = self.pos.get_order();
+        var all = $('.product');
+        $.each(all, function(index, value) {
+          $(value).find('#availqty').css({'display':'block'});
+        });
+
+        // console.log($('#availqty'));
+        // console.log(screens.ProductScreenWidget.find('#availqty'));
     	},
     });
     screens.define_action_button({
@@ -776,6 +790,12 @@ odoo.define('pos_unfixed.pos', function(require){
         $(".fixed_bt").css({'background':'fixed'});
         $(".unfixed_product").css({'display':'block'});
         $(".add_product").css({'display':'block'});
+
+        var order = self.pos.get_order();
+        var all = $('.product');
+        $.each(all, function(index, value) {
+          $(value).find('#availqty').css({'display':'none'});
+        });
     	},
       // check_type: function () {
       //     // var name = _t('Order Type');
