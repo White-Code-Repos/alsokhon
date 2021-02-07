@@ -608,7 +608,7 @@ odoo.define('pos_lot_select.pos', function(require){
                       self.options.order.add_product(product, {
                         quantity: 1,
                         price: order_line.quantity * lot.selling_making_charge,
-                        charge: order_line.quantity * lot.selling_making_charge,
+                        charge: order_line.quantity * lot.selling_making_charge,                        
                       });
                     }
                   }
@@ -631,7 +631,7 @@ odoo.define('pos_lot_select.pos', function(require){
               this.options.order.save_to_db();
               this.options.order_line.trigger('change', this.options.order_line);
               if (this.options.order_line.is_unfixed) {
-                this.options.order.add_paymentline(this.pos.payment_methods[0],self.options.order_line.qty_gm_pure,self.options.order_line.purity);
+                this.options.order.add_paymentline(this.pos.payment_methods[0],self.options.order_line.qty_gm_pure,self.options.order_line.qty_gm,self.options.order_line.purity);
                 this.pos.chrome.gui.current_screen.render_paymentlines();
                 // this.render_paymentlines();
 

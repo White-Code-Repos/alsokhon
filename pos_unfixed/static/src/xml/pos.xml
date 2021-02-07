@@ -394,20 +394,35 @@
           <!-- Payment Lines -->
 
           <t t-foreach='paymentlines' t-as='line'>
+            <t t-if='line.get_amount_gm() == 0'>
               <div>
                   <t t-esc='line.name' />
                   <span t-esc='widget.format_currency_no_symbol(line.get_amount())' class="pos-receipt-right-align"/>
               </div>
+            </t>
           </t>
 
+
+
+          <t t-if='!order.order_fixed '>
+            <t t-foreach='order.get_total_unfixed_purity_pure_qty_gm()' t-as='line'>
+              <!-- <t t-if='line.get_amount_gm() == 0'> -->
+                <div>
+                    <t t-esc='line.pure' />:
+                    <span t-esc='widget.format_currency_no_symbol(line.qty_gross)' class="pos-receipt-right-align"/>
+                </div>
+              <!-- </t> -->
+            </t>
+          </t>
           <t t-if='unfixed_total !== 0'>
             <div >
-                Unfixed
+                Unfixed Total
                 <span t-esc='unfixed_qty_total' class="pos-receipt-right-align"/>
                 <span t-esc='unfixed_unit' class="pos-receipt-right-align"/>
                 <!-- <span t-esc='widget.format_currency_no_symbol(-1*unfixed_total)' class="pos-receipt-right-align"/> -->
             </div>
           </t>
+
 
           <br/>
 
@@ -904,7 +919,12 @@
           <t t-if="!line.pos.get_order().order_fixed">
             <t t-if="line.get_product().categ.is_gold">
               <span class="price">
-                <t t-esc="line.get_qty_gm_str()" />g
+                <t t-if="!line.is_make_charge_value">
+                  <t t-esc="line.get_qty_gm_str()" />g
+                </t>
+                <t t-if="line.is_make_charge_value">
+                  <t t-esc="widget.format_currency(line.get_display_price())"/>
+                </t>
 
               </span>
               <ul class="info-list">

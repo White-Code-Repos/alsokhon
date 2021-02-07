@@ -80,6 +80,7 @@ odoo.define('pos_unfixed.pos', function(require){
         initialize: function(attr,options) {
     			var self = this;
           this.is_unfixed = false;
+          this.is_make_charge_value = false;
           this.purity = "";
           this.qty_gm = 0;
           this.qty_gm_pure = 0;
@@ -87,6 +88,38 @@ odoo.define('pos_unfixed.pos', function(require){
     			this.product_lot = {};
     			OrderlineSuper.initialize.call(this,attr,options);
     		},
+        export_for_printing: function(){
+            var data = OrderlineSuper.export_for_printing.apply(this, arguments);
+            data.is_unfixed = this.is_unfixed|| false;
+            data.is_make_charge_value = this.is_make_charge_value|| false;
+            data.qty_gm = this.qty_gm|| 0;
+            data.qty_gm_pure = this.qty_gm_pure|| 0;
+            data.make_charge_value = this.make_charge_value|| 0;
+            data.purity = this.purity|| "";
+            return data;
+        },
+        init_from_JSON: function(json) {
+            OrderlineSuper.init_from_JSON.apply(this,arguments);
+            this.is_unfixed = json.is_unfixed;
+            this.is_make_charge_value = json.is_make_charge_value;
+            this.qty_gm = json.qty_gm;
+            this.qty_gm_pure = json.qty_gm_pure;
+            this.make_charge_value = json.make_charge_value;
+            this.purity = json.purity;
+            this.product_lot = json.product_lot;
+        },
+        export_as_JSON: function() {
+          var loaded = OrderlineSuper.export_as_JSON.apply(this, arguments);
+          loaded.is_unfixed = this.is_unfixed || false;
+          loaded.is_make_charge_value = this.is_make_charge_value || false;
+          loaded.qty_gm = this.qty_gm || 0;
+          loaded.qty_gm_pure = this.qty_gm_pure || 0;
+          loaded.make_charge_value = this.make_charge_value || 0;
+          loaded.purity = this.purity || "";
+          loaded.product_lot = this.product_lot || "";
+          // this.order_type = 'retail';
+          return loaded;
+        },
         set_purity: function(purity){
 					this.purity = purity;
           this.trigger('change',this);
@@ -100,7 +133,8 @@ odoo.define('pos_unfixed.pos', function(require){
 					this.trigger('change',this);
 				},
         set_make_charge_value: function(make_charge_value){
-					this.make_charge_value = make_charge_value;
+          this.make_charge_value = make_charge_value;
+					this.is_make_charge_value = true;
 					this.trigger('change',this);
 				},
         get_qty_gm_str: function(){
@@ -108,35 +142,7 @@ odoo.define('pos_unfixed.pos', function(require){
 				},
 
 
-        export_for_printing: function(){
-            var data = OrderlineSuper.export_for_printing.apply(this, arguments);
-            data.is_unfixed = this.is_unfixed|| false;
-            data.qty_gm = this.qty_gm|| 0;
-            data.qty_gm_pure = this.qty_gm_pure|| 0;
-            data.make_charge_value = this.make_charge_value|| 0;
-            data.purity = this.purity|| "";
-            return data;
-        },
-        init_from_JSON: function(json) {
-            OrderlineSuper.init_from_JSON.apply(this,arguments);
-            this.is_unfixed = json.is_unfixed;
-            this.qty_gm = json.qty_gm;
-            this.qty_gm_pure = json.qty_gm_pure;
-            this.make_charge_value = json.make_charge_value;
-            this.purity = json.purity;
-            this.product_lot = json.product_lot;
-        },
-        export_as_JSON: function() {
-          var loaded = OrderlineSuper.export_as_JSON.apply(this, arguments);
-          loaded.is_unfixed = this.is_unfixed || false;
-          loaded.qty_gm = this.qty_gm || 0;
-          loaded.qty_gm_pure = this.qty_gm_pure || 0;
-          loaded.make_charge_value = this.make_charge_value || 0;
-          loaded.purity = this.purity || "";
-          loaded.product_lot = this.product_lot || "";
-          // this.order_type = 'retail';
-          return loaded;
-        },
+
         get_all_gm_purity: function(){
             var self = this;
             if (self.purity == "") {
@@ -410,6 +416,45 @@ odoo.define('pos_unfixed.pos', function(require){
         console.log("SADDL:QW:LD",list_total);
 				return list_total ;
 	    },
+      get_total_unfixed_purity_qty_gm: function() {
+        var list_total = {};
+        this.orderlines.forEach(function(line) {
+          if (line.is_unfixed) {
+            if (line.purity=="") {
+               line.set_purity("0");
+             }
+             if (!list_total[line.purity]) {
+               list_total[line.purity]=0;
+             }
+             console.log("line.purity",line.purity);
+             list_total[line.purity]-=line.qty_gm_pure;
+
+           }
+        });
+        console.log("SADDL:QW:LD",list_total);
+				return list_total ;
+	    },
+      get_total_unfixed_purity_pure_qty_gm: function() {
+        var list_total = [];
+        var pos = this.pos;
+        if (this.orderlines.models) {
+          var order = this.orderlines.models[0].order;
+          console.log("(((order.get_total_unfixed_purity_qty_gm())))");
+          console.log(order.get_total_unfixed_purity_qty_gm());
+          for (var total_qty in order.get_total_unfixed_purity_qty_gm()) {
+              _.each(pos.list_gold_purity, function(purity) {
+                if (purity.name==(total_qty).toString()) {
+                  var scrap_purity = purity.scrap_purity/1000;
+                  var list = {'pure':total_qty,'qty_gross':order.get_total_unfixed_purity_qty_gm()[total_qty]/scrap_purity,'qty_pure':order.get_total_unfixed_purity_qty_gm()[total_qty],'scrap_purity':scrap_purity}
+                  list_total.push(list);
+                  return true;
+                }
+              });
+          }
+        }
+        console.log("JKAHKJ",list_total);
+        return list_total ;
+      },
       get_total_purity_pure_qty_gm: function() {
         var list_total = [];
         var pos = this.pos;
@@ -560,7 +605,7 @@ odoo.define('pos_unfixed.pos', function(require){
   			posorder_super.init_from_JSON.apply(this,arguments);
   			// this.order_type = json.order_type;
   		},
-      add_paymentline: function(payment_method,unfixed=0,purity="") {
+      add_paymentline: function(payment_method,unfixed=0,unfixed_gross=0,purity="") {
           this.assert_editable();
           var newPaymentline = new models.Paymentline({},{order: this, payment_method:payment_method, pos: this.pos});
           if(!payment_method.is_cash_count || this.pos.config.iface_precompute_cash){
@@ -569,6 +614,10 @@ odoo.define('pos_unfixed.pos', function(require){
           if (unfixed) {
             console.log("unfixed",unfixed);
             newPaymentline.set_amount_gm(unfixed);
+          }
+          if (unfixed_gross) {
+            console.log("unfixed",unfixed_gross);
+            newPaymentline.set_amount_gm_gross(unfixed_gross);
           }
           this.paymentlines.add(newPaymentline);
           this.select_paymentline(newPaymentline);
@@ -598,7 +647,8 @@ odoo.define('pos_unfixed.pos', function(require){
   	models.Paymentline = models.Paymentline.extend({
   		initialize: function(attr,options) {
   			var self = this;
-  			this.gm_unfixed = 0;
+        this.gm_unfixed = 0;
+  			this.gm_unfixed_pure = 0;
         this.purity = "";
 
   			pospayment_super.initialize.call(this,attr,options);
@@ -606,6 +656,7 @@ odoo.define('pos_unfixed.pos', function(require){
       export_as_JSON: function(){
         var loaded = pospayment_super.export_as_JSON.apply(this, arguments);
         loaded.gm_unfixed = this.gm_unfixed || 0;
+        loaded.gm_unfixed_pure = this.gm_unfixed_pure || 0;
         loaded.purity = this.purity;
 
         return loaded;
@@ -614,16 +665,33 @@ odoo.define('pos_unfixed.pos', function(require){
       init_from_JSON: function(json){
         pospayment_super.init_from_JSON.apply(this,arguments);
         this.gm_unfixed = json.gm_unfixed;
+        this.gm_unfixed_pure = json.gm_unfixed_pure;
         this.purity = json.purity;
 
+      },
+      export_for_printing: function(){
+        var data = pospayment_super.export_for_printing.apply(this, arguments);
+        data.gm_unfixed = this.gm_unfixed|| 0;
+        data.gm_unfixed_pure = this.gm_unfixed_pure|| 0;
+        data.purity = this.purity|| 0;
+        return data;
       },
 
       get_amount_gm: function(){
           return this.gm_unfixed;
       },
+      et_amount_gm_pure: function(){
+          return this.gm_unfixed_pure;
+      },
       set_amount_gm: function(value){
           this.order.assert_editable();
           this.gm_unfixed = round_di(parseFloat(value) || 0, this.pos.currency.decimals);
+          this.pos.send_current_order_to_customer_facing_display();
+          this.trigger('change',this);
+      },
+      set_amount_gm_gross: function(value){
+          this.order.assert_editable();
+          this.gm_unfixed_pure = round_di(parseFloat(value) || 0, this.pos.currency.decimals);
           this.pos.send_current_order_to_customer_facing_display();
           this.trigger('change',this);
       },
