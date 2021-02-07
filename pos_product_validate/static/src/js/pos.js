@@ -163,6 +163,7 @@ odoo.define('pos_product_validate.pos', function(require){
           $.each(all, function(index, value) {
             var product_id = $(value).data('product-id');
             var product = self.pos.db.get_product_by_id(product_id)
+            var oeder = self.pos.get_order()
             for (var i = 0; i < output.length; i++) {
               if(product_id == output[i].id ){
                 var product_qty = output[i].qty_available;
@@ -171,6 +172,12 @@ odoo.define('pos_product_validate.pos', function(require){
                 break;
               }
             }
+            // if (order.is_fixed) {
+            //   $(value).find('#availqty').css({'display':'none'});
+            // }else {
+            //   $(value).find('#availqty').css({'display':'block'});
+            //
+            // }
           });
         });
       },
