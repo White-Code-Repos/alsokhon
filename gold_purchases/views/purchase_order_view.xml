@@ -101,6 +101,15 @@
                     </tree>
                   </field>
                 </page>
+                <page string="Assembly Stone From Vendor" name="assembly_mrp_diamond" attrs="{'invisible':['|',('assembly','!=', True),('assembly_type','!=', 'our_stock_a_vendor')]}">
+                  <field name="assembly_diamond_vendor_ids">
+                    <tree editable="top">
+                      <field name="product_id" domain="[('diamond','=',True)]"/>
+                      <field name="stones_quantity" sum="stones_quantity"/>
+                      <field name="carat" sum="carat"/>
+                    </tree>
+                  </field>
+                </page>
                 <page string="Assembly Mix Components" name="assembly_mrp_mix" attrs="{'invisible':['|',('assembly','!=', True),('assembly_type','!=', 'our_stock_a_vendor')]}">
                   <field name="assembly_mix_ids">
                     <tree editable="top">

@@ -64,6 +64,8 @@ class assemblyDescriptionDiamond(models.Model):
     stones_quantity = fields.Float(digits=(16,3))
     stone_setting_rate = fields.Float(digits=(16,3))
     stone_setting_value = fields.Float(digits=(16,3))
+    component_stone_line_id = fields.Many2one('assembly.component.diamond')
+    component_stone_vendor_line_id = fields.Many2one('assembly.component.diamond.vendor')
     @api.onchange('stone_setting_rate','stones_quantity')
     def cacl__stone_setting_value(self):
         self.stone_setting_value = self.stone_setting_rate * self.stones_quantity
@@ -172,11 +174,14 @@ class assemblyComponentsDiamond(models.Model):
             this.final_net_stones_quantity = this.stones_quantity - this.stones_quantity_ret
             this.final_net_carat = this.carat - this.carat_ret
 
-    # @api.onchange('lot_id')
-    # def getvalues(self):
-    #     if self.product_id and self.lot_id:
-    #         self.carat = self.lot_id.carat
+class assemblyComponentsDiamondVendor(models.Model):
+    """Assembly Details."""
+    _name = 'assembly.component.diamond.vendor'
 
+    product_id = fields.Many2one('product.product')
+    stones_quantity = fields.Float(digits=(16,3), string="Stones")
+    carat = fields.Float(digits=(16,3), string="Carat")
+    purchase_diamond_vendor_id = fields.Many2one('purchase.order')
 class assemblyComponentsMix(models.Model):
     """Assembly Details."""
     _name = 'assembly.component.mix'
@@ -477,7 +482,7 @@ class PurchaseOrder(models.Model):
     assembly_back_gold_ids = fields.One2many('assembly.back.component.gold','purchase_back_gold_id')
     assembly_back_diamond_ids = fields.One2many('assembly.back.component.diamond','purchase_back_diamond_id')
     assembly_back_mix_ids = fields.One2many('assembly.back.component.mix','purchase_back_mix_id')
-
+    assembly_diamond_vendor_ids = fields.One2many('assembly.component.diamond.vendor','purchase_diamond_vendor_id')
     def return_component(self):
         diamond_move_lines = []
         scrap_move_lines = []
@@ -649,13 +654,22 @@ class PurchaseOrder(models.Model):
             'product_id':line.product_id.id,
             'stones_quantity':line.final_net_stones_quantity,
             'carat':line.final_net_carat,
-            'our_stock':True
+            'our_stock':True,
+            'component_stone_line_id':line.id
             }))
         gold_description_lines = []
         for line in self.assembly_gold_ids:
             gold_description_lines.append((0,0,{
             'product_id':line.product_id.id,
             'our_stock':True
+            }))
+        for line in self.assembly_diamond_vendor_ids:
+            stone_description_lines.append((0,0,{
+            'product_id':line.product_id.id,
+            'stones_quantity':line.final_net_stones_quantity,
+            'carat':line.final_net_carat,
+            'our_stock':False,
+            'component_stone_vendor_line_id':line.id
             }))
         # self.write({'assembly_description_gold':[(5)]})
         self.write({'assembly_description_gold':gold_description_lines})
@@ -709,7 +723,7 @@ class PurchaseOrder(models.Model):
                     raise ValidationError(_('You Should Add Gold Description Details'))
         stone_description_lines = []
         for line in self.assembly_diamond_ids:
-            old_line = self.env['assembly.description.diamond'].search([('purchase_id_diamond','=',self.id),('product_id','=',line.product_id.id)])
+            old_line = self.env['assembly.description.diamond'].search([('component_stone_line_id','=',line.id)])
             if len(old_line)>0:
                 stone_description_lines.append((1,old_line.id,{
                 'product_id':line.product_id.id,
@@ -732,6 +746,26 @@ class PurchaseOrder(models.Model):
                 }))
             # _logger.info(line.product_id.id)
             # _logger.info(line.product_id.name)
+        for line in self.assembly_diamond_vendor_ids:
+            old_line = self.env['assembly.description.diamond'].search([('component_stone_vendor_line_id','=',line.id)])
+            if len(old_line)>0:
+                stone_description_lines.append((1,old_line.id,{
+                'product_id':line.product_id.id,
+                'stones_quantity':line.stones_quantity,
+                'carat':line.carat,
+                'carat_price':old_line.carat_price,
+                'stones_value':old_line.stones_value,
+                'our_stock':False,
+                'stone_setting_rate':old_line.stone_setting_rate,
+                'stone_setting_value':old_line.stone_setting_value,
+                }))
+            else:
+                stone_description_lines.append((0,0,{
+                'product_id':line.product_id.id,
+                'stones_quantity':line.stones_quantity,
+                'carat':line.carat,
+                'our_stock':False
+                }))
         gold_description_lines = []
         for line in self.assembly_gold_ids:
             old_line = self.env['assembly.description.gold'].search([('purchase_id_gold','=',self.id),('product_id','=',line.product_id.id)])
