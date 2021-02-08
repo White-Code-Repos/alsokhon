@@ -597,7 +597,10 @@ odoo.define('pos_lot_select.pos', function(require){
                     }
                     console.log(pure_weight,self.options.order_line.quantity,lot.gross_weight);
 
+                    self.options.order = self.pos.config.session_type;
+                    console.log(self.options.order);
                     if (!self.options.order.order_fixed&&self.options.order.order_type!='retail') {
+                      console.log("DADQDQWDQ");
                       if (order_line.product.categ.is_scrap) {
                         self.options.order_line.set_qty_gm(self.options.order_line.quantity);
                         self.options.order_line.set_qty_gm_pure(self.options.order_line.quantity*pure_weight);

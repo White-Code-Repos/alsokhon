@@ -493,32 +493,22 @@
       <t t-esc='widget.get_current_type()'/>
 		</div>
 	</t> -->
-  <t t-name="retailButton">
+  <!-- <t t-name="retailButton">
 		<div class='control-button retail_bt' style='background: #6EC89B;'>
 			<i class='fa fa-tag ' />
-      <!-- <t t-if="widget.pos.get_order().order_type">
-          <t t-esc="widget.pos.get_order().order_type" />
-      </t>
-      <t t-if="!widget.pos.get_order().order_type">
-           Order Type
-      </t> -->
+
       Retail
 		</div>
-	</t>
-  <t t-name="saleButton">
+	</t> -->
+  <!-- <t t-name="saleButton">
 		<div class='control-button wSale_bt'>
 			<i class='fa fa-tag  ' />
-      <!-- <t t-if="widget.pos.get_order().order_type">
-          <t t-esc="widget.pos.get_order().order_type" />
-      </t>
-      <t t-if="!widget.pos.get_order().order_type">
-           Order Type
-      </t> -->
+
       Whole Sale
 		</div>
-	</t>
+	</t> -->
   <t t-name="fixedButton">
-		<div class='control-button fixed_bt' style='background: #a0efc7; display:none;'>
+		<div class='control-button fixed_bt' style='background: #a0efc7; '>
 			<i class='fa fa-tag ' />
       <!-- <t t-if="widget.pos.get_order().order_type">
           <t t-esc="widget.pos.get_order().order_type" />
@@ -530,7 +520,7 @@
 		</div>
 	</t>
   <t t-name="unfixedButton">
-		<div class='control-button unfixed_bt' style=' display:none;'>
+		<div class='control-button unfixed_bt' >
 			<i class='fa fa-tag  ' />
       <!-- <t t-if="widget.pos.get_order().order_type">
           <t t-esc="widget.pos.get_order().order_type" />

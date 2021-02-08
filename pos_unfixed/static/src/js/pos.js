@@ -767,61 +767,61 @@ odoo.define('pos_unfixed.pos', function(require){
 
 
 
-    var saleButton = screens.ActionButtonWidget.extend({
-    	template: 'saleButton',
-    	button_click: function(){
-        var self = this;
-        var order = this.pos.get_order();
-        order.order_type = 'sale';
-        order.order_fixed = true;
-        $(".wSale_bt").css({'background': '#6EC89B'});
-        $(".retail_bt").css({'background':'fixed'});
-        $(".fixed_bt").css({'display':'inline-block'});
-        $(".unfixed_bt").css({'display':'inline-block'});
-    	},
-    });
-    screens.define_action_button({
-    	'name': 'saleorderType',
-    	'widget': saleButton,
-    });
-    var retailButton = screens.ActionButtonWidget.extend({
-    	template: 'retailButton',
-    	button_click: function(){
-        var self = this;
-        var order = this.pos.get_order();
-        order.order_type = 'retail';
-        order.order_fixed = true;
-        $(".retail_bt").css({'background': '#6EC89B'});
-        $(".wSale_bt").css({'background':'fixed'});
-        $(".fixed_bt").css({'display':'none'});
-        $(".unfixed_bt").css({'display':'none'});
-        $(".unfixed_product").css({'display':'none'});
-        var order = self.pos.get_order();
-        var all = $('.product');
-        $.each(all, function(index, value) {
-          $(value).find('#availqty').css({'display':'block'});
-        });
-
-    	},
-      // check_type: function () {
-      //     // var name = _t('Order Type');
-      //
-      //     var order = this.pos.get_order();
-      //     console.log(order);
-      //
-      //     if (order.order_type == 'sale') {
-      //       $(".wSale_bt").css({'background': '#6EC89B'});
-      //       $(".retail_bt").css({'background':'fixed'});
-      //     }else {
-      //       $(".retail_bt").css({'background': '#6EC89B'});
-      //       $(".wSale_bt").css({'background':'fixed'});
-      //     }
-      // },
-    });
-    screens.define_action_button({
-    	'name': 'retailorderType',
-    	'widget': retailButton,
-    });
+    // var saleButton = screens.ActionButtonWidget.extend({
+    // 	template: 'saleButton',
+    // 	button_click: function(){
+    //     var self = this;
+    //     var order = this.pos.get_order();
+    //     order.order_type = 'sale';
+    //     order.order_fixed = true;
+    //     $(".wSale_bt").css({'background': '#6EC89B'});
+    //     $(".retail_bt").css({'background':'fixed'});
+    //     $(".fixed_bt").css({'display':'inline-block'});
+    //     $(".unfixed_bt").css({'display':'inline-block'});
+    // 	},
+    // });
+    // screens.define_action_button({
+    // 	'name': 'saleorderType',
+    // 	'widget': saleButton,
+    // });
+    // var retailButton = screens.ActionButtonWidget.extend({
+    // 	template: 'retailButton',
+    // 	button_click: function(){
+    //     var self = this;
+    //     var order = this.pos.get_order();
+    //     order.order_type = 'retail';
+    //     order.order_fixed = true;
+    //     $(".retail_bt").css({'background': '#6EC89B'});
+    //     $(".wSale_bt").css({'background':'fixed'});
+    //     $(".fixed_bt").css({'display':'none'});
+    //     $(".unfixed_bt").css({'display':'none'});
+    //     $(".unfixed_product").css({'display':'none'});
+    //     var order = self.pos.get_order();
+    //     var all = $('.product');
+    //     $.each(all, function(index, value) {
+    //       $(value).find('#availqty').css({'display':'block'});
+    //     });
+    //
+    // 	},
+    //   // check_type: function () {
+    //   //     // var name = _t('Order Type');
+    //   //
+    //   //     var order = this.pos.get_order();
+    //   //     console.log(order);
+    //   //
+    //   //     if (order.order_type == 'sale') {
+    //   //       $(".wSale_bt").css({'background': '#6EC89B'});
+    //   //       $(".retail_bt").css({'background':'fixed'});
+    //   //     }else {
+    //   //       $(".retail_bt").css({'background': '#6EC89B'});
+    //   //       $(".wSale_bt").css({'background':'fixed'});
+    //   //     }
+    //   // },
+    // });
+    // screens.define_action_button({
+    // 	'name': 'retailorderType',
+    // 	'widget': retailButton,
+    // });
 
     var fixedButton = screens.ActionButtonWidget.extend({
     	template: 'fixedButton',
@@ -847,6 +847,10 @@ odoo.define('pos_unfixed.pos', function(require){
     screens.define_action_button({
     	'name': 'fixedType',
     	'widget': fixedButton,
+      'condition': function () {
+        console.log(this.pos);
+    			return this.pos.config.session_type=='sale';
+    	},
     });
     var unfixedButton = screens.ActionButtonWidget.extend({
     	template: 'unfixedButton',
@@ -883,6 +887,9 @@ odoo.define('pos_unfixed.pos', function(require){
     screens.define_action_button({
     	'name': 'unfixedType',
     	'widget': unfixedButton,
+      'condition': function () {
+    			return this.pos.config.session_type=='sale';
+    	},
     });
 
 
