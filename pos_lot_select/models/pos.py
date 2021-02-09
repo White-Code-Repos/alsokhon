@@ -26,6 +26,10 @@ class pos_order_line(models.Model):
     make_value = fields.Monetary('Make Value Per G', digits=(16, 3))
     gold_rate = fields.Float('Gold Rate/G', digits=(16, 3))
 
+
+
+
+
     def _order_line_fields(self, line, session_id=None):
         if line[2].get('pack_lot_ids'):
             lot_name = line[2].get('pack_lot_ids')[0][2]['lot_name']
@@ -67,8 +71,32 @@ class pos_config(models.Model):
     lot_expire_days = fields.Integer('Product Lot expire days.', default=1)
     pos_lot_receipt = fields.Boolean('Print lot Number on receipt',default=1)
     gold_rate = fields.Float(string='Gold Rate', digits=(16, 3), compute="_compute_gold_rate")
+    def check_purity(self):
+        print("ASDJAKSDHAKJLDHQWDQW")
+        print("ASDJAKSDHAKJLDHQWDQW")
+        print("ASDJAKSDHAKJLDHQWDQW")
+        print("ASDJAKSDHAKJLDHQWDQW")
+        print("ASDJAKSDHAKJLDHQWDQW")
+        print("ASDJAKSDHAKJLDHQWDQW")
+        lots = self.env['stock.production.lot'].search([])
+        for lot in lots:
+            purity_gold = self.env['gold.purity'].search([('purity','=',lot.purity)])
+            purity_scrap = self.env['gold.purity'].search([('scrap_purity','=',lot.purity)])
+
+
+            if purity_gold :
+                print('purity_gold',purity_gold)
+                lot.purity_id = purity_gold.id
+            elif purity_scrap:
+                print('purity_scrap',purity_scrap)
+                lot.purity_id = purity_scrap.id
 
     def _compute_gold_rate(self):
+        print("OOOOOOOOOOOOOOOOO")
+        print("OOOOOOOOOOOOOOOOO")
+        print("OOOOOOOOOOOOOOOOO")
+        self.check_purity()
+
         for this in self:
             if this.currency_id and this.currency_id.is_gold :
                 rates = this.env['gold.rates'].search([
