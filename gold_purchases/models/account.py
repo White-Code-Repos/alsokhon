@@ -94,7 +94,7 @@ class AccountMoveLine(models.Model):
     gold_rate = fields.Float('Gold Rate/G', digits=(16, 3))
     gold_value = fields.Monetary('Gold Value', digits=(16, 3))
     gold = fields.Boolean(related="account_id.gold", store=True)
-    # polish_rhodium = fields.Float('Polish & Rhodium', digits=(16,3))
+    total_ds_value = fields.Float(string="Total Stone Value", digits=(16, 3))
 
 
 class GoldPayment(models.Model):
@@ -118,6 +118,7 @@ class AccountMove(models.Model):
                 this.is_unfixed = True
     diamond = fields.Boolean(string="Stone", compute="_compute_gold_state")
     gold = fields.Boolean(string="Gold", compute="_compute_gold_state")
+    assembly = fields.Boolean(string="Assembly")
     def _compute_gold_state(self):
         for this in self:
             if this.journal_id.gold:
@@ -425,20 +426,26 @@ class AccountMove(models.Model):
     purchase_type = fields.Selection([('fixed', 'Fixed'),
                                         ('unfixed', 'Unfixed')], string='purchase type')
     gold_rate_value = fields.Float( string='Gold Rate/G',compute="_compute_make_value_move",store=True, digits=(16, 3))
-    make_value_move = fields.Float( string='Remainning Make Charge',compute="_compute_make_value_move",store=True, digits=(16, 3))
-    make_value_move_perm = fields.Float( string='Due Make Charge',store=True, digits=(16, 3))
-    make_value_move_paid = fields.Float( string='Paid Make Charge', compute="compute_gold_paid",store=True, digits=(16, 3))
+    make_value_move = fields.Float( string='Remainning Money',compute="_compute_make_value_move",store=True, digits=(16, 3))
+    make_value_move_perm = fields.Float( string='Due Money',store=True, digits=(16, 3))
+    make_value_move_paid = fields.Float( string='Paid Money', compute="compute_gold_paid",store=True, digits=(16, 3))
     make_value_move_perm_flag = fields.Boolean(default=False)
     pure_wt_value = fields.Float( string='Remaining Pure Weight',compute="_compute_make_value_move",store=True, digits=(16, 3))
     pure_wt_value_perm = fields.Float( string='Due Pure Weight',store=True, digits=(16, 3))
     pure_wt_value_paid = fields.Float( string='Paid Pure Weight', compute="compute_gold_paid",store=True, digits=(16, 3))
     pure_wt_value_perm_flag = fields.Boolean(default=False)
+    # dimaond_value_move = fields.Float( string='Remainning Diamond Value',compute="_compute_make_value_move",store=True, digits=(16, 3))
+    # dimaond_value_move_perm = fields.Float( string='Due Diamond Value',store=True, digits=(16, 3))
+    # dimaond_value_move_paid = fields.Float( string='Paid Diamond Value', compute="compute_gold_paid",store=True, digits=(16, 3))
+    # dimaond_value_move_perm_flag = fields.Boolean(default=False)
+
 
     @api.depends('gold_rate_value','make_value_move','make_value_move_perm','make_value_move_paid','make_value_move_perm_flag','pure_wt_value','pure_wt_value_perm','pure_wt_value_paid','pure_wt_value_perm_flag')
     def compute_gold_paid(self):
         for this in self:
             this.make_value_move_paid = this.make_value_move_perm - this.make_value_move
             this.pure_wt_value_paid = this.pure_wt_value_perm - this.pure_wt_value - this.unfixed_fixed_gold
+            this.dimaond_value_move_paid = this.dimaond_value_move_perm - this.dimaond_value_move
 
 
     unfixed_move_id = fields.Many2one('account.move')
@@ -584,15 +591,18 @@ class AccountMove(models.Model):
                 make_value = 0.00
                 pure = 0.00
                 rate = 0.00
+                got_rate = False
                 for line in rec.invoice_line_ids:
                     print(line)
                     print(line.pure_wt)
                     print(line.make_value)
                     if line.pure_wt == 0.00 and line.make_value == 0.00:
-                        make_value = line.price_unit
+                        make_value += line.price_unit
                     else:
-                        pure = line.pure_wt
-                        rate = line.gold_rate
+                        make_value += line.total_ds_value
+                        pure += line.pure_wt
+                        if not got_rate:
+                            rate = line.gold_rate
                 rec.pure_wt_value = pure
                 rec.gold_rate_value = rate
                 if rec.amount_by_group:
@@ -606,7 +616,6 @@ class AccountMove(models.Model):
                     if rec.make_value_move_perm_flag == False:
                         rec.make_value_move_perm = rec.make_value_move
                         rec.make_value_move_perm_flag = True
-
 
 
 
@@ -806,7 +815,7 @@ class Account_Payment_Inherit(models.Model):
     _inherit = 'account.payment'
 
     is_unfixed_wizard = fields.Boolean('is_unfixed')
-    unfixed_option = fields.Selection([('make_tax', 'make value + tax'), ('pay_gold_value', 'pay gold value')],string='Unfixed Option')
+    unfixed_option = fields.Selection([('make_tax', 'Money (Non Gold Value)'), ('pay_gold_value', 'Pay Fixed Gold Value')],string='Unfixed Option')
 
     @api.onchange('unfixed_option')
     def _onchange_unfixed_option(self):

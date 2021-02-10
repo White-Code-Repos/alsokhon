@@ -36,9 +36,12 @@
                       <field name="product_id"/>
                       <field name="quantity" sum="quantity"/>
                       <field name="gross_weight" sum="gross_weight"/>
+                      <field name="net_weight" sum="gross_weight"/>
                       <field name="purity_id"/>
                       <field name="purity"/>
                       <field name="pure_weight" sum="pure_weight"/>
+                      <field name="polish_rhodium" sum="polish_rhodium"/>
+                      <field name="making_charge" sum="making_charge"/>
                     </tree>
                   </field>
                 </page>
@@ -170,7 +173,7 @@
                     <attribute name="force_save">1</attribute>
                 </xpath>
                 <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom_qty']" position="attributes">
-                    <attribute name="attrs">{'readonly': ['|',('is_make_value', '=', True),('state', 'in', ['sale','done','cancel'])]}</attribute>
+                    <attribute name="attrs">{'readonly': ['|',('is_make_value', '=', True),('state', 'in', ['sale','done','cancel']),('product_id.gold_with_lots','!=',True)]}</attribute>
                     <attribute name="force_save">1</attribute>
                 </xpath>
                  <xpath expr="//form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='qty_delivered']" position="attributes">

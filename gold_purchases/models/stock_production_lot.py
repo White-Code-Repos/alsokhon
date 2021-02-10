@@ -7,12 +7,14 @@ class assemblyDescriptionLotGold(models.Model):
     _name = 'assembly.description.lot.gold'
 
     product_id = fields.Many2one('product.product')
-    quantity = fields.Float()
-    gross_weight = fields.Float()
-    pure_weight = fields.Float()
+    quantity = fields.Float(digits=(16,3))
+    gross_weight = fields.Float(digits=(16,3))
+    net_weight = fields.Float(digits=(16,3))
+    pure_weight = fields.Float(digits=(16,3))
     purity_id = fields.Many2one('gold.purity')
-    purity = fields.Float()
-    # polish_rhodium = fields.Float('Polish & Rhodium',digits=(16,3))
+    purity = fields.Float(digits=(16,3))
+    polish_rhodium = fields.Float('Polish & Rhodium',digits=(16,3))
+    making_charge= fields.Float('Making Charge',digits=(16,3))
     lot_id_gold = fields.Many2one('stock.production.lot')
 
 class assemblyDescriptionLotDiamond(models.Model):
@@ -72,7 +74,7 @@ class StockProductionLot(models.Model):
                 this.assembly = True
                 this.diamond = False
 
-    gross_weight = fields.Float(string="Gross Weight")
+    gross_weight = fields.Float(string="Gross Weight", digits=(16,3))
     purity_id = fields.Many2one('gold.purity')
     # , string="Purity Karat", compute="_compute_purity_id"
     # def _compute_purity_id(self):
@@ -89,7 +91,7 @@ class StockProductionLot(models.Model):
     #             if purity_id:
     #                 this.purity_id = purity_id.id
 
-    purity = fields.Float(string="Purity")
+    purity = fields.Float(string="Purity",digits=(16,3))
     is_scrap = fields.Boolean(related="product_id.categ_id.is_scrap" , string="scrap", store=True)
     pure_weight = fields.Float(compute='get_pure_weight',string="Pure Weight", store=True, digits=(16, 3))
     item_category_id = fields.Many2one('item.category',string="Item Category")
