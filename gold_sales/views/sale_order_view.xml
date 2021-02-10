@@ -173,7 +173,7 @@
                     <attribute name="force_save">1</attribute>
                 </xpath>
                 <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom_qty']" position="attributes">
-                    <attribute name="attrs">{'readonly': ['|',('is_make_value', '=', True),('state', 'in', ['sale','done','cancel']),('product_id.gold_with_lots','!=',True)]}</attribute>
+                    <!-- <attribute name="attrs">{'readonly': ['|',('is_make_value', '=', True),('state', 'in', ['sale','done','cancel']),('product_id.gold_with_lots','!=',True)]}</attribute> -->
                     <attribute name="force_save">1</attribute>
                 </xpath>
                  <xpath expr="//form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='qty_delivered']" position="attributes">
