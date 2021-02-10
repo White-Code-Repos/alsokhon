@@ -445,7 +445,7 @@ class AccountMove(models.Model):
         for this in self:
             this.make_value_move_paid = this.make_value_move_perm - this.make_value_move
             this.pure_wt_value_paid = this.pure_wt_value_perm - this.pure_wt_value - this.unfixed_fixed_gold
-            this.dimaond_value_move_paid = this.dimaond_value_move_perm - this.dimaond_value_move
+            # this.dimaond_value_move_paid = this.dimaond_value_move_perm - this.dimaond_value_move
 
 
     unfixed_move_id = fields.Many2one('account.move')
