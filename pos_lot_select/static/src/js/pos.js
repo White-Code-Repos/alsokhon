@@ -597,7 +597,7 @@ odoo.define('pos_lot_select.pos', function(require){
                     }
                     console.log(pure_weight,self.options.order_line.quantity,lot.gross_weight);
 
-                    self.options.order = self.pos.config.session_type;
+                    self.options.order.order_type = self.pos.config.session_type;
                     console.log(self.options.order);
                     if (!self.options.order.order_fixed&&self.options.order.order_type!='retail') {
                       console.log("DADQDQWDQ");
@@ -628,6 +628,8 @@ odoo.define('pos_lot_select.pos', function(require){
                       console.log("self.options.order_line");
                       console.log(self.options.order_line);
                       console.log(self.options.order_line.product);
+                      console.log(self.options);
+                      console.log(self.options.order);
                       console.log(product);
                       self.options.order.add_product(product, {
                         quantity: 1,
