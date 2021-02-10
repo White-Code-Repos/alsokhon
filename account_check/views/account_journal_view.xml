@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_account_check_journal_form" model="ir.ui.view">
+        <field name="name">account_check.account.journal.form</field>
+        <field name="model">account.journal</field>
+        <field name="inherit_id" ref="account.view_account_journal_form"/>
+        <field name="arch" type="xml">
+            <page name="bank_account">
+                <field name="payment_received_bool" invisible="1"/>
+                <field name="payment_issued_bool" invisible="1"/>
+                <label for="checkbook_ids"/>
+                <field name="checkbook_ids" attrs="{'invisible': [('type', '!=', 'bank')]}"
+                       context="{'company_id':company_id}"/>
+            </page>
+            <xpath expr="//notebook/page/group/group[2]" position="after">
+                <group string="Check Accounts">
+                    <field name="holding_check_account_id" attrs="{'invisible': [('payment_received_bool', '=', False)]}"/>
+                    <field name="under_collection_check_account_id" attrs="{'invisible': [('payment_received_bool', '=', False)]}"/>
+                    <field name="deferred_check_account_id" attrs="{'invisible': [('payment_issued_bool', '=', False)]}"/>
+                </group>
+            </xpath>
+        </field>
+    </record>
+</odoo>

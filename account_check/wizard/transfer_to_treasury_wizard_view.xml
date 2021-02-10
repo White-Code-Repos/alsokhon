@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="action_transfer_treasury_wizard_view">
+        <field name="name">action.transfer.treasury.wizard.form</field>
+        <field name="model">action.transfer.treasury.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Change Treasury">
+                <group colspan="4" col="4">
+                    <field name="treasury_journal_id" domain="[('type', '=', 'cash')]"/>
+                    <field name="check_id" invisible="1"/>
+                </group>
+                <footer>
+                    <button string="Treasury" name="transfer_to_treasury_wizard" type="object" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_transfer_treasury_wizard" model="ir.actions.act_window">
+        <field name="name">Change Treasury</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">action.transfer.treasury.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="sell_check_action_wizard_view">
+        <field name="name">account.sell.check.wizard.form</field>
+        <field name="model">account.sell.check.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Sell Check">
+                <group colspan="4" col="4">
+                    <field name="journal_id" domain="[('type', 'in', ('cash', 'bank'))]"/>
+                    <field name="date"/>
+                    <field name="write_off_account_id" attrs="{'invisible': [('less_amount', '=', False)]}"/>
+                    <field name="analytic_account_id" attrs="{'invisible': [('less_amount', '=', False)]}"/>
+                    <field name="amount"/>
+                    <field name="less_amount" invisible="1"/>
+                    <field name="check_id" invisible="1"/>
+                </group>
+                <footer>
+                    <button string="Confirm" name="action_confirm" type="object" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_wizard_sell_check" model="ir.actions.act_window">
+        <field name="name">Sell Check</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">account.sell.check.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

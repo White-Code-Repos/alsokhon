@@ -32,9 +32,12 @@ class assemblyDescriptionSaleGold(models.Model):
     product_id = fields.Many2one('product.product')
     quantity = fields.Float(digits=(16,3))
     gross_weight = fields.Float(digits=(16,3))
+    net_weight = fields.Float(digits=(16,3))
     pure_weight = fields.Float(digits=(16,3))
     purity_id = fields.Many2one('gold.purity')
     purity = fields.Float(digits=(16,3))
+    polish_rhodium = fields.Float('Polish & Rhodium',digits=(16,3))
+    making_charge= fields.Float('Making Charge',digits=(16,3))
     sale_order_gold = fields.Many2one('sale.order')
     sol_product = fields.Many2one('product.product')
 
@@ -92,6 +95,7 @@ class SaleOrder(models.Model):
                     'product_id':detgol.product_id.id,
                     'quantity':detgol.quantity,
                     'gross_weight':detgol.gross_weight,
+                    'net_weight':detgol.net_weight,
                     'purity_id':detgol.purity_id.id,
                     'purity':detgol.purity,
                     'pure_weight':detgol.pure_weight,
@@ -206,6 +210,7 @@ class SaleOrder(models.Model):
                     'product_id':detgol.product_id.id,
                     'quantity':detgol.quantity,
                     'gross_weight':detgol.gross_weight,
+                    'net_weight':detgol.net_weight,
                     'purity_id':detgol.purity_id.id,
                     'purity':detgol.purity,
                     'pure_weight':detgol.pure_weight,
@@ -418,10 +423,10 @@ class SaleOrderLine(models.Model):
             # print(self.lot_id.pure_weight)
             self.gross_wt = self.lot_id.gross_weight
             self.pure_wt = self.lot_id.pure_weight
-            if self.lot_id.purity_id.purity != self.lot_id.purity and not self.product_id.scrap :
+            if self.lot_id.purity_id.gold_sales_hallmark != self.lot_id.purity and not self.product_id.scrap :
                 self.purity_hall = self.lot_id.purity
                 self.onchange_purity_hall()
-            elif self.lot_id.purity_id.scrap_purity != self.lot_id.purity and self.product_id.scrap :
+            elif self.lot_id.purity_id.scrap_sales_hallmark != self.lot_id.purity and self.product_id.scrap :
                 self.purity_hall = self.lot_id.purity
                 self.onchange_purity_hall()
             # self.purity = self.lot_id.purity
@@ -497,9 +502,9 @@ class SaleOrderLine(models.Model):
                 raise ValidationError(_('purity hallmark between 1 - 1000'))
             if rec.purity_hall:
                 if rec.product_id.gold_with_lots:
-                    rec.purity_diff = (rec.purity_hall - rec.purity_id.purity) / 1000
+                    rec.purity_diff = (rec.purity_hall - rec.purity_id.gold_sales_hallmark) / 1000
                 else:
-                    rec.purity_diff = ( rec.product_uom_qty * (rec.purity_hall - rec.purity_id.purity)) / 100
+                    rec.purity_diff = ( rec.product_uom_qty * (rec.purity_hall - rec.purity_id.gold_sales_hallmark)) / 100
 
     scrap_state_read = fields.Boolean(compute="_compute_scrap_state_read")
     @api.onchange('product_id')
@@ -514,12 +519,14 @@ class SaleOrderLine(models.Model):
 
 
     @api.onchange('product_uom_qty')
-    def update_gross(self):
+    def update_gross_and_carat(self):
+        print("33333333333333")
         if self.product_id and self.product_id.categ_id.is_scrap and self.product_uom_qty:
             self.gross_wt = self.product_uom_qty
         elif  self.product_id and self.product_id.categ_id.is_diamond and self.product_uom_qty:
             self.carat = self.product_uom_qty
         elif self.product_id and self.product_id.gold_with_lots and self.product_uom_qty:
+            print("151515151")
             self.gross_wt = self.product_uom_qty
 
     # def write(self, vals):
@@ -590,10 +597,10 @@ class SaleOrderLine(models.Model):
                 else:
                     if rec.product_id.gold_with_lots:
                         rec.pure_wt = rec.gross_wt * (rec.purity_id and (
-                                rec.purity_id.purity / 1000.000) or 0)
+                                rec.purity_id.gold_sales_hallmark / 1000.000) or 0)
                     else:
                         rec.pure_wt = rec.gross_wt * (rec.purity_id and (
-                                rec.purity_id.scrap_purity / 1000.000) or 0)
+                                rec.purity_id.scrap_sales_hallmark / 1000.000) or 0)
 
             else:
                 if rec.purity_diff != 0:
@@ -602,7 +609,7 @@ class SaleOrderLine(models.Model):
                     #         rec.purity_id.purity / 1000.000) or 0)
                 else:
                     rec.pure_wt = rec.product_uom_qty * rec.gross_wt * (rec.purity_id and (
-                            rec.purity_id.purity / 1000.000) or 0)
+                            rec.purity_id.gold_sales_hallmark / 1000.000) or 0)
             rec.total_pure_weight = rec.pure_wt
             # NEED TO ADD PURITY DIFF + rec.purity_diff
             # new_pure_wt = rec.pure_wt + rec.purity_diff
@@ -812,7 +819,7 @@ class SaleOrderLine(models.Model):
             if product_object.invoice_policy == "delivery":
                 if self.received_gross_wt < (self.gross_wt * self.product_uom_qty):
                     total_pure_weight = self.received_gross_wt * (self.purity_id and (
-                        self.purity_id.purity / 1000.000) or 1)
+                        self.purity_id.gold_sales_hallmark / 1000.000) or 1)
                     try:
                         diff_gross =  (self.gross_wt * self.product_uom_qty) / self.received_gross_wt
                     except:
@@ -1130,7 +1137,7 @@ class StockRule(models.Model):
                                             'carat': sol.carat,
                                             'gross_weight': sol.gross_wt,
                                             'pure_weight': sol.pure_wt,
-                                            'purity': sol.purity_id.scrap_purity,
+                                            'purity': sol.purity_id.scrap_sales_hallmark,
                                             'purity_id': sol.purity_id.id,
                                             'gold_rate': sol.gold_rate,
                                             'selling_karat_id':
@@ -1161,7 +1168,7 @@ class StockRule(models.Model):
                                             'carat': sol.carat,
                                             'gross_weight': sol.gross_wt,
                                             'pure_weight': sol.pure_wt,
-                                            'purity': sol.purity_id.purity,
+                                            'purity': sol.purity_id.gold_sales_hallmark,
                                             'purity_id': sol.purity_id.id,
                                             'gold_rate': sol.gold_rate,
                                             'selling_karat_id':
@@ -1194,7 +1201,7 @@ class StockRule(models.Model):
                                             'carat': sol.carat,
                                             'gross_weight': sol.gross_wt * sol.product_uom_qty,
                                             'pure_weight': sol.pure_wt,
-                                            'purity': sol.purity_id.purity,
+                                            'purity': sol.purity_id.gold_sales_hallmark,
                                             'purity_id': sol.purity_id.id,
                                             'gold_rate': sol.gold_rate,
                                             'selling_karat_id':

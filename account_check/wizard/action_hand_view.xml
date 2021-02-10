@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="action_handed_wizard_view">
+        <field name="name">action.handed.wizard.form</field>
+        <field name="model">action.handed.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Handed Check">
+                <group colspan="4" col="4">
+                    <field name="employee_id"/>
+                    <field name="check_id" invisible="1"/>
+                </group>
+                <footer>
+                    <button string="handed" name="change_state_to_handed" type="object" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_check_handed_wizard" model="ir.actions.act_window">
+        <field name="name">Handed Check</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">action.handed.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

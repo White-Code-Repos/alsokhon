@@ -1,0 +1,117 @@
+<odoo>
+    <data>
+        <record id="portfolio_account_check_form" model="ir.ui.view">
+            <field name="name">check.portfolio.form</field>
+            <field name="model">check.portfolio</field>
+            <field name="arch" type="xml">
+                <form string="Portfolio Check">
+                    <header>
+                        <field name="is_deposit" invisible="1"/>
+                        <field name="is_depit" invisible="1"/>
+                        <button name="hand_check_change_state" string="Hand Checks" class="oe_highlight" states="draft"
+                                type="object"/>
+                        <button name="open_wizard_inbank_check_portfolio" type="object" class="oe_highlight"
+                                string="Deposit In Bank"
+                                attrs="{'invisible': ['|',('is_deposit','!=',False),('state','!=','inprogress')]}"/>
+                        <button name="bank_debit_action_portfolio" type="object" string="Debited To Account"
+                                class="oe_highlight"
+                                attrs="{'invisible': ['|','|',('is_depit','=',True),('is_deposit','!=',True),('state','!=','inprogress')]}"/>
+                        <button name="return_to_treasury" type="object" string="Return To treasury" class="oe_highlight"
+                                attrs="{'invisible': [('state','in',['closed','draft','cancel'])]}"/>
+                        <button name="set_to_draft" type="object" string="SET TO DRAFT"
+                                attrs="{'invisible': [('state','!=','cancel')]}"/>
+                        <button name="set_to_cancel" type="object" string="Cancel"
+                                attrs="{'invisible': [('state','in',['closed','cancel'])]}"/>
+                        <field name="state" widget="statusbar" statusbar_visible="draft,inprogress,closed"/>
+                    </header>
+                    <sheet>
+                        <div class="oe_title">
+                            <span class="o_form_label">
+                                Portfolio Number
+                            </span>
+                            <h1>
+                                <field name="name" readonly="1"/>
+                            </h1>
+                        </div>
+
+                        <group colspan="4" col="4">
+                            <field name="journal_id" required="1" domain="[('type', '=', 'bank')]" attrs="{'readonly': [('state','=','closed')]}"/>
+                            <field name="bank_id"/>
+                            <field name="date" attrs="{'readonly': [('state','=','closed')]}"/>
+                            <field name="inbank_account_id"/>
+                        </group>
+                        <notebook>
+                            <page string="Checks">
+                                <field name="portfolio_line_ids" attrs="{'readonly': [('state','!=','draft')]}">
+                                    <tree editable="bottom">
+                                        <field name="check_id" required="1" options="{'no_create': True, 'no_create_edit':True}"/>
+                                        <field name="check_number" string="Check No"/>
+                                        <field name="amount" widget="monetary"
+                                               options="{'currency_field': 'currency_id'}"/>
+                                        <field name="payment_date"/>
+                                        <field name="partner_id"/>
+                                        <field name="state"/>
+                                        <field name="type" invisible="1"/>
+                                        <button name="return_to_treasury" type="object" string="Return To treasury"
+                                                class="oe_highlight"
+                                                attrs="{'invisible': ['|',('state','!=','handed'),('type','!=','third_check')]}"/>
+                                        <button name="return_to_treasury_debosit" type="object"
+                                                string="Return To treasury" class="oe_highlight"
+                                                attrs="{'invisible': ['|',('state','!=','inbank'),('type','!=','third_check')]}"/>
+                                    </tree>
+                                </field>
+                            </page>
+                            <page string="Notes">
+                                <field name="notes" nolabel="1" attrs="{'readonly': [('state','=','closed')]}"/>
+                            </page>
+                        </notebook>
+                    </sheet>
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_followers"/>
+                        <field name="activity_ids" widget="mail_activity"/>
+                        <field name="message_ids" widget="mail_thread"/>
+                    </div>
+                </form>
+            </field>
+        </record>
+
+
+        <record id="portfolio_account_check_tree" model="ir.ui.view">
+            <field name="name">check.portfolio.tree</field>
+            <field name="model">check.portfolio</field>
+            <field name="arch" type="xml">
+                <tree string="Portfolio">
+                    <field name="name"/>
+                    <field name="journal_id"/>
+                    <field name="bank_id"/>
+                    <field name="date"/>
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <record id="portfolio_account_check_action" model="ir.actions.act_window">
+            <field name="name">Check Portfolio</field>
+            <field name="type">ir.actions.act_window</field>
+            <field name="res_model">check.portfolio</field>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    <!-- Add Text Here -->
+                </p>
+            </field>
+        </record>
+        <menuitem id="portfolio_account_check_menuitem" name="Portfolio Checks" parent="account_check.menu_checks"
+                  action="portfolio_account_check_action" groups="base.group_partner_manager" sequence="3"/>
+
+
+        <record id="egypt_sequance_expenses" model="ir.sequence">
+            <field name="name">Portfolio Number</field>
+            <field name="code">check.portfolio</field>
+            <field name="prefix">PORTFOLIO/</field>
+            <field name="padding">3</field>
+        </record>
+
+    </data>
+</odoo>
