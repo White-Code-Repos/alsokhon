@@ -631,10 +631,14 @@ odoo.define('pos_lot_select.pos', function(require){
                       console.log(self.options);
                       console.log(self.options.order);
                       console.log(product);
+                      var price = order_line.quantity * lot.selling_making_charge*lot.gross_weight ;
+                      if (self.options.order_line.product.gold_with_lots) {
+                        price = order_line.quantity * lot.selling_making_charge;
+                      }
                       self.options.order.add_product(product, {
                         quantity: 1,
-                        price: order_line.quantity * lot.gross_weight * lot.selling_making_charge,
-                        charge: order_line.quantity * lot.gross_weight * lot.selling_making_charge,
+                        price: price,
+                        charge: price,
                       });
 
                     }
