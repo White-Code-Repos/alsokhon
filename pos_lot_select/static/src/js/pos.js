@@ -625,6 +625,10 @@ odoo.define('pos_lot_select.pos', function(require){
 
                     if(order_line.product.categ.is_gold && order_line.product.making_charge_id ){
                       var product = self.pos.db.get_product_by_id(self.options.order_line.product.making_charge_id[0]);
+                      console.log("self.options.order_line");
+                      console.log(self.options.order_line);
+                      console.log(self.options.order_line.product);
+                      console.log(product);
                       self.options.order.add_product(product, {
                         quantity: 1,
                         price: order_line.quantity * lot.gross_weight * lot.selling_making_charge,
