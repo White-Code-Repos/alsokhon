@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_account_checkbook_tree" model="ir.ui.view">
+        <field name="name">account.checkbook.tree</field>
+        <field name="model">account.checkbook</field>
+        <field name="arch" type="xml">
+            <tree string="Checkbooks">
+                <field name="name"/>
+                <field name="journal_id"/>
+                <field name="next_number"/>
+                <field name="range_from"/>
+                <field name="range_to"/>
+                <field name="block_manual_number"/>
+                <!-- <field name="company_id" groups="base.group_multi_company"/> -->
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_account_checkbook_form" model="ir.ui.view">
+        <field name="name">account.checkbook.form</field>
+        <field name="model">account.checkbook</field>
+        <field name="arch" type="xml">
+            <form string="Checkbooks">
+                <header string="Checkbooks">
+                    <field name="state" widget="statusbar" clickable="True"/>
+                </header>
+                <sheet string="Checkbooks">
+                    <group colspan="4" col="4">
+                        <field name="issue_check_subtype"/>
+                        <field name="name" invisible="1"/>
+                        <field name="sequence_id"/>
+                        <field name="journal_id"/>
+                        <field name="next_number"/>
+                        <field name="range_from"/>
+                        <field name="range_to"/>
+                        <field name="sequence_prefix"/>
+                        <field name="digit_number"/>
+                        <field name="block_manual_number"/>
+                    </group>
+                    <notebook>
+                        <page string="Checkbook Sequence">
+                            <field name="sequence_ids" nolabel="1">
+                                <tree>
+                                    <field name="name"/>
+                                    <field name="state"/>
+                                </tree>
+                                <form string="Checkbook Sequence">
+                                    <sheet>
+                                        <field name="name"/>
+                                        <field name="state"/>
+                                        <field name="checkbook_sequence" invisible="1"/>
+                                    </sheet>
+                                </form>
+                            </field>
+                        </page>
+                    </notebook>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_account_checkbook" model="ir.actions.act_window">
+        <field name="name">Account Checkbooks</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">account.checkbook</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="checkbooks_menu_id" name="Checkbooks" parent="account.menu_finance_configuration" sequence="70"/>
+
+    <menuitem action="action_account_checkbook"
+              id="menu_action_account_checkbook_form"
+              parent="checkbooks_menu_id"
+              sequence="1"/>
+
+</odoo>        

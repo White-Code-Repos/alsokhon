@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <record id="seq_check_deposited" model="ir.sequence">
+            <field name="name">Deposited Seq</field>
+            <field name="code">account_check_action</field>
+            <field name="padding">1</field>
+        </record>
+    </data>
+</odoo>
