@@ -380,15 +380,15 @@ class AccountMove(models.Model):
                     self.create_gold_fixing_entry(stock_picking,value)
                     self.pure_wt_value -= value
                     self.write({'unfixed_fixed_gold': self.unfixed_fixed_gold+value})
-                    self.write({'unfixed_fixed_remain': self.unfixed_fixed_remain+self.unfixed_fixed_value})
+                    self.write({'unfixed_fixed_value': self.unfixed_fixed_value+self.unfixed_fixed_gold*self.gold_rate_value})
 
     unfixed_fixed_gold = fields.Float('Unfixed -> Fixed Gold', digits=(16, 3))
-    unfixed_fixed_value = fields.Float('Unfixed -> Fixed Due', compute="compute_unfixed_fixed_value", digits=(16, 3))
-    unfixed_fixed_paid = fields.Float('Unfixed -> Fixed Paid', compute="compute_unfixed_fixed_paid", digits=(16, 3))
-    def compute_unfixed_fixed_paid(self):
-        for this in self:
-            this.unfixed_fixed_paid = this.unfixed_fixed_value - this.unfixed_fixed_remain
-    unfixed_fixed_remain = fields.Float('Unfixed -> Fixed Remaining', digits=(16, 3))
+    unfixed_fixed_value = fields.Float('Unfixed -> Fixed Due', digits=(16, 3))
+    unfixed_fixed_paid = fields.Float('Unfixed -> Fixed Paid', digits=(16, 3))
+    # def compute_unfixed_fixed_paid(self):
+    #     for this in self:
+    #         this.unfixed_fixed_paid = this.unfixed_fixed_value - this.unfixed_fixed_remain
+    unfixed_fixed_remain = fields.Float('Unfixed -> Fixed Remaining',compute="compute_unfixed_fixed_remain" digits=(16, 3))
     fixed_not_paid = fields.Boolean(default=True)
     fixing_move = fields.Many2one('account.move')
     unfixing_move = fields.Many2one('account.move')
@@ -402,12 +402,9 @@ class AccountMove(models.Model):
     #         else:
     #             this.unfixed_fixed_remain = this.unfixed_fixed_value
 
-    def compute_unfixed_fixed_value(self):
+    def compute_unfixed_fixed_remain(self):
         for this in self:
-            if this.gold_rate_value and this.unfixed_fixed_gold > 0.00:
-                this.unfixed_fixed_value = this.gold_rate_value * this.unfixed_fixed_gold
-            else:
-                this.unfixed_fixed_value = 0.0
+            this.unfixed_fixed_remain = this.unfixed_fixed_value - this.unfixed_fixed_paid
 
 
     def open_wizard_for_fixing(self):
@@ -913,7 +910,7 @@ class Account_Payment_Inherit(models.Model):
 
                     if rec.unfixed_option == "pay_gold_value":
                         print("*********************************")
-                        rec.invoice_ids.write({'unfixed_fixed_remain': rec.invoice_ids.unfixed_fixed_remain - rec.amount,'fixed_not_paid':False })
+                        rec.invoice_ids.write({'unfixed_fixed_paid': rec.invoice_ids.unfixed_fixed_paid + rec.amount,'fixed_not_paid':False })
                         print(rec.invoice_ids.unfixed_fixed_paid)
                         print(rec.invoice_ids.unfixed_fixed_remain)
 
