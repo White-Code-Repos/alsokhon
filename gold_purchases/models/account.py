@@ -369,7 +369,7 @@ class AccountMove(models.Model):
                     self.create_gold_fixing_entry_sale(stock_picking,value)
                     self.pure_wt_value -= value
                     self.write({'unfixed_fixed_gold': self.unfixed_fixed_gold+value})
-                    self.write({'unfixed_fixed_remain': self.unfixed_fixed_remain+self.unfixed_fixed_value})
+                    self.write({'unfixed_fixed_value': self.unfixed_fixed_value+self.unfixed_fixed_gold*self.gold_rate_value})
     def convert_fixed(self,value):
         if self.invoice_origin and 'P0'in self.invoice_origin:
             purchase_order = self.env['purchase.order'].search([('name','=',self.invoice_origin)])
@@ -388,7 +388,7 @@ class AccountMove(models.Model):
     # def compute_unfixed_fixed_paid(self):
     #     for this in self:
     #         this.unfixed_fixed_paid = this.unfixed_fixed_value - this.unfixed_fixed_remain
-    unfixed_fixed_remain = fields.Float('Unfixed -> Fixed Remaining',compute="compute_unfixed_fixed_remain" digits=(16, 3))
+    unfixed_fixed_remain = fields.Float('Unfixed -> Fixed Remaining',compute="compute_unfixed_fixed_remain", digits=(16, 3))
     fixed_not_paid = fields.Boolean(default=True)
     fixing_move = fields.Many2one('account.move')
     unfixing_move = fields.Many2one('account.move')
