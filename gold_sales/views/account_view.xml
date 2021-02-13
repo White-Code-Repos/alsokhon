@@ -19,7 +19,7 @@
           <field name="arch" type="xml">
               <xpath expr="//form/sheet/group/group[@name='right_column']/div/field[@name='amount']" position="replace">
                 <field name="unfixed_option" invisible="1"/>
-                <field name="amount" force_save="1" attrs="{'readonly':[('unfixed_option','!=',False)]}"/>
+                <field name="amount"/>
               </xpath>
           </field>
       </record>
