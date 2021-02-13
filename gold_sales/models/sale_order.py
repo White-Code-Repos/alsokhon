@@ -425,14 +425,18 @@ class SaleOrderLine(models.Model):
             # print(self.lot_id.pure_weight)
             self.gross_wt = self.lot_id.gross_weight
             if self.product_id.gold_with_lots:
-                self.gross_wt = 0.0 
+                self.gross_wt = 0.0
             self.pure_wt = self.lot_id.pure_weight
-            if self.lot_id.purity_id.gold_sales_hallmark != self.lot_id.purity and not self.product_id.scrap :
-                self.purity_hall = self.lot_id.purity
-                self.onchange_purity_hall()
-            elif self.lot_id.purity_id.scrap_sales_hallmark != self.lot_id.purity and self.product_id.scrap :
-                self.purity_hall = self.lot_id.purity
-                self.onchange_purity_hall()
+            if self.product_id.categ_id.is_scrap:
+                self.purity_hall = self.lot_id.purity.scrap_sales_hallmark
+            elif self.product_id.categ_id.gold and not self.product_id.categ_id.is_scrap:
+                self.purity_hall = self.lot_id.purity.gold_sales_hallmark
+            # if self.lot_id.purity_id.gold_sales_hallmark != self.lot_id.purity and not self.product_id.scrap :
+            #     self.purity_hall = self.lot_id.purity
+            #     self.onchange_purity_hall()
+            # elif self.lot_id.purity_id.scrap_sales_hallmark != self.lot_id.purity and self.product_id.scrap :
+            #     self.purity_hall = self.lot_id.purity
+            #     self.onchange_purity_hall()
             # self.purity = self.lot_id.purity
             # stock_move_line = self.env['stock.move.line'].search([('lot_id','=',self.lot_id.id),('product_id','=',self.product_id.id)])
             # if stock_move_line and len(stock_move_line) == 1:
