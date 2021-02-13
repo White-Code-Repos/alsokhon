@@ -192,7 +192,7 @@ class SaleOrder(models.Model):
                                         'is_make_value': True,
                                         'price_subtotal': pro[0],
                                     })
-        self.write({'require_payment':True})
+        res.write({'require_payment':True})
         return res
 
     def write(self, values):
