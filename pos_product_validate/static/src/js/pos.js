@@ -23,6 +23,7 @@ odoo.define('pos_product_validate.pos', function(require){
       finalize_validation: function() {
           var self = this;
           var order = this.pos.get_order();
+          console.log("QQQQQQQQQQQQQQQQQQQQQQQ");
 
           if (order.is_paid_with_cash() && this.pos.config.iface_cashdrawer) {
 

@@ -346,6 +346,37 @@ odoo.define('pos_unfixed.pos', function(require){
   			// 	this._super();
   			// }
   		},
+      finalize_validation: function() {
+        var self = this;
+        console.log("SAJDKHWIQDHIWDIQUWDOIWQDWQIDUWQIJWLNDJ");
+
+        var order = this.pos.get_order();
+        console.log(order.get_due_converted_fix());
+
+
+        if (!order.get_due_converted_fix()<1){
+          self.gui.show_popup('error',{
+          	'title': _t('Order Not Paid'),
+          	'body': _t('You cannot get the order. select payment method first.'),
+          });
+        	return;
+        }
+        this._super();
+
+
+          var partner_id = order.get_client();
+          // if (!partner_id){
+    				// self.gui.show_popup('error',{
+    				// 	'title': _t('Unknown customer'),
+    				// 	'body': _t('You cannot get the order. Select customer first.'),
+    				// });
+    			// 	return;
+    			// }
+
+
+      },
+
+
     });
 
 
