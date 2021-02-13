@@ -137,7 +137,7 @@ class assemblyComponentsGold(models.Model):
 
     product_id = fields.Many2one('product.product')
     location_id = fields.Many2one('stock.location', required=True)
-    lot_id = fields.Many2one('stock.production.lot', domain=lot_domain_get)
+    lot_id = fields.Many2one('stock.production.lot', domain="lot_domain_get")
     @api.onchange('product_id')
     def lot_domain_get(self):
         return [('is_empty_lot','=',False),('product_id','=',self.product_id.id)]
@@ -164,7 +164,7 @@ class assemblyComponentsDiamond(models.Model):
 
     product_id = fields.Many2one('product.product')
     location_id = fields.Many2one('stock.location', required=True)
-    lot_id = fields.Many2one('stock.production.lot', domain=lot_domain_get)
+    lot_id = fields.Many2one('stock.production.lot', domain="lot_domain_get")
     @api.onchange('product_id')
     def lot_domain_get(self):
         return [('is_empty_lot','=',False),('product_id','=',self.product_id.id)]
@@ -195,7 +195,7 @@ class assemblyComponentsMix(models.Model):
 
     product_id = fields.Many2one('product.product')
     location_id = fields.Many2one('stock.location', required=True)
-    lot_id = fields.Many2one('stock.production.lot', domain=lot_domain_get)
+    lot_id = fields.Many2one('stock.production.lot', domain="lot_domain_get")
     @api.onchange('product_id')
     def lot_domain_get(self):
         return [('is_empty_lot','=',False),('product_id','=',self.product_id.id)]
