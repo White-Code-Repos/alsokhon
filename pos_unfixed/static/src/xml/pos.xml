@@ -162,7 +162,7 @@
                             <td class='col-due'> <t t-esc='widget.format_currency_no_symbol(order.get_due(line))' /> </td>
                             <t t-if="line &amp;&amp; line.payment_status &amp;&amp; ['done', 'waitingCard', 'waiting', 'reversing', 'reversed'].includes(line.payment_status)">
                                 <td class='col-tendered'>
-                                    <t t-esc='widget.format_currency_no_symbol(line.get_amount())' />
+                                    <!-- <t t-esc='widget.format_currency_no_symbol(line.get_amount())' /> -->
                                 </td>
                             </t>
                             <t t-else="">

@@ -324,29 +324,6 @@ odoo.define('pos_unfixed.pos', function(require){
 														}), 0), this.pos.currency.rounding)
 					return qty_gm ;
 	    },
-      get_qty_gm_unfixed_total: function() {
-					var qty_gm = round_pr(this.orderlines.reduce((function(sum, orderLine) {
-            if (orderLine.is_unfixed) {
-              sum += orderLine.qty_gm_pure
-            }
-						return sum ;
-					}), 0), this.pos.currency.rounding)
-          console.log('get_qty_gm_unfixed_total',qty_gm);
-
-
-					return qty_gm ;
-	    },
-      get_amount_unfixed_total: function() {
-					var price = round_pr(this.orderlines.reduce((function(sum, orderLine) {
-						// console.log(orderLine);
-            if (orderLine.is_unfixed) {
-              sum += orderLine.price;
-            }
-						return sum ;
-					}), 0), this.pos.currency.rounding)
-
-					return price ;
-	    },
       get_qty_gm_fixed_total: function() {
 					var qty_gm = round_pr(this.orderlines.reduce((function(sum, orderLine) {
 						// console.log(orderLine);
@@ -359,10 +336,33 @@ odoo.define('pos_unfixed.pos', function(require){
 
 					return qty_gm ;
 	    },
+      get_qty_gm_unfixed_total: function() {
+					var qty_gm = round_pr(this.orderlines.reduce((function(sum, orderLine) {
+            if (orderLine.is_unfixed) {
+              sum += orderLine.qty_gm_pure
+            }
+						return sum ;
+					}), 0), this.pos.currency.rounding)
+          console.log('get_qty_gm_unfixed_total',qty_gm);
+
+
+					return qty_gm ;
+	    },
       get_amount_fixed_total: function() {
 					var price = round_pr(this.orderlines.reduce((function(sum, orderLine) {
 						// console.log(orderLine);
             if (!orderLine.is_unfixed) {
+              sum += orderLine.price;
+            }
+						return sum ;
+					}), 0), this.pos.currency.rounding)
+
+					return price ;
+	    },
+      get_amount_unfixed_total: function() {
+					var price = round_pr(this.orderlines.reduce((function(sum, orderLine) {
+						// console.log(orderLine);
+            if (orderLine.is_unfixed) {
               sum += orderLine.price;
             }
 						return sum ;
@@ -494,9 +494,7 @@ odoo.define('pos_unfixed.pos', function(require){
               this.destroy();
               return this.pos.get_order().add_product(product, options);
           }
-          console.log("add product");
-          console.log(product);
-          console.log(options);
+
           this.assert_editable();
           options = options || {};
           var attr = JSON.parse(JSON.stringify(product));
@@ -588,7 +586,28 @@ odoo.define('pos_unfixed.pos', function(require){
           this.paymentlines.add(newPaymentline);
           this.select_paymentline(newPaymentline);
       },
-
+      get_due: function(paymentline) {
+          if (!paymentline) {
+              var due = this.get_total_with_tax() - this.get_total_paid();
+              if (!this.order_fixed) {
+                due = this.get_make_charge_value_total()- this.get_total_paid();
+              }
+          } else {
+              var due = this.get_total_with_tax();
+              if (!this.order_fixed) {
+                due = this.get_make_charge_value_total();
+              }
+              var lines = this.paymentlines.models;
+              for (var i = 0; i < lines.length; i++) {
+                  if (lines[i] === paymentline) {
+                      break;
+                  } else {
+                      due -= lines[i].get_amount();
+                  }
+              }
+          }
+          return round_pr(due, this.pos.currency.rounding);
+      },
       get_due_gm: function(paymentline) {
           if (!paymentline) {
               var due_gm = this.get_qty_gm_fixed_total() + this.get_qty_gm_unfixed_total();
@@ -646,7 +665,7 @@ odoo.define('pos_unfixed.pos', function(require){
       get_amount_gm: function(){
           return this.gm_unfixed;
       },
-      et_amount_gm_pure: function(){
+      get_amount_gm_pure: function(){
           return this.gm_unfixed_pure;
       },
       set_amount_gm: function(value){
