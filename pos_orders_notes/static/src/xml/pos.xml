@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<templates id="template" xml:space="preserve">
+
+    <t t-extend="Orderline">
+        <t t-jquery=".info-list" t-operation="append">
+            <t t-if="line.get_extra_note()">
+                <li class="info orderline-note">
+                    <i class='fa fa-tag'/><t t-esc="line.get_extra_note()" />
+                </li>
+            </t>
+        </t>
+    </t>
+
+    <t t-name="OrderlineNoteExButton">
+        <div class='control-button'>
+            <i class='fa fa-tag' /> Line Note
+        </div>
+    </t>
+    <t t-name="OrderNoteExButton">
+        <div class='control-button'>
+            <i class='fa fa-tag order_note_button' /> Order Note
+        </div>
+    </t>
+    <t t-name="PosExtNotePopupWidget">
+        <div class="modal-dialog">
+            <div class="popup">
+                <div class="content-container ">
+                <textarea class="order_line_note" rows="4" cols="42" placeholder="Enter your note........"><t t-esc="widget.options.note"/></textarea>
+                <div style="height: 231px;overflow: scroll;">
+                    <t t-if="widget.options.shortcut_list">
+                        <t t-foreach='widget.options.shortcut_list' t-as='shortuct'>
+                            <div class="button shortcut_button" style="padding: 0px 11px;width:auto"><t t-esc="shortuct.name"/></div>
+                        </t>
+                    </t>
+                </div>
+                </div>
+                <div class="footer">
+                    <t t-if="widget.options.is_order_line">
+                        <div class="button save_order_line_note">
+                            Ok
+                        </div>
+                    </t>
+                    <t t-if="! widget.options.is_order_line">
+                        <div class="button save_order_note">
+                            Ok
+                        </div>
+                    </t>
+                    <div class="button cancel">
+                        Cancel 
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+    <!-- <t t-extend="PaymentScreenWidget">
+        <t t-jquery=".payment-buttons" t-operation="append">
+            <t t-if='widget.pos.config.allow_order_note'>
+                <div class='button order_note_button'>
+                    <i class='fa fa-tag' /> Order Note
+                </div>
+            </t>
+        </t>
+    </t> -->
+
+    <t t-extend="PosTicket">
+        <t t-jquery='t[t-if="orderline.get_discount() > 0"]' t-operation="after">
+            <t t-if="orderline.get_extra_note()">
+                <br/><i><b style="font-size:10px"><t t-esc="orderline.get_extra_note()"/></b></i>
+            </t>
+        </t>
+        <t t-jquery='t[t-if="receipt.footer"]' t-operation="before">
+            <t t-if="order.note">
+                Note:-<t t-esc="order.note"/>
+            </t>
+        </t>
+    </t>
+</templates>

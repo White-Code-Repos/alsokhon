@@ -532,7 +532,7 @@ odoo.define('pos_lot_select.pos', function(require){
           },
 
 
-          change_price: function(gold_rate,pure_weight,qty,tot_qty){
+          change_price: function(gold_rate,pure_weight){
               var pack_lot_lines = this.options.pack_lot_lines;
               // console.log(gold_rate*pure_weight);
               this.options.order_line.price=gold_rate*pure_weight;
@@ -562,17 +562,31 @@ odoo.define('pos_lot_select.pos', function(require){
                     var pure_weight = lot.pure_weight;
                     // console.log("asadas");
                     // console.log(order_line);
+                    if (order_line.product.categ.is_gold) {
+                      // console.log("DKLWAJDLQKDKL");
+                      // console.log(self.pos.list_gold_purity[lot.purity_id[0]]);
+                      if (!self.pos.list_gold_purity[lot.purity_id[0]].gold_sales_hallmark) {
+                        pure_weight = 0;
+                      }
+                      else {
+                        // console.log("sadasdasdadqweqqwqe");
+                        pure_weight = lot.gross_weight*(self.pos.list_gold_purity[lot.purity_id[0]].gold_sales_hallmark/1000);
+                        // pure_weight = self.pos.list_gold_purity[lot.purity_id[0]].purity/1000;
+                      }
+                      order_line.purity = self.pos.list_gold_purity[lot.purity_id[0]].name;
+                    }
+
 
                     if (order_line.product.categ.is_scrap) {
                       // console.log(lot);
                       // console.log(self.pos.list_gold_purity[lot.purity_id[0]].scrap_purity);
                       // console.log(self.pos.list_gold_purity[lot.purity_id[0]]);
-                      if (!self.pos.list_gold_purity[lot.purity_id[0]].scrap_purity) {
+                      if (!self.pos.list_gold_purity[lot.purity_id[0]].scrap_sales_hallmark) {
                         pure_weight = 0;
                       }
                       else {
                         // console.log("sadasdasdadqweqqwqe");
-                        pure_weight = self.pos.list_gold_purity[lot.purity_id[0]].scrap_purity/1000;
+                        pure_weight = self.pos.list_gold_purity[lot.purity_id[0]].scrap_sales_hallmark/1000;
                       }
                       order_line.purity = self.pos.list_gold_purity[lot.purity_id[0]].name;
                     }
@@ -582,7 +596,8 @@ odoo.define('pos_lot_select.pos', function(require){
                       }
                       else {
                         // console.log("sadasdasdadqweqqwqe");
-                        pure_weight = self.pos.list_gold_purity[lot.purity_id[0]].purity/1000;
+                        pure_weight = self.pos.list_gold_purity[lot.purity_id[0]].gold_sales_hallmark/1000;
+                        // pure_weight = self.pos.list_gold_purity[lot.purity_id[0]].purity/1000;
                       }
                       order_line.purity = self.pos.list_gold_purity[lot.purity_id[0]].name;
                     }
@@ -591,6 +606,7 @@ odoo.define('pos_lot_select.pos', function(require){
 
                     // console.log(self.options);
                     if (self.options.order_line.is_unfixed) {
+                      pure_weight = self.pos.list_gold_purity[lot.purity_id[0]].scrap_purity/1000;
                       self.options.pack_lot_lines.models[0].quantity*=-1;
                       self.options.order_line.quantity*=-1;
                       self.options.order_line.quantityStr=String(self.options.order_line.quantity);
