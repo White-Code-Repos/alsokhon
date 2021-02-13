@@ -137,10 +137,10 @@ class assemblyComponentsGold(models.Model):
 
     product_id = fields.Many2one('product.product')
     location_id = fields.Many2one('stock.location', required=True)
-    @api.onchange('product_id')
-    def lot_domain_get(self):
-        return [('is_empty_lot','=',False),('product_id','=',self.product_id.id)]
-    lot_id = fields.Many2one('stock.production.lot', domain=lot_domain_get)
+    # @api.onchange('product_id')
+    # def lot_domain_get(self):
+    #     return [('is_empty_lot','=',False),('product_id','=',self.product_id.id)]
+    lot_id = fields.Many2one('stock.production.lot')
 
     product_uom_qty = fields.Float(digits=(16,3))
     gross_weight = fields.Float(digits=(16,3))
@@ -165,10 +165,10 @@ class assemblyComponentsDiamond(models.Model):
 
     product_id = fields.Many2one('product.product')
     location_id = fields.Many2one('stock.location', required=True)
-    @api.onchange('product_id')
-    def lot_domain_get(self):
-        return [('is_empty_lot','=',False),('product_id','=',self.product_id.id)]
-    lot_id = fields.Many2one('stock.production.lot', domain=lot_domain_get)
+    # @api.onchange('product_id')
+    # def lot_domain_get(self):
+    #     return [('is_empty_lot','=',False),('product_id','=',self.product_id.id)]
+    lot_id = fields.Many2one('stock.production.lot')
 
     stones_quantity = fields.Float(digits=(16,3), string="Stones")
     carat = fields.Float(digits=(16,3), string="Carat")
@@ -197,10 +197,10 @@ class assemblyComponentsMix(models.Model):
 
     product_id = fields.Many2one('product.product')
     location_id = fields.Many2one('stock.location', required=True)
-    @api.onchange('product_id')
-    def lot_domain_get(self):
-        return [('is_empty_lot','=',False),('product_id','=',self.product_id.id)]
-    lot_id = fields.Many2one('stock.production.lot', domain=lot_domain_get)
+    # @api.onchange('product_id')
+    # def lot_domain_get(self):
+    #     return [('is_empty_lot','=',False),('product_id','=',self.product_id.id)]
+    lot_id = fields.Many2one('stock.production.lot')
 
     quantity = fields.Float(digits=(16,3), default=1)
     purchase_mix_id = fields.Many2one('purchase.order')
