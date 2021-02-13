@@ -137,7 +137,7 @@ class assemblyComponentsGold(models.Model):
 
     product_id = fields.Many2one('product.product')
     location_id = fields.Many2one('stock.location', required=True)
-    lot_id = fields.Many2one('stock.production.lot')
+    lot_id = fields.Many2one('stock.production.lot', domain=[('is_empty_lot','=',False),('product_id','=',lambda x:x.product_id.id == self.product_id.id)])
     product_uom_qty = fields.Float(digits=(16,3))
     gross_weight = fields.Float(digits=(16,3))
     pure_weight = fields.Float(digits=(16,3))
@@ -161,7 +161,7 @@ class assemblyComponentsDiamond(models.Model):
 
     product_id = fields.Many2one('product.product')
     location_id = fields.Many2one('stock.location', required=True)
-    lot_id = fields.Many2one('stock.production.lot')
+    lot_id = fields.Many2one('stock.production.lot', domain=[('is_empty_lot','=',False),('product_id','=',lambda x:x.product_id.id == self.product_id.id)])
     stones_quantity = fields.Float(digits=(16,3), string="Stones")
     carat = fields.Float(digits=(16,3), string="Carat")
     stones_quantity_ret = fields.Float(default=0.0, digits=(16,3), string="Returned Stones")
@@ -189,7 +189,7 @@ class assemblyComponentsMix(models.Model):
 
     product_id = fields.Many2one('product.product')
     location_id = fields.Many2one('stock.location', required=True)
-    lot_id = fields.Many2one('stock.production.lot')
+    lot_id = fields.Many2one('stock.production.lot', domain=[('is_empty_lot','=',False),('product_id','=',lambda x:x.product_id.id == self.product_id.id)])
     quantity = fields.Float(digits=(16,3), default=1)
     purchase_mix_id = fields.Many2one('purchase.order')
 
