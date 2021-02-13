@@ -416,7 +416,7 @@ class SaleOrderLine(models.Model):
             if self.product_id.categ_id.is_scrap or self.product_id.categ_id.is_diamond :
                 self.product_uom_qty = self.lot_id.product_qty
             if self.product_id.gold_with_lots:
-                self.product_uom_qty = 0.0 
+                self.product_uom_qty = 0.0
             self.purity_id = self.lot_id.purity_id.id
             self.carat = self.lot_id.carat
             self.make_rate = self.lot_id.selling_making_charge
@@ -424,6 +424,8 @@ class SaleOrderLine(models.Model):
             # print(self.lot_id.gross_weight)
             # print(self.lot_id.pure_weight)
             self.gross_wt = self.lot_id.gross_weight
+            if self.product_id.gold_with_lots:
+                self.gross_wt = 0.0 
             self.pure_wt = self.lot_id.pure_weight
             if self.lot_id.purity_id.gold_sales_hallmark != self.lot_id.purity and not self.product_id.scrap :
                 self.purity_hall = self.lot_id.purity
