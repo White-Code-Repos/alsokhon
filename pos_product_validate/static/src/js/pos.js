@@ -31,13 +31,13 @@ odoo.define('pos_product_validate.pos', function(require){
 
           order.initialize_validation_date();
           var partner_id = order.get_client();
-          if (!partner_id){
-    				self.gui.show_popup('error',{
-    					'title': _t('Unknown customer'),
-    					'body': _t('You cannot get the order. Select customer first.'),
-    				});
-    				return;
-    			}
+          // if (!partner_id){
+    			// 	self.gui.show_popup('error',{
+    			// 		'title': _t('Unknown customer'),
+    			// 		'body': _t('You cannot get the order. Select customer first.'),
+    			// 	});
+    			// 	return;
+    			// }
           order.finalized = true;
           if (order.is_to_invoice()) {
               var invoiced = this.pos.push_and_invoice_order(order);

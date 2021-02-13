@@ -162,10 +162,21 @@
                             <td class='col-due'> <t t-esc='widget.format_currency_no_symbol(order.get_due(line))' /> </td>
                             <t t-if="line &amp;&amp; line.payment_status &amp;&amp; ['done', 'waitingCard', 'waiting', 'reversing', 'reversed'].includes(line.payment_status)">
                                 <td class='col-tendered'>
-                                    <!-- <t t-esc='widget.format_currency_no_symbol(line.get_amount())' /> -->
+                                    <t t-esc='widget.format_currency_no_symbol(line.get_amount())' />
                                 </td>
                             </t>
                             <t t-else="">
+                              <t t-if='line.get_amount_gm()!=0'>
+                                  <td class='col-tendered' >
+                                    Unfixed
+                                  </td>
+                              </t>
+                              <t t-else="">
+                                <td class='col-tendered edit'>
+                                  <!-- <t t-esc='widget.format_currency_no_symbol(line.get_amount())' /> -->
+                                    <t t-esc='widget.inputbuffer' />
+                                </td>
+                              </t>
 
                               <!-- <t t-if='line.get_amount_gm()!=0'>
                                   <td class='col-tendered' >
@@ -173,10 +184,7 @@
                                   </td>
                               </t> -->
                               <!-- <t t-else=""> -->
-                                <td class='col-tendered edit'>
-                                  <!-- <t t-esc='widget.format_currency_no_symbol(line.get_amount())' /> -->
-                                    <t t-esc='widget.inputbuffer' />
-                                </td>
+
                               <!-- </t> -->
                             </t>
                             <t t-if='order.get_change(line)'>
@@ -212,13 +220,19 @@
                               <t t-esc='widget.format_currency_no_symbol(order.get_due(line))' />
                             </td>
                             <td class='col-tendered'>
+                              <t t-if='line.get_amount_gm()!=0'>
+                                    Unfixed
+                              </t>
+                              <t t-else="">
+                                <t t-esc='widget.format_currency_no_symbol(line.get_amount())' />
+
+                              </t>
                               <!-- <t t-if='line.get_amount_gm()'>
                                  <t t-esc='widget.format_currency_no_symbol(line.get_amount_gm())' />g
                              </t>
                              <t t-else=''> -->
-                                 <t t-esc='widget.format_currency_no_symbol(line.get_amount())' />
-                              <!-- </t> -->
                             </td>
+                            
                             <td class='col-change'>
                                 <t t-if='order.get_change(line)'>
                                     <t t-esc='widget.format_currency_no_symbol(order.get_change(line))' />

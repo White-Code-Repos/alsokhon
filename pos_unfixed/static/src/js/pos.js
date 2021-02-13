@@ -578,6 +578,7 @@ odoo.define('pos_unfixed.pos', function(require){
           if (unfixed) {
             console.log("unfixed",unfixed);
             newPaymentline.set_amount_gm(unfixed);
+            // newPaymentline.set_payment_status('waiting');
           }
           if (unfixed_gross) {
             console.log("unfixed",unfixed_gross);
