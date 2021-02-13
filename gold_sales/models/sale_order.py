@@ -80,9 +80,9 @@ class SaleOrder(models.Model):
 
     @api.model
     def create(self, values):
-        making_order_line = self.env['sale.order.line'].search([('order_id','=',self.id),('is_make_value','=',True)])
-        if making_order_line:
-            making_order_line.unlink()
+        # making_order_line = self.env['sale.order.line'].search([('order_id','=',self.id),('is_make_value','=',True)])
+        # if making_order_line:
+        #     making_order_line.unlink()
         res = super(SaleOrder, self).create(values)
         list_assemply_gold = []
         list_assemply_diamond = []
