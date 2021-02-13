@@ -11,7 +11,6 @@ class AccountMove(models.Model):
     _inherit = 'account.move'
 
     amount = fields.Monetary(string='Amount', default=0.0, required=True, readonly=True, states={'draft': [('readonly', False)]}, tracking=True)
-
     type_of_action = fields.Selection([('fixed', 'Fixed'),
                                         ('unfixed', 'Unfixed')])
     sale_type = fields.Selection([('fixed', 'Fixed'),
