@@ -382,6 +382,7 @@ class AccountMove(models.Model):
                     self.write({'unfixed_fixed_gold': self.unfixed_fixed_gold+value})
                     self.write({'unfixed_fixed_value': self.unfixed_fixed_gold*self.gold_rate_value})
 
+
     unfixed_fixed_gold = fields.Float('Unfixed -> Fixed Gold', digits=(16, 3))
     unfixed_fixed_value = fields.Float('Unfixed -> Fixed Due', digits=(16, 3))
     unfixed_fixed_paid = fields.Float('Unfixed -> Fixed Paid', digits=(16, 3))
