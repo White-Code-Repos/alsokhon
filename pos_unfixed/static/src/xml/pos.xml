@@ -159,7 +159,16 @@
                     <t t-if='line.selected'>
                         <tr class='paymentline selected'>
                           <!-- <td class='col-due-gm'> <t t-esc='widget.format_currency_no_symbol(order.get_due_gm(line))' /> </td> -->
-                            <td class='col-due'> <t t-esc='widget.format_currency_no_symbol(order.get_due(line))' /> </td>
+                            <td class='col-due'>
+                              <!-- <t t-esc='widget.format_currency_no_symbol(order.get_due(line))' />  -->
+                              <t t-if='line.order_to_fix'>
+                                <t t-esc='widget.format_currency_no_symbol(order.get_due_converted_fix())' />
+                              </t>
+                              <t t-else="">
+                                <t t-esc='widget.format_currency_no_symbol(order.get_due(line))' />
+                              </t>
+
+                            </td>
                             <t t-if="line &amp;&amp; line.payment_status &amp;&amp; ['done', 'waitingCard', 'waiting', 'reversing', 'reversed'].includes(line.payment_status)">
                                 <td class='col-tendered'>
                                     <t t-esc='widget.format_currency_no_symbol(line.get_amount())' />
@@ -217,7 +226,13 @@
                               <t t-esc='widget.format_currency_no_symbol(order.get_due_gm(line))' />
                             </td> -->
                             <td class='col-due'>
-                              <t t-esc='widget.format_currency_no_symbol(order.get_due(line))' />
+
+                              <t t-if='line.order_to_fix'>
+                                <t t-esc='widget.format_currency_no_symbol(order.get_due_converted_fix())' />
+                              </t>
+                              <t t-else="">
+                                <t t-esc='widget.format_currency_no_symbol(order.get_due(line))' />
+                              </t>
                             </td>
                             <td class='col-tendered'>
                               <t t-if='line.get_amount_gm()!=0'>
@@ -232,7 +247,7 @@
                              </t>
                              <t t-else=''> -->
                             </td>
-                            
+
                             <td class='col-change'>
                                 <t t-if='order.get_change(line)'>
                                     <t t-esc='widget.format_currency_no_symbol(order.get_change(line))' />
@@ -271,6 +286,10 @@
           <div class='button unfixed_product' style=' display:none;' >
               <i class='fa fa-tag' role="img" aria-label="Customer" title="Unfixed"/>
               Unfixed
+          </div>
+          <div class='button convert_to_fixed' style=' display:none;' >
+              <i class='fa fa-tag' role="img" aria-label="Customer" title="Convert To Fixed"/>
+              Convert To Fixed
           </div>
         </t>
 
@@ -993,7 +1012,7 @@
   <t t-name="AddLotWidget">
       <div class="modal-dialog" role="dialog">
           <div class="popup popup-selection add_lot_pos">
-              <p class="title">Add New Lot</p>
+              <p class="title">Add lot</p>
               <div class='selection scrollable-y touch-scrollable'>
                   <table id="list" cellspacing="1px" cellpadding="10px" text-align="center"
                          width="100%" style="border:1px;padding-left:1.16cm;">

@@ -255,6 +255,58 @@ odoo.define('pos_unfixed.pos', function(require){
       					},
       				});
           });
+          this.$('.convert_to_fixed').click(function(){
+              // console.log("jsdhsajlkdhalksjdh");
+              // var list = [];
+              var order = self.pos.get_order();
+              // console.log(self);
+              // console.log(self.pos.db.product_by_id);
+              // var products = self.pos.db.product_by_id;
+
+              // _.each(products, function (product) {
+              //   // console.log(product);
+              //     if (product.categ.is_scrap) {
+              //       list.push({label:product.display_name, item:product.id});
+              //     }
+              // });
+              // self.gui.show_popup('AddLotWidget');
+              self.gui.show_popup('confirm',{
+                'title':  _t('Convert All Remaining to fixed?'),
+                'body': _t('Do You Need To Convert All Remaining Weight To fixed?'),
+                // 'body': body,
+                'comment':_t('Convert All Remaining to fixed?'),
+                'confirm': function(){
+                  console.log("KSLDALKDJALKDWHJDWJDLA");
+                  order.covert_order_fixed = true;
+                    // self.selected_table.trash();
+                },
+              });
+
+              // self.gui.show_popup('selection',{
+      				// 	title: 'Unfixed Product',
+      				// 	list: list,
+      				// 	confirm: function (product_id) {
+              //
+              //     var prod = self.pos.db.get_product_by_id(product_id);
+              //     var order = self.pos.get_order();
+              //
+              //     // prod.is_unfixed=true;
+              //     order.add_product(prod,{is_unfixed:true});
+              //     // order.get_selected_orderline().is_unfixed=true;
+              //     // console.log(order.get_selected_orderline());
+              //
+              //     // if (prod.tracking!=='none') {
+              //     //   console.log("sakdljsldk");
+              //     //
+              //     //
+              //     // }
+      				// 		// uom_id = {0:line.pos.units_by_id[uom_id].id, 1:line.pos.units_by_id[uom_id].name};
+      				// 		// line.set_uom(uom_id);
+      				// 		// line.set_unit_price(line.pos.uom_price[line.product.product_tmpl_id].uom_id[uom_id[0]]);
+      				// 		// line.price_manually_set = true;
+      				// 	},
+      				// });
+          });
 
 
 
@@ -302,7 +354,8 @@ odoo.define('pos_unfixed.pos', function(require){
   		initialize: function(attr,options) {
   			var self = this;
         this.order_type = 'retail';
-  			this.order_fixed = true;
+        this.order_fixed = true;
+  			this.covert_order_fixed = false;
   			posorder_super.initialize.call(this,attr,options);
   		},
       get_make_charge_value_total: function() {
@@ -575,6 +628,10 @@ odoo.define('pos_unfixed.pos', function(require){
           if(!payment_method.is_cash_count || this.pos.config.iface_precompute_cash){
               newPaymentline.set_amount( this.get_due() );
           };
+          if(this.covert_order_fixed){
+            newPaymentline.set_order_to_fix(true);
+          }
+
           if (unfixed) {
             console.log("unfixed",unfixed);
             newPaymentline.set_amount_gm(unfixed);
@@ -585,6 +642,7 @@ odoo.define('pos_unfixed.pos', function(require){
             newPaymentline.set_amount_gm_gross(unfixed_gross);
           }
           this.paymentlines.add(newPaymentline);
+          console.log(newPaymentline);
           this.select_paymentline(newPaymentline);
       },
       get_due: function(paymentline) {
@@ -598,6 +656,28 @@ odoo.define('pos_unfixed.pos', function(require){
               if (!this.order_fixed) {
                 due = this.get_make_charge_value_total();
               }
+              var lines = this.paymentlines.models;
+              for (var i = 0; i < lines.length; i++) {
+                  if (lines[i] === paymentline) {
+                      break;
+                  } else {
+                      due -= lines[i].get_amount();
+                  }
+              }
+          }
+          return round_pr(due, this.pos.currency.rounding);
+      },
+      get_due_converted_fix: function(paymentline) {
+          if (!paymentline) {
+              var due = this.get_total_with_tax() - this.get_total_paid();
+              // if (!this.order_fixed) {
+              //   due = this.get_make_charge_value_total()- this.get_total_paid();
+              // }
+          } else {
+              var due = this.get_total_with_tax();
+              // if (!this.order_fixed) {
+              //   due = this.get_make_charge_value_total();
+              // }
               var lines = this.paymentlines.models;
               for (var i = 0; i < lines.length; i++) {
                   if (lines[i] === paymentline) {
@@ -634,6 +714,7 @@ odoo.define('pos_unfixed.pos', function(require){
   		initialize: function(attr,options) {
   			var self = this;
         this.gm_unfixed = 0;
+        this.order_to_fix = false;
   			this.gm_unfixed_pure = 0;
         this.purity = "";
 
@@ -642,6 +723,7 @@ odoo.define('pos_unfixed.pos', function(require){
       export_as_JSON: function(){
         var loaded = pospayment_super.export_as_JSON.apply(this, arguments);
         loaded.gm_unfixed = this.gm_unfixed || 0;
+        loaded.order_to_fix = this.order_to_fix || false;
         loaded.gm_unfixed_pure = this.gm_unfixed_pure || 0;
         loaded.purity = this.purity;
 
@@ -651,6 +733,7 @@ odoo.define('pos_unfixed.pos', function(require){
       init_from_JSON: function(json){
         pospayment_super.init_from_JSON.apply(this,arguments);
         this.gm_unfixed = json.gm_unfixed;
+        this.order_to_fix = json.order_to_fix;
         this.gm_unfixed_pure = json.gm_unfixed_pure;
         this.purity = json.purity;
 
@@ -658,6 +741,7 @@ odoo.define('pos_unfixed.pos', function(require){
       export_for_printing: function(){
         var data = pospayment_super.export_for_printing.apply(this, arguments);
         data.gm_unfixed = this.gm_unfixed|| 0;
+        data.order_to_fix = this.order_to_fix|| false;
         data.gm_unfixed_pure = this.gm_unfixed_pure|| 0;
         data.purity = this.purity|| 0;
         return data;
@@ -678,6 +762,12 @@ odoo.define('pos_unfixed.pos', function(require){
       set_amount_gm_gross: function(value){
           this.order.assert_editable();
           this.gm_unfixed_pure = round_di(parseFloat(value) || 0, this.pos.currency.decimals);
+          this.pos.send_current_order_to_customer_facing_display();
+          this.trigger('change',this);
+      },
+      set_order_to_fix: function(value){
+          this.order.assert_editable();
+          this.order_to_fix = value ;
           this.pos.send_current_order_to_customer_facing_display();
           this.trigger('change',this);
       },
@@ -818,6 +908,7 @@ odoo.define('pos_unfixed.pos', function(require){
         $(".fixed_bt").css({'background': '#a0efc7'});
         $(".unfixed_bt").css({'background':'fixed'});
         $(".unfixed_product").css({'display':'none'});
+        $(".convert_to_fixed").css({'display':'none'});
         $(".add_product").css({'display':'none'});
 
         var order = self.pos.get_order();
@@ -847,6 +938,7 @@ odoo.define('pos_unfixed.pos', function(require){
         $(".unfixed_bt").css({'background': '#a0efc7'});
         $(".fixed_bt").css({'background':'fixed'});
         $(".unfixed_product").css({'display':'block'});
+        $(".convert_to_fixed").css({'display':'block'});
         $(".add_product").css({'display':'block'});
 
         var order = self.pos.get_order();
