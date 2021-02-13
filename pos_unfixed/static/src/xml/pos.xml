@@ -39,8 +39,8 @@
           </t>
           <t t-if="!order.order_fixed">
             <div class='total'>
-              <t t-esc="order.get_qty_gm_pure_total()"/> g
-              +
+              <!-- <t t-esc="order.get_qty_gm_pure_total()"/> g
+              + -->
               <t t-esc="widget.format_currency(order.get_make_charge_value_total())"/>
             </div>
           </t>
@@ -137,7 +137,7 @@
           </t>
           <t t-if="!order.order_fixed">
             <colgroup>
-              <col class='due_g' />
+              <!-- <col class='due_g' /> -->
                 <col class='due' />
                 <col class='tendered' />
                 <col class='change' />
@@ -146,7 +146,7 @@
             </colgroup>
             <thead>
                 <tr class='label'>
-                  <th>Due G</th>
+                  <!-- <th>Due G</th> -->
                     <th>Due</th>
                     <th>Tendered</th>
                     <th>Change</th>
@@ -158,7 +158,7 @@
                 <t t-foreach='paymentlines' t-as='line'>
                     <t t-if='line.selected'>
                         <tr class='paymentline selected'>
-                          <td class='col-due-gm'> <t t-esc='widget.format_currency_no_symbol(order.get_due_gm(line))' /> </td>
+                          <!-- <td class='col-due-gm'> <t t-esc='widget.format_currency_no_symbol(order.get_due_gm(line))' /> </td> -->
                             <td class='col-due'> <t t-esc='widget.format_currency_no_symbol(order.get_due(line))' /> </td>
                             <t t-if="line &amp;&amp; line.payment_status &amp;&amp; ['done', 'waitingCard', 'waiting', 'reversing', 'reversed'].includes(line.payment_status)">
                                 <td class='col-tendered'>
@@ -167,17 +167,17 @@
                             </t>
                             <t t-else="">
 
-                              <t t-if='line.get_amount_gm()!=0'>
+                              <!-- <t t-if='line.get_amount_gm()!=0'>
                                   <td class='col-tendered' >
                                     <t t-esc='widget.format_currency_no_symbol(line.get_amount_gm())' />g
                                   </td>
-                              </t>
-                              <t t-else="">
+                              </t> -->
+                              <!-- <t t-else=""> -->
                                 <td class='col-tendered edit'>
                                   <!-- <t t-esc='widget.format_currency_no_symbol(line.get_amount())' /> -->
                                     <t t-esc='widget.inputbuffer' />
                                 </td>
-                              </t>
+                              <!-- </t> -->
                             </t>
                             <t t-if='order.get_change(line)'>
                                 <td class='col-change highlight' >
@@ -205,19 +205,19 @@
                     </t>
                     <t t-if='!line.selected'>
                         <tr class='paymentline' t-att-data-cid='line.cid'>
-                            <td class='col-due-gm'>
+                            <!-- <td class='col-due-gm'>
                               <t t-esc='widget.format_currency_no_symbol(order.get_due_gm(line))' />
-                            </td>
+                            </td> -->
                             <td class='col-due'>
                               <t t-esc='widget.format_currency_no_symbol(order.get_due(line))' />
                             </td>
                             <td class='col-tendered'>
-                              <t t-if='line.get_amount_gm()'>
+                              <!-- <t t-if='line.get_amount_gm()'>
                                  <t t-esc='widget.format_currency_no_symbol(line.get_amount_gm())' />g
                              </t>
-                             <t t-else=''>
+                             <t t-else=''> -->
                                  <t t-esc='widget.format_currency_no_symbol(line.get_amount())' />
-                              </t>
+                              <!-- </t> -->
                             </td>
                             <td class='col-change'>
                                 <t t-if='order.get_change(line)'>
@@ -561,7 +561,7 @@
                                   Is Return Product:
                                   <i class="is_return_bt"  style="color: green;font-size: 25px;cursor: pointer" >False</i>
                                 </span> -->
-                                <t t-if="widget.options.order_line.is_unfixed">
+                                <!-- <t t-if="widget.options.order_line.is_unfixed">
                                   <t t-if="widget.options.order.get_total_purity_convert_qty_gm(widget.options.order_line)" style="font-size: 15px;">
                                     <t t-foreach='widget.options.order.get_total_purity_convert_qty_gm(widget.options.order_line)' t-as='line'>
                                         <t t-esc="line.pure" />:
@@ -570,7 +570,7 @@
                                       </t>
                                   </t>
 
-                                </t>
+                                </t> -->
 
 
                                 <input placeholder="Search Lot" style="width: 160px;
@@ -601,6 +601,39 @@
                                   <input type="checkbox" id="oe_import_trackingaas" class="fa fa-check"  /> -->
                                   <!-- class="fa fa-check" -->
                               </div>
+
+
+                              <t t-if="widget.options.order_line.is_unfixed">
+                                <t t-if="widget.options.order.get_total_purity_convert_qty_gm(widget.options.order_line)" style="font-size: 15px;">
+
+                                  <div style="height: 10%;overflow: scroll;font-size: 13px;">
+                                      <table >
+                                          <colgroup >
+
+                                              <!-- <col width='15%' />
+                                              <col width='15%' />
+                                              <col width='15%' />
+                                              <col width='15%' />
+                                              <col width='15%' /> -->
+                                            <td>Purity</td>
+                                            <td style="color: #43996E">Total Gross</td>
+                                          </colgroup>
+                                          <t t-foreach="widget.options.order.get_total_purity_convert_qty_gm(widget.options.order_line)" t-as="line">
+                                              <tr style="font-size: 12px;">
+                                                      <td id="pure">
+                                                          <t t-esc="line.pure" />
+                                                      </td>
+                                                      <td id="total" style="color: #43996E" >
+                                                          <t t-esc="line.qty_gross" />
+                                                      </td>
+                                              </tr>
+                                          </t>
+                                      </table>
+                                  </div>
+                                </t>
+
+                              </t>
+
                               <div style="height: 360px;overflow: scroll;">
                                   <table >
                                       <colgroup >
@@ -685,19 +718,21 @@
                                                     <td id="pure_weight">
                                                         <t t-esc="product_lot.pure_weight"/>
                                                     </td>
-                                                    <td id="selling_making_charge">
+                                                    <!-- <td id="selling_making_charge">
                                                         <t t-esc="making_charge" />
-                                                    </td>
-                                                    <!-- <td id="selling_making">
-                                                        <t t-esc="product_lot.selling_making_charge" />
                                                     </td> -->
+                                                    <td id="selling_making">
+                                                        <t t-esc="product_lot.selling_making_charge" />
+                                                    </td>
                                                     <td id="gold_rate">
                                                         <t t-esc="widget.pos.config.gold_rate" />
                                                     </td>
                                                   </t>
                                                   <t t-if="!widget.options.order.order_fixed">
                                                     <td id="selling_making_charge">
-                                                        <t t-esc="making_charge" />
+                                                        <!-- <t t-esc="making_charge" /> -->
+                                                        <t t-esc="product_lot.selling_making_charge" />
+
                                                     </td>
                                                   </t>
                                                 </t>
@@ -848,7 +883,7 @@
             <t t-if="!line.get_product().categ.is_scrap">
 
               <span class="price">
-                  <t t-esc="widget.format_currency(line.get_display_price())"/>
+                  <t t-esc="widget.format_currency(line.get_display_price(),3)"/>
               </span>
               <ul class="info-list">
                   <t t-if="line.get_quantity_str() !== '1' || line.selected ">
@@ -861,12 +896,12 @@
                           <t t-if="line.display_discount_policy() == 'without_discount' &amp;&amp;
                               line.get_unit_display_price() != line.get_lst_price()">
                               <s>
-                                  <t t-esc="widget.format_currency(line.get_fixed_lst_price(),'Product Price')" />
+                                  <t t-esc="widget.format_currency(line.get_fixed_lst_price(),3)" />
                               </s>
-                              <t t-esc="widget.format_currency(line.get_unit_display_price(),'Product Price')" />
+                              <t t-esc="widget.format_currency(line.get_unit_display_price(),3)" />
                           </t>
                           <t t-else="">
-                              <t t-esc="widget.format_currency(line.get_unit_display_price(),'Product Price')" />
+                              <t t-esc="widget.format_currency(line.get_unit_display_price(),3)" />
                           </t>
                           /
                           <t t-esc="line.get_unit().name" />
@@ -913,7 +948,7 @@
                   <t t-esc="line.get_qty_gm_str()" />g
                 </t>
                 <t t-if="line.is_make_charge_value">
-                  <t t-esc="widget.format_currency(line.get_display_price())"/>
+                  <t t-esc="widget.format_currency(line.get_display_price(),3)"/>
                 </t>
 
               </span>

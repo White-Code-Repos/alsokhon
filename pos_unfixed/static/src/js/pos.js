@@ -12,38 +12,7 @@ odoo.define('pos_unfixed.pos', function(require){
 
     screens.OrderWidget.include({
 
-			// update_summary: function(){
-			// 	var self = this;
-		  //   var order = this.pos.get_order();
-			// 	if(!order && !order.get_orderlines().length){
-    	// 		return;
-    	// 	}
-      //
-		  //   var total     = order && order.get_total_with_tax()? order.get_total_with_tax() : 0;
-			// 	var dis_promo = order && order.get_discount_promo_total()?order.get_discount_promo_total():0;
-		  //   var taxes     = order && order.get_total_with_tax()? total +dis_promo- order.get_total_without_tax() : 0;
-		  //   var total_items    = order && order.get_total_items()? order.get_total_items() : 0;
-      //
-    	// 	var discount = 0;
-    	// 	order.set_discount_product_id(false);
-    	// 	order.set_order_total_discount(discount);
-    	// 	// discount = order ? order.calculate_discount_amt() : 0;
-			// 	order.set_order_total_discount(Number(discount));
-			// 	if (self.el.querySelector('.summary .total > .value')) {
-			// 		self.el.querySelector('.summary .total > .value').textContent = this.format_currency(total);
-			// 	}
-			// 	if (self.el.querySelector('.summary .total .subentry .value')) {
-			// 		self.el.querySelector('.summary .total .subentry .value').textContent = this.format_currency(taxes);
-			// 	}
-			// 	if (self.el.querySelector('.items .value')) {
-			// 		self.el.querySelector('.items .value').textContent = total_items;
-			// 	}
-				// // console.log("dis_promo",dis_promo);
-				// if(self.el.querySelector('.discount .value')){
-				//    self.el.querySelector('.discount .value').textContent = this.format_currency(dis_promo);
-    		// }
-      //
-			// },
+
       update_summary: function(){
           var order = this.pos.get_order();
           if (!order.get_orderlines().length) {
@@ -413,7 +382,7 @@ odoo.define('pos_unfixed.pos', function(require){
            console.log("line.purity",line.purity);
             list_total[line.purity]+=line.qty_gm_pure;
         });
-        console.log("SADDL:QW:LD",list_total);
+        console.log("get_total_purity_qty_gm",list_total);
 				return list_total ;
 	    },
       get_total_unfixed_purity_qty_gm: function() {
@@ -426,12 +395,11 @@ odoo.define('pos_unfixed.pos', function(require){
              if (!list_total[line.purity]) {
                list_total[line.purity]=0;
              }
-             console.log("line.purity",line.purity);
              list_total[line.purity]-=line.qty_gm_pure;
 
            }
         });
-        console.log("SADDL:QW:LD",list_total);
+        console.log("get_total_unfixed_purity_qty_gm",list_total);
 				return list_total ;
 	    },
       get_total_unfixed_purity_pure_qty_gm: function() {
@@ -439,8 +407,7 @@ odoo.define('pos_unfixed.pos', function(require){
         var pos = this.pos;
         if (this.orderlines.models) {
           var order = this.orderlines.models[0].order;
-          console.log("(((order.get_total_unfixed_purity_qty_gm())))");
-          console.log(order.get_total_unfixed_purity_qty_gm());
+
           for (var total_qty in order.get_total_unfixed_purity_qty_gm()) {
               _.each(pos.list_gold_purity, function(purity) {
                 if (purity.name==(total_qty).toString()) {
@@ -452,7 +419,7 @@ odoo.define('pos_unfixed.pos', function(require){
               });
           }
         }
-        console.log("JKAHKJ",list_total);
+        console.log("get_total_unfixed_purity_pure_qty_gm",list_total);
         return list_total ;
       },
       get_total_purity_pure_qty_gm: function() {
@@ -460,8 +427,7 @@ odoo.define('pos_unfixed.pos', function(require){
         var pos = this.pos;
         if (this.orderlines.models) {
           var order = this.orderlines.models[0].order;
-          console.log("(((order.get_total_purity_qty_gm())))");
-          console.log(order.get_total_purity_qty_gm());
+
           for (var total_qty in order.get_total_purity_qty_gm()) {
               // var i = Object.keys(order.get_total_purity_qty_gm()).indexOf(total_qty);
               _.each(pos.list_gold_purity, function(purity) {
@@ -476,14 +442,13 @@ odoo.define('pos_unfixed.pos', function(require){
               });
           }
         }
-        console.log("JKAHKJ",list_total);
+        console.log("get_total_purity_pure_qty_gm",list_total);
         return list_total ;
       },
       get_total_purity_convert_qty_gm: function(orderline) {
         var list_total = [];
         var pos = this.pos;
-        console.log(orderline);
-        console.log(orderline.product_lot);
+
         var lot_purity=[];
         _.each(orderline.product_lot, function(lot) {
           // console.log(lot);
@@ -503,13 +468,11 @@ odoo.define('pos_unfixed.pos', function(require){
           var order = this.orderlines.models[0].order;
           var get_total_purity_pure_qty_gm = order.get_total_purity_pure_qty_gm();
           var total_pure = 0;
-          console.log("get_total_purity_pure_qty_gm");
-          console.log(get_total_purity_pure_qty_gm);
+
           _.each(get_total_purity_pure_qty_gm, function(total_qty) {
             total_pure+=total_qty['qty_pure'];
           });
 
-          console.log("total_pure",total_pure);
           _.each(lot_purity, function(purity) {
             var scrap = 0;
             _.each(pos.list_gold_purity, function(puri) {
@@ -518,12 +481,12 @@ odoo.define('pos_unfixed.pos', function(require){
                 return true;
               }
             });
-            console.log("((scrap))",scrap);
-            var list = {'pure':purity,'qty_gross':(total_pure/scrap).toFixed(4),'qty_pure':total_pure}
+            console.log("((scrap))",total_pure,scrap,(total_pure/scrap),(total_pure/scrap).toFixed(4));
+            var list = {'pure':purity,'qty_gross':(total_pure/scrap),'qty_pure':total_pure}
             list_total.push(list);
           });
         }
-        console.log("JKAHKsdadsfafJ",list_total);
+        console.log("get_total_purity_convert_qty_gm",list_total);
         return list_total ;
       },
       add_product: function(product, options){
