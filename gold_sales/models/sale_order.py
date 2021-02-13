@@ -415,6 +415,8 @@ class SaleOrderLine(models.Model):
         if self.lot_id and self.product_id:
             if self.product_id.categ_id.is_scrap or self.product_id.categ_id.is_diamond :
                 self.product_uom_qty = self.lot_id.product_qty
+            if self.product_id.gold_with_lots:
+                self.product_uom_qty = 0.0 
             self.purity_id = self.lot_id.purity_id.id
             self.carat = self.lot_id.carat
             self.make_rate = self.lot_id.selling_making_charge
