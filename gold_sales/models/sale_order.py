@@ -428,9 +428,9 @@ class SaleOrderLine(models.Model):
                 self.gross_wt = 0.0
             self.pure_wt = self.lot_id.pure_weight
             if self.product_id.categ_id.is_scrap:
-                self.purity_hall = self.lot_id.purity.scrap_sales_hallmark
+                self.purity_hall = self.lot_id.purity_id.scrap_sales_hallmark
             elif self.product_id.categ_id.is_gold and not self.product_id.categ_id.is_scrap:
-                self.purity_hall = self.lot_id.purity.gold_sales_hallmark
+                self.purity_hall = self.lot_id.purity_id.gold_sales_hallmark
             # if self.lot_id.purity_id.gold_sales_hallmark != self.lot_id.purity and not self.product_id.scrap :
             #     self.purity_hall = self.lot_id.purity
             #     self.onchange_purity_hall()
