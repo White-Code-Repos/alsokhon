@@ -19,6 +19,12 @@ MAP_INVOICE_TYPE_PARTNER_TYPE = {
 class AccountAccount(models.Model):
     _inherit = 'account.account'
 
+
+    # @api.model
+    # def create(self, values):
+    #     old_current_position_account = self.search([('current_position', '=', True),('id', '!=', rec.id)])
+    #     res = super(AccountAccount, self).create(values)
+    #     return res
     @api.constrains('current_position')
     def _constrains_current_position(self):
         """
