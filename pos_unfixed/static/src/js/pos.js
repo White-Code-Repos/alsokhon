@@ -676,6 +676,42 @@ odoo.define('pos_unfixed.pos', function(require){
           console.log(newPaymentline);
           this.select_paymentline(newPaymentline);
       },
+      get_change_value: function(paymentline) {
+          if (!paymentline) {
+              var change = this.get_total_paid() - this.get_total_with_tax();
+              if (!this.order_fixed) {
+                change = this.get_total_paid()-this.get_make_charge_value_total();
+              }
+          } else {
+              var change = -this.get_total_with_tax();
+              if (!this.order_fixed) {
+                change = -this.get_make_charge_value_total();
+              }
+              var lines  = this.paymentlines.models;
+              for (var i = 0; i < lines.length; i++) {
+                  change += lines[i].get_amount();
+                  if (lines[i] === paymentline) {
+                      break;
+                  }
+              }
+          }
+          return round_pr(change, this.pos.currency.rounding)
+      },
+      get_change_convert_value: function(paymentline) {
+        if (!paymentline) {
+            var change = this.get_total_paid() - this.get_total_with_tax();
+        } else {
+            var change = -this.get_total_with_tax();
+            var lines  = this.paymentlines.models;
+            for (var i = 0; i < lines.length; i++) {
+                change += lines[i].get_amount();
+                if (lines[i] === paymentline) {
+                    break;
+                }
+            }
+        }
+        return round_pr(change, this.pos.currency.rounding)
+      },
       get_due: function(paymentline) {
           if (!paymentline) {
               var due = this.get_total_with_tax() - this.get_total_paid();
@@ -698,6 +734,7 @@ odoo.define('pos_unfixed.pos', function(require){
           }
           return round_pr(due, this.pos.currency.rounding);
       },
+
       get_due_converted_fix: function(paymentline) {
           if (!paymentline) {
               var due = this.get_total_with_tax() - this.get_total_paid();
