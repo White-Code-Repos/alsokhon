@@ -68,7 +68,7 @@
            <field name="inherit_id" ref="account.view_move_form"/>
            <field name="arch" type="xml">
                    <xpath expr="//header" position="inside">
-                     <button  name="%(action_stock_moves_sales)d" type="action" context="{'pure_weight': pure_wt_value_perm}" groups="account.group_account_invoice" attrs="{'invisible': ['|', '|','|','|',('pure_wt_value','=',0.00),('state', '!=', 'posted'),('invoice_payment_state', '!=', 'not_paid'),('purchase_type', '!=', 'unfixed'),('type', 'not in', ('in_invoice'))]}" string="Register Gold Sales" class="oe_highlight"/>
+                     <button  name="%(action_stock_moves_sales)d" type="action" context="{'pure_weight': pure_wt_value_perm}" groups="account.group_account_invoice" attrs="{'invisible': ['|', '|','|','|',('pure_wt_value','=',0.00),('state', '!=', 'posted'),('invoice_payment_state', '!=', 'not_paid'),('sale_type', '!=', 'unfixed'),('type', 'not in', ('in_invoice'))]}" string="Register Gold Sales" class="oe_highlight"/>
                      <button  name="%(gold_sales.action_fixing_unfixed_inv_wiz_ss)d" type="action" string="Convert Into Fixed" class="oe_highlight" attrs="{'invisible': ['|', '|','|','|',('pure_wt_value','=',0.00),('state', '!=', 'posted'),('invoice_payment_state', '!=', 'not_paid'),('sale_type', '!=', 'unfixed'),('type', 'not in', ('out_invoice'))]}" context="{'remaining_gold': pure_wt_value,'gold_rate': gold_rate_value}"/>
                    </xpath>
 
