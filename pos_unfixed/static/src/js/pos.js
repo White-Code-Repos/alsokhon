@@ -351,7 +351,9 @@ odoo.define('pos_unfixed.pos', function(require){
         console.log("SAJDKHWIQDHIWDIQUWDOIWQDWQIDUWQIJWLNDJ");
 
         var order = this.pos.get_order();
+        console.log("ASKMLDASDAWW");
         console.log(order.get_due_converted_fix());
+        console.log(order.get_total_with_tax() , order.get_total_paid());
 
 
         if (!order.get_due_converted_fix()<1){
