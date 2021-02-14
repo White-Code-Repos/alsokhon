@@ -23,7 +23,7 @@ class stockGoldMove(models.TransientModel):
     _name = 'stock.move.gold.sale'
     _description = 'Generate move for all selected moves'
 
-    move_ids = fields.Many2many('stock.production.lot', 'production_lot_stock_rel', 'stock_gold_id', 'production_lot_id',  'moves', readonly=False)
+    move_ids = fields.Many2many('stock.production.lot', 'production_lot_stock_sale_rel', 'stock_gold_id', 'production_lot_id',  'moves', readonly=False)
     location_id = fields.Many2one('stock.location', required=True)
     pure_weight = fields.Float('Pure Weight', digits=(16, 3))
     pure_remainning = fields.Float('Pure Remainning',compute="get_pure_weight_remain", digits=(16, 3))
