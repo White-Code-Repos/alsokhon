@@ -35,7 +35,7 @@ class GoldFixingPositionWizard(models.TransientModel):
             pickings = self.env['stock.picking'].search([('name', '=', rec.ref.split()[0])])
             # ('scheduled_date', '>=', self.date_from),
             #  ('scheduled_date', '<=', self.date_to),
-            
+
             vals = {
                 'date': rec.move_id.date,
                 'name': rec.move_id.name,

@@ -9,7 +9,7 @@
     'images': [
     ],
     'depends': [
-        'account',
+        'account', 'gold_purchases'
         # for bank and cash menu and also for better usability
         # 'account_payment_fix',
     ],
