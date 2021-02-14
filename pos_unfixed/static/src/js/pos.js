@@ -356,8 +356,8 @@ odoo.define('pos_unfixed.pos', function(require){
         console.log(order.get_total_with_tax() , order.get_total_paid());
 
         console.log(!order.get_due_converted_fix()<1);
-        console.log(order.get_due_converted_fix()<1);
-        if (!order.get_due_converted_fix()<1){
+        console.log(order.get_due_converted_fix()>1);
+        if (order.get_due_converted_fix()>1){
           self.gui.show_popup('error',{
           	'title': _t('Order Not Paid'),
           	'body': _t('You cannot get the order. select payment method first.'),
