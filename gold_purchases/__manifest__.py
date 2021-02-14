@@ -26,6 +26,7 @@
         'views/gold_purity_view.xml',
         'views/stock_quant.xml',
         'wizard/fixing_unfixed_bill.xml',
+        'wizard/warning_wizard.xml',
         # 'reports/gold_fixing_register.xml',
     ],
 

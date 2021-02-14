@@ -171,6 +171,7 @@
                     <field name="gross_weight" attrs="{'column_invisible':[('gold','!=',True)]}"/>
                     <field name="pure_weight" attrs="{'column_invisible':[('gold','!=',True)]}"/>
                     <field name="purity" attrs="{'column_invisible':[('gold','!=',True)]}"/>
+                    <field name="purity_id" attrs="{'column_invisible':[('gold','!=',True)]}"/>
                 </field>
             </field>
         </record>
@@ -191,6 +192,7 @@
                     <field name="gross_weight" readonly="0" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
                     <field name="pure_weight" readonly="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
                     <field name="purity" readonly="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
+                    <field name="purity_id" readonly="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
                     <field name="item_category_id" required="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
                     <field name="sub_category_id" attrs="{'invisible': [('item_category_id','=', False)], 'required': [('item_category_id', '!=', False)]}"
                            domain="[('parent_category_id', '=', item_category_id)]"/>
@@ -217,6 +219,7 @@
                             <field name="gross_weight" invisible="1" attrs="{'column_invisible':[('gold','!=',True)]}"/>
                             <field name="pure_weight" invisible="1" attrs="{'column_invisible':[('gold','!=',True)]}"/>
                             <field name="purity" invisible="1" attrs="{'column_invisible':[('gold','!=',True)]}"/>
+                            <field name="purity_id" invisible="1" attrs="{'column_invisible':[('gold','!=',True)]}"/>
                         </group>
                         <group>
                             <field name="item_category_id" invisible="1"/>
@@ -228,7 +231,7 @@
                     </group>
                     <field name="move_line_nosuggest_ids"
                            attrs="{'readonly': ['|', ('state', '=', 'cancel'), '&amp;', ('state', '=', 'done'), ('is_locked', '=', True)]}"
-                           context="{'tree_view_ref': 'stock.view_stock_move_line_operation_tree','default_picking_id': picking_id, 'default_move_id': id, 'default_product_id': product_id, 'default_location_id': location_id, 'default_location_dest_id': location_dest_id, 'default_company_id': company_id, 'default_selling_karat_id': selling_karat_id, 'default_item_category_id': item_category_id, 'default_sub_category_id': sub_category_id, 'default_gross_weight': gross_weight, 'default_pure_weight': pure_weight, 'default_purity': purity, 'default_selling_making_charge': selling_making_charge, 'default_buying_making_charge': buying_making_charge, 'default_carat': carat}"/>
+                           context="{'tree_view_ref': 'stock.view_stock_move_line_operation_tree','default_picking_id': picking_id, 'default_move_id': id, 'default_product_id': product_id, 'default_location_id': location_id, 'default_location_dest_id': location_dest_id, 'default_company_id': company_id, 'default_selling_karat_id': selling_karat_id, 'default_item_category_id': item_category_id, 'default_sub_category_id': sub_category_id, 'default_gross_weight': gross_weight, 'default_pure_weight': pure_weight, 'default_purity': purity, 'default_purity_id': purity_id, 'default_selling_making_charge': selling_making_charge, 'default_buying_making_charge': buying_making_charge, 'default_carat': carat}"/>
                 </field>
             </field>
         </record>

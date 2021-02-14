@@ -36,9 +36,12 @@
                       <field name="product_id"/>
                       <field name="quantity" sum="quantity"/>
                       <field name="gross_weight" sum="gross_weight"/>
+                      <field name="net_weight" sum="gross_weight"/>
                       <field name="purity_id"/>
                       <field name="purity"/>
                       <field name="pure_weight" sum="pure_weight"/>
+                      <field name="polish_rhodium" sum="polish_rhodium"/>
+                      <field name="making_charge" sum="making_charge"/>
                     </tree>
                   </field>
                 </page>
@@ -46,8 +49,12 @@
                   <field name="details_assembly_diamond">
                     <tree editable="top">
                       <field name="product_id"/>
-                      <field name="carat" sum="carat"/>
+                      <field name="carat"/>
+                      <!-- <field name="carat_price"/> -->
+                      <!-- <field name="stones_value"/> -->
                       <field name="stones_quantity" sum="stones_quantity"/>
+                      <!-- <field name="stone_setting_rate"/> -->
+                      <!-- <field name="stone_setting_value" sum="stone_setting_value" readonly="1" force_save="1"/> -->
                     </tree>
                   </field>
                 </page>
@@ -94,11 +101,21 @@
                     <attribute name="width">10%</attribute>
                 </xpath>
                 <xpath expr="//field[@name='order_line']/tree/field[@name='price_subtotal']" position="after">
-                    <field name="total_with_make"/>
+                    <field name="total_with_make" attrs="{'column_invisible':[('parent.is_unfixed','=',True)]}"/>
                 </xpath>
                 <field name="amount_untaxed" position="before">
-                  <field name="total_gold_vale_order"/>
+                  <field name="dont_view_tree_value_fields" invisible="1"/>
+                  <field name="total_gold_vale_order" attrs="{'invisible':[('is_unfixed','=',True)]}"/>
                   <field name="total_make_vale_order"/>
+                </field>
+                <field name="amount_untaxed" position="attributes">
+                    <attribute name="attrs">{'invisible':[('is_unfixed','=',True)]}</attribute>
+                </field>
+                <field name="amount_tax" position="attributes">
+                    <attribute name="attrs">{'invisible':[('is_unfixed','=',True)]}</attribute>
+                </field>
+                <field name="amount_total" position="attributes">
+                    <attribute name="attrs">{'invisible':[('is_unfixed','=',True)]}</attribute>
                 </field>
                 <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom']" position="after">
                     <field name="scrap_state_read" invisible="1"/>
@@ -112,8 +129,8 @@
                     <field name="stock" width="10%" invisible="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=', True)]}"/>
                     <field name="make_rate" width="15%"  force_save="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=', True)],'readonly':[('parent.order_category','=','retail')]}"/>
                     <field name="make_value" width="12%"   force_save="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=', True)]}" readonly="1"/>
-                    <field name="gold_rate" width="12%"   force_save="1" readonly="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=', True)]}"/>
-                    <field name="gold_value" width="12%"   force_save="1" readonly="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=', True)]}"/>
+                    <field name="gold_rate" width="12%"   force_save="1" readonly="1" attrs="{'column_invisible':[('parent.dont_view_tree_value_fields','=',True)]}"/>
+                    <field name="gold_value" width="12%"   force_save="1" readonly="1" attrs="{'column_invisible':[('parent.dont_view_tree_value_fields','=',True)]}"/>
                     <field name="is_make_value"  width="10%"  invisible="1"/>
                 </xpath>
                 <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom']" position="after">
@@ -133,13 +150,19 @@
                        <field name="stock" width="10%" invisible="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=', True)]}"/>
                        <field name="make_rate" width="15%"  force_save="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=', True)],'readonly':[('parent.order_category','=','retail')]}"/>
                        <field name="make_value" width="12%"   force_save="1" readonly="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=', True)]}"/>
-                       <field name="gold_rate" width="12%"   force_save="1" readonly="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=', True)]}"/>
-                       <field name="gold_value" width="12%"   force_save="1" readonly="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=', True)]}"/>
+                       <field name="gold_rate" width="12%"   force_save="1" readonly="1" attrs="{'column_invisible':[('parent.dont_view_tree_value_fields','=',True)]}"/>
+                       <field name="gold_value" width="12%"   force_save="1" readonly="1" attrs="{'column_invisible':[('parent.dont_view_tree_value_fields','=',True)]}"/>
                        <field name="is_make_value"  width="10%"  invisible="1"/>
                 </xpath>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='discount']" position="attributes">
+                    <attribute name="attrs">{'column_invisible':[('parent.is_unfixed','=',True)]}</attribute>
+                </xpath>
                 <xpath expr="//field[@name='order_line']/tree/field[@name='price_unit']" position="attributes">
-                    <attribute name="attrs">{'readonly': [('parent.assembly','!=',True),('parent.diamond','!=',True)]}</attribute>
+                    <attribute name="attrs">{'readonly': [('parent.assembly','!=',True),('parent.diamond','!=',True)],'column_invisible':[('parent.is_unfixed','=',True)]}</attribute>
                     <attribute name="force_save">1</attribute>
+                </xpath>
+                <xpath expr="//field[@name='order_line']/tree/field[@name='price_subtotal']" position="attributes">
+                    <attribute name="attrs">{'column_invisible':[('parent.is_unfixed','=',True)]}</attribute>
                 </xpath>
                 <xpath expr="//field[@name='order_line']/tree/field[@name='product_id']" position="attributes">
                     <attribute name="attrs">{'readonly': ['|',('is_make_value', '=', True),('state', 'in', ['sale','done','cancel'])]}</attribute>
@@ -150,7 +173,7 @@
                     <attribute name="force_save">1</attribute>
                 </xpath>
                 <xpath expr="//field[@name='order_line']/tree/field[@name='product_uom_qty']" position="attributes">
-                    <attribute name="attrs">{'readonly': ['|',('is_make_value', '=', True),('state', 'in', ['sale','done','cancel'])]}</attribute>
+                    <!-- <attribute name="attrs">{'readonly': ['|',('is_make_value', '=', True),('state', 'in', ['sale','done','cancel']),('product_id.gold_with_lots','!=',True)]}</attribute> -->
                     <attribute name="force_save">1</attribute>
                 </xpath>
                  <xpath expr="//form/sheet/notebook/page/field[@name='order_line']/tree/field[@name='qty_delivered']" position="attributes">

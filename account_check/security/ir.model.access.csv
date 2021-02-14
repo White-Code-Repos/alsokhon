@@ -1,0 +1,11 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+account_check_access_full,account_check_access_full,model_account_check,account.group_account_invoice,1,1,1,1
+account_checkbook_access_full,account_checkbook_access_full,model_account_checkbook,account.group_account_invoice,1,1,1,1
+account_check_access_global,account_check_access_global,model_account_check,,1,1,0,0
+account_checkbook_access_global,account_checkbook_access_global,model_account_checkbook,,1,0,0,0
+account_check_operation_access_global,account_check_operation_access_global,model_account_check_operation,,1,0,0,0
+account_check_operation_access_full,account_check_operation_access_full,model_account_check_operation,account.group_account_invoice,1,1,1,1
+base.access_ir_sequence_group_user,base.ir_sequence group_user,base.model_ir_sequence,base.group_user,1,1,0,0
+checkbook_sequence_access_full,checkbook_sequence_access_full,model_checkbook_sequence,account.group_account_invoice,1,1,1,1
+manager_access_check_portfolio,check.portfolio.manager,model_check_portfolio,,1,1,1,1
+manager_access_check_portfolio_lines,check.portfolio.lines.manager,model_check_portfolio_lines,,1,1,1,1

@@ -319,7 +319,7 @@ class PosOrder(models.Model):
                         # print(line.qty)
 # # 97.0 1.0 97.0
 #                         print(lot.carat,line.qty,lot.total_qty)
-                        if line.product_id.categ_id.is_scrap:
+                        if line.product_id.categ_id.is_scrap or (line.product_id.categ_id.is_gold and line.product_id.gold_with_lots):
                             lot.gross_weight -= line.qty
                         elif line.product_id.categ_id.is_diamond:
                             if lot.total_qty==1:

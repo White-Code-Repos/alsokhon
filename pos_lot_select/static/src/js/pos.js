@@ -9,7 +9,7 @@ odoo.define('pos_lot_select.pos', function(require){
       var rpc = require('web.rpc');
       var PosBaseWidget = require('point_of_sale.BaseWidget');
 
-      models.load_fields('product.product',['making_charge_id','making_charge_diamond_id']);
+      models.load_fields('product.product',['making_charge_id','making_charge_diamond_id','gold_with_lots']);
       models.load_fields('product.category',['is_gold','is_scrap','is_diamond','is_assembly']);
       models.load_models({
           model: 'stock.production.lot',
@@ -39,7 +39,7 @@ odoo.define('pos_lot_select.pos', function(require){
                   self.list_gold_purity[list_gold_purity[i].id] = list_gold_purity[i];
           			}
           		}
-              // console.log(self.list_gold_purity);
+              console.log(self.list_gold_purity);
           },
       });
 
@@ -160,7 +160,7 @@ odoo.define('pos_lot_select.pos', function(require){
                       var lot_list = self.pos.list_lot_num;
                         for(var i=0;i<lot_list.length;i++){
                             if(lot_list[i].product_id[0]==item.product.id&&lot_list[i].name == lot_item.attributes['lot_name']){
-                              console.log(lot_list[i]);
+                              // console.log(lot_list[i]);
                               // console.log((item.quantity*lot_list[i].gross_weight)/lot_list[i].total_qty);
                               // console.log((item.quantity*lot_list[i].pure_weight)/lot_list[i].total_qty);
                               if (item.product.categ.is_scrap || item.product.categ.is_gold) {
@@ -171,13 +171,18 @@ odoo.define('pos_lot_select.pos', function(require){
                                   // console.log(lot_list[i]);
                                   // console.log(lot_list[i].purity_id);
                                   // console.log(self.pos.list_gold_purity[lot_list[i].purity_id[0]]);
-                                  var scrap_purity = self.pos.list_gold_purity[lot_list[i].purity_id[0]].scrap_purity/1000;
+                                  var purity = self.pos.list_gold_purity[lot_list[i].purity_id[0]].scrap_purity/1000;
+
+
+                                  if (item.product.gold_with_lots) {
+                                    purity = self.pos.list_gold_purity[lot_list[i].purity_id[0]].purity/1000;
+                                  }
 
                                   // console.log(lot_list[i].gross_weight,item.quantity,lot_list[i].total_qty,lot_list[i].gross_weight-item.quantity);
                                   // console.log(lot_list[i].pure_weight,item.quantity,lot_list[i].total_qty,lot_list[i].pure_weight-item.quantity*scrap_purity);
                                   lot_list[i].gross_weight -= item.quantity;
                                   lot_list[i].gross_weight = parseFloat((lot_list[i].gross_weight).toFixed(4))
-                                  lot_list[i].pure_weight -= (item.quantity*scrap_purity);
+                                  lot_list[i].pure_weight -= (item.quantity*purity);
                                   lot_list[i].pure_weight = parseFloat((lot_list[i].pure_weight).toFixed(4))
 
                                 }else {
@@ -259,7 +264,7 @@ odoo.define('pos_lot_select.pos', function(require){
               // self.get_pos_lots();
               var product_lots =  self.pos.list_lot_num;
               var product_lot = []
-              // console.log("ptions.order_line");
+              // console.log("options.order_line");
               // console.log(options.order_line);
               // setTimeout(function(){
               // }, 1000);
@@ -274,14 +279,45 @@ odoo.define('pos_lot_select.pos', function(require){
                   }
 
               });
+              options.order_line.product_lot=product_lot;
 
+              // console.log("product_lot");
               // console.log(product_lot);
 
               // self.render_list_lots(product_lot,undefined);
               options.qstr = "";
               options.add_lot = false;
+              // console.log(options.order.get_total_purity_pure_qty_gm());
+              //
+              // _.each(options.order.get_total_purity_pure_qty_gm(), function(purity) {
+              //   console.log("purity");
+              //   console.log(purity);
+              // });
+              // var lot_purity=[];
+              // _.each(product_lot, function(lot) {
+              //   // console.log(lot);
+              //   if (lot.purity_id&&lot.purity_id[1]) {
+              //     lot_purity.push(lot.purity_id[1]);
+              //   }
+              // });
+              // var set = new Set(lot_purity);
+              //
+              // lot_purity=[];
+              // for (let lot of set) {
+              //     lot_purity.push(lot);
+              // }
+              var total_purity_convert_qty_gm= options.order.get_total_purity_convert_qty_gm(options.order_line);
+              // console.log("(((((t)))))");
+              // console.log(total_purity_convert_qty_gm);
+
+
+              // console.log(lot_purity);
+              // console.log(set);
+
               // options.is_return = false;
               options.product_lot = product_lot;
+              options.total_purity_convert_qty_gm = total_purity_convert_qty_gm;
+              // console.log(options);
               this._super(options);
               // this.focus();
           },
@@ -442,8 +478,8 @@ odoo.define('pos_lot_select.pos', function(require){
 
                   // console.log(name_lot,puri);
                 }
-                  console.log("NEEEEEEW");
-                  console.log(self.options);
+                  // console.log("NEEEEEEW");
+                  // console.log(self.options);
                   // self.gui.show_popup('AddLotWidget');
                   // self.renderElement();
               });
@@ -496,7 +532,7 @@ odoo.define('pos_lot_select.pos', function(require){
           },
 
 
-          change_price: function(gold_rate,pure_weight,qty,tot_qty){
+          change_price: function(gold_rate,pure_weight){
               var pack_lot_lines = this.options.pack_lot_lines;
               // console.log(gold_rate*pure_weight);
               this.options.order_line.price=gold_rate*pure_weight;
@@ -505,6 +541,7 @@ odoo.define('pos_lot_select.pos', function(require){
 
           click_confirm: function(){
               self = this
+
               var pack_lot_lines = this.options.pack_lot_lines;
               this.$('.packlot-line-input').each(function(index, el){
                   var cid = $(el).attr('cid'),
@@ -523,45 +560,111 @@ odoo.define('pos_lot_select.pos', function(require){
                   {
                     var order_line = self.options.order_line
                     var pure_weight = lot.pure_weight;
-
-                    if (order_line.product.categ.is_scrap) {
-                      // console.log(lot);
-                      // console.log(self.pos.list_gold_purity[lot.purity_id[0]].scrap_purity);
-                      if (!self.pos.list_gold_purity[lot.purity_id[0]].scrap_purity) {
+                    // console.log("asadas");
+                    // console.log(order_line);
+                    if (order_line.product.categ.is_gold) {
+                      // console.log("DKLWAJDLQKDKL");
+                      // console.log(self.pos.list_gold_purity[lot.purity_id[0]]);
+                      if (!self.pos.list_gold_purity[lot.purity_id[0]].gold_sales_hallmark) {
                         pure_weight = 0;
                       }
                       else {
-                        pure_weight = self.pos.list_gold_purity[lot.purity_id[0]].scrap_purity/1000;
+                        // console.log("sadasdasdadqweqqwqe");
+                        pure_weight = lot.gross_weight*(self.pos.list_gold_purity[lot.purity_id[0]].gold_sales_hallmark/1000);
+                        // pure_weight = self.pos.list_gold_purity[lot.purity_id[0]].purity/1000;
                       }
                       order_line.purity = self.pos.list_gold_purity[lot.purity_id[0]].name;
                     }
 
+
+                    if (order_line.product.categ.is_scrap) {
+                      // console.log(lot);
+                      // console.log(self.pos.list_gold_purity[lot.purity_id[0]].scrap_purity);
+                      // console.log(self.pos.list_gold_purity[lot.purity_id[0]]);
+                      if (!self.pos.list_gold_purity[lot.purity_id[0]].scrap_sales_hallmark) {
+                        pure_weight = 0;
+                      }
+                      else {
+                        // console.log("sadasdasdadqweqqwqe");
+                        pure_weight = self.pos.list_gold_purity[lot.purity_id[0]].scrap_sales_hallmark/1000;
+                      }
+                      order_line.purity = self.pos.list_gold_purity[lot.purity_id[0]].name;
+                    }
+                    if (order_line.product.categ.is_gold&&order_line.product.gold_with_lots) {
+                      if (!self.pos.list_gold_purity[lot.purity_id[0]].purity) {
+                        pure_weight = 0;
+                      }
+                      else {
+                        // console.log("sadasdasdadqweqqwqe");
+                        pure_weight = self.pos.list_gold_purity[lot.purity_id[0]].gold_sales_hallmark/1000;
+                        // pure_weight = self.pos.list_gold_purity[lot.purity_id[0]].purity/1000;
+                      }
+                      order_line.purity = self.pos.list_gold_purity[lot.purity_id[0]].name;
+                    }
+
+
+
                     // console.log(self.options);
                     if (self.options.order_line.is_unfixed) {
+                      pure_weight = self.pos.list_gold_purity[lot.purity_id[0]].scrap_purity/1000;
                       self.options.pack_lot_lines.models[0].quantity*=-1;
                       self.options.order_line.quantity*=-1;
                       self.options.order_line.quantityStr=String(self.options.order_line.quantity);
                     }
-                    // console.log(pure_weight);
+                    console.log("DADQDQWDQ");
 
+                    console.log(pure_weight,self.options.order_line.quantity,lot.gross_weight);
 
+                    self.options.order.order_type = self.pos.config.session_type;
+                    // console.log(self.options.order);
+                    if (!self.options.order.order_fixed&&self.options.order.order_type!='retail') {
+                      if (order_line.product.categ.is_scrap) {
+                        self.options.order_line.set_qty_gm(self.options.order_line.quantity);
+                        self.options.order_line.set_qty_gm_pure(self.options.order_line.quantity*pure_weight);
+                        self.options.order_line.set_purity(lot.purity_id[1]);
+                      }else if (order_line.product.categ.is_gold) {
+                        if (order_line.product.gold_with_lots) {
+                          self.options.order_line.set_qty_gm(self.options.order_line.quantity);
+                          self.options.order_line.set_qty_gm_pure(self.options.order_line.quantity*pure_weight);
+                          self.options.order_line.set_purity(lot.purity_id[1]);
+                        }else {
+                          self.options.order_line.set_qty_gm(lot.gross_weight);
+                          self.options.order_line.set_qty_gm_pure(pure_weight);
+                          self.options.order_line.set_purity(lot.purity_id[1]);
+                        }
 
+                      }
+                    }
+                    console.log("pure_weight",pure_weight);
                     if (order_line.product.categ.is_scrap||order_line.product.categ.is_gold) {
                       self.change_price(self.pos.config.gold_rate,pure_weight);
                     }
 
                     if(order_line.product.categ.is_gold && order_line.product.making_charge_id ){
                       var product = self.pos.db.get_product_by_id(self.options.order_line.product.making_charge_id[0]);
+                      // console.log("self.options.order_line");
+                      // console.log(self.options.order_line);
+                      // console.log(self.options.order_line.product);
+                      // console.log(self.options);
+                      // console.log(self.options.order);
+                      // console.log(product);
+                      var price = order_line.quantity * lot.selling_making_charge*lot.gross_weight ;
+                      if (self.options.order_line.product.gold_with_lots) {
+                        price = order_line.quantity * lot.selling_making_charge;
+                      }
                       self.options.order.add_product(product, {
                         quantity: 1,
-                        price: order_line.quantity * lot.gross_weight * lot.selling_making_charge,
+                        price: price,
+                        charge: price,
                       });
+
                     }
                     if(order_line.product.categ.is_diamond && order_line.product.making_charge_diamond_id ){
                       var product = self.pos.db.get_product_by_id(self.options.order_line.product.making_charge_diamond_id[0]);
                       self.options.order.add_product(product, {
                         quantity: 1,
                         price: order_line.quantity * lot.selling_making_charge,
+                        charge: order_line.quantity * lot.selling_making_charge,
                       });
                     }
                   }
@@ -577,13 +680,19 @@ odoo.define('pos_lot_select.pos', function(require){
               // var gold_rate= $(this).closest("tr").find("#gold_rate")[0].innerText;
               //
               // self.change_price(gold_rate,pure_weight);
-              console.log(this.options.order_line);
 
 
               // this.options.order_line.price=0;
 
               this.options.order.save_to_db();
               this.options.order_line.trigger('change', this.options.order_line);
+              if (this.options.order_line.is_unfixed) {
+                this.options.order.add_paymentline(this.pos.payment_methods[0],self.options.order_line.qty_gm_pure,self.options.order_line.qty_gm,self.options.order_line.purity);
+                this.pos.chrome.gui.current_screen.render_paymentlines();
+                // this.render_paymentlines();
+
+              }
+
               this.gui.close_popup();
           },
 

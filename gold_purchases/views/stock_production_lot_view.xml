@@ -13,9 +13,11 @@
                       <field name="product_id"/>
                       <field name="quantity" sum="quantity"/>
                       <field name="gross_weight" sum="gross_weight"/>
+                      <field name="net_weight" sum="gross_weight"/>
                       <field name="purity_id"/>
                       <field name="purity"/>
-                      <field name="polish_rhodium"/>
+                      <field name="polish_rhodium" sum="polish_rhodium"/>
+                      <field name="making_charge" sum="making_charge"/>
                       <field name="pure_weight" sum="pure_weight"/>
                     </tree>
                   </field>
@@ -67,6 +69,7 @@
                     <field name="assembly" invisible="1"/>
                     <field name="gross_weight" invisible="1" attrs="{'column_invisible':[('gold','!=',True),('assembly','!=',True)]}"/>
                     <field name="purity" invisible ="1" attrs="{'column_invisible':[('gold','!=',True),('assembly','!=',True)]}"/>
+                    <field name="purity_id" invisible ="1" attrs="{'column_invisible':[('gold','!=',True),('assembly','!=',True)]}"/>
                     <field name="is_scrap" invisible ="1" attrs="{'column_invisible':[('gold','!=',True),('assembly','!=',True)]}"/>
                     <field name="pure_weight" attrs="{'column_invisible':[('gold','!=',True),('assembly','!=',True)]}"/>
                     <field name="item_category_id" invisible ="1"/>

@@ -6,48 +6,10 @@ import datetime
 _logger = logging.getLogger(__name__)
 
 
-# class pos_order_line(models.Model):
-#     _inherit = 'pos.order.line'
-#     gross_weight = fields.Float('Gross Wt', digits=(16, 3))
-#     purity_id = fields.Many2one('gold.purity', 'Purity')
-#     pure_weight = fields.Float('Pure Weight', digits=(16, 3))
-#     make_value = fields.Monetary('Make Value Per G', digits=(16, 3))
-#     gold_rate = fields.Float('Gold Rate/G', digits=(16, 3))
+class pos_config(models.Model):
+    _inherit = 'pos.config'
 #
-#     def _order_line_fields(self, line, session_id=None):
-#         if line[2].get('pack_lot_ids'):
-#             lot_name = line[2].get('pack_lot_ids')[0][2]['lot_name']
-#             if lot_name:
-#                 lot = self.env['stock.production.lot'].search([('name','=',lot_name)])
-#                 if lot:
-#                     line[2]['gross_weight'] = lot.gross_weight
-#                     line[2]['purity_id'] = lot.purity_id.id
-#                     line[2]['pure_weight'] = lot.pure_weight
-#                     line[2]['make_value'] = lot.selling_making_charge
-#                     line[2]['gold_rate'] = lot.gold_rate
-#         if line and 'name' not in line[2]:
-#             session = self.env['pos.session'].browse(session_id).exists() if session_id else None
-#             if session and session.config_id.sequence_line_id:
-#                 # set name based on the sequence specified on the config
-#                 line[2]['name'] = session.config_id.sequence_line_id._next()
-#             else:
-#                 # fallback on any pos.order.line sequence
-#                 line[2]['name'] = self.env['ir.sequence'].next_by_code('pos.order.line')
-#
-#         if line and 'tax_ids' not in line[2]:
-#             product = self.env['product.product'].browse(line[2]['product_id'])
-#             line[2]['tax_ids'] = [(6, 0, [x.id for x in product.taxes_id])]
-#         # Clean up fields sent by the JS
-#         line = [
-#             line[0], line[1], {k: v for k, v in line[2].items() if k in self.env['pos.order.line']._fields}
-#         ]
-#         return line
-#
-#
-# class pos_config(models.Model):
-#     _inherit = 'pos.config'
-#
-#     allow_pos_lot = fields.Boolean('Allow POS Lot', default=True)
+    session_type = fields.Selection([('sale', 'Whole Sale'),('retail', 'Retail')],default='retail',string='Session Type')
 #     lot_expire_days = fields.Integer('Product Lot expire days.', default=1)
 #     pos_lot_receipt = fields.Boolean('Print lot Number on receipt',default=1)
 #

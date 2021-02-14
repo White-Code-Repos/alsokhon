@@ -19,7 +19,7 @@
           <field name="arch" type="xml">
               <xpath expr="//form/sheet/group/group[@name='right_column']/div/field[@name='amount']" position="replace">
                 <field name="unfixed_option" invisible="1"/>
-                <field name="amount" force_save="1" attrs="{'readonly':[('unfixed_option','!=',False)]}"/>
+                <field name="amount"/>
               </xpath>
           </field>
       </record>
@@ -35,7 +35,7 @@
                     <field name="gold_rate_value"  invisible="1" /> -->
                 </field>
                 <xpath expr="//notebook/page[@id='invoice_tab']/field[@name='invoice_line_ids']/tree/field[@name='price_unit']" position="attributes">
-                    <attribute name="attrs">{'readonly': ['|','|','|',('parent.purchase_type', '=', 'unfixed'),('parent.purchase_type', '=', 'fixed'),('parent.sale_type', '=', 'unfixed'),('parent.sale_type', '=', 'fixed')]}</attribute>
+                    <attribute name="attrs">{'readonly': [('parent.is_unfixed', '=', True)],'column_invisible':[('parent.is_unfixed', '=', True)]}</attribute>
                     <attribute name="force_save">1</attribute>
                 </xpath>
             </field>

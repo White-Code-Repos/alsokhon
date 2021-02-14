@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+
+  <record id="inherit_view_pos_config_freeze" model="ir.ui.view">
+    <field name="name">inherit.view.pos.config.freeze</field>
+    <field name="model">pos.config</field>
+    <field name="inherit_id" ref="point_of_sale.pos_config_view_form"/>
+    <field name="arch" type="xml">
+      <xpath expr="//div[3]" position="after">
+        <h2>Send Reports in POS </h2>
+        <div class="row mt16 o_settings_container" id="reports_config">
+          <div id="allow_report_div" class="col-xs-12 col-md-6 o_setting_box">
+            <!-- <div class="o_setting_left_pane">
+              <field name="is_freeze_session" attrs="{'invisible': 1}"/>
+            </div> -->
+            <div class="o_setting_left_pane">
+              <field name="allow_report_account_statement"/>
+            </div>
+            <div class="o_setting_right_pane">
+              <label for="allow_report_account_statement"/>
+            </div>
+          </div>
+          <div id="allow_report_customer_activity_div" class="col-xs-12 col-md-6 o_setting_box">
+            <div class="o_setting_left_pane">
+              <field name="allow_report_customer_activity"/>
+            </div>
+            <div class="o_setting_right_pane">
+              <label for="allow_report_customer_activity"/>
+            </div>
+          </div>
+          <div id="allow_report_order_div" class="col-xs-12 col-md-6 o_setting_box">
+            <div class="o_setting_left_pane">
+              <field name="allow_report_order"/>
+            </div>
+            <div class="o_setting_right_pane">
+              <label for="allow_report_order"/>
+            </div>
+          </div>
+          <div id="allow_send_receipt_div" class="col-xs-12 col-md-6 o_setting_box">
+            <div class="o_setting_left_pane">
+              <field name="allow_send_receipt"/>
+            </div>
+            <div class="o_setting_right_pane">
+              <label for="allow_send_receipt"/>
+            </div>
+          </div>
+        </div>
+      </xpath>
+    </field>
+  </record>
+
+</odoo>

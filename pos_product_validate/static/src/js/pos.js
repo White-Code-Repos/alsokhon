@@ -23,6 +23,7 @@ odoo.define('pos_product_validate.pos', function(require){
       finalize_validation: function() {
           var self = this;
           var order = this.pos.get_order();
+          console.log("QQQQQQQQQQQQQQQQQQQQQQQ");
 
           if (order.is_paid_with_cash() && this.pos.config.iface_cashdrawer) {
 
@@ -31,13 +32,13 @@ odoo.define('pos_product_validate.pos', function(require){
 
           order.initialize_validation_date();
           var partner_id = order.get_client();
-          if (!partner_id){
-    				self.gui.show_popup('error',{
-    					'title': _t('Unknown customer'),
-    					'body': _t('You cannot get the order. Select customer first.'),
-    				});
-    				return;
-    			}
+          // if (!partner_id){
+    			// 	self.gui.show_popup('error',{
+    			// 		'title': _t('Unknown customer'),
+    			// 		'body': _t('You cannot get the order. Select customer first.'),
+    			// 	});
+    			// 	return;
+    			// }
           order.finalized = true;
           if (order.is_to_invoice()) {
               var invoiced = this.pos.push_and_invoice_order(order);
@@ -163,6 +164,7 @@ odoo.define('pos_product_validate.pos', function(require){
           $.each(all, function(index, value) {
             var product_id = $(value).data('product-id');
             var product = self.pos.db.get_product_by_id(product_id)
+            var oeder = self.pos.get_order()
             for (var i = 0; i < output.length; i++) {
               if(product_id == output[i].id ){
                 var product_qty = output[i].qty_available;
@@ -171,6 +173,12 @@ odoo.define('pos_product_validate.pos', function(require){
                 break;
               }
             }
+            // if (order.is_fixed) {
+            //   $(value).find('#availqty').css({'display':'none'});
+            // }else {
+            //   $(value).find('#availqty').css({'display':'block'});
+            //
+            // }
           });
         });
       },

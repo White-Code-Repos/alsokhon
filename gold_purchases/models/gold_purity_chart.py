@@ -15,10 +15,15 @@ class GoldPurity(models.Model):
     scrap_purity = fields.Float('Scrap Purity/Hallmark')
     gold_percent = fields.Float('Gold %', digits='Product Price')
     scrap_percent = fields.Float('Scrap %', digits='Product Price')
+    gold_sales_hallmark = fields.Float(digits=(16,3), default=0.0)
+    scrap_sales_hallmark = fields.Float(digits=(16,3), default=lambda s:s.scrap_purity)
     allow_delete = fields.Boolean(default=True)
     name = fields.Char('Karat', compute='get_name')
     parts_name = fields.Char('Parts Gold', compute='get_part_name')
 
+    @api.onchange('scrap_purity')
+    def get_sales_scrap_h(self):
+        self.scrap_sales_hallmark = self.scrap_purity
     def get_part_name(self):
         for rec in self:
             rec.parts_name = '%s / %s' % (rec.parts, rec.out_of_parts)

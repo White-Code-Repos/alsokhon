@@ -49,6 +49,7 @@ class StockMove(models.Model):
     gross_weight = fields.Float(string='Gross Weight', digits=(16, 3))
     pure_weight = fields.Float('Pure Weight', digits=(16, 3))
     purity = fields.Float(string="Purity", digits=(16, 3))
+    purity_id = fields.Many2one('gold.purity')
     gold_rate = fields.Float(string='Gold Rate', digits=(16, 3))
     item_category_id = fields.Many2one('item.category', string="Item Category")
     sub_category_id = fields.Many2one('item.category.line',
@@ -95,6 +96,11 @@ class StockMove(models.Model):
                     if len(purchase_order) > 0:
                         # print(purchase_order)
                         pol = self.env['purchase.order.line'].search([('order_id','=',purchase_order.id),('product_id','=',move.product_id.id)])
+                        diamond_price = 0.0
+                        for line in purchase_order.assembly_description_diamond:
+                            diamond_price += line.stones_value
+                        svl_vals = move.product_id._prepare_in_svl_vals(
+                            pol.product_qty, pol.price_unit + pol.d_make_value  + pol.net_gold_value + diamond_price)
                         # print(pol)
                         # print(pol.price_unit)
                         # print(pol.make_value)
@@ -102,24 +108,26 @@ class StockMove(models.Model):
                         # print(pol.gold_value)
                         # print(pol.product_id.standard_price)
                         # print(purchase_order.assembly_type)
+                        svl_vals = move.product_id._prepare_in_svl_vals(
+                            pol.product_qty, pol.price_unit + pol.d_make_value)
                         if purchase_order.assembly_no_giving:
                             # print("J")
                             # print(pol.price_unit + pol.d_make_value + pol.make_value)
                             # print("J")
                             svl_vals = move.product_id._prepare_in_svl_vals(
-                                pol.product_qty, pol.price_unit + pol.d_make_value + pol.polish_rhodium)
+                                pol.product_qty, pol.price_unit + pol.d_make_value)
                         elif purchase_order.assembly_give_both:
                             diamond_price = 0.0
                             for line in purchase_order.assembly_description_diamond:
                                 diamond_price += line.stones_value
                             svl_vals = move.product_id._prepare_in_svl_vals(
-                                pol.product_qty, pol.price_unit + pol.d_make_value  + pol.gold_value + pol.polish_rhodium + diamond_price)
+                                pol.product_qty, pol.price_unit + pol.d_make_value  + pol.net_gold_value + diamond_price)
                         elif purchase_order.assembly_give_gold:
                             # print("GG")
                             # print(pol.price_unit + pol.d_make_value + pol.make_value + pol.gold_value)
                             # print("GG")
                             svl_vals = move.product_id._prepare_in_svl_vals(
-                                pol.product_qty, pol.price_unit + pol.d_make_value  + pol.gold_value + pol.polish_rhodium)
+                                pol.product_qty, pol.price_unit + pol.d_make_value  + pol.net_gold_value)
                         elif purchase_order.assembly_give_diamond:
                             # print("GD")
                             # print(pol.price_unit)
@@ -131,7 +139,7 @@ class StockMove(models.Model):
                             for line in purchase_order.assembly_description_diamond:
                                 diamond_price += line.stones_value
                             svl_vals = move.product_id._prepare_in_svl_vals(
-                                pol.product_qty, pol.price_unit + pol.d_make_value  + diamond_price + pol.polish_rhodium)
+                                pol.product_qty, pol.price_unit + pol.d_make_value  + diamond_price)
             elif move.product_id.gold:
                 if move.origin:
                     if 'P0' in move.origin:
@@ -288,19 +296,20 @@ class StockMoveLine(models.Model):
                                 # related='move_id.gross_weight',
 
     actual_gross_weight = fields.Float(string='Gross Weight', store=True)
-    purity_id = fields.Many2one('gold.purity', string="Purity Karat", compute="_compute_purity_id")
-    def _compute_purity_id(self):
-        for this in self:
-            this.purity_id = False
-            if this.product_id and this.product_id.categ_id.is_scrap:
-                purity_id = self.env['gold.purity'].search([('scrap_purity','=',this.purity)])
-                if purity_id:
-                    this.purity_id = purity_id.id
-            elif this.product_id and not this.product_id.categ_id.is_scrap:
-                purity_id = self.env['gold.purity'].search([('purity','=',this.purity)])
-                if purity_id:
-                    this.purity_id = purity_id.id
+    # purity_id = fields.Many2one('gold.purity', string="Purity Karat", compute="_compute_purity_id")
+    # def _compute_purity_id(self):
+    #     for this in self:
+    #         this.purity_id = False
+    #         if this.product_id and this.product_id.categ_id.is_scrap:
+    #             purity_id = self.env['gold.purity'].search([('scrap_purity','=',this.purity)])
+    #             if purity_id:
+    #                 this.purity_id = purity_id.id
+    #         elif this.product_id and not this.product_id.categ_id.is_scrap:
+    #             purity_id = self.env['gold.purity'].search([('purity','=',this.purity)])
+    #             if purity_id:
+    #                 this.purity_id = purity_id.id
     purity = fields.Float(related="move_id.purity", string="Purity", store=True)
+    purity_id = fields.Many2one('gold.purity', related="move_id.purity_id")
     pure_weight = fields.Float(compute='get_pure_weight', string="Pure Weight",
                                store=True, digits=(16, 3))
     item_category_id = fields.Many2one('item.category', string="Item Category")
@@ -317,7 +326,14 @@ class StockMoveLine(models.Model):
                                   related='company_id.currency_id')
 
 
-
+    @api.onchange('lot_id')
+    def check_equal_lots_purity(self):
+        if self.lot_id:
+            if self.lot_id.purity_id:
+                if self.product_id.gold_with_lots:
+                    if self.purity_id:
+                        if self.purity_id != self.lot_id.purity_id:
+                            raise ValidationError(_('Karat at same lot cannot overlap, Please add item to a lot with the same karat'))
     @api.depends('move_id')
     def get_karat(self):
         for rec in self:
@@ -374,6 +390,7 @@ class StockMoveLine(models.Model):
             res.lot_id.write({
             'gross_weight': res.lot_id.gross_weight + res.gross_weight,
             'purity': res.purity,
+            'purity_id': res.purity_id.id,
             'selling_making_charge':res.selling_making_charge,
             'buying_making_charge':res.buying_making_charge,
             'pure_weight':res.pure_weight,
@@ -386,6 +403,7 @@ class StockMoveLine(models.Model):
             'carat': res.lot_id.carat + res.carat,
             'gross_weight': res.lot_id.gross_weight + res.gross_weight,
             'purity': res.purity,
+            'purity_id': res.purity_id.id,
             'selling_making_charge':res.selling_making_charge,
             'buying_making_charge':res.buying_making_charge,
             'pure_weight':res.pure_weight,
@@ -397,6 +415,7 @@ class StockMoveLine(models.Model):
             res.lot_id.write({
             'gross_weight': res.gross_weight,
             'purity': res.purity,
+            'purity_id': res.purity_id.id,
             'selling_making_charge':res.selling_making_charge,
             'buying_making_charge':res.buying_making_charge,
             'pure_weight':res.pure_weight,
@@ -416,10 +435,12 @@ class StockMoveLine(models.Model):
                         'product_id':line.product_id.id,
                         'quantity':line.quantity,
                         'gross_weight':line.gross_weight,
+                        'net_weight':line.net_weight,
                         'pure_weight':line.pure_weight,
                         'purity_id':line.purity_id.id,
                         'purity':line.purity,
-                        'polish_rhodium':line.polish_rhodium
+                        'polish_rhodium':line.polish_rhodium,
+                        'making_charge':line.making_charge
                         }))
                     for line in purchase_obj.assembly_description_diamond:
                         assembly_description_diamond.append((0,0,{
@@ -435,6 +456,7 @@ class StockMoveLine(models.Model):
             'carat': res.carat,
             'gross_weight': res.gross_weight,
             'purity': res.purity,
+            'purity_id': res.purity_id.id,
             'selling_making_charge':res.selling_making_charge,
             'buying_making_charge':res.buying_making_charge,
             'pure_weight':res.pure_weight,
@@ -468,6 +490,7 @@ class StockValuationLayer(models.Model):
     gold_rate = fields.Float(string='Gold Rate', digits=(16, 3))
     gross_weight = fields.Float('Gross Weight',related="stock_move_id.gross_weight" ,  store=True,digits=(16, 3))
     purity = fields.Float(related="stock_move_id.purity" , string="purity", store=True,digits=(16, 3))
+    purity_id = fields.Many2one('gold.purity', related="stock_move_id.purity_id")
     is_scrap = fields.Boolean(related="product_id.categ_id.is_scrap" , string="scrap", store=True)
     qty_done = fields.Float(related="stock_move_id.product_qty" , string="product_qty", store=True)
     picking_id = fields.Many2one('stock.picking',related="stock_move_id.picking_id" , string="picking_id", store=True)

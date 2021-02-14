@@ -98,38 +98,68 @@
                 <field name="gold" invisible="1"/>
                 <field name="diamond" invisible="1"/>
               </field>
+              <field name="amount_residual" position="attributes">
+                <attribute name="attrs">{'invisible':[('is_unfixed', '=', True)]}</attribute>
+              </field>
+              <field name="amount_untaxed" position="attributes">
+                <attribute name="attrs">{'invisible':[('is_unfixed', '=', True)]}</attribute>
+              </field>
+              <field name="amount_total" position="attributes">
+                <attribute name="attrs">{'invisible':[('is_unfixed', '=', True)]}</attribute>
+              </field>
+              <field name="invoice_outstanding_credits_debits_widget" position="attributes">
+                <attribute name="attrs">{'invisible':[('is_unfixed', '=', True)]}</attribute>
+              </field>
+              <!-- <xpath expr="//notebook/page[@id='invoice_tab']/field[@name='invoice_line_ids']/tree/field[@name='price_unit']" position="attributes">
+                <attribute name="attrs">{'column_invisible':[('parent.is_unfixed', '=', True)]}</attribute>
+              </xpath> -->
+              <xpath expr="//notebook/page[@id='invoice_tab']/field[@name='invoice_line_ids']/tree/field[@name='discount']" position="attributes">
+                <attribute name="attrs">{'column_invisible':[('parent.is_unfixed', '=', True)]}</attribute>
+              </xpath>
+              <xpath expr="//notebook/page[@id='invoice_tab']/field[@name='invoice_line_ids']/tree/field[@name='price_subtotal']" position="attributes">
+                <attribute name="attrs">{'column_invisible':[('parent.is_unfixed', '=', True)]}</attribute>
+              </xpath>
                 <xpath expr="//notebook/page[@id='invoice_tab']/field[@name='invoice_line_ids']/tree/field[@name='product_uom_id']" position="after">
-                  <field name="carat" readonly="1"  />
-                    <field name="gross_wt" readonly="1"  />
-                    <field name="purity_id" readonly="1"  />
-                    <field name="pure_wt" readonly="1"  />
-                    <field name="purity_diff" readonly="1"  />
-                    <field name="make_rate" readonly="1"  />
-                    <field name="make_value" readonly="1"  />
-                    <field name="gold_rate" readonly="1"  />
-                    <field name="gold_value" readonly="1"  />
+                  <field name="carat" readonly="1" force_save="1"  />
+                  <field name="d_make_value" readonly="1" force_save="1"  />
+                    <field name="total_ds_value" readonly="1" force_save="1"  />
+                    <field name="gross_wt" readonly="1" force_save="1"  />
+                    <field name="purity_id" readonly="1" force_save="1"  />
+                    <field name="pure_wt" readonly="1" force_save="1"  />
+                    <field name="purity_diff" readonly="1" force_save="1"  />
+                    <field name="make_rate" readonly="1" force_save="1"/>
+                    <field name="make_value" readonly="1" force_save="1"/>
+                    <!-- <field name="polish_rhodium" readonly="1" force_save="1"  /> -->
+                    <field name="gold_rate" readonly="1" force_save="1" attrs="{'column_invisible':[('parent.is_unfixed', '=', True)]}" />
+                    <field name="gold_value" readonly="1" force_save="1" attrs="{'column_invisible':[('parent.is_unfixed', '=', True)]}" />
                 </xpath>
                 <xpath expr="//notebook/page[@id='invoice_tab']/field[@name='invoice_line_ids']/form/sheet/group/field[@name='product_uom_id']" position="after">
-                  <field name="carat" readonly="1"  />
-                    <field name="gross_wt" readonly="1"  />
-                    <field name="purity_id" readonly="1"  />
-                    <field name="pure_wt" readonly="1"  />
-                    <field name="purity_diff" readonly="1"  />
-                    <field name="make_rate" readonly="1"  />
-                    <field name="make_value" readonly="1"  />
-                    <field name="gold_rate" readonly="1"  />
-                    <field name="gold_value" readonly="1"  />
+                  <field name="carat" readonly="1" force_save="1"  />
+                  <field name="d_make_value" readonly="1" force_save="1"  />
+                  <field name="total_ds_value" readonly="1" force_save="1"  />
+                    <field name="gross_wt" readonly="1" force_save="1"  />
+                    <field name="purity_id" readonly="1" force_save="1"  />
+                    <field name="pure_wt" readonly="1" force_save="1"  />
+                    <field name="purity_diff" readonly="1" force_save="1"  />
+                    <field name="make_rate" readonly="1" force_save="1"/>
+                    <field name="make_value" readonly="1" force_save="1"/>
+                    <!-- <field name="polish_rhodium" readonly="1" force_save="1"  /> -->
+                    <field name="gold_rate" readonly="1" force_save="1" attrs="{'invisible':[('parent.is_unfixed', '=', True)]}" />
+                    <field name="gold_value" readonly="1" force_save="1"  attrs="{'invisible':[('parent.is_unfixed', '=', True)]}" />
                 </xpath>
                 <xpath expr="//notebook/page[@id='aml_tab']/field[@name='line_ids']/tree/field[@name='product_id']" position="after">
-                  <field name="carat" readonly="1"  />
+                  <field name="carat" readonly="1" force_save="1"  />
+                  <field name="d_make_value" readonly="1" force_save="1"  />
+                  <field name="total_ds_value" readonly="1" force_save="1"  />
                     <field name="gross_wt" invisible="1"  />
                     <field name="purity_id" invisible="1"  />
                     <field name="pure_wt" invisible="1"  />
                     <field name="purity_diff" invisible="1"  />
-                    <field name="make_rate" invisible="1"  />
-                    <field name="make_value" invisible="1"  />
-                    <field name="gold_rate" invisible="1"  />
-                    <field name="gold_value" invisible="1"  />
+                    <field name="make_rate" invisible="1"/>
+                    <field name="make_value" invisible="1"/>
+                    <!-- <field name="polish_rhodium" readonly="1" force_save="1"  /> -->
+                    <field name="gold_rate" invisible="1" attrs="{'column_invisible':[('parent.is_unfixed', '=', True)]}" />
+                    <field name="gold_value" invisible="1" attrs="{'column_invisible':[('parent.is_unfixed', '=', True)]}" />
                 </xpath>
                 <xpath expr="//form/sheet/notebook" position="inside">
                   <page string="Unfixed Details" attrs="{'invisible': [('is_unfixed', '!=', True)]}">
@@ -149,9 +179,9 @@
                             <field name="unfixing_move" attrs="{'invisible': [('unfixed_fixed_gold', '=', 0.00)]}" readonly="1" force_save="1"/>
                           </group>
                           <group>
-                            <field name="unfixed_stock_picking" string="Stock Operation" readonly="1" />
-                            <field name="unfixed_stock_picking_two" nolabel="1"  attrs="{'invisible': [('unfixed_stock_picking_two', '=', False)],'readonly': True}"/>
-                            <field name="unfixed_stock_picking_three" nolabel="1"  attrs="{'invisible': [('unfixed_stock_picking_three', '=', False)],'readonly': True}"/>
+                            <field name="unfixed_stock_picking" string="Stock Operation" readonly="1" force_save="1" />
+                            <field name="unfixed_stock_picking_two" nolabel="1" force_save="1"  attrs="{'invisible': [('unfixed_stock_picking_two', '=', False)],'readonly': True}"/>
+                            <field name="unfixed_stock_picking_three" nolabel="1" force_save="1"  attrs="{'invisible': [('unfixed_stock_picking_three', '=', False)],'readonly': True}"/>
                           </group>
                       </group>
                     </group>
@@ -195,7 +225,7 @@
                     <xpath expr="//field[@name='fiscal_position_id']" position="after">
 
 
-                    <field name="unfixed_move_id"  string="unfixed move" readonly="1" />
+                    <field name="unfixed_move_id"  string="unfixed move" readonly="1"  force_save="1"/>
                     <field name="unfixed_move_id_two" nolabel="1"  string="unfixed move two" attrs="{'invisible': [('unfixed_move_id_two', '=', False)],'readonly': True}" />
                     <field name="unfixed_move_id_three" nolabel="1"  string="unfixed move three" attrs="{'invisible': [('unfixed_move_id_three', '=', False)],'readonly': True}" />
 

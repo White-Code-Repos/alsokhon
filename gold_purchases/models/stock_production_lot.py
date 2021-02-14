@@ -7,12 +7,14 @@ class assemblyDescriptionLotGold(models.Model):
     _name = 'assembly.description.lot.gold'
 
     product_id = fields.Many2one('product.product')
-    quantity = fields.Float()
-    gross_weight = fields.Float()
-    pure_weight = fields.Float()
+    quantity = fields.Float(digits=(16,3))
+    gross_weight = fields.Float(digits=(16,3))
+    net_weight = fields.Float(digits=(16,3))
+    pure_weight = fields.Float(digits=(16,3))
     purity_id = fields.Many2one('gold.purity')
-    purity = fields.Float()
+    purity = fields.Float(digits=(16,3))
     polish_rhodium = fields.Float('Polish & Rhodium',digits=(16,3))
+    making_charge= fields.Float('Making Charge',digits=(16,3))
     lot_id_gold = fields.Many2one('stock.production.lot')
 
 class assemblyDescriptionLotDiamond(models.Model):
@@ -31,6 +33,14 @@ class assemblyDescriptionLotDiamond(models.Model):
 
 class StockProductionLot(models.Model):
     _inherit = 'stock.production.lot'
+
+    is_empty_lot = fields.Boolean(default=False, compute="compute_is_empty_lot")
+    def compute_is_empty_lot(self):
+        for this in self:
+            if this.product_qty <= 0:
+                this.is_empty_lot = True
+            else:
+                this.is_empty_lot = False
 
     def read(self, fields=None, load='_classic_read'):
         res = super(StockProductionLot, self).read(fields, load)
@@ -64,23 +74,24 @@ class StockProductionLot(models.Model):
                 this.assembly = True
                 this.diamond = False
 
-    gross_weight = fields.Float(string="Gross Weight")
-    purity_id = fields.Many2one('gold.purity', string="Purity Karat", compute="_compute_purity_id")
-    def _compute_purity_id(self):
-        for this in self:
-            this.purity_id = False
-            if this.from_pos:
-                this.purity_id=this.from_pos
-            elif this.product_id and this.product_id.categ_id.is_scrap:
-                purity_id = self.env['gold.purity'].search([('scrap_purity','=',this.purity)])
-                if purity_id:
-                    this.purity_id = purity_id.id
-            elif this.product_id and not this.product_id.categ_id.is_scrap:
-                purity_id = self.env['gold.purity'].search([('purity','=',this.purity)])
-                if purity_id:
-                    this.purity_id = purity_id.id
+    gross_weight = fields.Float(string="Gross Weight", digits=(16,3))
+    purity_id = fields.Many2one('gold.purity')
+    # , string="Purity Karat", compute="_compute_purity_id"
+    # def _compute_purity_id(self):
+    #     for this in self:
+    #         this.purity_id = False
+    #         if this.from_pos:
+    #             this.purity_id=this.from_pos
+    #         elif this.product_id and this.product_id.categ_id.is_scrap:
+    #             purity_id = self.env['gold.purity'].search([('scrap_purity','=',this.purity)])
+    #             if purity_id:
+    #                 this.purity_id = purity_id.id
+    #         elif this.product_id and not this.product_id.categ_id.is_scrap:
+    #             purity_id = self.env['gold.purity'].search([('purity','=',this.purity)])
+    #             if purity_id:
+    #                 this.purity_id = purity_id.id
 
-    purity = fields.Float(string="Purity")
+    purity = fields.Float(string="Purity",digits=(16,3))
     is_scrap = fields.Boolean(related="product_id.categ_id.is_scrap" , string="scrap", store=True)
     pure_weight = fields.Float(compute='get_pure_weight',string="Pure Weight", store=True, digits=(16, 3))
     item_category_id = fields.Many2one('item.category',string="Item Category")

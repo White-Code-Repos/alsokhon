@@ -20,7 +20,7 @@ class DetailsAssembly(models.Model):
     _name = 'details.assembly'
 
     product_id = fields.Many2one('product.product')
-    quantity = fields.Float()
+    quantity = fields.Float(digits=(16,3))
     sale_id = fields.Many2one('sale.order')
     sol_product = fields.Many2one('product.product')
 
@@ -30,11 +30,14 @@ class assemblyDescriptionSaleGold(models.Model):
     _name = 'assembly.description.sale.gold'
 
     product_id = fields.Many2one('product.product')
-    quantity = fields.Float()
-    gross_weight = fields.Float()
-    pure_weight = fields.Float()
+    quantity = fields.Float(digits=(16,3))
+    gross_weight = fields.Float(digits=(16,3))
+    net_weight = fields.Float(digits=(16,3))
+    pure_weight = fields.Float(digits=(16,3))
     purity_id = fields.Many2one('gold.purity')
-    purity = fields.Float()
+    purity = fields.Float(digits=(16,3))
+    polish_rhodium = fields.Float('Polish & Rhodium',digits=(16,3))
+    making_charge= fields.Float('Making Charge',digits=(16,3))
     sale_order_gold = fields.Many2one('sale.order')
     sol_product = fields.Many2one('product.product')
 
@@ -43,14 +46,28 @@ class assemblyDescriptionSaleDiamond(models.Model):
     _name = 'assembly.description.sale.diamond'
 
     product_id = fields.Many2one('product.product')
-    carat = fields.Float()
-    stones_quantity = fields.Float()
+    carat = fields.Float(digits=(16,3))
+    carat_price = fields.Float(digits=(16,3))
+    stones_value = fields.Float(digits=(16,3))
+    stones_quantity = fields.Float(digits=(16,3))
+    stone_setting_rate = fields.Float(digits=(16,3))
+    stone_setting_value = fields.Float(digits=(16,3))
     sale_order_diamond = fields.Many2one('sale.order')
     sol_product = fields.Many2one('product.product')
 
 
 class SaleOrder(models.Model):
     _inherit = 'sale.order'
+
+    dont_view_tree_value_fields = fields.Boolean(default=False, compute="_compute_view_tree_gold_value")
+    @api.onchange('order_type')
+    def _compute_view_tree_gold_value(self):
+        for this in self:
+            if (this.gold !=  True and this.assembly != True) or this.is_unfixed == True:
+                this.dont_view_tree_value_fields = True
+            else:
+                this.dont_view_tree_value_fields = False
+
 
     order_category = fields.Selection([('whole_sale','Whole-sale'),('retail','Retail')],required=True)
     # details_assembly = fields.One2many('details.assembly','sale_id')
@@ -63,9 +80,9 @@ class SaleOrder(models.Model):
 
     @api.model
     def create(self, values):
-        making_order_line = self.env['sale.order.line'].search([('order_id','=',self.id),('is_make_value','=',True)])
-        if making_order_line:
-            making_order_line.unlink()
+        # making_order_line = self.env['sale.order.line'].search([('order_id','=',self.id),('is_make_value','=',True)])
+        # if making_order_line:
+        #     making_order_line.unlink()
         res = super(SaleOrder, self).create(values)
         list_assemply_gold = []
         list_assemply_diamond = []
@@ -78,14 +95,15 @@ class SaleOrder(models.Model):
                     'product_id':detgol.product_id.id,
                     'quantity':detgol.quantity,
                     'gross_weight':detgol.gross_weight,
-                    'purity_id':detgol.purity_id,
+                    'net_weight':detgol.net_weight,
+                    'purity_id':detgol.purity_id.id,
                     'purity':detgol.purity,
                     'pure_weight':detgol.pure_weight,
                     'sale_order_gold':line.order_id.id,
                     'sol_product':line.product_id.id,
                     }))
                 for detdim in line.lot_id.assembly_description_diamond:
-                    list_assemply_gold.append((0,0,{
+                    list_assemply_diamond.append((0,0,{
                     'product_id':detdim.product_id.id,
                     'carat':detdim.carat,
                     'stones_quantity':detdim.stones_quantity,
@@ -174,6 +192,7 @@ class SaleOrder(models.Model):
                                         'is_make_value': True,
                                         'price_subtotal': pro[0],
                                     })
+        res.write({'require_payment':True})
         return res
 
     def write(self, values):
@@ -192,14 +211,15 @@ class SaleOrder(models.Model):
                     'product_id':detgol.product_id.id,
                     'quantity':detgol.quantity,
                     'gross_weight':detgol.gross_weight,
-                    'purity_id':detgol.purity_id,
+                    'net_weight':detgol.net_weight,
+                    'purity_id':detgol.purity_id.id,
                     'purity':detgol.purity,
                     'pure_weight':detgol.pure_weight,
                     'sale_order_gold':line.order_id.id,
                     'sol_product':line.product_id.id,
                     }))
                 for detdim in line.lot_id.assembly_description_diamond:
-                    list_assemply_gold.append((0,0,{
+                    list_assemply_diamond.append((0,0,{
                     'product_id':detdim.product_id.id,
                     'carat':detdim.carat,
                     'stones_quantity':detdim.stones_quantity,
@@ -300,7 +320,7 @@ class SaleOrder(models.Model):
                                         })
             return res
 
-    total_gold_vale_order = fields.Float('Total Value', compute="_compute_total_gold_value_order")
+    total_gold_vale_order = fields.Float('Total Value', digits=(16,3),compute="_compute_total_gold_value_order")
     def _compute_total_gold_value_order(self):
         for this in self:
             total = 0.0
@@ -310,7 +330,7 @@ class SaleOrder(models.Model):
                 else:
                     total = total+line.price_subtotal
             this.total_gold_vale_order = total
-    total_make_vale_order = fields.Float('Total Labor/Make Value', compute="_compute_total_make_value_order")
+    total_make_vale_order = fields.Float('Total Labor/Make Value', digits=(16,3),compute="_compute_total_make_value_order")
     def _compute_total_make_value_order(self):
         for this in self:
             total = 0.0
@@ -320,8 +340,8 @@ class SaleOrder(models.Model):
                 else:
                     total = total
             this.total_make_vale_order = total
-    period_from = fields.Float('Period From')
-    period_to = fields.Float('Period To')
+    period_from = fields.Float('Period From', digits=(16,3))
+    period_to = fields.Float('Period To', digits=(16,3))
     period_uom_id = fields.Many2one('uom.uom', 'Period UOM')
     is_gold_fixed = fields.Boolean(string='Is Gold Fixed',
                                    compute='check_gold_fixed')
@@ -396,6 +416,8 @@ class SaleOrderLine(models.Model):
         if self.lot_id and self.product_id:
             if self.product_id.categ_id.is_scrap or self.product_id.categ_id.is_diamond :
                 self.product_uom_qty = self.lot_id.product_qty
+            if self.product_id.gold_with_lots:
+                self.product_uom_qty = 0.0
             self.purity_id = self.lot_id.purity_id.id
             self.carat = self.lot_id.carat
             self.make_rate = self.lot_id.selling_making_charge
@@ -403,18 +425,31 @@ class SaleOrderLine(models.Model):
             # print(self.lot_id.gross_weight)
             # print(self.lot_id.pure_weight)
             self.gross_wt = self.lot_id.gross_weight
+            if self.product_id.gold_with_lots:
+                self.gross_wt = 0.0
             self.pure_wt = self.lot_id.pure_weight
-            stock_move_line = self.env['stock.move.line'].search([('lot_id','=',self.lot_id.id),('product_id','=',self.product_id.id)])
-            if stock_move_line and len(stock_move_line) == 1:
-                if stock_move_line.picking_id:
-                    if stock_move_line.picking_id.group_id:
-                        if stock_move_line.picking_id.group_id.name:
-                            if 'P0' in stock_move_line.picking_id.group_id.name:
-                                purchase_order = self.env['purchase.order'].search([('name','=',stock_move_line.picking_id.group_id.name)])
-                                if purchase_order and len(purchase_order) == 1:
-                                    for line in purchase_order.order_line:
-                                        if line.product_id == self.product_id:
-                                            self.purity_id = line.purity_id.id
+            if self.product_id.categ_id.is_scrap:
+                self.purity_hall = self.lot_id.purity_id.scrap_sales_hallmark
+            elif self.product_id.categ_id.is_gold and not self.product_id.categ_id.is_scrap:
+                self.purity_hall = self.lot_id.purity_id.gold_sales_hallmark
+            # if self.lot_id.purity_id.gold_sales_hallmark != self.lot_id.purity and not self.product_id.scrap :
+            #     self.purity_hall = self.lot_id.purity
+            #     self.onchange_purity_hall()
+            # elif self.lot_id.purity_id.scrap_sales_hallmark != self.lot_id.purity and self.product_id.scrap :
+            #     self.purity_hall = self.lot_id.purity
+            #     self.onchange_purity_hall()
+            # self.purity = self.lot_id.purity
+            # stock_move_line = self.env['stock.move.line'].search([('lot_id','=',self.lot_id.id),('product_id','=',self.product_id.id)])
+            # if stock_move_line and len(stock_move_line) == 1:
+            #     if stock_move_line.picking_id:
+            #         if stock_move_line.picking_id.group_id:
+            #             if stock_move_line.picking_id.group_id.name:
+            #                 if 'P0' in stock_move_line.picking_id.group_id.name:
+            #                     purchase_order = self.env['purchase.order'].search([('name','=',stock_move_line.picking_id.group_id.name)])
+            #                     if purchase_order and len(purchase_order) == 1:
+            #                         for line in purchase_order.order_line:
+            #                             if line.product_id == self.product_id:
+            #                                 self.purity_id = line.purity_id.id
                                             # self.make_rate = line.make_rate
                                             # self.make_value = line.make_value
     def _get_gold_stock(self):
@@ -431,6 +466,7 @@ class SaleOrderLine(models.Model):
 
     price_unit = fields.Float(string='Unit Price', required=True,
                               digits='Product Price', copy=False, default=lambda self: self.default_price_unit_get())
+
     @api.depends('product_id')
     def default_price_unit_get(self):
         for this in self:
@@ -460,7 +496,7 @@ class SaleOrderLine(models.Model):
     gold_value = fields.Monetary('Gold Value', compute='_get_gold_rate',
                                  digits=(16, 3))
     is_make_value = fields.Boolean(string='is_make_value')
-    total_with_make = fields.Float('Total Value + Make Value', compute="_compute_total_with_make")
+    total_with_make = fields.Float('Total Value + Make Value', compute="_compute_total_with_make", digits=(16, 3))
 
     def _compute_total_with_make(self):
         for this in self:
@@ -474,7 +510,10 @@ class SaleOrderLine(models.Model):
             if rec.purity_hall > 1000 or rec.purity_hall < 0.00 :
                 raise ValidationError(_('purity hallmark between 1 - 1000'))
             if rec.purity_hall:
-                rec.purity_diff = ( rec.product_uom_qty * (rec.purity_hall - rec.purity_id.purity)) / 100
+                if rec.product_id.gold_with_lots:
+                    rec.purity_diff = (rec.purity_hall - rec.purity_id.gold_sales_hallmark) / 1000
+                else:
+                    rec.purity_diff = ( rec.product_uom_qty * (rec.purity_hall - rec.purity_id.gold_sales_hallmark)) / 100
 
     scrap_state_read = fields.Boolean(compute="_compute_scrap_state_read")
     @api.onchange('product_id')
@@ -486,6 +525,18 @@ class SaleOrderLine(models.Model):
                 this.scrap_state_read = False
             else:
                 this.scrap_state_read = False
+
+
+    @api.onchange('product_uom_qty')
+    def update_gross_and_carat(self):
+        print("33333333333333")
+        if self.product_id and self.product_id.categ_id.is_scrap and self.product_uom_qty:
+            self.gross_wt = self.product_uom_qty
+        elif  self.product_id and self.product_id.categ_id.is_diamond and self.product_uom_qty:
+            self.carat = self.product_uom_qty
+        elif self.product_id and self.product_id.gold_with_lots and self.product_uom_qty:
+            print("151515151")
+            self.gross_wt = self.product_uom_qty
 
     # def write(self, vals):
     #     res = super(SaleOrderLine, self).write(vals)
@@ -549,13 +600,26 @@ class SaleOrderLine(models.Model):
             # if rec.product_id.making_charge_id.id:
             #     make_value_product = self.env['product.product'].browse([rec.product_id.making_charge_id.id])
             #     product_make_object = self.env['sale.order.line'].search([('order_id','=',rec.order_id.id),('product_id','=',make_value_product.id)])
-            if rec.product_id.categ_id.is_scrap:
-                rec.pure_wt = rec.gross_wt * (rec.purity_id and (
-                        rec.purity_id.scrap_purity / 1000.000) or 0)
+            if rec.product_id.categ_id.is_scrap or rec.product_id.gold_with_lots:
+                if rec.purity_diff != 0:
+                    rec.pure_wt = rec.gross_wt * rec.purity_hall / 1000.000
+                else:
+                    if rec.product_id.gold_with_lots:
+                        rec.pure_wt = rec.gross_wt * (rec.purity_id and (
+                                rec.purity_id.gold_sales_hallmark / 1000.000) or 0)
+                    else:
+                        rec.pure_wt = rec.gross_wt * (rec.purity_id and (
+                                rec.purity_id.scrap_sales_hallmark / 1000.000) or 0)
+
             else:
-                rec.pure_wt = rec.product_uom_qty * rec.gross_wt * (rec.purity_id and (
-                        rec.purity_id.purity / 1000.000) or 0)
-            rec.total_pure_weight = rec.pure_wt + rec.purity_diff
+                if rec.purity_diff != 0:
+                    rec.pure_wt = rec.product_uom_qty * rec.gross_wt * rec.purity_hall / 1000.000
+                    # (rec.purity_id and (
+                    #         rec.purity_id.purity / 1000.000) or 0)
+                else:
+                    rec.pure_wt = rec.product_uom_qty * rec.gross_wt * (rec.purity_id and (
+                            rec.purity_id.gold_sales_hallmark / 1000.000) or 0)
+            rec.total_pure_weight = rec.pure_wt
             # NEED TO ADD PURITY DIFF + rec.purity_diff
             # new_pure_wt = rec.pure_wt + rec.purity_diff
             # rec.stock = (rec.product_id and rec.product_id.available_gold or
@@ -563,7 +627,7 @@ class SaleOrderLine(models.Model):
             if rec.order_id.diamond:
                 rec.make_value = 0.00
             else:
-                if rec.product_id.categ_id.is_scrap:
+                if rec.product_id.categ_id.is_scrap or rec.product_id.gold_with_lots:
                     rec.make_value = rec.gross_wt * rec.make_rate
                 else:
                     rec.make_value = rec.product_uom_qty * rec.gross_wt * rec.make_rate
@@ -579,7 +643,7 @@ class SaleOrderLine(models.Model):
                 else:
                     rec.gold_rate = 0.00
                     rec.gold_value = 0.00
-            if rec.product_id.categ_id.is_scrap:
+            if rec.product_id.categ_id.is_scrap or rec.product_id.gold_with_lots:
                 rec.total_gross_wt = rec.gross_wt
             else:
                 rec.total_gross_wt = rec.gross_wt * rec.product_uom_qty
@@ -764,7 +828,7 @@ class SaleOrderLine(models.Model):
             if product_object.invoice_policy == "delivery":
                 if self.received_gross_wt < (self.gross_wt * self.product_uom_qty):
                     total_pure_weight = self.received_gross_wt * (self.purity_id and (
-                        self.purity_id.purity / 1000.000) or 1)
+                        self.purity_id.gold_sales_hallmark / 1000.000) or 1)
                     try:
                         diff_gross =  (self.gross_wt * self.product_uom_qty) / self.received_gross_wt
                     except:
@@ -1062,28 +1126,98 @@ class StockRule(models.Model):
                         for move in moves:
                             if sol.product_id.id == move.product_id.id:
                                 if move.product_id.categ_id.is_scrap:
-                                    move.update({
-                                        'gross_weight': sol.gross_wt,
-                                        'pure_weight': sol.pure_wt,
-                                        'purity': sol.purity_id.scrap_purity or 1,
-                                        'gold_rate': sol.gold_rate,
-                                        'selling_karat_id':
-                                            sol.product_id.product_template_attribute_value_ids and
-                                            sol.product_id.product_template_attribute_value_ids.mapped(
-                                                'product_attribute_value_id')[0].id or
-                                            False
-                                    })
+                                    if sol.purity_diff != 0.0:
+                                        move.update({
+                                            'carat': sol.carat,
+                                            'gross_weight': sol.gross_wt,
+                                            'pure_weight': sol.pure_wt,
+                                            'purity': sol.purity_hall,
+                                            'purity_id': sol.purity_id.id,
+                                            'gold_rate': sol.gold_rate,
+                                            'selling_karat_id':
+                                                sol.product_id.product_template_attribute_value_ids and
+                                                sol.product_id.product_template_attribute_value_ids.mapped(
+                                                    'product_attribute_value_id')[0].id or
+                                                False
+                                            ,'buying_making_charge':sol.make_rate
+                                        })
+                                    else:
+                                        move.update({
+                                            'carat': sol.carat,
+                                            'gross_weight': sol.gross_wt,
+                                            'pure_weight': sol.pure_wt,
+                                            'purity': sol.purity_id.scrap_sales_hallmark,
+                                            'purity_id': sol.purity_id.id,
+                                            'gold_rate': sol.gold_rate,
+                                            'selling_karat_id':
+                                                sol.product_id.product_template_attribute_value_ids and
+                                                sol.product_id.product_template_attribute_value_ids.mapped(
+                                                    'product_attribute_value_id')[0].id or
+                                                False
+                                            ,'buying_making_charge':sol.make_rate
+                                        })
+                                elif move.product_id.gold_with_lots:
+                                    if sol.purity_diff != 0.0:
+                                        move.update({
+                                            'carat': sol.carat,
+                                            'gross_weight': sol.gross_wt,
+                                            'pure_weight': sol.pure_wt,
+                                            'purity': sol.purity_hall,
+                                            'purity_id': sol.purity_id.id,
+                                            'gold_rate': sol.gold_rate,
+                                            'selling_karat_id':
+                                                sol.product_id.product_template_attribute_value_ids and
+                                                sol.product_id.product_template_attribute_value_ids.mapped(
+                                                    'product_attribute_value_id')[0].id or
+                                                False
+                                            ,'buying_making_charge':sol.make_rate
+                                        })
+                                    else:
+                                        move.update({
+                                            'carat': sol.carat,
+                                            'gross_weight': sol.gross_wt,
+                                            'pure_weight': sol.pure_wt,
+                                            'purity': sol.purity_id.gold_sales_hallmark,
+                                            'purity_id': sol.purity_id.id,
+                                            'gold_rate': sol.gold_rate,
+                                            'selling_karat_id':
+                                                sol.product_id.product_template_attribute_value_ids and
+                                                sol.product_id.product_template_attribute_value_ids.mapped(
+                                                    'product_attribute_value_id')[0].id or
+                                                False
+                                            ,'buying_making_charge':sol.make_rate
+                                        })
                                 else:
-                                    move.update({
-                                        'carat': sol.carat,
-                                        'gross_weight': sol.gross_wt * sol.product_uom_qty,
-                                        'pure_weight': sol.pure_wt,
-                                        'purity': sol.purity_id.purity or 1,
-                                        'gold_rate': sol.gold_rate,
-                                        'selling_karat_id':
-                                            sol.product_id.product_template_attribute_value_ids and
-                                            sol.product_id.product_template_attribute_value_ids.mapped(
-                                                'product_attribute_value_id')[0].id or
-                                            False
-                                    })
+                                    if sol.purity_diff != 0.0:
+                                        move.update({
+                                            'carat': sol.carat,
+                                            'carat': sol.carat,
+                                            'gross_weight': sol.gross_wt * sol.product_uom_qty,
+                                            'pure_weight': sol.pure_wt,
+                                            'purity': sol.purity_hall,
+                                            'purity_id': sol.purity_id.id,
+                                            'gold_rate': sol.gold_rate,
+                                            'selling_karat_id':
+                                                sol.product_id.product_template_attribute_value_ids and
+                                                sol.product_id.product_template_attribute_value_ids.mapped(
+                                                    'product_attribute_value_id')[0].id or
+                                                False
+                                            ,'buying_making_charge':sol.make_rate
+                                        })
+                                    else:
+                                        move.update({
+                                            'carat': sol.carat,
+                                            'carat': sol.carat,
+                                            'gross_weight': sol.gross_wt * sol.product_uom_qty,
+                                            'pure_weight': sol.pure_wt,
+                                            'purity': sol.purity_id.gold_sales_hallmark,
+                                            'purity_id': sol.purity_id.id,
+                                            'gold_rate': sol.gold_rate,
+                                            'selling_karat_id':
+                                                sol.product_id.product_template_attribute_value_ids and
+                                                sol.product_id.product_template_attribute_value_ids.mapped(
+                                                    'product_attribute_value_id')[0].id or
+                                                False
+                                            ,'buying_making_charge':sol.make_rate
+                                        })
         return True

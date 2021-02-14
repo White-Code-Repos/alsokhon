@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record model="ir.ui.view" id="check_action_treasury_form">
+        <field name="name">account.check.action.treasury.wizard.form</field>
+        <field name="model">check.return.treasury</field>
+        <field name="arch" type="xml">
+            <form string="Return To Treasury">
+                <group>
+                    <group>
+                        <field name="date"/>
+                    </group>
+                </group>
+                <footer>
+                    <button string="Confirm" name="action_confirm" type="object" class="oe_highlight"/>
+                    or
+                    <button string="Cancel" class="oe_link" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_wizard_return_treasury" model="ir.actions.act_window">
+        <field name="name">Return To Treasury</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">check.return.treasury</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>
