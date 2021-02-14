@@ -27,7 +27,7 @@ class AccountAccount(models.Model):
         for rec in self:
             account = self.search([('current_position', '=', True),
                                    ('id', '!=', rec.id)])
-            if len(account) not in [0,1]:
+            if account and self.current_position:
                 raise UserError(
                     _('Current Position Already Marked in %s.' % account.name)
                 )
