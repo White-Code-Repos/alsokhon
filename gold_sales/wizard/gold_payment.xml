@@ -29,6 +29,7 @@
 
                     <separator string="moves" colspan="4"/>
                     <group>
+                      <field name="location_id"/>
                     <field name="pure_weight" readonly="1"/>
                     <field name="pure_remainning" readonly="1"/>
                     </group>
