@@ -342,17 +342,17 @@ class StockPicking(models.Model):
                     if product_id.scrap:
                         if product_id not in product_dict.keys():
                             product_dict[product_id] = sum(
-                                x.gross_weight * x.purity_id.scrap_purity for x in move_list)
+                                x.gross_weight * x.purity_id.scrap_purity / 1000 for x in move_list)
                         else:
                             product_dict[product_id] = product_dict[product_id] + sum(
-                                x.gross_weight * x.purity_id.scrap_purity for x in move_list)
+                                x.gross_weight * x.purity_id.scrap_purity / 1000 for x in move_list)
                     else:
                         if product_id not in product_dict.keys():
                             product_dict[product_id] = sum(
-                                x.gross_weight * x.purity_id.purity for x in move_list)
+                                x.gross_weight * x.purity_id.purity / 1000 for x in move_list)
                         else:
                             product_dict[product_id] = product_dict[product_id] + sum(
-                                x.gross_weight * x.purity_id.purity for x in move_list)
+                                x.gross_weight * x.purity_id.purity / 1000 for x in move_list)
 
                 total_purity = sum(value for key, value in product_dict.items())
                 if total_purity > 0.0 and product_dict and \
