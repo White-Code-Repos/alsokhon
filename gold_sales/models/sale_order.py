@@ -1139,10 +1139,10 @@ class StockRule(models.Model):
                                                 sol.product_id.product_template_attribute_value_ids.mapped(
                                                     'product_attribute_value_id')[0].id or
                                                 False
-                                            ,'buying_making_charge':sol.lot_id.buying_making_charge,
-                                            ,'selling_making_charge':sol.lot_id.selling_making_charge,
-                                            ,'item_category_id':sol.lot_id.item_category_id.id,
-                                            ,'sub_category_id':sol.lot_id.sub_category_id.id,
+                                            ,'buying_making_charge':sol.lot_id.buying_making_charge
+                                            ,'selling_making_charge':sol.lot_id.selling_making_charge
+                                            ,'item_category_id':sol.lot_id.item_category_id.id
+                                            ,'sub_category_id':sol.lot_id.sub_category_id.id
                                         })
                                     else:
                                         move.update({
@@ -1157,10 +1157,10 @@ class StockRule(models.Model):
                                                 sol.product_id.product_template_attribute_value_ids.mapped(
                                                     'product_attribute_value_id')[0].id or
                                                 False
-                                            ,'buying_making_charge':sol.lot_id.buying_making_charge,
-                                            ,'selling_making_charge':sol.lot_id.selling_making_charge,
-                                            ,'item_category_id':sol.lot_id.item_category_id.id,
-                                            ,'sub_category_id':sol.lot_id.sub_category_id.id,
+                                            ,'buying_making_charge':sol.lot_id.buying_making_charge
+                                            ,'selling_making_charge':sol.lot_id.selling_making_charge
+                                            ,'item_category_id':sol.lot_id.item_category_id.id
+                                            ,'sub_category_id':sol.lot_id.sub_category_id.id
                                         })
                                 elif move.product_id.gold_with_lots:
                                     if sol.purity_diff != 0.0:
@@ -1176,10 +1176,10 @@ class StockRule(models.Model):
                                                 sol.product_id.product_template_attribute_value_ids.mapped(
                                                     'product_attribute_value_id')[0].id or
                                                 False
-                                            ,'buying_making_charge':sol.lot_id.buying_making_charge,
-                                            ,'selling_making_charge':sol.lot_id.selling_making_charge,
-                                            ,'item_category_id':sol.lot_id.item_category_id.id,
-                                            ,'sub_category_id':sol.lot_id.sub_category_id.id,
+                                            ,'buying_making_charge':sol.lot_id.buying_making_charge
+                                            ,'selling_making_charge':sol.lot_id.selling_making_charge
+                                            ,'item_category_id':sol.lot_id.item_category_id.id
+                                            ,'sub_category_id':sol.lot_id.sub_category_id.id
                                         })
                                     else:
                                         move.update({
@@ -1194,10 +1194,10 @@ class StockRule(models.Model):
                                                 sol.product_id.product_template_attribute_value_ids.mapped(
                                                     'product_attribute_value_id')[0].id or
                                                 False
-                                            ,'buying_making_charge':sol.lot_id.buying_making_charge,
-                                            ,'selling_making_charge':sol.lot_id.selling_making_charge,
-                                            ,'item_category_id':sol.lot_id.item_category_id.id,
-                                            ,'sub_category_id':sol.lot_id.sub_category_id.id,
+                                            ,'buying_making_charge':sol.lot_id.buying_making_charge
+                                            ,'selling_making_charge':sol.lot_id.selling_making_charge
+                                            ,'item_category_id':sol.lot_id.item_category_id.id
+                                            ,'sub_category_id':sol.lot_id.sub_category_id.id
                                         })
                                 else:
                                     if sol.purity_diff != 0.0:
@@ -1214,10 +1214,10 @@ class StockRule(models.Model):
                                                 sol.product_id.product_template_attribute_value_ids.mapped(
                                                     'product_attribute_value_id')[0].id or
                                                 False
-                                            ,'buying_making_charge':sol.lot_id.buying_making_charge,
-                                            ,'selling_making_charge':sol.lot_id.selling_making_charge,
-                                            ,'item_category_id':sol.lot_id.item_category_id.id,
-                                            ,'sub_category_id':sol.lot_id.sub_category_id.id,
+                                            ,'buying_making_charge':sol.lot_id.buying_making_charge
+                                            ,'selling_making_charge':sol.lot_id.selling_making_charge
+                                            ,'item_category_id':sol.lot_id.item_category_id.id
+                                            ,'sub_category_id':sol.lot_id.sub_category_id.id
                                         })
                                     else:
                                         move.update({
@@ -1233,9 +1233,9 @@ class StockRule(models.Model):
                                                 sol.product_id.product_template_attribute_value_ids.mapped(
                                                     'product_attribute_value_id')[0].id or
                                                 False
-                                            ,'buying_making_charge':sol.lot_id.buying_making_charge,
-                                            ,'selling_making_charge':sol.lot_id.selling_making_charge,
-                                            ,'item_category_id':sol.lot_id.item_category_id.id,
-                                            ,'sub_category_id':sol.lot_id.sub_category_id.id,
+                                            ,'buying_making_charge':sol.lot_id.buying_making_charge
+                                            ,'selling_making_charge':sol.lot_id.selling_making_charge
+                                            ,'item_category_id':sol.lot_id.item_category_id.id
+                                            ,'sub_category_id':sol.lot_id.sub_category_id.id
                                         })
         return True
