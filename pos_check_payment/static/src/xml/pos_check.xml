@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<templates xml:space="preserve">
+
+    <!-- <t t-extend="PosTicket">
+        <t t-jquery="t[t-foreach*='paymentlines'][t-as*='line']" t-operation="append">
+            <t t-if="line.cashregister.journal.check_info_required">
+                <tr>
+                    <td colspan="2">
+                        Check: <t t-esc="line.check_number"/>
+                    </td>
+                </tr>
+            </t>
+        </t>
+    </t> -->
+
+    <!-- <t t-extend="XmlReceipt">
+        <t t-jquery="t[t-foreach*='paymentlines'][t-as*='line']" t-operation="append">
+            <t t-if="line.cashregister.journal.check_info_required">
+                <line line-ratio="1">
+                    <left>Check: <t t-esc="line.check_number"/></left>
+                </line>
+            </t>
+        </t>
+    </t> -->
+
+    <t t-name="CheckInfoWidget">
+        <div class='modal-dialog'>
+            <div class='popup popup-checkinfo'>
+                <p class='title'>Please enter check info</p>
+                <div class='checkinfo-detail'>
+                    <span class='label'>Check number</span>
+                    <input class='detail required' name='check_number' t-att-value='widget.options.data ? widget.options.data.check_number : undefined' placeholder='Check number'></input>
+                </div>
+                <!-- <div class='checkinfo-detail' t-if="widget.options.config_check and widget.options.config_check.bank_visible"> -->
+                <div class='checkinfo-detail' >
+                    <span class='label'>Bank name</span>
+                    <!-- <select name='check_bank_id' t-att-class='widget.options.config_check and widget.options.config_check.bank_required ? "detail required" : "detail"'> -->
+                    <select name='check_bank_id' >
+                        <option value=''>---</option>
+                        <t t-foreach='widget.pos.banks' t-as='bank'>
+                            <option t-att-value='bank.id' >
+                                <t t-esc='bank.name'/>
+                            </option>
+                        </t>
+                    </select>
+                </div>
+                <div class='checkinfo-detail' >
+                    <span class='label'>Issue Date</span>
+                    <input name='check_issue_date' type="date"></input>
+                    <!-- <input  name='check_bank_acc' t-att-value='widget.options.data ? widget.options.data.check_bank_acc : undefined' placeholder='Bank account'></input> -->
+                </div>
+                <div class='checkinfo-detail' >
+                  <span class='label'>Payment Date</span>
+                  <input name='check_payment_date' type="date"></input>
+                </div>
+
+                <div class='checkinfo-detail' >
+                    <span class='label'>Check owner</span>
+                    <input  name='check_owner' t-att-value='widget.options.data ? widget.options.data.check_owner : undefined' placeholder='Check owner'></input>
+                </div>
+                <div class='footer'>
+                    <div class='button confirm'>
+                        Confirm
+                    </div>
+                    <div class='button cancel'>
+                        Cancel
+                    </div>
+                </div>
+            </div>
+        </div>
+    </t>
+
+    <t t-extend="PaymentScreen-Paymentlines">
+        <t t-jquery=".col-name" t-operation="append">
+            <t t-if="line.payment_method.is_check">
+                <span class='check-info-button' t-att-data-cid='line.cid'><i class='fa fa-bank' /></span>
+            </t>
+        </t>
+    </t>
+</templates>
