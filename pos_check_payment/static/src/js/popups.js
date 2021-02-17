@@ -16,10 +16,9 @@ var CheckInfoWidget = PopupWidget.extend({
       console.log(this.options);
         return {
             'check_bank_id' : parseInt(this.$('select[name=check_bank_id]').val()) || undefined,
-            // 'check_bank_acc': this.$('input[name=check_bank_acc]').val(),
             'check_number'  : this.$('input[name=check_number]').val(),
-            'check_owner'   : this.options.data.client.id,
-            // 'check_owner'   : this.$('input[name=check_owner]').val(),
+            // 'check_owner'   : this.options.data.client.id,
+            'check_owner'   : this.$('input[name=check_owner]').val(),
             'check_issue_date'   : this.$('input[name=check_issue_date]').val(),
             'check_payment_date'   : this.$('input[name=check_payment_date]').val(),
         };
