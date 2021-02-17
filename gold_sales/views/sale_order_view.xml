@@ -50,11 +50,11 @@
                     <tree editable="top">
                       <field name="product_id"/>
                       <field name="carat"/>
-                      <!-- <field name="carat_price"/> -->
-                      <!-- <field name="stones_value"/> -->
+                      <field name="carat_price"/>
+                      <field name="stones_value"/>
                       <field name="stones_quantity" sum="stones_quantity"/>
-                      <!-- <field name="stone_setting_rate"/> -->
-                      <!-- <field name="stone_setting_value" sum="stone_setting_value" readonly="1" force_save="1"/> -->
+                      <field name="stone_setting_rate"/>
+                      <field name="stone_setting_value" sum="stone_setting_value" readonly="1" force_save="1"/>
                     </tree>
                   </field>
                 </page>

@@ -141,6 +141,11 @@ class assemblyComponentsGold(models.Model):
     # def lot_domain_get(self):
     #     return [('is_empty_lot','=',False),('product_id','=',self.product_id.id)]
     lot_id = fields.Many2one('stock.production.lot')
+    @api.onchange('lot_id')
+    def check_qty(self):
+        if self.lot_id:
+            if self.lot_id.product_qty <= 0:
+                raise ValidationError(_('The lot is empty! Please Choose another one.'))
 
     product_uom_qty = fields.Float(digits=(16,3))
     gross_weight = fields.Float(digits=(16,3))
@@ -169,6 +174,11 @@ class assemblyComponentsDiamond(models.Model):
     # def lot_domain_get(self):
     #     return [('is_empty_lot','=',False),('product_id','=',self.product_id.id)]
     lot_id = fields.Many2one('stock.production.lot')
+    @api.onchange('lot_id')
+    def check_qty(self):
+        if self.lot_id:
+            if self.lot_id.product_qty <= 0:
+                raise ValidationError(_('The lot is empty! Please Choose another one.'))
 
     stones_quantity = fields.Float(digits=(16,3), string="Stones")
     carat = fields.Float(digits=(16,3), string="Carat")
@@ -201,6 +211,11 @@ class assemblyComponentsMix(models.Model):
     # def lot_domain_get(self):
     #     return [('is_empty_lot','=',False),('product_id','=',self.product_id.id)]
     lot_id = fields.Many2one('stock.production.lot')
+    @api.onchange('lot_id')
+    def check_qty(self):
+        if self.lot_id:
+            if self.lot_id.product_qty <= 0:
+                raise ValidationError(_('The lot is empty! Please Choose another one.'))
 
     quantity = fields.Float(digits=(16,3), default=1)
     purchase_mix_id = fields.Many2one('purchase.order')
@@ -283,6 +298,8 @@ class PurchaseOrder(models.Model):
                 need_location = True
         if need_location:
             raise (_('Please fill the location at the component lines'))
+        if len(self.assembly_gold_ids) <= 0 and len(self.assembly_diamond_ids) <= 0 and len(self.assembly_mix_ids) <= 0 and self.assembly_type == 'our_stock_a_vendor':
+            raise ValidationError(_('Please add any component of any type to process!'))
         diamond_move_lines = []
         scrap_move_lines = []
         gold_move_lines = []
@@ -792,7 +809,7 @@ class PurchaseOrder(models.Model):
                 'product_id':line.product_id.id,
                 'quantity':old_line.quantity,
                 'gross_weight':old_line.gross_weight,
-                'gross_weight':old_line.net_gross_wt,
+                'gross_weight':old_line.net_weight,
                 'purity_id':old_line.purity_id.id or False,
                 'purity':old_line.purity,
                 'pure_weight':old_line.pure_weight,
@@ -892,19 +909,19 @@ class PurchaseOrder(models.Model):
             pol[0]._get_gold_rate()
             if self.assembly_no_giving:
                 pol[0].write({
-                'price_unit':total_stones_price+pol[0].gold_value,
+                'price_unit':total_stones_price+pol[0].gold_value + self.lamb_sum_stone_value,
                 })
             if self.assembly_give_both:
                 pol[0].write({
-                'price_unit':0.0,
+                'price_unit':0.0 + self.lamb_sum_stone_value,
                 })
             if self.assembly_give_gold:
                 pol[0].write({
-                'price_unit':total_stones_price,
+                'price_unit':total_stones_price + self.lamb_sum_stone_value,
                 })
             if self.assembly_give_diamond:
                 pol[0].write({
-                'price_unit':pol[0].gold_value,
+                'price_unit':pol[0].gold_value + self.lamb_sum_stone_value,
                 })
             self.write({'report_grids':True})
     def finish_processing(self):
@@ -977,6 +994,18 @@ class PurchaseOrder(models.Model):
         for picking in component_pickings:
             picking.action_cancel()
         return res
+    # def button_confirm(self):
+    #     res = super(PurchaseOrder,self).button_confirm()
+    #     if res.diamond:
+    #         for line in res.order_line:
+    #             pass
+    #     elif res.assembly:
+    #         for line in res.order_line:
+    #             pass
+    #     elif res.gold:
+    #         for line in res.order_line:
+    #             pass
+    #     return res
     # def button_confirm(self):
     #     res = super(PurchaseOrder,self).button_confirm()
     #     need_location = False

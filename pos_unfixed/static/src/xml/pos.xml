@@ -161,12 +161,15 @@
                           <!-- <td class='col-due-gm'> <t t-esc='widget.format_currency_no_symbol(order.get_due_gm(line))' /> </td> -->
                             <td class='col-due'>
                               <!-- <t t-esc='widget.format_currency_no_symbol(order.get_due(line))' />  -->
-                              <t t-if='line.order_to_fix'>
-                                <t t-esc='widget.format_currency_no_symbol(order.get_due_converted_fix())' />
+                              <t t-if='line.get_amount_gm()==0'>
+                                <t t-if='line.order_to_fix'>
+                                  <t t-esc='widget.format_currency_no_symbol(order.get_due_converted_fix())' />
+                                </t>
+                                <t t-else="">
+                                  <t t-esc='widget.format_currency_no_symbol(order.get_due(line))' />
+                                </t>
                               </t>
-                              <t t-else="">
-                                <t t-esc='widget.format_currency_no_symbol(order.get_due(line))' />
-                              </t>
+
 
                             </td>
                             <t t-if="line &amp;&amp; line.payment_status &amp;&amp; ['done', 'waitingCard', 'waiting', 'reversing', 'reversed'].includes(line.payment_status)">
@@ -211,7 +214,14 @@
                                 <td class='col-change' ></td>
                             </t>
 
-                            <td class='col-name' > <t t-esc='line.payment_method.name' /> </td>
+                            <td class='col-name' >
+                              <t t-if='line.get_amount_gm()==0'>
+                                <t t-esc='line.payment_method.name' />
+                              </t>
+                              <t t-else="">
+                                Gold
+                                </t>
+                            </td>
                             <t t-if="line &amp;&amp; line.payment_status &amp;&amp; ['done', 'reversed', 'reversing'].includes(line.payment_status)">
                                 <td/>
                             </t>
@@ -232,12 +242,14 @@
                               <t t-esc='widget.format_currency_no_symbol(order.get_due_gm(line))' />
                             </td> -->
                             <td class='col-due'>
+                              <t t-if='line.get_amount_gm()==0'>
 
-                              <t t-if='line.order_to_fix'>
-                                <t t-esc='widget.format_currency_no_symbol(order.get_due_converted_fix())' />
-                              </t>
-                              <t t-else="">
-                                <t t-esc='widget.format_currency_no_symbol(order.get_due(line))' />
+                                <t t-if='line.order_to_fix'>
+                                  <t t-esc='widget.format_currency_no_symbol(order.get_due_converted_fix())' />
+                                </t>
+                                <t t-else="">
+                                  <t t-esc='widget.format_currency_no_symbol(order.get_due(line))' />
+                                </t>
                               </t>
                             </td>
                             <td class='col-tendered'>
@@ -265,7 +277,15 @@
                                     </t>
                                  </t>
                             </td>
-                            <td class='col-name'> <t t-esc='line.name' /> </td>
+                            <!-- <td class='col-name'> <t t-esc='line.name' /> </td> -->
+                            <td class='col-name' >
+                              <t t-if='line.get_amount_gm()==0'>
+                                <t t-esc='line.name' />
+                              </t>
+                              <t t-else="">
+                                Gold
+                                </t>
+                            </td>
                             <t t-if="line &amp;&amp; line.payment_status &amp;&amp; ['done', 'reversed', 'reversing'].includes(line.payment_status)">
                                 <td/>
                             </t>

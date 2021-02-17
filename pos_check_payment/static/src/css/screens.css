@@ -1,0 +1,54 @@
+.pos .modal-dialog .popup-checkinfo{
+    text-align: left;
+}
+
+.checkinfo-detail{
+    padding: 10px 10px 0 10px;
+}
+
+.checkinfo-detail > .label{
+    width: 150px;
+    text-align: right;
+    margin-right: 8px;
+    display: inline-block;
+}
+
+.checkinfo-detail input{
+    width: 300px !important;
+}
+
+.checkinfo-detail select{
+    text-align: left;
+    display: inline-block;
+    overflow: hidden;
+    background: white;
+    min-height: 44px;
+    font-family: "Lato";
+    font-size: 20px;
+    color: #444;
+    padding: 10px;
+    border-radius: 3px;
+    border: none;
+    box-shadow: 0px 0px 0px 1px rgb(220,220,220) inset;
+    box-sizing: border-box;
+    width: 300px;
+}
+
+.checkinfo-detail select:focus {
+    outline: none;
+    box-shadow: 0px 0px 0px 3px #6EC89B;
+}
+.checkinfo-detail input.error, .checkinfo-detail select.error {
+    outline: none;
+    box-shadow: 0px 0px 0px 3px #FF0000 !important;
+}
+
+.checkinfo-detail .detail.required {
+    background-color: #ffffb4;
+}
+
+.pos .paymentline .check-info-button {
+    cursor: pointer;
+    text-align: center;
+}
+
