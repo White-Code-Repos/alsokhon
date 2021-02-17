@@ -438,16 +438,16 @@ class SaleOrderLine(models.Model):
             # elif self.lot_id.purity_id.scrap_sales_hallmark != self.lot_id.purity and self.product_id.scrap :
             #     self.purity_hall = self.lot_id.purity
             #     self.onchange_purity_hall()
-            # # self.purity = self.lot_id.purity
-            # if self.product_id.tracking == 'serial':
-            #     stock_move_line = self.env['stock.move.line'].search([('lot_id','=',self.lot_id.id),('product_id','=',self.product_id.id)])
-            #     if stock_move_line and len(stock_move_line) == 1:
-            #         move_id = stock_move_line.move_id
-            #         if move_id and len(move_id) == 1:
-            #             svl = self.env['stock.valuation.layer'].search([('stock_move_id','=',move_id.id)])
-            #             if svl and len(svl):
-            #                 lst_price = svl.value / svl.quantity
-            #                 svl.product_id.write({'lst_price':lst_price})
+            # self.purity = self.lot_id.purity
+            if self.product_id.tracking == 'serial':
+                stock_move_line = self.env['stock.move.line'].search([('lot_id','=',self.lot_id.id),('product_id','=',self.product_id.id)])
+                if stock_move_line and len(stock_move_line) == 1:
+                    move_id = stock_move_line.move_id
+                    if move_id and len(move_id) == 1:
+                        svl = self.env['stock.valuation.layer'].search([('stock_move_id','=',move_id.id)])
+                        if svl and len(svl):
+                            lst_price = svl.value / svl.quantity
+                            svl.product_id.write({'lst_price':lst_price})
                     # if stock_move_line.picking_id:
                     #     if stock_move_line.picking_id.group_id:
                     #         if stock_move_line.picking_id.group_id.name:
