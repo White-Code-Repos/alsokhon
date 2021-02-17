@@ -438,20 +438,27 @@ class SaleOrderLine(models.Model):
             # elif self.lot_id.purity_id.scrap_sales_hallmark != self.lot_id.purity and self.product_id.scrap :
             #     self.purity_hall = self.lot_id.purity
             #     self.onchange_purity_hall()
-            # self.purity = self.lot_id.purity
-            # stock_move_line = self.env['stock.move.line'].search([('lot_id','=',self.lot_id.id),('product_id','=',self.product_id.id)])
-            # if stock_move_line and len(stock_move_line) == 1:
-            #     if stock_move_line.picking_id:
-            #         if stock_move_line.picking_id.group_id:
-            #             if stock_move_line.picking_id.group_id.name:
-            #                 if 'P0' in stock_move_line.picking_id.group_id.name:
-            #                     purchase_order = self.env['purchase.order'].search([('name','=',stock_move_line.picking_id.group_id.name)])
-            #                     if purchase_order and len(purchase_order) == 1:
-            #                         for line in purchase_order.order_line:
-            #                             if line.product_id == self.product_id:
-            #                                 self.purity_id = line.purity_id.id
-                                            # self.make_rate = line.make_rate
-                                            # self.make_value = line.make_value
+            # # self.purity = self.lot_id.purity
+            # if self.product_id.tracking == 'serial':
+            #     stock_move_line = self.env['stock.move.line'].search([('lot_id','=',self.lot_id.id),('product_id','=',self.product_id.id)])
+            #     if stock_move_line and len(stock_move_line) == 1:
+            #         move_id = stock_move_line.move_id
+            #         if move_id and len(move_id) == 1:
+            #             svl = self.env['stock.valuation.layer'].search([('stock_move_id','=',move_id.id)])
+            #             if svl and len(svl):
+            #                 lst_price = svl.value / svl.quantity
+            #                 svl.product_id.write({'lst_price':lst_price})
+                    # if stock_move_line.picking_id:
+                    #     if stock_move_line.picking_id.group_id:
+                    #         if stock_move_line.picking_id.group_id.name:
+                    #             if 'P0' in stock_move_line.picking_id.group_id.name:
+                    #                 purchase_order = self.env['purchase.order'].search([('name','=',stock_move_line.picking_id.group_id.name)])
+                    #                 if purchase_order and len(purchase_order) == 1:
+                    #                     for line in purchase_order.order_line:
+                    #                         if line.product_id == self.product_id:
+                    #                             self.purity_id = line.purity_id.id
+                    #                             self.make_rate = line.make_rate
+                    #                             self.make_value = line.make_value
     def _get_gold_stock(self):
         for this in self:
             if this.product_id:

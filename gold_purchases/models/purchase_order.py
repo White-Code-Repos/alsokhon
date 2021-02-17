@@ -996,6 +996,18 @@ class PurchaseOrder(models.Model):
         return res
     # def button_confirm(self):
     #     res = super(PurchaseOrder,self).button_confirm()
+    #     if res.diamond:
+    #         for line in res.order_line:
+    #             pass
+    #     elif res.assembly:
+    #         for line in res.order_line:
+    #             pass
+    #     elif res.gold:
+    #         for line in res.order_line:
+    #             pass
+    #     return res
+    # def button_confirm(self):
+    #     res = super(PurchaseOrder,self).button_confirm()
     #     need_location = False
     #     for line in self.assembly_gold_ids:
     #         if not line.location_id:
