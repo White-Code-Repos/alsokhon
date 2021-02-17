@@ -2,6 +2,8 @@
 from itertools import groupby
 from odoo.exceptions import ValidationError
 from odoo import api, fields, models , _
+import logging
+_logger = logging.getLogger(__name__)
 
 
 class StockPicking(models.Model):
@@ -337,12 +339,21 @@ class StockPicking(models.Model):
                 description = '%s' % self.name
                 for product_id, move_list in groupby(moves, lambda x: x.product_id):
                     description = '%s-%s' % (description, product_id.display_name)
+                    _logger.info(product_id)
+                    _logger.info(product_id)
+                    _logger.info(product_id)
+                    _logger.info(product_id)
+                    _logger.info(product_id)
+                    _logger.info(product_id)
+                    _logger.info(product_id)
+                    _logger.info(product_id)
+                    _logger.info(product_id)
                     if product_id not in product_dict.keys():
                         product_dict[product_id] = sum(
-                            x.pure_weight for x in move_list)
+                            x.gross_weight * x.purity_id.purity for x in move_list)
                     else:
                         product_dict[product_id] = product_dict[product_id] + sum(
-                            x.pure_weight for x in move_list)
+                            x.gross_weight * x.purity_id.purity for x in move_list)
                 total_purity = sum(value for key, value in product_dict.items())
                 if total_purity > 0.0 and product_dict and \
                         self.partner_id :

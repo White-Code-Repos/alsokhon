@@ -141,6 +141,11 @@ class assemblyComponentsGold(models.Model):
     # def lot_domain_get(self):
     #     return [('is_empty_lot','=',False),('product_id','=',self.product_id.id)]
     lot_id = fields.Many2one('stock.production.lot')
+    @api.onchange('lot_id')
+    def check_qty(self):
+        if self.lot_id:
+            if self.lot_id.product_qty <= 0:
+                raise ValidationError(_('The lot is empty! Please Choose another one.'))
 
     product_uom_qty = fields.Float(digits=(16,3))
     gross_weight = fields.Float(digits=(16,3))
@@ -169,6 +174,11 @@ class assemblyComponentsDiamond(models.Model):
     # def lot_domain_get(self):
     #     return [('is_empty_lot','=',False),('product_id','=',self.product_id.id)]
     lot_id = fields.Many2one('stock.production.lot')
+    @api.onchange('lot_id')
+    def check_qty(self):
+        if self.lot_id:
+            if self.lot_id.product_qty <= 0:
+                raise ValidationError(_('The lot is empty! Please Choose another one.'))
 
     stones_quantity = fields.Float(digits=(16,3), string="Stones")
     carat = fields.Float(digits=(16,3), string="Carat")
@@ -201,6 +211,11 @@ class assemblyComponentsMix(models.Model):
     # def lot_domain_get(self):
     #     return [('is_empty_lot','=',False),('product_id','=',self.product_id.id)]
     lot_id = fields.Many2one('stock.production.lot')
+    @api.onchange('lot_id')
+    def check_qty(self):
+        if self.lot_id:
+            if self.lot_id.product_qty <= 0:
+                raise ValidationError(_('The lot is empty! Please Choose another one.'))
 
     quantity = fields.Float(digits=(16,3), default=1)
     purchase_mix_id = fields.Many2one('purchase.order')
@@ -283,6 +298,8 @@ class PurchaseOrder(models.Model):
                 need_location = True
         if need_location:
             raise (_('Please fill the location at the component lines'))
+        if len(self.assembly_gold_ids) <= 0 and len(self.assembly_diamond_ids) <= 0 and len(self.assembly_mix_ids) <= 0 and self.assembly_type == 'our_stock_a_vendor':
+            raise ValidationError(_('Please add any component of any type to process!'))
         diamond_move_lines = []
         scrap_move_lines = []
         gold_move_lines = []
