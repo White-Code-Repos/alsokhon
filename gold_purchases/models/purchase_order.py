@@ -809,7 +809,7 @@ class PurchaseOrder(models.Model):
                 'product_id':line.product_id.id,
                 'quantity':old_line.quantity,
                 'gross_weight':old_line.gross_weight,
-                'gross_weight':old_line.net_gross_wt,
+                'gross_weight':old_line.net_weight,
                 'purity_id':old_line.purity_id.id or False,
                 'purity':old_line.purity,
                 'pure_weight':old_line.pure_weight,
