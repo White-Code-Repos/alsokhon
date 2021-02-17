@@ -334,6 +334,10 @@ class StockMoveLine(models.Model):
                     if self.purity_id:
                         if self.purity_id != self.lot_id.purity_id:
                             raise ValidationError(_('Karat at same lot cannot overlap, Please add item to a lot with the same karat'))
+                elif self.product_id.scrap:
+                    if self.purity_id:
+                        if self.purity_id != self.lot_id.purity_id:
+                            raise ValidationError(_('Karat at same lot cannot overlap, Please add item to a lot with the same karat'))
     @api.depends('move_id')
     def get_karat(self):
         for rec in self:
