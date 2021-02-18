@@ -3,7 +3,8 @@ from datetime import datetime, timedelta, time
 
 class CalendarChangeRequest(models.Model):
     _name = 'working.calendar.change.request'
-    _inherit = ['mail.thread', 'mail.activity.mixin', 'portal.mixin']
+    _inherit = ['mail.thread', 'mail.activity.mixin']
+    # , 'portal.mixin'
     _description = "Working Calendar Change Request"
 
     def _get_resource_calendar(self):

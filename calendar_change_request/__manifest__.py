@@ -20,4 +20,5 @@
         'views/calendar_change_view.xml',
 
     ],
+    # 'images': ['static/description/banner.png'],
 }
