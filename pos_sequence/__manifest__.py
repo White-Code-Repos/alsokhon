@@ -13,7 +13,7 @@
     'data': [
     #     # 'security/pos_user_restrict_security.xml',pos_config
     #     # 'views/res_users_views.xml',
-    #     # 'views/pos_config.xml',
+        # 'views/pos_config.xml',
     #     # 'views/assets.xml',
     ],
     'application': False,
