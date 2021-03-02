@@ -193,8 +193,8 @@
                     <field name="pure_weight" readonly="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
                     <field name="purity" readonly="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
                     <field name="purity_id" readonly="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
-                    <field name="item_category_id" required="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
-                    <field name="sub_category_id" attrs="{'invisible': [('item_category_id','=', False)], 'required': [('item_category_id', '!=', False)]}"
+                    <field name="item_category_id" required="0" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
+                    <field name="sub_category_id" attrs="{'invisible': [('item_category_id','=', False)]}"
                            domain="[('parent_category_id', '=', item_category_id)]"/>
                     <field name="selling_karat_id"  readonly="1" invisible="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
                     <field name="selling_making_charge" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
