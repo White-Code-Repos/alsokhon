@@ -171,6 +171,7 @@ class SaleOrder(models.Model):
                                         'name': make_value_product.name,
                                         'product_uom_qty': 1,
                                         'price_unit': pro[0],
+                                        'make_value_unfixed_view': pro[0],
                                         'product_uom': uom.id,
                                         'order_id':res.id,
                                         # 'date_planned': datetime.today() ,
@@ -186,6 +187,7 @@ class SaleOrder(models.Model):
                                         'name': make_value_product.name,
                                         'product_uom_qty': 1,
                                         'price_unit': pro[0],
+                                        'make_value_unfixed_view': pro[0],
                                         'product_uom': uom.id,
                                         'order_id':res.id,
                                         # 'date_planned': datetime.today() ,
@@ -297,6 +299,7 @@ class SaleOrder(models.Model):
                                             'name': make_value_product.name,
                                             'product_uom_qty': 1,
                                             'price_unit': pro[0],
+                                            'make_value_unfixed_view': pro[0],
                                             'product_uom': uom.id,
                                             'order_id':self.id,
                                             # 'date_planned': datetime.today() ,
@@ -312,6 +315,7 @@ class SaleOrder(models.Model):
                                             'name': make_value_product.name,
                                             'product_uom_qty': 1,
                                             'price_unit': pro[0],
+                                            'make_value_unfixed_view': pro[0],
                                             'product_uom': uom.id,
                                             'order_id':self.id,
                                             # 'date_planned': datetime.today() ,
@@ -403,6 +407,7 @@ class SaleOrderLine(models.Model):
 
 
 
+    make_value_unfixed_view = fields.Float(default=0.000)
 
     def _prepare_procurement_values(self, group_id=False):
         values = super(SaleOrderLine, self)._prepare_procurement_values(group_id)
@@ -635,9 +640,15 @@ class SaleOrderLine(models.Model):
                 rec.make_value = 0.00
             else:
                 if rec.product_id.categ_id.is_scrap or rec.product_id.gold_with_lots:
-                    rec.make_value = rec.gross_wt * rec.make_rate
+                    if rec.make_value_unfixed_view != 0.000:
+                        rec.make_value = rec.gross_wt * rec.make_rate
+                    else:
+                        rec.make_value = rec.make_value_unfixed_view
                 else:
-                    rec.make_value = rec.product_uom_qty * rec.gross_wt * rec.make_rate
+                    if rec.make_value_unfixed_view != 0.000:
+                        rec.make_value = rec.product_uom_qty * rec.gross_wt * rec.make_rate
+                    else:
+                        rec.make_value = rec.make_value_unfixed_view
             if rec.order_id.gold:
                 rec.gold_rate = rec.order_id.gold_rate / 1000.000000000000
                 rec.gold_value = rec.gold_rate and (

@@ -1213,6 +1213,7 @@ class PurchaseOrder(models.Model):
                                         'name': make_value_product.name,
                                         'product_qty': 1,
                                         'price_unit': pro[0],
+                                        'make_value_unfixed_view': pro[0],
                                         'product_uom': uom.id,
                                         'order_id':res.id,
                                         'date_planned': datetime.today() ,
@@ -1230,6 +1231,7 @@ class PurchaseOrder(models.Model):
                                         'name': make_value_product.name,
                                         'product_qty': 1,
                                         'price_unit': pro[0],
+                                        'make_value_unfixed_view': pro[0],
                                         'product_uom': uom.id,
                                         'order_id':res.id,
                                         'date_planned': datetime.today() ,
@@ -1322,6 +1324,7 @@ class PurchaseOrder(models.Model):
                                             'name': make_value_product.name,
                                             'product_qty': 1,
                                             'price_unit': pro[0],
+                                            'make_value_unfixed_view': pro[0],
                                             'product_uom': uom.id,
                                             'order_id':self.id,
                                             'date_planned': datetime.today() ,
@@ -1339,6 +1342,7 @@ class PurchaseOrder(models.Model):
                                             'name': make_value_product.name,
                                             'product_qty': 1,
                                             'price_unit': pro[0],
+                                            'make_value_unfixed_view': pro[0],
                                             'product_uom': uom.id,
                                             'order_id':self.id,
                                             'date_planned': datetime.today() ,
@@ -1458,6 +1462,7 @@ class PurchaseOrder(models.Model):
 class PurchaseOrderLine(models.Model):
     _inherit = 'purchase.order.line'
 
+    make_value_unfixed_view = fields.Float(default=0.000)
     purity_may_overlap =fields.Boolean(default=False)
     assembly_service = fields.Float(string="Service Fees", default=0.0, digits=(16, 3))
     price_unit = fields.Float(string='Unit Price', required=True,
@@ -1662,12 +1667,21 @@ class PurchaseOrderLine(models.Model):
             if rec.order_id.diamond:
                 rec.make_value = 0.00
             elif rec.order_id.assembly:
-                rec.make_value = rec.product_qty * rec.gross_wt * rec.make_rate + rec.order_id.total_par_value + rec.order_id.total_mc_value + rec.assembly_service
+                if rec.make_value_unfixed_view != 0.000:
+                    rec.make_value = rec.make_value_unfixed_view
+                else:
+                    rec.make_value = rec.product_qty * rec.gross_wt * rec.make_rate + rec.order_id.total_par_value + rec.order_id.total_mc_value + rec.assembly_service
             else:
                 if rec.product_id.categ_id.is_scrap or rec.product_id.gold_with_lots:
-                    rec.make_value = rec.gross_wt * rec.make_rate
+                    if rec.make_value_unfixed_view != 0.000:
+                        rec.make_value = rec.make_value_unfixed_view
+                    else:
+                        rec.make_value = rec.gross_wt * rec.make_rate
                 else:
-                    rec.make_value = rec.product_qty * rec.gross_wt * rec.make_rate
+                    if rec.make_value_unfixed_view != 0.000:
+                        rec.make_value = rec.make_value_unfixed_view
+                    else:
+                        rec.make_value = rec.product_qty * rec.gross_wt * rec.make_rate
             if rec.order_id.gold:
                 rec.gold_rate = rec.order_id.gold_rate / 1000.000000000000
                 rec.gold_value = rec.gold_rate and (

@@ -17,7 +17,9 @@
     'depends':['hr','resource'],
     'data': [
         'security/ir.model.access.csv',
-        'views/calendar_change_view.xml',
+        # 'views/purchase_config.xml',
+        'views/purchase_order_view.xml',
+        'views/vendor_bill_view.xml',
 
     ],
 }

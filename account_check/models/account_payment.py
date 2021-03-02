@@ -64,7 +64,7 @@ class AccountPayment(models.Model):
         states={'draft': [('readonly', False)]},
         copy=False
     )
-    check_number_id = fields.Many2one(comodel_name='checkbook.sequence', string='Check Number', required=True,
+    check_number_id = fields.Many2one(comodel_name='checkbook.sequence', string='Check Number', required=False,
                                       states={'draft': [('readonly', False)]})
     check_issue_date = fields.Date(
         'Check Issue Date',
