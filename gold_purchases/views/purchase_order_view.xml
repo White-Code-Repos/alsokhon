@@ -12,6 +12,12 @@
             <xpath expr="//form/header/button[@id='draft_confirm']" position="replace">
               <button name="button_confirm" type="object" states="ready" string="Confirm Order" id="draft_confirm"/>
             </xpath> -->
+            <field name="order_line" position="after">
+              <group>
+                <field name="add_lamb_sum_stone_value" widget="boolean_toggle"/>
+                <field name="lamb_sum_stone_value" attrs="{'invisible':[('add_lamb_sum_stone_value','!=',True)]}"/>
+              </group>
+            </field>
             <button name="button_cancel" position="replace">
               <button name="button_cancel" states="draft,to approve,sent,purchase,processing,receive,review" string="Cancel" type="object"/>
             </button>
@@ -75,10 +81,10 @@
                       <field name="stone_setting_value" sum="stone_setting_value" readonly="1" force_save="1"/>
                     </tree>
                   </field>
-                  <group>
+                  <!-- <group>
                     <field name="add_lamb_sum_stone_value"/>
                     <field name="lamb_sum_stone_value" attrs="{'invisible':[('add_lamb_sum_stone_value','!=',True)]}"/>
-                  </group>
+                  </group> -->
                 </page>
                 <page string="Assembly Gold Components" name="assembly_mrp_gold" attrs="{'invisible':['|',('assembly','!=', True),('assembly_type','!=', 'our_stock_a_vendor')]}">
                   <field name="assembly_gold_ids">

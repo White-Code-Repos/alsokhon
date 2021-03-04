@@ -907,22 +907,27 @@ class PurchaseOrder(models.Model):
                     })
             pol[0].onchange_purity_hall()
             pol[0]._get_gold_rate()
-            if self.assembly_no_giving:
-                pol[0].write({
-                'price_unit':total_stones_price+pol[0].gold_value + self.lamb_sum_stone_value,
-                })
-            if self.assembly_give_both:
+            if self.self.lamb_sum_stone_value != 0.00:
                 pol[0].write({
                 'price_unit':0.0 + self.lamb_sum_stone_value,
                 })
-            if self.assembly_give_gold:
-                pol[0].write({
-                'price_unit':total_stones_price + self.lamb_sum_stone_value,
-                })
-            if self.assembly_give_diamond:
-                pol[0].write({
-                'price_unit':pol[0].gold_value + self.lamb_sum_stone_value,
-                })
+            else:
+                if self.assembly_no_giving:
+                    pol[0].write({
+                    'price_unit':total_stones_price+pol[0].gold_value + self.lamb_sum_stone_value,
+                    })
+                if self.assembly_give_both:
+                    pol[0].write({
+                    'price_unit':0.0 + self.lamb_sum_stone_value,
+                    })
+                if self.assembly_give_gold:
+                    pol[0].write({
+                    'price_unit':total_stones_price + self.lamb_sum_stone_value,
+                    })
+                if self.assembly_give_diamond:
+                    pol[0].write({
+                    'price_unit':pol[0].gold_value + self.lamb_sum_stone_value,
+                    })
             self.write({'report_grids':True})
     def finish_processing(self):
         if len(self.assembly_description_gold) > 0:
