@@ -12,9 +12,9 @@ class SaleOrder(models.Model):
     def _compute_hide_order_gold_rate(self):
         for this in self:
             if (this.gold == False and this.assembly == False) or this.is_unfixed == True:
-                this.hide_order_gold_rate == True
+                this.hide_order_gold_rate = True
             else:
-                this.hide_order_gold_rate == False
+                this.hide_order_gold_rate = False
 
     @api.onchange('currency_id', 'date_order', 'order_type')
     def get_gold_rate(self):
