@@ -9,6 +9,7 @@ class SaleOrder(models.Model):
     gold_rate = fields.Float(string='Gold Rate', digits=(12, 12))
 
     hide_order_gold_rate = fields.Boolean(compute="_compute_hide_order_gold_rate")
+    @api.onchange('currency_id', 'date_order', 'order_type')
     def _compute_hide_order_gold_rate(self):
         for this in self:
             if (this.gold == False and this.assembly == False) or this.is_unfixed == True:
