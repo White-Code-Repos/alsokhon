@@ -7,10 +7,10 @@
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='date_order']" position="after">
-                    <strong attrs="{'invisible': [('gold', '=', False),('assembly','=',False),'|',('is_unfixed','=',True)]}">
+                    <strong attrs="{'invisible': [('hide_order_gold_rate', '=', True)]}">
                         <label for="gold_rate" string="Gold Rate" style="font-weight: bold;"/>
                     </strong>
-                    <div class="o_row" attrs="{'invisible': [('gold', '=', False),('assembly','=',False),'|',('is_unfixed','=',True)]}">
+                    <div class="o_row" attrs="{'invisible': [('hide_order_gold_rate', '=', True)]}">
                         <field name="gold_rate"/>
                         <strong>Per Kg</strong>
                     </div>
