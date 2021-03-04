@@ -7,6 +7,7 @@
             <field name="inherit_id" ref="sale.view_order_form"/>
             <field name="arch" type="xml">
                 <xpath expr="//field[@name='date_order']" position="after">
+                  <field name="hide_order_gold_rate" invisible="1"/>
                     <strong attrs="{'invisible': [('hide_order_gold_rate', '=', True)]}">
                         <label for="gold_rate" string="Gold Rate" style="font-weight: bold;"/>
                     </strong>
