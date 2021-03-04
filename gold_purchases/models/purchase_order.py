@@ -1522,7 +1522,8 @@ class PurchaseOrderLine(models.Model):
                 if this.is_make_value:
                     this.total_ds_value = 0.0
                 else:
-                    this.total_ds_value = order.lamb_sum_stone_value
+                    this.total_ds_value = 0.0
+                    # this.total_ds_value = order.lamb_sum_stone_value
             else:
                 for line in order.assembly_description_diamond:
                     total_ds += line.stones_value
