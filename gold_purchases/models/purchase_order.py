@@ -1520,6 +1520,7 @@ class PurchaseOrderLine(models.Model):
             total_ds = 0.0
             if order.add_lamb_sum_stone_value:
                 if this.is_make_value:
+                    # 
                     this.total_ds_value = 0.0
                 else:
                     this.total_ds_value = 0.0
