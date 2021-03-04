@@ -13,7 +13,9 @@ class PurchaseOrder(models.Model):
     hide_order_gold_rate = fields.Boolean(compute="_compute_hide_order_gold_rate")
     def _compute_hide_order_gold_rate(self):
         for this in self:
+            _logger.info("this.gold,this.assembly,this.is_unfixed")
             _logger.info(this.gold,this.assembly,this.is_unfixed)
+            _logger.info("this.gold,this.assembly,this.is_unfixed")
             if (this.gold == False and this.assembly == False) or this.is_unfixed == True:
                 this.hide_order_gold_rate == True
             else:
