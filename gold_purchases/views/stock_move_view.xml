@@ -61,8 +61,8 @@
             <field name="arch" type="xml">
                 <field name="qty_done" position="before">
                   <field name="carat" readonly="0" attrs="{'column_invisible':[('parent.assembly','!=',True),('parent.diamond','!=',True)]}"/>
-                    <field name="gross_weight" readonly="0" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
-                    <field name="pure_weight" readonly="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
+                    <field name="gross_weight" sum="gross_weight" readonly="0" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
+                    <field name="pure_weight" sum="pure_weight" readonly="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
                     <field name="purity_id" readonly="1" force_save="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
                     <field name="purity" readonly="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
                     <field name="item_category_id"/>
@@ -72,6 +72,9 @@
                     <field name="selling_making_charge"/>
                     <field name="buying_making_charge" readonly="1" force_save="1"/>
                 </field>
+                <xpath expr="//field[@name='qty_done']" position="attributes">
+                   <attribute name="sum">qty_done</attribute>
+               </xpath>
                  <xpath expr="//field[@name='date']" position="attributes">
                     <attribute name="attrs">{'column_invisible': True}</attribute>
                     <attribute name="force_save">1</attribute>
@@ -101,10 +104,14 @@
                     <field name="image" widget="image"
                            options='{"size": [60, 60]}'/>
                 </field>
+                <xpath expr="//field[@name='qty_done']" position="attributes">
+                   <attribute name="sum">qty_done</attribute>
+               </xpath>
+
                 <field name="product_uom_id" position="after">
                   <field name="carat" readonly="0"  attrs="{'column_invisible':[('parent.assembly','!=',True),('parent.diamond','!=',True)]}"/>
-                    <field name="gross_weight" readonly="0"  attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
-                    <field name="pure_weight" readonly="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
+                    <field name="gross_weight" sum="gross_weight" readonly="0"  attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
+                    <field name="pure_weight" sum="pure_weight" readonly="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
                     <field name="purity_id" readonly="1" force_save="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
                     <field name="purity" readonly="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
                     <field name="item_category_id" readonly="1" force_save="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
@@ -168,8 +175,8 @@
                   <field name="diamond" invisible="1"/>
                   <field name="assembly" invisible="1"/>
                   <field name="carat" attrs="{'column_invisible':[('diamond','!=',True)]}"/>
-                    <field name="gross_weight" attrs="{'column_invisible':[('gold','!=',True)]}"/>
-                    <field name="pure_weight" attrs="{'column_invisible':[('gold','!=',True)]}"/>
+                    <field name="gross_weight" sum="gross_weight" attrs="{'column_invisible':[('gold','!=',True)]}"/>
+                    <field name="pure_weight" sum="gross_weight" attrs="{'column_invisible':[('gold','!=',True)]}"/>
                     <field name="purity" attrs="{'column_invisible':[('gold','!=',True)]}"/>
                     <field name="purity_id" attrs="{'column_invisible':[('gold','!=',True)]}"/>
                 </field>
@@ -189,8 +196,8 @@
                 <xpath expr="//field[@name='move_ids_without_package']/tree/field[@name='product_uom']"
                        position="after">
                      <field name="carat" readonly="0" attrs="{'column_invisible':[('parent.assembly','!=',True),('parent.diamond','!=',True)]}"/>
-                    <field name="gross_weight" readonly="0" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
-                    <field name="pure_weight" readonly="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
+                    <field name="gross_weight" sum="gross_weight" readonly="0" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
+                    <field name="pure_weight" sum="pure_weight" readonly="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
                     <field name="purity" readonly="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
                     <field name="purity_id" readonly="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
                     <field name="item_category_id" required="0" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>

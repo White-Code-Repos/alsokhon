@@ -67,6 +67,8 @@ class stockGoldMove(models.TransientModel):
 
 
     def compute_sheet(self):
+        if self.pure_remainning < 0:
+            raise UserError(_("The registered quantity is more than required !"))
         [data] = self.read()
         if not data['move_ids']:
             raise UserError(_("You must select move(s) to generate payment(s)."))
