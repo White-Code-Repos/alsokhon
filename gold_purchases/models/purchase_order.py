@@ -907,7 +907,7 @@ class PurchaseOrder(models.Model):
                     })
             pol[0].onchange_purity_hall()
             pol[0]._get_gold_rate()
-            if self.self.lamb_sum_stone_value != 0.00:
+            if self.lamb_sum_stone_value != 0.00:
                 pol[0].write({
                 'price_unit':0.0 + self.lamb_sum_stone_value,
                 })
