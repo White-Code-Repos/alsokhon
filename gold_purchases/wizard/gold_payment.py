@@ -84,7 +84,9 @@ class stockGoldMove(models.TransientModel):
         # purity = 0.00
         move_lines = []
         move_line_ids_without_package = []
+        total_paid_pure = 0
         for move in self.env['stock.production.lot'].browse(data['move_ids']):
+            total_paid_pure += move.paid_pure
             paid_pure = move.paid_pure
             paid_gross = move.paid_gross
             gross_weight =  move.gross_weight
@@ -126,7 +128,7 @@ class stockGoldMove(models.TransientModel):
             # move.write({'paid_gross': 0.00 ,'paid_pure' : 0.00})
             # if move.gross_weight <= 0.00 or move.pure_weight <= 0.00:
                 # move.write({'is_full_paid': True})
-        account_move.write({'pure_wt_value': account_move.pure_wt_value - paid_pure })
+        account_move.write({'pure_wt_value': account_move.pure_wt_value - total_paid_pure })
         # pure_money = account_move.pure_wt_value * account_move.gold_rate_value
         # account_move.write({'make_value_move': account_move.make_value_move - pure_money })
 
