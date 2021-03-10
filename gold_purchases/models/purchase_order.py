@@ -1695,7 +1695,7 @@ class PurchaseOrderLine(models.Model):
                     if rec.make_value_unfixed_view != 0.000:
                         rec.make_value = rec.make_value_unfixed_view
                     else:
-                        rec.make_value = rec.product_qty * rec.gross_wt * rec.make_rate
+                        rec.make_value = rec.total_gross_wt * rec.make_rate
             if rec.order_id.gold:
                 rec.gold_rate = rec.order_id.gold_rate / 1000.000000000000
                 rec.gold_value = rec.gold_rate and (

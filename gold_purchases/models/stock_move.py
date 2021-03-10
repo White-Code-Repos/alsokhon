@@ -27,6 +27,12 @@ class SubCategory(models.Model):
 class StockMove(models.Model):
     _inherit = 'stock.move'
 
+
+    @api.onchange('gross_weight')
+    def check_get_pure(self):
+        if self.gross_weight and self.purity:
+            self.pure_weight = self.gross_weight * self.purity / 1000.000
+
     gold = fields.Boolean(string="Gold", compute="_compute_gold_state")
     diamond = fields.Boolean(string="Gold", compute="_compute_gold_state")
     assembly = fields.Boolean(string="assembly", compute="_compute_gold_state")

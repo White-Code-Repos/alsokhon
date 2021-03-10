@@ -62,7 +62,7 @@
                 <field name="qty_done" position="before">
                   <field name="carat" readonly="0" attrs="{'column_invisible':[('parent.assembly','!=',True),('parent.diamond','!=',True)]}"/>
                     <field name="gross_weight" sum="gross_weight" readonly="0" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
-                    <field name="pure_weight" sum="pure_weight" readonly="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
+                    <field name="pure_weight" force_save="1" sum="pure_weight" readonly="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
                     <field name="purity_id" readonly="1" force_save="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
                     <field name="purity" readonly="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
                     <field name="item_category_id"/>
@@ -111,7 +111,7 @@
                 <field name="product_uom_id" position="after">
                   <field name="carat" readonly="0"  attrs="{'column_invisible':[('parent.assembly','!=',True),('parent.diamond','!=',True)]}"/>
                     <field name="gross_weight" sum="gross_weight" readonly="0"  attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
-                    <field name="pure_weight" sum="pure_weight" readonly="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
+                    <field name="pure_weight" force_save="1" sum="pure_weight" readonly="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
                     <field name="purity_id" readonly="1" force_save="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
                     <field name="purity" readonly="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
                     <field name="item_category_id" readonly="1" force_save="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
@@ -140,7 +140,7 @@
                   <!-- <field name="carat" readonly="0"  attrs="{'invisible':[('parent.assembly','!=',True),('parent.diamond','!=',True)]}"/> -->
                   <field name="carat" readonly="0" />
                     <field name="gross_weight" readonly="0" />
-                    <field name="pure_weight" readonly="1" />
+                    <field name="pure_weight" force_save="1" readonly="1" />
                     <field name="purity_id" readonly="1" force_save="1" />
                     <field name="purity" readonly="1" />
                     <field name="item_category_id"/>
@@ -160,7 +160,7 @@
             <field name="arch" type="xml">
                 <field name="product_uom_id" position="after">
                     <field name="gross_weight" attrs="{'column_invisible':[('product_id.categ_id.is_gold','!=',True)]}"/>
-                    <field name="pure_weight" attrs="{'column_invisible':[('product_id.categ_id.is_gold','!=',True)]}"/>
+                    <field name="pure_weight" force_save="1" attrs="{'column_invisible':[('product_id.categ_id.is_gold','!=',True)]}"/>
                 </field>
             </field>
         </record>
@@ -176,7 +176,7 @@
                   <field name="assembly" invisible="1"/>
                   <field name="carat" attrs="{'column_invisible':[('diamond','!=',True)]}"/>
                     <field name="gross_weight" sum="gross_weight" attrs="{'column_invisible':[('gold','!=',True)]}"/>
-                    <field name="pure_weight" sum="gross_weight" attrs="{'column_invisible':[('gold','!=',True)]}"/>
+                    <field name="pure_weight" force_save="1" sum="gross_weight" attrs="{'column_invisible':[('gold','!=',True)]}"/>
                     <field name="purity" attrs="{'column_invisible':[('gold','!=',True)]}"/>
                     <field name="purity_id" attrs="{'column_invisible':[('gold','!=',True)]}"/>
                 </field>
@@ -197,7 +197,7 @@
                        position="after">
                      <field name="carat" readonly="0" attrs="{'column_invisible':[('parent.assembly','!=',True),('parent.diamond','!=',True)]}"/>
                     <field name="gross_weight" sum="gross_weight" readonly="0" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
-                    <field name="pure_weight" sum="pure_weight" readonly="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
+                    <field name="pure_weight" force_save="1" sum="pure_weight" readonly="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
                     <field name="purity" readonly="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
                     <field name="purity_id" readonly="1" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
                     <field name="item_category_id" required="0" attrs="{'column_invisible':[('parent.gold','!=',True),('parent.assembly','!=',True)]}"/>
@@ -224,7 +224,7 @@
                           <field name="assembly" invisible="1"/>
                             <field name="carat" invisible="1" attrs="{'column_invisible':[('diamond','!=',True)]}"/>
                             <field name="gross_weight" invisible="1" attrs="{'column_invisible':[('gold','!=',True)]}"/>
-                            <field name="pure_weight" invisible="1" attrs="{'column_invisible':[('gold','!=',True)]}"/>
+                            <field name="pure_weight" force_save="1" invisible="1" attrs="{'column_invisible':[('gold','!=',True)]}"/>
                             <field name="purity" invisible="1" attrs="{'column_invisible':[('gold','!=',True)]}"/>
                             <field name="purity_id" invisible="1" attrs="{'column_invisible':[('gold','!=',True)]}"/>
                         </group>
