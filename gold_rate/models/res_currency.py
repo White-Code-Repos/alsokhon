@@ -65,8 +65,8 @@ class GoldRates(models.Model):
                                  default=lambda self: self.env.company)
 
     _sql_constraints = [
-        ('unique_name_per_day', 'unique (name,currency_id,company_id)',
-         'Only one currency rate per day allowed!'),
+        # ('unique_name_per_day', 'unique (name,currency_id,company_id)',
+        #  'Only one currency rate per day allowed!'),
         ('currency_rate_check', 'CHECK (rate>0)',
          'The currency rate must be strictly positive.'),
     ]
