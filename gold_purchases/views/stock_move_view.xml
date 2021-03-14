@@ -159,8 +159,11 @@
             <field name="inherit_id" ref="stock.stock_inventory_line_tree2"/>
             <field name="arch" type="xml">
                 <field name="product_uom_id" position="after">
-                    <field name="gross_weight" attrs="{'column_invisible':[('product_id.categ_id.is_gold','!=',True)]}"/>
-                    <field name="pure_weight" force_save="1" attrs="{'column_invisible':[('product_id.categ_id.is_gold','!=',True)]}"/>
+                  <!-- attrs="{'column_invisible':[('product_id.categ_id.is_gold','!=',True)]}" -->
+                  <field name="gross_weight" force_save="1"/>
+                  <field name="purity_id" force_save="1"/>
+                  <field name="purity" force_save="1"/>
+                  <field name="pure_weight" force_save="1" />
                 </field>
             </field>
         </record>

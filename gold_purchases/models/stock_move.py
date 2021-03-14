@@ -490,8 +490,43 @@ class StockInventoryLine(models.Model):
     _inherit = 'stock.inventory.line'
 
     gross_weight = fields.Float('Gross Weight', digits=(16, 3))
+    purity_id = fields.Many2one('gold.purity')
+    @api.onchange('purity_id')
+    def get_hall_purity(self):
+        if self.purity_id:
+            if self.product_id.gold and not self.product_id.scrap:
+                self.purity = self.purity_id.purity
+            else:
+                self.purity = self.purity_id.scrap_purity
+    purity = fields.Float(string="Purity", digits=(16, 3))
+    @api.onchange('purity')
+    def get_pure_weight(self):
+        self.pure_weight = self.gross_weight * (self.purity / 1000)
     pure_weight = fields.Float('Pure Weight', digits=(16, 3))
 
+    def action_start(self):
+        self.ensure_one()
+        self._action_start()
+        self._check_company()
+        for sil in self.line_ids:
+            if sil.prod_lot_id:
+                sil.gross_weight = sil.prod_lot_id.gross_weight
+                sil.purity_id = sil.prod_lot_id.purity_id.id
+                sil.purity = sil.prod_lot_id.purity
+                sil.pure_weight = sil.prod_lot_id.pure_weight
+        return self.action_open_inventory_lines()
+
+
+
+    # def read(self, fields=None, load='_classic_read'):
+    #     res = super(StockInventoryLine, self).read(fields, load)
+    #     for this in self:
+    #         # if this.prod_lot_id:
+    #         this.gross_weight = this.prod_lot_id.gross_weight
+    #         this.purity_id = this.prod_lot_id.purity_id.id
+    #         this.purity = this.prod_lot_id.purity
+    #         this.pure_weight = this.prod_lot_id.pure_weight
+    #     return res
 
 class StockValuationLayer(models.Model):
     _inherit = 'stock.valuation.layer'
