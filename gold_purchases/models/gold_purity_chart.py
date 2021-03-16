@@ -18,7 +18,7 @@ class GoldPurity(models.Model):
     gold_sales_hallmark = fields.Float(digits=(16,3), default=0.0)
     scrap_sales_hallmark = fields.Float(digits=(16,3), default=lambda s:s.scrap_purity)
     allow_delete = fields.Boolean(default=True)
-    name = fields.Char('Karat', compute='get_name')
+    name = fields.Char('Karat')
     parts_name = fields.Char('Parts Gold', compute='get_part_name')
 
     @api.onchange('scrap_purity')
@@ -28,9 +28,11 @@ class GoldPurity(models.Model):
         for rec in self:
             rec.parts_name = '%s / %s' % (rec.parts, rec.out_of_parts)
 
-    def get_name(self):
+    def read(self, fields=None, load='_classic_read'):
+        res = super(GoldPurity, self).read(fields, load)
         for rec in self:
             rec.name = rec.purity and int(rec.purity) or 0
+        return res
 
     @api.constrains('parts')
     def check_parts(self):
@@ -78,12 +80,12 @@ class GoldPurity(models.Model):
                               recs[0].name))
         return super(GoldPurity, self).unlink()
 
-    @api.model
-    def _name_search(self, name, args=None, operator='ilike', limit=100,
-                     name_get_uid=None):
-        if not args:
-            args = []
-        if name:
-            args = expression.AND([args, [('karat', operator, name)]])
-        return super(GoldPurity, self)._name_search(
-            name, args, operator, limit, name_get_uid)
+    # @api.model
+    # def _name_search(self, name, args=None, operator='ilike', limit=100,
+    #                  name_get_uid=None):
+    #     if not args:
+    #         args = []
+    #     if name:
+    #         args = expression.AND([args, [('name', operator, name)]])
+    #     return super(GoldPurity, self)._name_search(
+    #         name, args, operator, limit, name_get_uid)

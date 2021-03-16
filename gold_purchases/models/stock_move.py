@@ -504,6 +504,38 @@ class StockInventoryLine(models.Model):
         self.pure_weight = self.gross_weight * (self.purity / 1000)
     pure_weight = fields.Float('Pure Weight', digits=(16, 3))
 
+    def _generate_moves(self):
+        vals_list = []
+        for line in self:
+            virtual_location = line._get_virtual_location()
+            rounding = line.product_id.uom_id.rounding
+            if float_is_zero(line.difference_qty, precision_rounding=rounding):
+                continue
+            if line.difference_qty > 0:  # found more than expected
+                vals = line._get_move_values(line.difference_qty, virtual_location.id, line.location_id.id, False)
+            else:
+                vals = line._get_move_values(abs(line.difference_qty), line.location_id.id, virtual_location.id, True)
+            vals_list.append(vals)
+            if line.product_id and line.product_id.gold:
+                lot_id = self.env['stock.production.lot'].browse(vals_list[0]['move_line_ids'][0][2]['lot_id'])
+                print("vals_list[0]['move_line_ids'][0][2]['lot_id']")
+                print(vals_list[0]['move_line_ids'][0][2]['lot_id'])
+                print(lot_id)
+                print(line.gross_weight)
+                print(line.purity_id.id)
+                print(line.purity)
+                print(line.pure_weight)
+                if len(lot_id) == 1:
+                    vals_list[0]['move_line_ids'][0][2]['gross_weight'] = line.gross_weight
+                    vals_list[0]['move_line_ids'][0][2]['purity_id'] = line.purity_id.id
+                    vals_list[0]['move_line_ids'][0][2]['purity'] = line.purity
+                    vals_list[0]['move_line_ids'][0][2]['pure_weight'] = line.pure_weight
+                print(vals_list)
+                print("vals_list[0]['move_line_ids'][0][2]['lot_id']")
+        return self.env['stock.move'].create(vals_list)
+class Inventory(models.Model):
+    _inherit = 'stock.inventory'
+
     def action_start(self):
         self.ensure_one()
         self._action_start()
